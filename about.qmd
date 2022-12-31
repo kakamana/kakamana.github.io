@@ -16,4 +16,18 @@ about:
 
 ---
 
-About this blog
+Muhammad Asad Kamran is passionate 
+
+Muhammad Asad Kamran has more than 15 years of experience in Software Engineering profession. Having strong hands on for architect, development, consultation & team building/managing experience of enterprise application & their integration with business critical applications, which includes SharePoint/Project Server, Asp.Net MVC & Biztalk complex applications.
+
+Being a certified PMP & Prince 2 practitioner, Asad has been managing & mentoring mission critical team which delivered successful & award wining projects worth millions for clients in Middle East, Europe including Telco Operators, Oil & Gas clients, ministries, Insurance giant & multinational Attorney giants. Having numerous success stories of working with key stakeholders to develop architectural framework that aligns strategy, processes, and IT assets with business goals.
+
+Excellent communication, presentation, and organizational skills. Involved in successful Digital Transformation & Integration projects which provides G2G, G2B, B2B, B2C & G2C e-commerce & Digital services. His core competencies are Collaboration, Messaging, Enterprise solution architecture, Digitization transformation, project management, Agile methodologies & Data analytics.
+
+## Education
+
+University Of Michigan | Michigan, USA
+Masters in applied data science (MADS) | May 2022 - April 2024
+
+Comsats Institute Of Information Technology | Lahore, Pakistan
+Bachelors Of Computer Science (Software Engineering) | 2002 - 2005
