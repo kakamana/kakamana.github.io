@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Blogs</title>
+<title>Kakamana Blogs - Blogs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-date','listing-title','listing-author','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
@@ -103,25 +103,37 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Blogs</span>
+    <span class="navbar-title">Kakamana Blogs</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="dropdown-header">
+ <span class="menu-text">talks.qmd</span></li>
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -153,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -166,7 +178,33 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="news,code,analysis" data-listing-date-sort="1672430400000" data-listing-file-modified-sort="1672515062650" data-listing-reading-time-sort="0.035">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1672099444351" data-listing-reading-time-sort="2.72">
+<div class="thumbnail">
+<a href="./posts/Summary of statistics/Summary Of Statistics.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/Summary of statistics/Summary Of Statistics.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/Summary of statistics/Summary Of Statistics.html">
+<h3 class="no-anchor listing-title">
+<strong>Introduction to Statistics in Python</strong>
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/Summary of statistics/Summary Of Statistics.html">
+<div class="listing-reading-time">
+2 min
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="news,code,analysis" data-listing-date-sort="1672430400000" data-listing-file-modified-sort="1672515062650" data-listing-reading-time-sort="0.035">
 <div class="thumbnail">
 <p><a href="./posts/post-with-code/index.html"> <img src="./posts/post-with-code/image.jpg" class="thumnail-image"> </a></p>
 </div>
@@ -179,22 +217,6 @@ Post With Code
 
 </div>
 </a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<a href="./posts/post-with-code/index.html">
-<div class="listing-description">
-This is a post with executable code.
-</div>
-</a>
 </div>
 <div class="metadata">
 <a href="./posts/post-with-code/index.html">
@@ -204,10 +226,13 @@ Dec 31, 2022
 <div class="listing-author">
 Harlow Malloc
 </div>
+<div class="listing-reading-time">
+0 min
+</div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="news" data-listing-date-sort="1672171200000" data-listing-file-modified-sort="1672515062659" data-listing-reading-time-sort="0.16">
+<div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1672171200000" data-listing-file-modified-sort="1672515062659" data-listing-reading-time-sort="0.16">
 <div class="thumbnail">
 <p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/thumbnail.jpg" class="thumnail-image"> </a></p>
 </div>
@@ -220,16 +245,6 @@ Welcome To My Blog
 
 </div>
 </a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/welcome/index.html">
-<div class="listing-description">
-This is the first post in a Quarto blog. Welcome!
-</div>
-</a>
 </div>
 <div class="metadata">
 <a href="./posts/welcome/index.html">
@@ -238,6 +253,9 @@ Dec 28, 2022
 </div>
 <div class="listing-author">
 Tristan O’Malley
+</div>
+<div class="listing-reading-time">
+0 min
 </div>
 </a>
 </div>

@@ -3,14 +3,21 @@ project:
   output-dir: docs
   
 website:
-  title: "Blogs"
+  title: "Kakamana Blogs"
   navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        file: index.qmd
+      - talks.qmd
+      - about.qmd 
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://kakamana.github.io
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/Nerdy_kakamana
 format:
   html:
     theme: cosmo
