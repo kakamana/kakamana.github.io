@@ -1,0 +1,10 @@
+---
+title: "Summary Of Statistics"
+author: "kakamana"
+date: "2022-12-27"
+categories: [python, datacamp, statistics]
+---
+
+The study of statistics involves collecting, analyzing, and interpreting data. You can use it to bring the future into focus and infer answers to tons of questions. How many calls will your support team receive, and how many jeans sizes should you manufacture to fit 95% of the population? Statistical skills are developed in this course, which teaches you how to calculate averages, plot relationships between numeric values, and calculate correlations. In addition, you’ll learn how to conduct a well-designed study using Python to draw your own conclusions
+
+![](cell-9-output-3.png)
