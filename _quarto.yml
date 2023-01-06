@@ -4,6 +4,8 @@ project:
   
 website:
   title: "Kakamana's Blogs"
+  site-url: https://kakamana.github.io
+  description: "This is kakamana's personal blog."
   navbar:
     background: primary
     search: true
@@ -11,7 +13,7 @@ website:
       - text: "Home"
         file: index.qmd      
       - about.qmd 
-    right:
+    right:      
       - about.qmd
       - icon: github
         href: https://kakamana.github.io

@@ -9,7 +9,7 @@ listing:
   filter-ui: [title, date]
   fields: [image, title,reading-time, categories, description, author, date]
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 ---
 
 
