@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://kakamana.github.io/about.html</loc>
+    <lastmod>2023-01-06T08:55:44.094Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/archive.html</loc>
+    <lastmod>2023-01-06T08:55:45.399Z</lastmod>
+  </url>
+  <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-06T08:40:38.216Z</lastmod>
+    <lastmod>2023-01-06T08:56:00.760Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/post-with-code/index.html</loc>
+    <lastmod>2023-01-06T08:55:47.023Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Random numbers and probability/Random numbers and probability.html</loc>
+    <lastmod>2023-01-06T08:55:47.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Summary of statistics/Summary Of Statistics.html</loc>
+    <lastmod>2023-01-06T08:55:48.657Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/welcome/index.html</loc>
+    <lastmod>2023-01-06T08:55:49.329Z</lastmod>
   </url>
 </urlset>
