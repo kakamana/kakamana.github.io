@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kakamana.github.io/about.html</loc>
-    <lastmod>2023-01-06T22:39:17.611Z</lastmod>
+    <lastmod>2023-01-07T01:47:03.649Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/archive.html</loc>
-    <lastmod>2023-01-06T22:39:18.503Z</lastmod>
+    <lastmod>2023-01-07T01:47:04.558Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-06T22:39:35.298Z</lastmod>
+    <lastmod>2023-01-07T01:47:05.506Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Correlation and experimental design/Correlation and experimental design.html</loc>
+    <lastmod>2023-01-07T01:47:06.315Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html</loc>
-    <lastmod>2023-01-06T22:40:28.483Z</lastmod>
+    <lastmod>2023-01-07T01:47:07.224Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/post-with-code/index.html</loc>
-    <lastmod>2023-01-06T22:39:21.069Z</lastmod>
+    <lastmod>2023-01-07T01:47:07.895Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Random numbers and probability/Random numbers and probability.html</loc>
-    <lastmod>2023-01-06T22:39:21.926Z</lastmod>
+    <lastmod>2023-01-07T01:47:08.723Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Summary of statistics/Summary Of Statistics.html</loc>
-    <lastmod>2023-01-06T22:39:22.737Z</lastmod>
+    <lastmod>2023-01-07T01:47:09.531Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/welcome/index.html</loc>
-    <lastmod>2023-01-06T22:39:23.422Z</lastmod>
+    <lastmod>2023-01-07T01:47:10.202Z</lastmod>
   </url>
 </urlset>
