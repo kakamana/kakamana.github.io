@@ -9,6 +9,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html",
       "/posts/Correlation in a nutshell/Correlation in a nutshell.html",
       "/posts/Correlation and experimental design/Correlation and experimental design.html",
       "/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html",
