@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-08T13:26:28.111Z</lastmod>
+    <lastmod>2023-01-12T13:13:51.253Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation and experimental design/Correlation and experimental design.html</loc>
@@ -43,5 +43,9 @@
   <url>
     <loc>https://kakamana.github.io/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html</loc>
     <lastmod>2023-01-08T13:25:12.146Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Predictions and model objects/Predictions and model objects.html</loc>
+    <lastmod>2023-01-12T13:13:17.583Z</lastmod>
   </url>
 </urlset>
