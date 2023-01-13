@@ -9,6 +9,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Quantifying model fit/Quantifying model fit.html",
       "/posts/Predictions and model objects/Predictions and model objects.html",
       "/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html",
       "/posts/Correlation in a nutshell/Correlation in a nutshell.html",
