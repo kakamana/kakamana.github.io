@@ -1,22 +1,18 @@
 [
   {
     "listing": "/archive.html",
-    "items": [
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html"
-    ]
+    "items": []
   },
   {
     "listing": "/index.html",
     "items": [
       "/posts/Quantifying model fit/Quantifying model fit.html",
+      "/posts/Simple Logistic Regression Modeling/Simple Logistic Regression Modeling.html",
       "/posts/Predictions and model objects/Predictions and model objects.html",
       "/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html",
       "/posts/Correlation in a nutshell/Correlation in a nutshell.html",
       "/posts/Correlation and experimental design/Correlation and experimental design.html",
       "/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html",
-      "/posts/post-with-code/index.html",
-      "/posts/welcome/index.html",
       "/posts/Random numbers and probability/Random numbers and probability.html",
       "/posts/Summary of statistics/Summary Of Statistics.html"
     ]
