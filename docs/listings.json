@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Sampling Distribution/Sampling Distributions.html",
       "/posts/Quantifying model fit/Quantifying model fit.html",
       "/posts/Sampling Methods/Sampling Methods.html",
       "/posts/Simple Logistic Regression Modeling/Simple Logistic Regression Modeling.html",
