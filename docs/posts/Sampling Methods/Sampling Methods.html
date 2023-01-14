@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-13">
+
+<title>Kakamana’s Blogs - Sampling Methods</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sampling-methods" id="toc-sampling-methods" class="nav-link active" data-scroll-target="#sampling-methods">Sampling Methods</a>
+  <ul class="collapse">
+  <li><a href="#simple-random-and-systematic-sampling" id="toc-simple-random-and-systematic-sampling" class="nav-link" data-scroll-target="#simple-random-and-systematic-sampling">Simple random and systematic sampling</a>
+  <ul class="collapse">
+  <li><a href="#simple-random-sampling" id="toc-simple-random-sampling" class="nav-link" data-scroll-target="#simple-random-sampling">Simple random sampling</a></li>
+  <li><a href="#systematic-random-sampling" id="toc-systematic-random-sampling" class="nav-link" data-scroll-target="#systematic-random-sampling">Systematic random sampling</a></li>
+  <li><a href="#do-you-think-systematic-sampling-is-appropriate" id="toc-do-you-think-systematic-sampling-is-appropriate" class="nav-link" data-scroll-target="#do-you-think-systematic-sampling-is-appropriate">Do you think systematic sampling is appropriate?</a></li>
+  <li><a href="#stratified-and-weighted-random-sampling" id="toc-stratified-and-weighted-random-sampling" class="nav-link" data-scroll-target="#stratified-and-weighted-random-sampling">Stratified and weighted random sampling</a></li>
+  <li><a href="#sampling-by-proportional-stratification" id="toc-sampling-by-proportional-stratification" class="nav-link" data-scroll-target="#sampling-by-proportional-stratification">Sampling by proportional stratification</a></li>
+  <li><a href="#a-stratified-sampling-method-based-on-equal-counts" id="toc-a-stratified-sampling-method-based-on-equal-counts" class="nav-link" data-scroll-target="#a-stratified-sampling-method-based-on-equal-counts">A stratified sampling method based on equal counts</a></li>
+  <li><a href="#weighted-sampling" id="toc-weighted-sampling" class="nav-link" data-scroll-target="#weighted-sampling">Weighted sampling</a></li>
+  <li><a href="#cluster-sampling" id="toc-cluster-sampling" class="nav-link" data-scroll-target="#cluster-sampling">Cluster sampling</a></li>
+  <li><a href="#kinds-of-sampling" id="toc-kinds-of-sampling" class="nav-link" data-scroll-target="#kinds-of-sampling">3 kinds of sampling</a></li>
+  <li><a href="#comparing-point-estimates" id="toc-comparing-point-estimates" class="nav-link" data-scroll-target="#comparing-point-estimates">Comparing point estimates</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Sampling Methods</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">statistics</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">sampling</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 13, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="sampling-methods" class="level1">
+<h1>Sampling Methods</h1>
+<p>It’s time to get hands-on and perform the four random sampling methods in Python: simple, systematic, stratified, and cluster.</p>
+<p>This <strong>Sampling Methods</strong> is part of <a href="https://app.datacamp.com/learn/courses/sampling-in-python">Datacamp course: Introduction to sampling</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import seaborn with alias sns</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Import matplotlib.pyplot with alias plt</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="simple-random-and-systematic-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="simple-random-and-systematic-sampling">Simple random and systematic sampling</h2>
+<p>Although there are several sampling methods such as: * Simple random sampling * Systematic random sampling * Stratified &amp; weight random sampling * Cluster sampling</p>
+<ul>
+<li>Simple random sampling: Work like raffle or lottery &amp; consider simplest method of sampling a population. involves picking rows at random, one at a time, where each row has the same chance of being picked as any other</li>
+<li>Systematic random sampling: This samples the population at regular intervals and this method avoid randomness</li>
+</ul>
+<section id="simple-random-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="simple-random-sampling">Simple random sampling</h3>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>attrition_pop<span class="op">=</span>pd.read_feather(<span class="st">'dataset/attrition.feather'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>attrition_pop.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Age</th>
+      <th>Attrition</th>
+      <th>BusinessTravel</th>
+      <th>DailyRate</th>
+      <th>Department</th>
+      <th>DistanceFromHome</th>
+      <th>Education</th>
+      <th>EducationField</th>
+      <th>EnvironmentSatisfaction</th>
+      <th>Gender</th>
+      <th>...</th>
+      <th>PerformanceRating</th>
+      <th>RelationshipSatisfaction</th>
+      <th>StockOptionLevel</th>
+      <th>TotalWorkingYears</th>
+      <th>TrainingTimesLastYear</th>
+      <th>WorkLifeBalance</th>
+      <th>YearsAtCompany</th>
+      <th>YearsInCurrentRole</th>
+      <th>YearsSinceLastPromotion</th>
+      <th>YearsWithCurrManager</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>21</td>
+      <td>0.0</td>
+      <td>Travel_Rarely</td>
+      <td>391</td>
+      <td>Research_Development</td>
+      <td>15</td>
+      <td>College</td>
+      <td>Life_Sciences</td>
+      <td>High</td>
+      <td>Male</td>
+      <td>...</td>
+      <td>Excellent</td>
+      <td>Very_High</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>Better</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>19</td>
+      <td>1.0</td>
+      <td>Travel_Rarely</td>
+      <td>528</td>
+      <td>Sales</td>
+      <td>22</td>
+      <td>Below_College</td>
+      <td>Marketing</td>
+      <td>Very_High</td>
+      <td>Male</td>
+      <td>...</td>
+      <td>Excellent</td>
+      <td>Very_High</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Good</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>18</td>
+      <td>1.0</td>
+      <td>Travel_Rarely</td>
+      <td>230</td>
+      <td>Research_Development</td>
+      <td>3</td>
+      <td>Bachelor</td>
+      <td>Life_Sciences</td>
+      <td>High</td>
+      <td>Male</td>
+      <td>...</td>
+      <td>Excellent</td>
+      <td>High</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Better</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>18</td>
+      <td>0.0</td>
+      <td>Travel_Rarely</td>
+      <td>812</td>
+      <td>Sales</td>
+      <td>10</td>
+      <td>Bachelor</td>
+      <td>Medical</td>
+      <td>Very_High</td>
+      <td>Female</td>
+      <td>...</td>
+      <td>Excellent</td>
+      <td>Low</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>Better</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>1.0</td>
+      <td>Travel_Frequently</td>
+      <td>1306</td>
+      <td>Sales</td>
+      <td>5</td>
+      <td>Bachelor</td>
+      <td>Marketing</td>
+      <td>Medium</td>
+      <td>Male</td>
+      <td>...</td>
+      <td>Excellent</td>
+      <td>Very_High</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>Better</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 31 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 70 rows using simple random sampling and set the seed</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>attrition_samp <span class="op">=</span> attrition_pop.sample(n<span class="op">=</span><span class="dv">70</span>, random_state<span class="op">=</span><span class="dv">18900217</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+1134   35        0.0      Travel_Rarely        583  Research_Development   
+1150   52        0.0         Non-Travel        585                 Sales   
+531    33        0.0      Travel_Rarely        931  Research_Development   
+395    31        0.0      Travel_Rarely       1332  Research_Development   
+392    29        0.0      Travel_Rarely        942  Research_Development   
+...   ...        ...                ...        ...                   ...   
+361    27        0.0  Travel_Frequently       1410                 Sales   
+1180   36        0.0      Travel_Rarely        530                 Sales   
+230    26        0.0      Travel_Rarely       1443                 Sales   
+211    29        0.0  Travel_Frequently        410  Research_Development   
+890    30        0.0  Travel_Frequently       1312  Research_Development   
+
+      DistanceFromHome      Education    EducationField  \
+1134                25         Master           Medical   
+1150                29         Master     Life_Sciences   
+531                 14       Bachelor           Medical   
+395                 11        College           Medical   
+392                 15  Below_College     Life_Sciences   
+...                ...            ...               ...   
+361                  3  Below_College           Medical   
+1180                 2         Master     Life_Sciences   
+230                 23       Bachelor         Marketing   
+211                  2  Below_College     Life_Sciences   
+890                  2         Master  Technical_Degree   
+
+     EnvironmentSatisfaction  Gender  ...  PerformanceRating  \
+1134                    High  Female  ...          Excellent   
+1150                     Low    Male  ...          Excellent   
+531                Very_High  Female  ...          Excellent   
+395                     High    Male  ...          Excellent   
+392                   Medium  Female  ...          Excellent   
+...                      ...     ...  ...                ...   
+361                Very_High  Female  ...        Outstanding   
+1180                    High  Female  ...          Excellent   
+230                     High  Female  ...          Excellent   
+211                Very_High  Female  ...          Excellent   
+890                Very_High  Female  ...          Excellent   
+
+     RelationshipSatisfaction  StockOptionLevel TotalWorkingYears  \
+1134                     High                 1                16   
+1150                   Medium                 2                16   
+531                 Very_High                 1                 8   
+395                 Very_High                 0                 6   
+392                       Low                 1                 6   
+...                       ...               ...               ...   
+361                    Medium                 2                 6   
+1180                     High                 0                17   
+230                      High                 1                 5   
+211                      High                 3                 4   
+890                 Very_High                 0                10   
+
+     TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \
+1134                     3            Good              16   
+1150                     3            Good               9   
+531                      5          Better               8   
+395                      2            Good               6   
+392                      2            Good               5   
+...                    ...             ...             ...   
+361                      3          Better               6   
+1180                     2            Good              13   
+230                      2            Good               2   
+211                      3          Better               3   
+890                      2          Better               9   
+
+      YearsInCurrentRole  YearsSinceLastPromotion YearsWithCurrManager  
+1134                  10                       10                    1  
+1150                   8                        0                    0  
+531                    7                        1                    6  
+395                    5                        0                    1  
+392                    4                        1                    3  
+...                  ...                      ...                  ...  
+361                    5                        0                    4  
+1180                   7                        6                    7  
+230                    2                        0                    0  
+211                    2                        0                    2  
+890                    7                        0                    7  
+
+[70 rows x 31 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="systematic-random-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="systematic-random-sampling">Systematic random sampling</h3>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the sample size to 70</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="op">=</span> <span class="dv">70</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the population size from attrition_pop</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pop_size <span class="op">=</span> <span class="bu">len</span>(attrition_pop)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the interval</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>interval <span class="op">=</span> pop_size <span class="op">//</span> sample_size</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Systematically sample 70 rows</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>attrition_sys_samp <span class="op">=</span> attrition_pop.iloc[::interval]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_sys_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition BusinessTravel  DailyRate            Department  \
+0      21        0.0  Travel_Rarely        391  Research_Development   
+21     19        0.0  Travel_Rarely       1181  Research_Development   
+42     45        0.0  Travel_Rarely        252  Research_Development   
+63     23        0.0  Travel_Rarely        373  Research_Development   
+84     30        1.0  Travel_Rarely        945                 Sales   
+...   ...        ...            ...        ...                   ...   
+1365   48        0.0  Travel_Rarely        715  Research_Development   
+1386   48        0.0  Travel_Rarely       1355  Research_Development   
+1407   50        0.0  Travel_Rarely        989  Research_Development   
+1428   50        0.0     Non-Travel        881  Research_Development   
+1449   52        0.0  Travel_Rarely        699  Research_Development   
+
+      DistanceFromHome      Education EducationField EnvironmentSatisfaction  \
+0                   15        College  Life_Sciences                    High   
+21                   3  Below_College        Medical                  Medium   
+42                   2       Bachelor  Life_Sciences                  Medium   
+63                   1        College  Life_Sciences               Very_High   
+84                   9       Bachelor        Medical                  Medium   
+...                ...            ...            ...                     ...   
+1365                 1       Bachelor  Life_Sciences               Very_High   
+1386                 4         Master  Life_Sciences                    High   
+1407                 7        College        Medical                  Medium   
+1428                 2         Master  Life_Sciences                     Low   
+1449                 1         Master  Life_Sciences                    High   
+
+      Gender  ...  PerformanceRating RelationshipSatisfaction  \
+0       Male  ...          Excellent                Very_High   
+21    Female  ...          Excellent                Very_High   
+42    Female  ...          Excellent                Very_High   
+63      Male  ...        Outstanding                Very_High   
+84      Male  ...          Excellent                     High   
+...      ...  ...                ...                      ...   
+1365    Male  ...          Excellent                     High   
+1386    Male  ...          Excellent                   Medium   
+1407  Female  ...          Excellent                Very_High   
+1428    Male  ...          Excellent                Very_High   
+1449    Male  ...          Excellent                      Low   
+
+      StockOptionLevel TotalWorkingYears TrainingTimesLastYear  \
+0                    0                 0                     6   
+21                   0                 1                     3   
+42                   0                 1                     3   
+63                   1                 1                     2   
+84                   0                 1                     3   
+...                ...               ...                   ...   
+1365                 0                25                     3   
+1386                 0                27                     3   
+1407                 1                29                     2   
+1428                 1                31                     3   
+1449                 1                34                     5   
+
+     WorkLifeBalance  YearsAtCompany  YearsInCurrentRole  \
+0             Better               0                   0   
+21            Better               1                   0   
+42            Better               1                   0   
+63            Better               1                   0   
+84              Good               1                   0   
+...              ...             ...                 ...   
+1365            Best               1                   0   
+1386          Better              15                  11   
+1407            Good              27                   3   
+1428          Better              31                   6   
+1449          Better              33                  18   
+
+      YearsSinceLastPromotion YearsWithCurrManager  
+0                           0                    0  
+21                          0                    0  
+42                          0                    0  
+63                          0                    1  
+84                          0                    0  
+...                       ...                  ...  
+1365                        0                    0  
+1386                        4                    8  
+1407                       13                    8  
+1428                       14                    7  
+1449                       11                    9  
+
+[70 rows x 31 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="do-you-think-systematic-sampling-is-appropriate" class="level3">
+<h3 class="anchored" data-anchor-id="do-you-think-systematic-sampling-is-appropriate">Do you think systematic sampling is appropriate?</h3>
+<p>In the case of systematic sampling, there is a problem: if the data has been sorted or there is a pattern or meaning behind the row order, then the resulting sample may not be representative of the entire population. If the rows are shuffled, the problem can be solved, but then systematic sampling becomes equivalent to simple random sampling.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an index column to attrition_pop</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>attrition_pop_id <span class="op">=</span> attrition_pop.reset_index()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany vs. index for attrition_pop_id</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>attrition_pop_id.plot(x<span class="op">=</span><span class="st">'index'</span>,y<span class="op">=</span><span class="st">'YearsAtCompany'</span>,kind<span class="op">=</span><span class="st">'scatter'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shuffle the rows of attrition_pop</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>attrition_shuffled <span class="op">=</span> attrition_pop.sample(frac<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset the row indexes and create an index column</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>attrition_shuffled <span class="op">=</span> attrition_shuffled.reset_index(drop<span class="op">=</span><span class="va">True</span>).reset_index()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany vs. index for attrition_shuffled</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>attrition_shuffled.plot(x<span class="op">=</span><span class="st">'index'</span>,y<span class="op">=</span><span class="st">'YearsAtCompany'</span>,kind<span class="op">=</span><span class="st">'scatter'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="stratified-and-weighted-random-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="stratified-and-weighted-random-sampling">Stratified and weighted random sampling</h3>
+<p>Stratified sampling is a technique that allows us to sample a population that contains subgroups</p>
+<ul>
+<li>Weighted random sampling</li>
+</ul>
+<p>A close relative of stratified sampling that provides even more flexibility is weighted random sampling. In this variant, we create a column of weights that adjust the relative probability of sampling each row.</p>
+</section>
+<section id="sampling-by-proportional-stratification" class="level3">
+<h3 class="anchored" data-anchor-id="sampling-by-proportional-stratification">Sampling by proportional stratification</h3>
+<p>You may need to carefully control the counts of each subgroup within the population if you are interested in subgroups within the population. As a result of proportional stratified sampling, the subgroup sizes within the sample are representative of the subgroup sizes within the population as a whole.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportion of employees by Education level</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>education_counts_pop <span class="op">=</span> attrition_pop[<span class="st">'Education'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print education_counts_pop</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(education_counts_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bachelor         0.389116
+Master           0.270748
+College          0.191837
+Below_College    0.115646
+Doctor           0.032653
+Name: Education, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportional stratified sampling for 40% of each Education group</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>attrition_strat <span class="op">=</span> attrition_pop.groupby(<span class="st">'Education'</span>).sample(frac<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">2022</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_strat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+1191   53        0.0      Travel_Rarely        238                 Sales   
+407    29        0.0  Travel_Frequently        995  Research_Development   
+1233   59        0.0  Travel_Frequently       1225                 Sales   
+366    37        0.0      Travel_Rarely        571  Research_Development   
+702    31        0.0  Travel_Frequently        163  Research_Development   
+...   ...        ...                ...        ...                   ...   
+733    38        0.0  Travel_Frequently        653  Research_Development   
+1061   44        0.0  Travel_Frequently        602       Human_Resources   
+1307   41        0.0      Travel_Rarely       1276                 Sales   
+1060   33        0.0      Travel_Rarely        516  Research_Development   
+177    29        0.0      Travel_Rarely        738  Research_Development   
+
+      DistanceFromHome      Education    EducationField  \
+1191                 1  Below_College           Medical   
+407                  2  Below_College     Life_Sciences   
+1233                 1  Below_College     Life_Sciences   
+366                 10  Below_College     Life_Sciences   
+702                 24  Below_College  Technical_Degree   
+...                ...            ...               ...   
+733                 29         Doctor     Life_Sciences   
+1061                 1         Doctor   Human_Resources   
+1307                 2         Doctor     Life_Sciences   
+1060                 8         Doctor     Life_Sciences   
+177                  9         Doctor             Other   
+
+     EnvironmentSatisfaction  Gender  ...  PerformanceRating  \
+1191               Very_High  Female  ...        Outstanding   
+407                      Low    Male  ...          Excellent   
+1233                     Low  Female  ...          Excellent   
+366                Very_High  Female  ...          Excellent   
+702                Very_High  Female  ...        Outstanding   
+...                      ...     ...  ...                ...   
+733                Very_High  Female  ...          Excellent   
+1061                     Low    Male  ...          Excellent   
+1307                  Medium  Female  ...          Excellent   
+1060               Very_High    Male  ...          Excellent   
+177                   Medium    Male  ...          Excellent   
+
+     RelationshipSatisfaction  StockOptionLevel TotalWorkingYears  \
+1191                Very_High                 0                18   
+407                 Very_High                 1                 6   
+1233                Very_High                 0                20   
+366                    Medium                 2                 6   
+702                 Very_High                 0                 9   
+...                       ...               ...               ...   
+733                 Very_High                 0                10   
+1061                     High                 0                14   
+1307                   Medium                 1                22   
+1060                      Low                 0                14   
+177                      High                 0                 4   
+
+     TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \
+1191                     2            Best              14   
+407                      0            Best               6   
+1233                     2            Good               4   
+366                      3            Good               5   
+702                      3            Good               5   
+...                    ...             ...             ...   
+733                      2          Better              10   
+1061                     3          Better              10   
+1307                     2          Better              18   
+1060                     6          Better               0   
+177                      2          Better               3   
+
+      YearsInCurrentRole  YearsSinceLastPromotion YearsWithCurrManager  
+1191                   7                        8                   10  
+407                    4                        1                    3  
+1233                   3                        1                    3  
+366                    3                        4                    3  
+702                    4                        1                    4  
+...                  ...                      ...                  ...  
+733                    3                        9                    9  
+1061                   7                        0                    2  
+1307                  16                       11                    8  
+1060                   0                        0                    0  
+177                    2                        2                    2  
+
+[588 rows x 31 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Education level proportions from attrition_strat</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>education_counts_strat <span class="op">=</span> attrition_strat[<span class="st">'Education'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print education_counts_strat</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(education_counts_strat)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">By grouping then sampling, the size of each group in the sample is representative of the size of the sample in the population.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Bachelor         0.389456
+Master           0.270408
+College          0.192177
+Below_College    0.115646
+Doctor           0.032313
+Name: Education, dtype: float64
+
+By grouping then sampling, the size of each group in the sample is representative of the size of the sample in the population.</code></pre>
+</div>
+</div>
+</section>
+<section id="a-stratified-sampling-method-based-on-equal-counts" class="level3">
+<h3 class="anchored" data-anchor-id="a-stratified-sampling-method-based-on-equal-counts">A stratified sampling method based on equal counts</h3>
+<p>When one subgroup is larger than another in the population, but you do not want to factor this difference into your analysis, you can use equal counts stratified sampling to generate samples in which each subgroup has the same amount of data.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get 30 employees from each Education group</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>attrition_eq <span class="op">=</span> attrition_pop.groupby(<span class="st">'Education'</span>).sample(n<span class="op">=</span><span class="dv">30</span>, random_state<span class="op">=</span><span class="dv">2022</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_eq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+1191   53        0.0      Travel_Rarely        238                 Sales   
+407    29        0.0  Travel_Frequently        995  Research_Development   
+1233   59        0.0  Travel_Frequently       1225                 Sales   
+366    37        0.0      Travel_Rarely        571  Research_Development   
+702    31        0.0  Travel_Frequently        163  Research_Development   
+...   ...        ...                ...        ...                   ...   
+774    33        0.0      Travel_Rarely        922  Research_Development   
+869    45        0.0      Travel_Rarely       1015  Research_Development   
+530    32        0.0      Travel_Rarely        120  Research_Development   
+1049   48        0.0      Travel_Rarely        163                 Sales   
+350    29        1.0      Travel_Rarely        408  Research_Development   
+
+      DistanceFromHome      Education    EducationField  \
+1191                 1  Below_College           Medical   
+407                  2  Below_College     Life_Sciences   
+1233                 1  Below_College     Life_Sciences   
+366                 10  Below_College     Life_Sciences   
+702                 24  Below_College  Technical_Degree   
+...                ...            ...               ...   
+774                  1         Doctor           Medical   
+869                  5         Doctor           Medical   
+530                  6         Doctor     Life_Sciences   
+1049                 2         Doctor         Marketing   
+350                 25         Doctor  Technical_Degree   
+
+     EnvironmentSatisfaction  Gender  ...  PerformanceRating  \
+1191               Very_High  Female  ...        Outstanding   
+407                      Low    Male  ...          Excellent   
+1233                     Low  Female  ...          Excellent   
+366                Very_High  Female  ...          Excellent   
+702                Very_High  Female  ...        Outstanding   
+...                      ...     ...  ...                ...   
+774                      Low  Female  ...          Excellent   
+869                     High  Female  ...          Excellent   
+530                     High    Male  ...        Outstanding   
+1049                  Medium  Female  ...          Excellent   
+350                     High  Female  ...          Excellent   
+
+     RelationshipSatisfaction  StockOptionLevel TotalWorkingYears  \
+1191                Very_High                 0                18   
+407                 Very_High                 1                 6   
+1233                Very_High                 0                20   
+366                    Medium                 2                 6   
+702                 Very_High                 0                 9   
+...                       ...               ...               ...   
+774                      High                 1                10   
+869                       Low                 0                10   
+530                       Low                 0                 8   
+1049                      Low                 1                14   
+350                    Medium                 0                 6   
+
+     TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \
+1191                     2            Best              14   
+407                      0            Best               6   
+1233                     2            Good               4   
+366                      3            Good               5   
+702                      3            Good               5   
+...                    ...             ...             ...   
+774                      2          Better               6   
+869                      3          Better              10   
+530                      2          Better               5   
+1049                     2          Better               9   
+350                      2            Best               2   
+
+      YearsInCurrentRole  YearsSinceLastPromotion YearsWithCurrManager  
+1191                   7                        8                   10  
+407                    4                        1                    3  
+1233                   3                        1                    3  
+366                    3                        4                    3  
+702                    4                        1                    4  
+...                  ...                      ...                  ...  
+774                    1                        0                    5  
+869                    7                        1                    4  
+530                    4                        1                    4  
+1049                   7                        6                    7  
+350                    2                        1                    1  
+
+[150 rows x 31 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the proportions from attrition_eq</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>education_counts_eq <span class="op">=</span> attrition_eq[<span class="st">'Education'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(education_counts_eq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Below_College    0.2
+College          0.2
+Bachelor         0.2
+Master           0.2
+Doctor           0.2
+Name: Education, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="weighted-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="weighted-sampling">Weighted sampling</h3>
+<p>The stratified sampling method determines the probability of picking rows from your dataset based on the subgroups within your dataset. A generalization of this is weighted sampling, which allows you to specify rules regarding the probability of selecting rows at the row level. A row’s probability of being selected is proportional to its weight value.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany from attrition_pop as a histogram</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>attrition_pop[<span class="st">'YearsAtCompany'</span>].hist(bins<span class="op">=</span>np.arange(<span class="dv">0</span>,<span class="dv">41</span>,<span class="dv">1</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 400 employees weighted by YearsAtCompany</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>attrition_weight <span class="op">=</span> attrition_pop.sample(n<span class="op">=</span><span class="dv">400</span>, weights<span class="op">=</span><span class="st">'YearsAtCompany'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+853    36        0.0      Travel_Rarely        172  Research_Development   
+481    34        0.0  Travel_Frequently        618  Research_Development   
+1148   38        0.0      Travel_Rarely       1321                 Sales   
+1430   51        0.0  Travel_Frequently        237                 Sales   
+517    39        0.0      Travel_Rarely        835  Research_Development   
+...   ...        ...                ...        ...                   ...   
+1351   45        0.0      Travel_Rarely       1038  Research_Development   
+1412   54        0.0      Travel_Rarely        971  Research_Development   
+1248   47        0.0  Travel_Frequently       1379  Research_Development   
+1210   36        0.0  Travel_Frequently        688  Research_Development   
+1328   55        0.0  Travel_Frequently       1091  Research_Development   
+
+      DistanceFromHome      Education EducationField EnvironmentSatisfaction  \
+853                  4         Master  Life_Sciences                     Low   
+481                  3  Below_College  Life_Sciences                     Low   
+1148                 1         Master  Life_Sciences               Very_High   
+1430                 9       Bachelor  Life_Sciences               Very_High   
+517                 19         Master          Other               Very_High   
+...                ...            ...            ...                     ...   
+1351                20       Bachelor        Medical                  Medium   
+1412                 1       Bachelor        Medical               Very_High   
+1248                16         Master        Medical                    High   
+1210                 4        College  Life_Sciences               Very_High   
+1328                 2  Below_College  Life_Sciences               Very_High   
+
+      Gender  ...  PerformanceRating RelationshipSatisfaction  \
+853     Male  ...          Excellent                     High   
+481     Male  ...          Excellent                     High   
+1148    Male  ...          Excellent                      Low   
+1430    Male  ...        Outstanding                      Low   
+517     Male  ...          Excellent                   Medium   
+...      ...  ...                ...                      ...   
+1351    Male  ...          Excellent                   Medium   
+1412  Female  ...          Excellent                Very_High   
+1248    Male  ...          Excellent                     High   
+1210  Female  ...          Excellent                   Medium   
+1328    Male  ...          Excellent                   Medium   
+
+      StockOptionLevel TotalWorkingYears TrainingTimesLastYear  \
+853                  0                10                     2   
+481                  0                 7                     1   
+1148                 2                16                     3   
+1430                 1                31                     5   
+517                  3                 7                     2   
+...                ...               ...                   ...   
+1351                 1                24                     2   
+1412                 0                29                     3   
+1248                 0                20                     3   
+1210                 3                18                     3   
+1328                 1                23                     4   
+
+     WorkLifeBalance  YearsAtCompany  YearsInCurrentRole  \
+853             Good              10                   4   
+481             Good               6                   2   
+1148          Better              15                  13   
+1430            Good              29                  10   
+517           Better               2                   2   
+...              ...             ...                 ...   
+1351          Better               7                   7   
+1412            Good              20                   7   
+1248            Best              19                  10   
+1210          Better               4                   2   
+1328          Better               3                   2   
+
+      YearsSinceLastPromotion YearsWithCurrManager  
+853                         1                    8  
+481                         0                    4  
+1148                        5                    8  
+1430                       11                   10  
+517                         2                    2  
+...                       ...                  ...  
+1351                        0                    7  
+1412                       12                    7  
+1248                        2                    7  
+1210                        0                    2  
+1328                        1                    2  
+
+[400 rows x 31 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany from attrition_weight as a histogram</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>attrition_weight[<span class="st">'YearsAtCompany'</span>].hist(bins<span class="op">=</span>np.arange(<span class="dv">0</span>,<span class="dv">41</span>,<span class="dv">1</span>))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany from attrition_pop as a histogram</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>attrition_pop[<span class="st">'YearsAtCompany'</span>].hist(bins<span class="op">=</span>np.arange(<span class="dv">0</span>, <span class="dv">41</span>, <span class="dv">1</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 400 employees weighted by YearsAtCompany</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>attrition_weight <span class="op">=</span> attrition_pop.sample(n<span class="op">=</span><span class="dv">400</span>, weights<span class="op">=</span><span class="st">"YearsAtCompany"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot YearsAtCompany from attrition_weight as a histogram</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>attrition_weight[<span class="st">'YearsAtCompany'</span>].hist(bins<span class="op">=</span>np.arange(<span class="dv">0</span>,<span class="dv">41</span>,<span class="dv">1</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Sampling Methods_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="cluster-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="cluster-sampling">Cluster sampling</h3>
+<p>Stratified sampling vs.&nbsp;cluster sampling * Stratified sampling: * Split the population into subgroups * Use simple random sampling on every subgroup * Cluster sampling * Use simple random sampling to pick some subgroups * Use simple random sampling on only those subgroups</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of unique JobRole values</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>job_roles_pop <span class="op">=</span> <span class="bu">list</span>(attrition_pop[<span class="st">'JobRole'</span>].unique())</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly sample four JobRole values</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>job_roles_samp <span class="op">=</span> random.sample(job_roles_pop,k<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(job_roles_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Research_Director', 'Sales_Executive', 'Sales_Representative', 'Laboratory_Technician']</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for rows where JobRole is in job_roles_samp</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>jobrole_condition <span class="op">=</span> attrition_pop[<span class="st">'JobRole'</span>].isin(job_roles_samp)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>attrition_filtered <span class="op">=</span> attrition_pop[jobrole_condition]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+1      19        1.0      Travel_Rarely        528                 Sales   
+2      18        1.0      Travel_Rarely        230  Research_Development   
+3      18        0.0      Travel_Rarely        812                 Sales   
+4      18        1.0  Travel_Frequently       1306                 Sales   
+7      18        1.0         Non-Travel        247  Research_Development   
+...   ...        ...                ...        ...                   ...   
+1457   55        0.0      Travel_Rarely        692  Research_Development   
+1458   56        0.0  Travel_Frequently        906                 Sales   
+1459   54        0.0      Travel_Rarely        685  Research_Development   
+1467   58        0.0      Travel_Rarely        682                 Sales   
+1469   58        1.0      Travel_Rarely        286  Research_Development   
+
+      DistanceFromHome      Education EducationField EnvironmentSatisfaction  \
+1                   22  Below_College      Marketing               Very_High   
+2                    3       Bachelor  Life_Sciences                    High   
+3                   10       Bachelor        Medical               Very_High   
+4                    5       Bachelor      Marketing                  Medium   
+7                    8  Below_College        Medical                    High   
+...                ...            ...            ...                     ...   
+1457                14         Master        Medical                    High   
+1458                 6       Bachelor  Life_Sciences                    High   
+1459                 3       Bachelor  Life_Sciences               Very_High   
+1467                10         Master        Medical               Very_High   
+1469                 2         Master  Life_Sciences               Very_High   
+
+      Gender  ...  PerformanceRating RelationshipSatisfaction  \
+1       Male  ...          Excellent                Very_High   
+2       Male  ...          Excellent                     High   
+3     Female  ...          Excellent                      Low   
+4       Male  ...          Excellent                Very_High   
+7       Male  ...          Excellent                Very_High   
+...      ...  ...                ...                      ...   
+1457    Male  ...          Excellent                Very_High   
+1458  Female  ...          Excellent                Very_High   
+1459    Male  ...          Excellent                      Low   
+1467    Male  ...          Excellent                     High   
+1469    Male  ...          Excellent                Very_High   
+
+      StockOptionLevel TotalWorkingYears TrainingTimesLastYear  \
+1                    0                 0                     2   
+2                    0                 0                     2   
+3                    0                 0                     2   
+4                    0                 0                     3   
+7                    0                 0                     0   
+...                ...               ...                   ...   
+1457                 0                36                     3   
+1458                 3                36                     0   
+1459                 0                36                     2   
+1467                 0                38                     1   
+1469                 0                40                     2   
+
+     WorkLifeBalance  YearsAtCompany  YearsInCurrentRole  \
+1               Good               0                   0   
+2             Better               0                   0   
+3             Better               0                   0   
+4             Better               0                   0   
+7             Better               0                   0   
+...              ...             ...                 ...   
+1457          Better              24                  15   
+1458            Good               7                   7   
+1459          Better              10                   9   
+1467            Good              37                  10   
+1469          Better              31                  15   
+
+      YearsSinceLastPromotion YearsWithCurrManager  
+1                           0                    0  
+2                           0                    0  
+3                           0                    0  
+4                           0                    0  
+7                           0                    0  
+...                       ...                  ...  
+1457                        2                   15  
+1458                        7                    7  
+1459                        0                    9  
+1467                        1                    8  
+1469                       13                    8  
+
+[748 rows x 31 columns]</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove categories with no rows</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>attrition_filtered[<span class="st">'JobRole'</span>] <span class="op">=</span> attrition_filtered[<span class="st">'JobRole'</span>].cat.remove_unused_categories()</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly sample 10 employees from each sampled job role</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>attrition_clust <span class="op">=</span> attrition_filtered.groupby(<span class="st">'JobRole'</span>).sample(n<span class="op">=</span><span class="dv">10</span>,random_state<span class="op">=</span><span class="dv">2022</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the sample</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(attrition_clust)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st"> The two-stage sampling technique gives you control over sampling both between subgroups and within subgroups."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age  Attrition     BusinessTravel  DailyRate            Department  \
+1124   36        0.0      Travel_Rarely       1396  Research_Development   
+576    45        0.0      Travel_Rarely        974  Research_Development   
+995    42        0.0  Travel_Frequently        748  Research_Development   
+1243   50        0.0      Travel_Rarely       1207  Research_Development   
+869    45        0.0      Travel_Rarely       1015  Research_Development   
+599    33        0.0      Travel_Rarely       1099  Research_Development   
+117    24        0.0      Travel_Rarely        350  Research_Development   
+472    30        0.0      Travel_Rarely        921  Research_Development   
+149    27        0.0         Non-Travel       1277  Research_Development   
+49     20        1.0      Travel_Rarely        129  Research_Development   
+1302   40        0.0      Travel_Rarely       1416  Research_Development   
+1126   42        0.0      Travel_Rarely        810  Research_Development   
+1216   38        0.0      Travel_Rarely        849  Research_Development   
+1362   43        0.0      Travel_Rarely        982  Research_Development   
+1327   46        0.0      Travel_Rarely        430  Research_Development   
+664    27        0.0      Travel_Rarely        269  Research_Development   
+1284   40        0.0      Travel_Rarely       1308  Research_Development   
+1440   50        0.0  Travel_Frequently        333  Research_Development   
+790    36        0.0         Non-Travel        427  Research_Development   
+1432   55        0.0      Travel_Rarely       1136  Research_Development   
+941    36        0.0      Travel_Rarely        329                 Sales   
+454    27        0.0  Travel_Frequently       1242                 Sales   
+460    37        0.0      Travel_Rarely        228                 Sales   
+636    45        0.0      Travel_Rarely       1268                 Sales   
+293    33        0.0  Travel_Frequently        430                 Sales   
+976    39        1.0      Travel_Rarely       1162                 Sales   
+813    30        0.0      Travel_Rarely        231                 Sales   
+288    35        1.0  Travel_Frequently        662                 Sales   
+1111   53        1.0      Travel_Rarely       1168                 Sales   
+1075   40        0.0      Travel_Rarely        630                 Sales   
+133    34        1.0  Travel_Frequently        296                 Sales   
+725    36        1.0      Travel_Rarely       1218                 Sales   
+4      18        1.0  Travel_Frequently       1306                 Sales   
+169    41        1.0      Travel_Rarely       1356                 Sales   
+1      19        1.0      Travel_Rarely        528                 Sales   
+48     19        1.0      Travel_Rarely        419                 Sales   
+150    31        0.0  Travel_Frequently        793                 Sales   
+130    21        0.0         Non-Travel        895                 Sales   
+3      18        0.0      Travel_Rarely        812                 Sales   
+99     31        0.0  Travel_Frequently        444                 Sales   
+
+      DistanceFromHome      Education    EducationField  \
+1124                 5        College     Life_Sciences   
+576                  1         Master           Medical   
+995                  9        College           Medical   
+1243                28  Below_College           Medical   
+869                  5         Doctor           Medical   
+599                  4         Master           Medical   
+117                 21        College  Technical_Degree   
+472                  1       Bachelor     Life_Sciences   
+149                  8         Doctor     Life_Sciences   
+49                   4       Bachelor  Technical_Degree   
+1302                 2        College           Medical   
+1126                23         Doctor     Life_Sciences   
+1216                25        College     Life_Sciences   
+1362                12       Bachelor     Life_Sciences   
+1327                 1         Master           Medical   
+664                  5  Below_College  Technical_Degree   
+1284                14       Bachelor           Medical   
+1440                22         Doctor           Medical   
+790                  8       Bachelor     Life_Sciences   
+1432                 1         Master           Medical   
+941                 16         Master         Marketing   
+454                 20       Bachelor     Life_Sciences   
+460                  6         Master           Medical   
+636                  4        College     Life_Sciences   
+293                  7       Bachelor           Medical   
+976                  3        College           Medical   
+813                  8        College             Other   
+288                 18         Master         Marketing   
+1111                24         Master     Life_Sciences   
+1075                 4         Master         Marketing   
+133                  6        College         Marketing   
+725                  9         Master     Life_Sciences   
+4                    5       Bachelor         Marketing   
+169                 20        College         Marketing   
+1                   22  Below_College         Marketing   
+48                  21       Bachelor             Other   
+150                 20       Bachelor     Life_Sciences   
+130                  9        College           Medical   
+3                   10       Bachelor           Medical   
+99                   5       Bachelor         Marketing   
+
+     EnvironmentSatisfaction  Gender  ...  PerformanceRating  \
+1124               Very_High    Male  ...          Excellent   
+576                Very_High  Female  ...          Excellent   
+995                      Low  Female  ...          Excellent   
+1243               Very_High    Male  ...          Excellent   
+869                     High  Female  ...          Excellent   
+599                      Low  Female  ...          Excellent   
+117                     High    Male  ...          Excellent   
+472                Very_High    Male  ...        Outstanding   
+149                      Low    Male  ...          Excellent   
+49                       Low    Male  ...          Excellent   
+1302                     Low    Male  ...          Excellent   
+1126                     Low  Female  ...          Excellent   
+1216                     Low  Female  ...          Excellent   
+1362                     Low    Male  ...          Excellent   
+1327               Very_High    Male  ...          Excellent   
+664                     High    Male  ...          Excellent   
+1284                    High    Male  ...          Excellent   
+1440                    High    Male  ...          Excellent   
+790                      Low  Female  ...          Excellent   
+1432                  Medium    Male  ...          Excellent   
+941                     High  Female  ...          Excellent   
+454                Very_High  Female  ...          Excellent   
+460                     High    Male  ...          Excellent   
+636                     High  Female  ...          Excellent   
+293                Very_High    Male  ...          Excellent   
+976                Very_High  Female  ...          Excellent   
+813                     High    Male  ...          Excellent   
+288                Very_High  Female  ...          Excellent   
+1111                     Low    Male  ...          Excellent   
+1075                    High    Male  ...          Excellent   
+133                Very_High  Female  ...          Excellent   
+725                     High    Male  ...        Outstanding   
+4                     Medium    Male  ...          Excellent   
+169                   Medium  Female  ...        Outstanding   
+1                  Very_High    Male  ...          Excellent   
+48                 Very_High    Male  ...          Excellent   
+150                     High    Male  ...          Excellent   
+130                      Low    Male  ...        Outstanding   
+3                  Very_High  Female  ...          Excellent   
+99                 Very_High  Female  ...          Excellent   
+
+     RelationshipSatisfaction  StockOptionLevel TotalWorkingYears  \
+1124                Very_High                 0                16   
+576                 Very_High                 2                 8   
+995                      High                 0                12   
+1243                     High                 3                20   
+869                       Low                 0                10   
+599                 Very_High                 0                 8   
+117                    Medium                 3                 2   
+472                      High                 2                 7   
+149                 Very_High                 3                 3   
+49                     Medium                 0                 1   
+1302                Very_High                 1                22   
+1126                   Medium                 0                16   
+1216                     High                 1                19   
+1362                     High                 1                25   
+1327                Very_High                 2                23   
+664                    Medium                 1                 9   
+1284                      Low                 0                21   
+1440                Very_High                 0                32   
+790                       Low                 1                10   
+1432                Very_High                 2                31   
+941                       Low                 2                11   
+454                 Very_High                 0                 7   
+460                    Medium                 1                 7   
+636                       Low                 1                 9   
+293                       Low                 2                 5   
+976                       Low                 0                12   
+813                       Low                 1                10   
+288                      High                 1                 5   
+1111                   Medium                 0                15   
+1075                      Low                 1                15   
+133                 Very_High                 1                 3   
+725                    Medium                 0                10   
+4                   Very_High                 0                 0   
+169                 Very_High                 0                 4   
+1                   Very_High                 0                 0   
+48                     Medium                 0                 1   
+150                       Low                 1                 3   
+130                      High                 0                 3   
+3                         Low                 0                 0   
+99                       High                 1                 2   
+
+     TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \
+1124                     3            Best              13   
+576                      2          Better               5   
+995                      3          Better              12   
+1243                     3          Better              20   
+869                      3          Better              10   
+599                      5          Better               5   
+117                      3          Better               1   
+472                      2          Better               2   
+149                      4          Better               3   
+49                       2          Better               1   
+1302                     5          Better              21   
+1126                     2          Better               1   
+1216                     2          Better              10   
+1362                     3          Better              25   
+1327                     0          Better               2   
+664                      3          Better               9   
+1284                     2            Best              20   
+1440                     2          Better              32   
+790                      2          Better               8   
+1432                     4            Best               7   
+941                      3            Good               3   
+454                      2          Better               7   
+460                      5            Best               5   
+636                      3            Best               5   
+293                      2          Better               4   
+976                      3            Good               1   
+813                      2            Best               8   
+288                      0            Good               4   
+1111                     2            Good               2   
+1075                     2            Good              12   
+133                      3            Good               2   
+725                      4          Better               5   
+4                        3          Better               0   
+169                      5            Good               4   
+1                        2            Good               0   
+48                       3            Best               1   
+150                      4          Better               2   
+130                      3            Good               3   
+3                        2          Better               0   
+99                       5            Good               2   
+
+      YearsInCurrentRole  YearsSinceLastPromotion YearsWithCurrManager  
+1124                  11                        3                    7  
+576                    3                        0                    2  
+995                    9                        5                    8  
+1243                   8                        3                    8  
+869                    7                        1                    4  
+599                    4                        0                    2  
+117                    1                        0                    0  
+472                    2                        0                    2  
+149                    2                        1                    2  
+49                     0                        0                    0  
+1302                   7                        3                    9  
+1126                   0                        0                    0  
+1216                   8                        0                    1  
+1362                  10                        3                    9  
+1327                   2                        2                    2  
+664                    8                        0                    8  
+1284                   7                        4                    9  
+1440                   6                       13                    9  
+790                    7                        0                    5  
+1432                   7                        0                    0  
+941                    2                        0                    2  
+454                    7                        0                    7  
+460                    4                        0                    1  
+636                    4                        0                    3  
+293                    3                        0                    3  
+976                    0                        0                    0  
+813                    4                        7                    7  
+288                    2                        3                    2  
+1111                   2                        2                    2  
+1075                  11                        2                   11  
+133                    2                        1                    0  
+725                    3                        0                    3  
+4                      0                        0                    0  
+169                    3                        0                    2  
+1                      0                        0                    0  
+48                     0                        0                    0  
+150                    2                        2                    2  
+130                    2                        2                    2  
+3                      0                        0                    0  
+99                     2                        2                    2  
+
+[40 rows x 31 columns]
+
+ The two-stage sampling technique gives you control over sampling both between subgroups and within subgroups.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Temp\ipykernel_28748\2564666783.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  attrition_filtered['JobRole'] = attrition_filtered['JobRole'].cat.remove_unused_categories()</code></pre>
+</div>
+</div>
+</section>
+<section id="kinds-of-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="kinds-of-sampling">3 kinds of sampling</h3>
+<p>You’re going to compare the performance of point estimates using simple, stratified, and cluster sampling. Before doing that, you’ll have to set up the samples</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform simple random sampling to get 0.25 of the population</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>attrition_srs <span class="op">=</span> attrition_pop.sample(frac<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">2022</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>attrition_srs.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>(368, 31)</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform stratified sampling to get 0.25 of each relationship group</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>attrition_strat <span class="op">=</span> attrition_pop.groupby(<span class="st">'RelationshipSatisfaction'</span>).sample(frac<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">2022</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>attrition_strat.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>(368, 31)</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of unique RelationshipSatisfaction values</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>satisfaction_unique <span class="op">=</span> <span class="bu">list</span>(attrition_pop[<span class="st">'RelationshipSatisfaction'</span>].unique())</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Randomly sample 2 unique satisfaction values</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>satisfaction_samp <span class="op">=</span> random.sample(satisfaction_unique, k<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for satisfaction_samp and clear unused categories from RelationshipSatisfaction</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>satis_condition <span class="op">=</span> attrition_pop[<span class="st">'RelationshipSatisfaction'</span>].isin(satisfaction_samp)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>attrition_clust_prep <span class="op">=</span> attrition_pop[satis_condition]</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>attrition_clust_prep[<span class="st">'RelationshipSatisfaction'</span>] <span class="op">=</span> attrition_clust_prep[<span class="st">'RelationshipSatisfaction'</span>].cat.remove_unused_categories()</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform cluster sampling on the selected group, getting 0.25 of attrition_pop</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>attrition_clust <span class="op">=</span> attrition_clust_prep.groupby(<span class="st">"RelationshipSatisfaction"</span>)<span class="op">\</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    .sample(n<span class="op">=</span><span class="bu">len</span>(attrition_pop) <span class="op">//</span> <span class="dv">4</span>, random_state<span class="op">=</span><span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Temp\ipykernel_28748\1225069142.py:10: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  attrition_clust_prep['RelationshipSatisfaction'] = attrition_clust_prep['RelationshipSatisfaction'].cat.remove_unused_categories()</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Cannot take a larger sample than population when 'replace=False'</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-point-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-point-estimates">Comparing point estimates</h3>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean Attrition by RelationshipSatisfaction group</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>mean_attrition_pop <span class="op">=</span> attrition_pop.groupby(<span class="st">'RelationshipSatisfaction'</span>)[<span class="st">'Attrition'</span>].mean()</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_attrition_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RelationshipSatisfaction
+Low          0.206522
+Medium       0.148515
+High         0.154684
+Very_High    0.148148
+Name: Attrition, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the same thing for the simple random sample</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mean_attrition_srs <span class="op">=</span> attrition_srs.groupby(<span class="st">'RelationshipSatisfaction'</span>)[<span class="st">'Attrition'</span>].mean()</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_attrition_srs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RelationshipSatisfaction
+Low          0.134328
+Medium       0.164179
+High         0.160000
+Very_High    0.155963
+Name: Attrition, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the same thing for the stratified sample</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>mean_attrition_strat <span class="op">=</span> attrition_strat.groupby(<span class="st">'RelationshipSatisfaction'</span>)[<span class="st">'Attrition'</span>].mean()</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_attrition_strat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RelationshipSatisfaction
+Low          0.144928
+Medium       0.078947
+High         0.165217
+Very_High    0.129630
+Name: Attrition, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="30">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the same thing for the cluster sample</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>mean_attrition_clust <span class="op">=</span> attrition_clust.groupby(<span class="st">'RelationshipSatisfaction'</span>)[<span class="st">'Attrition'</span>].mean()</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mean_attrition_clust)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RelationshipSatisfaction
+Low          0.090909
+Medium       0.500000
+High         0.125000
+Very_High    0.307692
+Name: Attrition, dtype: float64</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
