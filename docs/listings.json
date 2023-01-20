@@ -7,7 +7,6 @@
     "listing": "/index.html",
     "items": [
       "/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html",
-      "/posts/Two Sample Anova test/Two-Sample and ANOVA Tests.html",
       "/posts/Sampling Distribution/Sampling Distributions.html",
       "/posts/Quantifying model fit/Quantifying model fit.html",
       "/posts/Sampling Methods/Sampling Methods.html",
@@ -16,6 +15,7 @@
       "/posts/Predictions and model objects/Predictions and model objects.html",
       "/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html",
       "/posts/Correlation in a nutshell/Correlation in a nutshell.html",
+      "/posts/Classification/Classification.html",
       "/posts/Correlation and experimental design/Correlation and experimental design.html",
       "/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html",
       "/posts/Random numbers and probability/Random numbers and probability.html",
