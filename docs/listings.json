@@ -6,9 +6,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/Regression/Regression.html",
       "/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html",
       "/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html",
+      "/posts/Regression/Regression.html",
       "/posts/Sampling Distribution/Sampling Distributions.html",
       "/posts/Quantifying model fit/Quantifying model fit.html",
       "/posts/Sampling Methods/Sampling Methods.html",
