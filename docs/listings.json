@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Regression/Regression.html",
       "/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html",
       "/posts/Sampling Distribution/Sampling Distributions.html",
       "/posts/Quantifying model fit/Quantifying model fit.html",
@@ -18,6 +19,8 @@
       "/posts/Classification/Classification.html",
       "/posts/Correlation and experimental design/Correlation and experimental design.html",
       "/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html",
+      "/posts/Fine Tuning Model/Fine Tuning Model.html",
+      "/posts/Preprocessing and Pipelines/Preprocessing and pipelines.html",
       "/posts/Random numbers and probability/Random numbers and probability.html",
       "/posts/Summary of statistics/Summary Of Statistics.html"
     ]

@@ -209,8 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="quarto-category">datacamp</div>
     <div class="quarto-category">statistics</div>
     <div class="quarto-category">machine learning</div>
-    <div class="quarto-category">linear regression</div>
-    <div class="quarto-category">logistic regression</div>
+    <div class="quarto-category">sampling</div>
   </div>
   </div>
 
@@ -243,7 +242,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Get a better understanding of what sampling is and why it is so powerful. Additionally, We will learn about the problems associated with convenience sampling and what the difference between true randomness and pseudo-randomness is.</p>
 <p>This <strong>Introduction to sampling</strong> is part of <a href="https://app.datacamp.com/learn/courses/sampling-in-python">Datacamp course: Introduction to sampling</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="25">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import seaborn with alias sns</span></span>
@@ -268,13 +267,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="simple-sampling-with-pandas">Simple sampling with pandas</h2>
 <p>The purpose of this exercise is to explore Spotify song data. There are over 40,000 rows in this population dataset, each representing a song. These columns include the title of the song, the artists who performed it, the release year, and attributes of the song, such as its duration, tempo, and danceability. To begin, you should examine the durations.</p>
 <p>The Spotify dataset will be sampled and the mean duration of the sample will be compared with the mean duration of the population.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>spotify_population<span class="op">=</span>pd.read_feather(<span class="st">"dataset/spotify_2000_2020.feather"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spotify_population.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="26">
 
 <div>
 
@@ -425,7 +424,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="27">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample 1000 rows from spotify_population</span></span>
@@ -435,75 +434,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(spotify_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>       acousticness                        artists  danceability  duration_ms  \
-23850      0.001130                  ['Lil Wayne']         0.769     199427.0   
-41092      0.121000  ['Justin Bieber', 'Big Sean']         0.644     286853.0   
-25592      0.000120                     ['O.A.R.']         0.652     207493.0   
-15256      0.974000          ["Dustin O'Halloran"]         0.429     188400.0   
-40880      0.280000       ['Two Door Cinema Club']         0.731     286093.0   
-...             ...                            ...           ...          ...   
-5239       0.082500               ['Matt and Kim']         0.549     212560.0   
-37135      0.354000                         ['NF']         0.501     221573.0   
-36982      0.244000               ['Lil Uzi Vert']         0.626     248175.0   
-38148      0.562000    ['Tego Calderon', 'Yandel']         0.848     184480.0   
-40085      0.000078                  ['Rammstein']         0.496     235627.0   
+<pre><code>       acousticness                                            artists  \
+7874        0.66400                                    ['The Walters']   
+2664        0.01020                    ['Beastie Boys', 'Fatboy Slim']   
+1683        0.00241                                          ['batta']   
+14491       0.11400            ['AJ Mitchell', 'Ava Max', 'Sam Feldt']   
+34495       0.96800                                         ['Yiruma']   
+...             ...                                                ...   
+25541       0.85400  ['Andrew Lloyd Webber', 'Patrick Wilson', 'Emm...   
+904         0.71900                                   ['Carl Carlton']   
+26932       0.02910                                    ['Cory Asbury']   
+30144       0.14900                              ['Twenty One Pilots']   
+12676       0.35000                                  ['Grupo Intenso']   
 
-       duration_minutes  energy  explicit                      id  \
-23850          3.323783  0.6600       1.0  58PWl2rA7lU90UBvDufzWm   
-41092          4.780883  0.5950       0.0  23UV8pJEvRnAZd6ZAXBC0H   
-25592          3.458217  0.7070       0.0  7n9GxM3guijiK2isLfUgJt   
-15256          3.140000  0.0245       0.0  6CngZA32wwYDbfY0f3pVj2   
-40880          4.768217  0.7300       0.0  7GDDxCiTyiQuC1kig8AqFH   
-...                 ...     ...       ...                     ...   
-5239           3.542667  0.8820       0.0  7vLeZPIeblZLz04hLRRAES   
-37135          3.692883  0.3540       0.0  0wf9rSX8ds3yEI2gf2QdPs   
-36982          4.136250  0.7700       1.0  2p2DLGuXtnLLClzpmKkyCx   
-38148          3.074667  0.8010       1.0  4UxD6L5uah5Dvzs5kQwThG   
-40085          3.927117  0.9340       0.0  4hLS1e3mrL0gbm8BqX1VvN   
+       danceability  duration_ms  duration_minutes  energy  explicit  \
+7874          0.747     151683.0          2.528050   0.422       0.0   
+2664          0.650     248507.0          4.141783   0.942       0.0   
+1683          0.389     145400.0          2.423333   0.988       0.0   
+14491         0.732     193548.0          3.225800   0.850       0.0   
+34495         0.287     218293.0          3.638217   0.292       0.0   
+...             ...          ...               ...     ...       ...   
+25541         0.194     294160.0          4.902667   0.119       0.0   
+904           0.546     153947.0          2.565783   0.828       0.0   
+26932         0.572     333386.0          5.556433   0.685       0.0   
+30144         0.550     277013.0          4.616883   0.625       0.0   
+12676         0.718     219960.0          3.666000   0.529       0.0   
 
-       instrumentalness   key  liveness  loudness  mode  \
-23850          0.000000   9.0    0.0780    -7.375   1.0   
-41092          0.000000   1.0    0.2790    -6.877   1.0   
-25592          0.000003   4.0    0.4850    -4.552   1.0   
-15256          0.917000   5.0    0.1100   -31.444   1.0   
-40880          0.000000   7.0    0.0880    -6.728   1.0   
-...                 ...   ...       ...       ...   ...   
-5239           0.000000   7.0    0.3720    -4.911   1.0   
-37135          0.000003  11.0    0.1110   -13.031   0.0   
-36982          0.000000   2.0    0.2290    -6.368   1.0   
-38148          0.000011  10.0    0.0624    -6.821   1.0   
-40085          0.344000   5.0    0.1150    -5.305   1.0   
+                           id  instrumentalness  key  liveness  loudness  \
+7874   70QqoQ3krRFUHfEzit7vjT          0.002770  7.0    0.3920   -10.008   
+2664   2WGGxhsc2WtPNkhsXWVcYb          0.000000  1.0    0.1220    -6.609   
+1683   5V5akuBxKpIlTUPaueNpyy          0.000615  6.0    0.3460    -1.949   
+14491  2wenGTypSYHXl1sN1pNC7X          0.000002  1.0    0.0388    -5.999   
+34495  3xr8COed4nPPn6XWZ0iCGr          0.978000  9.0    0.0900   -19.285   
+...                       ...               ...  ...       ...       ...   
+25541  5klrh466oGToybceGHPGAX          0.000737  1.0    0.1090   -20.926   
+904    5i7rT8lbGzjj1n7TTXR5U8          0.030000  4.0    0.3720    -4.771   
+26932  0rH0mprtecH3grD9HFM5AD          0.000000  6.0    0.0963    -7.290   
+30144  4IN3imzEuTsiHO6tOwDQu5          0.000000  1.0    0.1610    -8.213   
+12676  0l7q7H1zYiJ9XHVqim2Uwc          0.000000  7.0    0.1510    -8.769   
 
-                         name  popularity release_date  speechiness    tempo  \
-23850                  3 Peat        58.0   2008-06-10       0.3310  153.092   
-41092             No Pressure        63.0   2015-11-13       0.2150  148.889   
-25592       Love and Memories        55.0   2005-10-04       0.0297  121.998   
-15256                 Opus 23        44.0   2006-10-10       0.0364   71.187   
-40880   Next Year - RAC Remix        50.0   2013-01-01       0.0489  123.051   
-...                       ...         ...          ...          ...      ...   
-5239                  Cameras        46.0   2010-11-02       0.0505  169.994   
-37135                  Dreams        65.0   2017-10-06       0.1770   86.289   
-36982                 Enemies        57.0   2015-12-18       0.2500  155.738   
-38148  Cuando Baila Reggaeton        55.0   2006-08-29       0.1020   95.027   
-40085         TE QUIERO PUTA!        53.0   2005-10-27       0.1450  159.931   
+       mode                                           name  popularity  \
+7874    1.0                                   Goodbye Baby        55.0   
+2664    1.0  Body Movin' - Fatboy Slim Remix/2005 Remaster        48.0   
+1683    0.0                                          chase        61.0   
+14491   1.0   Slow Dance (feat. Ava Max) - Sam Feldt Remix        72.0   
+34495   1.0                             River Flows in You        62.0   
+...     ...                                            ...         ...   
+25541   1.0                               All I Ask Of You        57.0   
+904     1.0                               Everlasting Love        48.0   
+26932   1.0                                  Reckless Love        71.0   
+30144   0.0                                       Trapdoor        56.0   
+12676   1.0                                         Y Volo        45.0   
 
-       valence    year  
-23850    0.471  2008.0  
-41092    0.554  2015.0  
-25592    0.655  2005.0  
-15256    0.197  2006.0  
-40880    0.397  2013.0  
-...        ...     ...  
-5239     0.645  2010.0  
-37135    0.301  2017.0  
-36982    0.478  2015.0  
-38148    0.908  2006.0  
-40085    0.268  2005.0  
+      release_date  speechiness    tempo  valence    year  
+7874    2015-10-20       0.0294  111.141   0.5950  2015.0  
+2664    2005-01-01       0.0754  101.786   0.7850  2005.0  
+1683    2016-07-27       0.1070  111.975   0.0996  2016.0  
+14491   2019-10-25       0.0444  124.024   0.3720  2019.0  
+34495   2011-12-09       0.0541  145.703   0.3460  2011.0  
+...            ...          ...      ...      ...     ...  
+25541   2004-12-10       0.0398   85.698   0.1400  2004.0  
+904     2009-01-01       0.0394  121.418   0.4010  2009.0  
+26932   2018-01-26       0.0356  110.698   0.2320  2018.0  
+30144   2009-12-29       0.0399  149.927   0.3170  2009.0  
+12676   2001-10-16       0.0325  142.069   0.9440  2001.0  
 
 [1000 rows x 20 columns]</code></pre>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="28">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean duration in mins from spotify_population</span></span>
@@ -519,7 +518,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>3.8521519140900073
-3.8350666166666665
+3.8048647333333334
 
  Notice that the mean song duration in the sample is similar, but not identical to the mean song duration in the whole population.</code></pre>
 </div>
@@ -527,7 +526,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="simple-sampling-and-calculating-with-numpy" class="level2">
 <h2 class="anchored" data-anchor-id="simple-sampling-and-calculating-with-numpy">Simple sampling and calculating with NumPy</h2>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="29">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the loudness column of spotify_population</span></span>
@@ -540,21 +539,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(loudness_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>9068     -9.554
-16607   -26.071
-6391    -10.661
-29709    -4.182
-32548    -3.494
-          ...  
-11177    -5.791
-18327    -6.229
-35183    -5.448
-3999    -11.212
-38095    -6.221
+<pre><code>28889   -6.697
+41542   -3.166
+24096   -8.327
+38021   -5.596
+29360   -3.779
+         ...  
+34958   -7.206
+41513   -7.560
+28413   -7.113
+41429   -6.073
+38857   -4.433
 Name: loudness, Length: 100, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="15">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="30">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean of loudness_pop</span></span>
@@ -570,7 +569,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>-7.366856851353947
--7.382759999999999
+-7.385839999999999
 
  Again, notice that the calculated value (the mean) is close but not identical in each case</code></pre>
 </div>
@@ -584,7 +583,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <section id="are-findings-from-the-sample-generalizable" class="level2">
 <h2 class="anchored" data-anchor-id="are-findings-from-the-sample-generalizable">Are findings from the sample generalizable?</h2>
 <p>In your previous example, you saw that convenience sampling, which is the collection of data using the simplest method, can lead to samples that are not representative of the population. In other words, the findings of the sample cannot be generalized to the entire population. It is possible to determine whether or not a sample is representative of the population by examining the distributions of the population and the sample</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="16">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="31">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the distribution of acousticness with a histogram</span></span>
@@ -596,7 +595,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <p><img src="Introduction to Sampling_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="17">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="32">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>spotify_mysterious_sample<span class="op">=</span>spotify_population.sample(n<span class="op">=</span><span class="dv">1107</span>)</span>
@@ -608,7 +607,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <p><img src="Introduction to Sampling_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="18">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="33">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the distribution of duration_minutes as a histogram</span></span>
@@ -619,7 +618,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <p><img src="Introduction to Sampling_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="34">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>spotify_mysterious_sample2<span class="op">=</span>spotify_population.sample(n<span class="op">=</span><span class="dv">50</span>)</span>
@@ -634,7 +633,7 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 </section>
 <section id="pseudo-random-number-generation" class="level2">
 <h2 class="anchored" data-anchor-id="pseudo-random-number-generation">Pseudo-random number generation</h2>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="35">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random numbers from a Uniform(-3, 3)</span></span>
@@ -648,14 +647,14 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[-2.12436214  0.26133352  2.10798367 ... -2.25488851 -1.16266127
- -1.16448391]</code></pre>
+<pre><code>[ 0.46978238 -1.66176314  1.31080161 ...  0.27384823  0.57683707
+  1.94834767]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="Introduction to Sampling_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="36">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random numbers from a Normal(5, 2)</span></span>
@@ -669,19 +668,10 @@ Name: loudness, Length: 100, dtype: float64</code></pre>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[2.06050457 2.77955126 1.88655315 ... 6.44834334 6.68448638 7.13942115]</code></pre>
+<pre><code>[0.37088348 5.46510043 5.6804744  ... 5.06268094 7.1989964  4.26078515]</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="Introduction to Sampling_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="22">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="Introduction to Sampling_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 
