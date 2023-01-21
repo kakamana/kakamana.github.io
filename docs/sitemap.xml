@@ -2,86 +2,98 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kakamana.github.io/about.html</loc>
-    <lastmod>2023-01-20T19:20:55.498Z</lastmod>
+    <lastmod>2023-01-21T06:03:42.138Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/archive.html</loc>
-    <lastmod>2023-01-20T19:20:57.047Z</lastmod>
+    <lastmod>2023-01-21T06:03:42.964Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-20T20:22:24.687Z</lastmod>
+    <lastmod>2023-01-21T06:03:45.002Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
-    <lastmod>2023-01-20T19:20:59.598Z</lastmod>
+    <lastmod>2023-01-21T06:03:45.856Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Classification/Classification.html</loc>
-    <lastmod>2023-01-20T20:21:31.557Z</lastmod>
+    <lastmod>2023-01-21T06:03:46.775Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation and experimental design/Correlation and experimental design.html</loc>
-    <lastmod>2023-01-20T19:21:01.345Z</lastmod>
+    <lastmod>2023-01-21T06:03:47.580Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation in a nutshell/Correlation in a nutshell.html</loc>
-    <lastmod>2023-01-20T19:21:02.218Z</lastmod>
+    <lastmod>2023-01-21T06:03:48.445Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html</loc>
-    <lastmod>2023-01-20T19:21:03.151Z</lastmod>
+    <lastmod>2023-01-21T06:03:49.335Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Fine Tuning Model/Fine Tuning Model.html</loc>
-    <lastmod>2023-01-20T19:21:04.070Z</lastmod>
+    <lastmod>2023-01-21T06:03:50.257Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Intoducting to sampling/Introduction to Sampling.html</loc>
-    <lastmod>2023-01-20T19:21:04.855Z</lastmod>
+    <lastmod>2023-01-21T06:03:51.069Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html</loc>
-    <lastmod>2023-01-20T19:21:05.946Z</lastmod>
+    <lastmod>2023-01-21T06:03:52.174Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Logistic regression/Logistic regression.html</loc>
+    <lastmod>2023-01-21T06:03:53.180Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Loss function/Loss function.html</loc>
+    <lastmod>2023-01-21T06:03:54.020Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Predictions and model objects/Predictions and model objects.html</loc>
-    <lastmod>2023-01-20T19:21:06.879Z</lastmod>
+    <lastmod>2023-01-21T06:03:54.911Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Preprocessing and Pipelines/Preprocessing and pipelines.html</loc>
-    <lastmod>2023-01-20T19:21:07.761Z</lastmod>
+    <lastmod>2023-01-21T06:03:55.820Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Quantifying model fit/Quantifying model fit.html</loc>
-    <lastmod>2023-01-20T19:21:08.872Z</lastmod>
+    <lastmod>2023-01-21T06:03:57.861Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Random numbers and probability/Random numbers and probability.html</loc>
-    <lastmod>2023-01-20T19:21:09.716Z</lastmod>
+    <lastmod>2023-01-21T06:03:58.734Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Regression/Regression.html</loc>
-    <lastmod>2023-01-20T20:22:23.266Z</lastmod>
+    <lastmod>2023-01-21T06:03:59.752Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Sampling Distribution/Sampling Distributions.html</loc>
-    <lastmod>2023-01-20T19:21:11.528Z</lastmod>
+    <lastmod>2023-01-21T06:04:00.609Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Sampling Methods/Sampling Methods.html</loc>
-    <lastmod>2023-01-20T19:21:12.392Z</lastmod>
+    <lastmod>2023-01-21T06:04:01.494Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html</loc>
-    <lastmod>2023-01-20T19:21:13.180Z</lastmod>
+    <lastmod>2023-01-21T06:04:02.293Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Simple Logistic Regression Modeling/Simple Logistic Regression Modeling.html</loc>
-    <lastmod>2023-01-20T19:21:14.107Z</lastmod>
+    <lastmod>2023-01-21T06:04:03.228Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Summary of statistics/Summary Of Statistics.html</loc>
-    <lastmod>2023-01-20T19:21:14.888Z</lastmod>
+    <lastmod>2023-01-21T06:04:04.016Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Support vector machines/Support Vector Machines.html</loc>
+    <lastmod>2023-01-21T06:04:04.875Z</lastmod>
   </url>
 </urlset>
