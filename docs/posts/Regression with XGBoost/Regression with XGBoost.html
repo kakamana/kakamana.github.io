@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-21">
+
+<title>Kakamana’s Blogs - Regression with XGBoost</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#regression-with-xgboost" id="toc-regression-with-xgboost" class="nav-link active" data-scroll-target="#regression-with-xgboost">Regression with XGBoost</a>
+  <ul class="collapse">
+  <li><a href="#regression-review" id="toc-regression-review" class="nav-link" data-scroll-target="#regression-review">Regression review</a></li>
+  <li><a href="#objective-loss-functions-and-base-learners" id="toc-objective-loss-functions-and-base-learners" class="nav-link" data-scroll-target="#objective-loss-functions-and-base-learners">Objective (loss) functions and base learners</a>
+  <ul class="collapse">
+  <li><a href="#decision-trees-as-base-learners" id="toc-decision-trees-as-base-learners" class="nav-link" data-scroll-target="#decision-trees-as-base-learners">Decision trees as base learners</a></li>
+  <li><a href="#linear-base-learners" id="toc-linear-base-learners" class="nav-link" data-scroll-target="#linear-base-learners">Linear base learners</a></li>
+  <li><a href="#evaluating-model-quality" id="toc-evaluating-model-quality" class="nav-link" data-scroll-target="#evaluating-model-quality">Evaluating model quality</a></li>
+  </ul></li>
+  <li><a href="#regularization-and-base-learners-in-xgboost" id="toc-regularization-and-base-learners-in-xgboost" class="nav-link" data-scroll-target="#regularization-and-base-learners-in-xgboost">Regularization and base learners in XGBoost</a>
+  <ul class="collapse">
+  <li><a href="#using-regularization-in-xgboost" id="toc-using-regularization-in-xgboost" class="nav-link" data-scroll-target="#using-regularization-in-xgboost">Using regularization in XGBoost</a></li>
+  <li><a href="#visualizing-individual-xgboost-trees" id="toc-visualizing-individual-xgboost-trees" class="nav-link" data-scroll-target="#visualizing-individual-xgboost-trees">Visualizing individual XGBoost trees</a></li>
+  <li><a href="#visualizing-feature-importances-what-features-are-most-important-in-my-dataset" id="toc-visualizing-feature-importances-what-features-are-most-important-in-my-dataset" class="nav-link" data-scroll-target="#visualizing-feature-importances-what-features-are-most-important-in-my-dataset">Visualizing feature importances: What features are most important in my dataset</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Regression with XGBoost</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">regression</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">XGBoost</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 21, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="regression-with-xgboost" class="level1">
+<h1>Regression with XGBoost</h1>
+<p>After a brief review of supervised regression, you’ll apply XGBoost to the regression task of predicting house prices in Ames, Iowa. Aside from learning how XGboost can evaluate the quality of your regression models, you will also learn about the two types of base learners it can use as weak learners.</p>
+<p>This <strong>Regression with XGBoost</strong> is part of <a href="https://app.datacamp.com/learn/courses/extreme-gradient-boosting-with-xgboost">Datacamp course: Extreme Gradient Boosting with XGBoost</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="regression-review" class="level2">
+<h2 class="anchored" data-anchor-id="regression-review">Regression review</h2>
+<ul>
+<li>Common regression metrics
+<ul>
+<li>Root Mean Squared Error (RMSE) <img src="Images/computing rmse.jpg" class="img-fluid"></li>
+<li>Mean Absolute Erro (MAE) <img src="Images/computing mae.jpg" class="img-fluid"></li>
+</ul></li>
+</ul>
+</section>
+<section id="objective-loss-functions-and-base-learners" class="level2">
+<h2 class="anchored" data-anchor-id="objective-loss-functions-and-base-learners">Objective (loss) functions and base learners</h2>
+<ul>
+<li>Objective functions and Why we use them
+<ul>
+<li>Quantifies how far off a prediction is from the actual result</li>
+<li>Measures the difference between estimated and true values for some collection of data</li>
+<li>Goal: Find the model that yields the minimum value of the loss function</li>
+</ul></li>
+<li>Common loss functions and XGBoost
+<ul>
+<li>Loss function names in xgboost:
+<ul>
+<li>reg:linear - use for regression problems</li>
+<li>reg:logistic - use for classification problems when you want just decision, not probability</li>
+<li>binary:logistic - use when you want probability rather than just decision</li>
+</ul></li>
+</ul></li>
+<li>Base learners and why we need them
+<ul>
+<li>XGBoost involves creating a meta-model that is composed of many individual models that combine to give a final prediction</li>
+<li>Individual models = base learners</li>
+<li>Want base learners that when combined create final prediction that is <strong>non-linear</strong></li>
+<li>Each base learner should be good at distinguishing or predicting different parts of the dataset</li>
+<li>Two kinds of base learners: tree and linear</li>
+</ul></li>
+</ul>
+<section id="decision-trees-as-base-learners" class="level3">
+<h3 class="anchored" data-anchor-id="decision-trees-as-base-learners">Decision trees as base learners</h3>
+<p>It’s now time to build an XGBoost model to predict house prices - not in Boston, Massachusetts, as you saw in the video, but in Ames, Iowa! This dataset of housing prices has been pre-loaded into a DataFrame called df. If you explore it in the Shell, you’ll see that there are a variety of features about the house and its location in the city.</p>
+<p>In this exercise, your goal is to use trees as base learners. By default, XGBoost uses trees as base learners, so you don’t have to specify that you want to use trees here with <code>booster="gbtree"</code>.</p>
+<blockquote class="blockquote">
+<p>Note: <code>reg:linear</code> is replaced with <code>reg:squarederror</code></p>
+</blockquote>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ames_housing_trimmed_processed.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> df.iloc[:, :<span class="op">-</span><span class="dv">1</span>], df.iloc[:, <span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 57 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   MSSubClass            1460 non-null   int64  
+ 1   LotFrontage           1460 non-null   float64
+ 2   LotArea               1460 non-null   int64  
+ 3   OverallQual           1460 non-null   int64  
+ 4   OverallCond           1460 non-null   int64  
+ 5   YearBuilt             1460 non-null   int64  
+ 6   Remodeled             1460 non-null   int64  
+ 7   GrLivArea             1460 non-null   int64  
+ 8   BsmtFullBath          1460 non-null   int64  
+ 9   BsmtHalfBath          1460 non-null   int64  
+ 10  FullBath              1460 non-null   int64  
+ 11  HalfBath              1460 non-null   int64  
+ 12  BedroomAbvGr          1460 non-null   int64  
+ 13  Fireplaces            1460 non-null   int64  
+ 14  GarageArea            1460 non-null   int64  
+ 15  MSZoning_FV           1460 non-null   int64  
+ 16  MSZoning_RH           1460 non-null   int64  
+ 17  MSZoning_RL           1460 non-null   int64  
+ 18  MSZoning_RM           1460 non-null   int64  
+ 19  Neighborhood_Blueste  1460 non-null   int64  
+ 20  Neighborhood_BrDale   1460 non-null   int64  
+ 21  Neighborhood_BrkSide  1460 non-null   int64  
+ 22  Neighborhood_ClearCr  1460 non-null   int64  
+ 23  Neighborhood_CollgCr  1460 non-null   int64  
+ 24  Neighborhood_Crawfor  1460 non-null   int64  
+ 25  Neighborhood_Edwards  1460 non-null   int64  
+ 26  Neighborhood_Gilbert  1460 non-null   int64  
+ 27  Neighborhood_IDOTRR   1460 non-null   int64  
+ 28  Neighborhood_MeadowV  1460 non-null   int64  
+ 29  Neighborhood_Mitchel  1460 non-null   int64  
+ 30  Neighborhood_NAmes    1460 non-null   int64  
+ 31  Neighborhood_NPkVill  1460 non-null   int64  
+ 32  Neighborhood_NWAmes   1460 non-null   int64  
+ 33  Neighborhood_NoRidge  1460 non-null   int64  
+ 34  Neighborhood_NridgHt  1460 non-null   int64  
+ 35  Neighborhood_OldTown  1460 non-null   int64  
+ 36  Neighborhood_SWISU    1460 non-null   int64  
+ 37  Neighborhood_Sawyer   1460 non-null   int64  
+ 38  Neighborhood_SawyerW  1460 non-null   int64  
+ 39  Neighborhood_Somerst  1460 non-null   int64  
+ 40  Neighborhood_StoneBr  1460 non-null   int64  
+ 41  Neighborhood_Timber   1460 non-null   int64  
+ 42  Neighborhood_Veenker  1460 non-null   int64  
+ 43  BldgType_2fmCon       1460 non-null   int64  
+ 44  BldgType_Duplex       1460 non-null   int64  
+ 45  BldgType_Twnhs        1460 non-null   int64  
+ 46  BldgType_TwnhsE       1460 non-null   int64  
+ 47  HouseStyle_1.5Unf     1460 non-null   int64  
+ 48  HouseStyle_1Story     1460 non-null   int64  
+ 49  HouseStyle_2.5Fin     1460 non-null   int64  
+ 50  HouseStyle_2.5Unf     1460 non-null   int64  
+ 51  HouseStyle_2Story     1460 non-null   int64  
+ 52  HouseStyle_SFoyer     1460 non-null   int64  
+ 53  HouseStyle_SLvl       1460 non-null   int64  
+ 54  PavedDrive_P          1460 non-null   int64  
+ 55  PavedDrive_Y          1460 non-null   int64  
+ 56  SalePrice             1460 non-null   int64  
+dtypes: float64(1), int64(56)
+memory usage: 650.3 KB</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the training and test sets</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiatethe XGBRegressor: xg_reg</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>xg_reg <span class="op">=</span> xgb.XGBRegressor(objective<span class="op">=</span><span class="st">'reg:squarederror'</span>, seed<span class="op">=</span><span class="dv">123</span>, n_estimators<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the regressor to the training set</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>xg_reg.fit(X_train, y_train)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the labels of the test set: preds</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> xg_reg.predict(X_test)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the rmse: rmse</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, preds))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"RMSE: </span><span class="sc">%f</span><span class="st">"</span> <span class="op">%</span> (rmse))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Next, you'll train an XGBoost model using linear base learners and XGBoost's learning API. Will it perform better or worse?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE: 28106.463641
+Next, you'll train an XGBoost model using linear base learners and XGBoost's learning API. Will it perform better or worse?</code></pre>
+</div>
+</div>
+</section>
+<section id="linear-base-learners" class="level3">
+<h3 class="anchored" data-anchor-id="linear-base-learners">Linear base learners</h3>
+<p>Now that you’ve used trees as base models in XGBoost, let’s use the other kind of base model that can be used with XGBoost - a linear learner. This model, although not as commonly used in XGBoost, allows you to create a regularized linear regression using XGBoost’s powerful learning API. However, because it’s uncommon, you have to use XGBoost’s own non-scikit-learn compatible functions to build the model, such as <code>xgb.train()</code>.</p>
+<p>In order to do this you must create the parameter dictionary that describes the kind of booster you want to use (similarly to how you created the dictionary in Chapter 1 when you used <code>xgb.cv()</code>). The key-value pair that defines the booster type (base model) you need is <code>"booster":"gblinear"</code>.</p>
+<p>Once you’ve created the model, you can use the <code>.train()</code> and <code>.predict()</code> methods of the model just like you’ve done in the past.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the training and testing sets into DMatrixes: DM_train, DM_test</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>DM_train <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X_train, label<span class="op">=</span>y_train)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>DM_test <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X_test, label<span class="op">=</span>y_test)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary: params</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"booster"</span>:<span class="st">"gblinear"</span>, <span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>}</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model: xg_reg</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>xg_reg <span class="op">=</span> xgb.train(params<span class="op">=</span>params, dtrain<span class="op">=</span>DM_train, num_boost_round<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the labels of the test set: preds</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> xg_reg.predict(DM_test)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and print the RMSE</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, preds))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"RMSE: </span><span class="sc">%f</span><span class="st">"</span> <span class="op">%</span> (rmse))</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">it looks like linear base learners performed better!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE: 44305.046080
+
+it looks like linear base learners performed better!</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluating-model-quality" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-model-quality">Evaluating model quality</h3>
+<p>It’s now time to begin evaluating model quality.</p>
+<p>Here, you will compare the RMSE and MAE of a cross-validated XGBoost model on the Ames housing data.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DMatrix: housing_dmatrix</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary: params</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">4</span>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform cross-valdiation: cv_results</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                    num_boost_round<span class="op">=</span><span class="dv">5</span>, metrics<span class="op">=</span><span class="st">'rmse'</span>, as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cv_results</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print final boosting round metric</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((cv_results[<span class="st">'test-rmse-mean'</span>]).tail(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   train-rmse-mean  train-rmse-std  test-rmse-mean  test-rmse-std
+0    141767.533478      429.451090   142980.434934    1193.795492
+1    102832.547530      322.472076   104891.395389    1223.157368
+2     75872.617039      266.474211    79478.938743    1601.345019
+3     57245.651780      273.624239    62411.921348    2220.150063
+4     44401.298519      316.423620    51348.279619    2963.378136
+4    51348.279619
+Name: test-rmse-mean, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DMatrix: housing_dmatrix</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary: params</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">4</span>}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform cross-valdiation: cv_results</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                    num_boost_round<span class="op">=</span><span class="dv">5</span>, metrics<span class="op">=</span><span class="st">'mae'</span>, as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cv_results</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print final boosting round metric</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((cv_results[<span class="st">'test-mae-mean'</span>]).tail(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   train-mae-mean  train-mae-std  test-mae-mean  test-mae-std
+0   127343.480012     668.306786  127633.999275   2404.005913
+1    89770.056424     456.963854   90122.501070   2107.909841
+2    63580.789280     263.405054   64278.558741   1887.567534
+3    45633.156501     151.883868   46819.168555   1459.818435
+4    33587.090044      86.998100   35670.647207   1140.607311
+4    35670.647207
+Name: test-mae-mean, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="regularization-and-base-learners-in-xgboost" class="level2">
+<h2 class="anchored" data-anchor-id="regularization-and-base-learners-in-xgboost">Regularization and base learners in XGBoost</h2>
+<ul>
+<li>Regularization in XGBoost
+<ul>
+<li>Regularization is a control on model complexity</li>
+<li>Want models that are both accurate and as simple as possible</li>
+<li>Regularization parameters in XGBoost:
+<ul>
+<li>Gamma - minimum loss reduction allowed for a split to occur</li>
+<li>alpha - L1 regularization on leaf weights, larger values mean more regularization</li>
+<li>lambda - L2 regularization on leaf weights</li>
+</ul></li>
+</ul></li>
+<li>Base learners in XGBoost
+<ul>
+<li>Linear Base learner
+<ul>
+<li>Sum of linear terms</li>
+<li>Boosted model is weighted sum of linear models (thus is itself linear)</li>
+<li>Rarely used</li>
+</ul></li>
+<li>Tree Base learner
+<ul>
+<li>Decision tree</li>
+<li>Boosted model is weighted sum of decision trees (nonlinear)</li>
+<li>Almost exclusively used in XGBoost</li>
+</ul></li>
+</ul></li>
+</ul>
+<section id="using-regularization-in-xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="using-regularization-in-xgboost">Using regularization in XGBoost</h3>
+<p>Having seen an example of l1 regularization in the video, you’ll now vary the l2 regularization penalty - also known as <code>"lambda"</code> - and see its effect on overall model performance on the Ames housing dataset.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DMatrix: housing_dmatrix</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>reg_params <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the initial parameter dictionary for varying l2 strength: params</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">3</span>}</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list for storing rmses as a function of l2 complexity</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>rmses_l2 <span class="op">=</span> []</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over reg_params</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> reg <span class="kw">in</span> reg_params:</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update l2 strength</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    params[<span class="st">'lambda'</span>] <span class="op">=</span> reg</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pass this updated param dictionary into cv</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    cv_results_rmse <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                            num_boost_round<span class="op">=</span><span class="dv">5</span>, metrics<span class="op">=</span><span class="st">'rmse'</span>, as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append best rmse (final round) to rmses_l2</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    rmses_l2.append(cv_results_rmse[<span class="st">'test-rmse-mean'</span>].tail(<span class="dv">1</span>).values[<span class="dv">0</span>])</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Loot at best rmse per l2 param</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best rmse as a function of l2:"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(<span class="bu">list</span>(<span class="bu">zip</span>(reg_params, rmses_l2)), columns<span class="op">=</span>[<span class="st">"l2"</span>, <span class="st">"rmse"</span>]))</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">It looks like as as the value of 'lambda' increases, so does the RMSE."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best rmse as a function of l2:
+    l2          rmse
+0    1  52275.357003
+1   10  57746.063828
+2  100  76624.627811
+
+It looks like as as the value of 'lambda' increases, so does the RMSE.</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-individual-xgboost-trees" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-individual-xgboost-trees">Visualizing individual XGBoost trees</h3>
+<p>Now that you’ve used XGBoost to both build and evaluate regression as well as classification models, you should get a handle on how to visually explore your models. Here, you will visualize individual trees from the fully boosted model that XGBoost creates using the entire housing dataset.</p>
+<p>XGBoost has a <code>plot_tree()</code> function that makes this type of visualization easy. Once you train a model using the XGBoost learning API, you can pass it to the <code>plot_tree()</code> function along with the number of trees you want to plot using the <code>num_trees</code> argument.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DMatrix: housing_dmatrix</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameters dictionary: params</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">'reg:squarederror'</span>, <span class="st">'max_depth'</span>:<span class="dv">2</span>}</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model: xg_reg</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>xg_reg <span class="op">=</span> xgb.train(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, num_boost_round<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the first tree</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>xgb.plot_tree(xg_reg, num_trees<span class="op">=</span><span class="dv">0</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the fifth tree</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>xgb.plot_tree(xg_reg, num_trees<span class="op">=</span><span class="dv">4</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the last tree sideways</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">15</span>))</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>xgb.plot_tree(xg_reg, rankdir<span class="op">=</span><span class="st">"LR"</span>, num_trees<span class="op">=</span><span class="dv">9</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Have a look at each of the plots. They provide insight into how the model arrived at its final decisions and what splits it made to arrive at those decisions. This allows us to identify which features are the most important in determining house price. In the next exercise, you'll learn another way of visualizing feature importances."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ExecutableNotFound: failed to execute WindowsPath('dot'), make sure the Graphviz executables are on your systems' PATH</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Regression with XGBoost_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="visualizing-feature-importances-what-features-are-most-important-in-my-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-feature-importances-what-features-are-most-important-in-my-dataset">Visualizing feature importances: What features are most important in my dataset</h3>
+<p>Another way to visualize your XGBoost models is to examine the importance of each feature column in the original dataset within the model.</p>
+<p>One simple way of doing this involves counting the number of times each feature is split on across all boosting rounds (trees) in the model, and then visualizing the result as a bar graph, with the features ordered according to how many times they appear. XGBoost has a <code>plot_importance()</code> function that allows you to do exactly this, and you’ll get a chance to use it in this exercise!</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the DMatrix: housing_dmatrix</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary: params</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">4</span>}</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model: xg_reg</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>xg_reg <span class="op">=</span> xgb.train(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, num_boost_round<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the feature importance</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>xgb.plot_importance(xg_reg)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Regression with XGBoost_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
