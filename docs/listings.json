@@ -6,6 +6,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Classification with XGBoost/Classification with XGBoost.html",
       "/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html",
       "/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html",
       "/posts/Logistic regression/Logistic regression.html",

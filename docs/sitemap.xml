@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-21T06:03:45.002Z</lastmod>
+    <lastmod>2023-01-21T14:16:45.762Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -95,5 +95,9 @@
   <url>
     <loc>https://kakamana.github.io/posts/Support vector machines/Support Vector Machines.html</loc>
     <lastmod>2023-01-21T06:04:04.875Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Classification with XGBoost/Classification with XGBoost.html</loc>
+    <lastmod>2023-01-21T14:16:20.316Z</lastmod>
   </url>
 </urlset>
