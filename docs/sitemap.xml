@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-22T19:58:50.072Z</lastmod>
+    <lastmod>2023-01-22T21:20:31.562Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -123,5 +123,9 @@
   <url>
     <loc>https://kakamana.github.io/posts/Feature selection II - selecting for model accuracy/Feature Selection II - Selecting for Model Accuracy.html</loc>
     <lastmod>2023-01-22T19:58:27.220Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Feature extraction/Feature Extraction.html</loc>
+    <lastmod>2023-01-22T21:20:06.625Z</lastmod>
   </url>
 </urlset>
