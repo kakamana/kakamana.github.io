@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-21">
+
+<title>Kakamana’s Blogs - Fine-tuning your XGBoost model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fine-tuning-your-xgboost-model" id="toc-fine-tuning-your-xgboost-model" class="nav-link active" data-scroll-target="#fine-tuning-your-xgboost-model">Fine-tuning your XGBoost model</a>
+  <ul class="collapse">
+  <li><a href="#why-tune-your-model" id="toc-why-tune-your-model" class="nav-link" data-scroll-target="#why-tune-your-model">Why tune your model?</a>
+  <ul class="collapse">
+  <li><a href="#tuning-the-number-of-boosting-rounds" id="toc-tuning-the-number-of-boosting-rounds" class="nav-link" data-scroll-target="#tuning-the-number-of-boosting-rounds">Tuning the number of boosting rounds</a></li>
+  <li><a href="#automated-boosting-round-selection-using-early_stopping" id="toc-automated-boosting-round-selection-using-early_stopping" class="nav-link" data-scroll-target="#automated-boosting-round-selection-using-early_stopping">Automated boosting round selection using early_stopping</a></li>
+  </ul></li>
+  <li><a href="#overview-of-xgboosts-hyperparameters" id="toc-overview-of-xgboosts-hyperparameters" class="nav-link" data-scroll-target="#overview-of-xgboosts-hyperparameters">Overview of XGBoost’s hyperparameters</a>
+  <ul class="collapse">
+  <li><a href="#tuning-eta" id="toc-tuning-eta" class="nav-link" data-scroll-target="#tuning-eta">Tuning eta</a></li>
+  <li><a href="#tuning-max_depth" id="toc-tuning-max_depth" class="nav-link" data-scroll-target="#tuning-max_depth">Tuning max_depth</a></li>
+  <li><a href="#tuning-colsample_bytree" id="toc-tuning-colsample_bytree" class="nav-link" data-scroll-target="#tuning-colsample_bytree">Tuning colsample_bytree</a></li>
+  </ul></li>
+  <li><a href="#review-of-grid-search-and-random-search" id="toc-review-of-grid-search-and-random-search" class="nav-link" data-scroll-target="#review-of-grid-search-and-random-search">Review of grid search and random search</a>
+  <ul class="collapse">
+  <li><a href="#grid-search-with-xgboost" id="toc-grid-search-with-xgboost" class="nav-link" data-scroll-target="#grid-search-with-xgboost">Grid search with XGBoost</a></li>
+  <li><a href="#random-search-with-xgboost" id="toc-random-search-with-xgboost" class="nav-link" data-scroll-target="#random-search-with-xgboost">Random search with XGBoost</a></li>
+  </ul></li>
+  <li><a href="#limits-of-grid-search-and-random-search" id="toc-limits-of-grid-search-and-random-search" class="nav-link" data-scroll-target="#limits-of-grid-search-and-random-search">Limits of grid search and random search</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fine-tuning your XGBoost model</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">hyperparameters</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">XGBoost</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 21, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="fine-tuning-your-xgboost-model" class="level1">
+<h1>Fine-tuning your XGBoost model</h1>
+<p>You will learn how to adjust XGBoost’s parameters and how to tune them efficiently so that you can supercharge the performance of your models</p>
+<p>This <strong>Fine-tuning your XGBoost model </strong> is part of <a href="https://app.datacamp.com/learn/courses/extreme-gradient-boosting-with-xgboost">Datacamp course: Extreme Gradient Boosting with XGBoost</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="why-tune-your-model" class="level2">
+<h2 class="anchored" data-anchor-id="why-tune-your-model">Why tune your model?</h2>
+<p>Now that you’ve seen the effect that tuning has on the overall performance of your XGBoost model, let’s turn the question on its head and see if you can figure out when tuning your model might not be the best idea.</p>
+<section id="tuning-the-number-of-boosting-rounds" class="level3">
+<h3 class="anchored" data-anchor-id="tuning-the-number-of-boosting-rounds">Tuning the number of boosting rounds</h3>
+<p>Let’s start with parameter tuning by seeing how the number of boosting rounds (number of trees you build) impacts the out-of-sample performance of your XGBoost model. You’ll use <code>xgb.cv()</code> inside a for loop and build one model per <code>num_boost_round</code> parameter.</p>
+<p>Here, you’ll continue working with the Ames housing dataset. The features are available in the array <code>X</code>, and the target vector is contained in <code>y</code>.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ames_housing_trimmed_processed.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> df.iloc[:, :<span class="op">-</span><span class="dv">1</span>], df.iloc[:, <span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Creata the parameter dictionary for each tree: params</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">3</span>}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of number of boosting rounds</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>num_rounds <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Empty list to store final round rmse per XGBoost model</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>final_rmse_per_round <span class="op">=</span> []</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Interate over num_rounds and build one model per num_boost_round parameter</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curr_num_rounds <span class="kw">in</span> num_rounds:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform cross-validation: cv_results</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                        num_boost_round<span class="op">=</span>curr_num_rounds, metrics<span class="op">=</span><span class="st">'rmse'</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                        as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append final round RMSE</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    final_rmse_per_round.append(cv_results[<span class="st">'test-rmse-mean'</span>].tail().values[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result DataFrame</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>num_rounds_rmses <span class="op">=</span> <span class="bu">list</span>(<span class="bu">zip</span>(num_rounds, final_rmse_per_round))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(num_rounds_rmses, columns<span class="op">=</span>[<span class="st">'num_boosting_rounds'</span>, <span class="st">'rmse'</span>]))</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">As you can see, increasing the number of boosting rounds decreases the RMSE."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   num_boosting_rounds          rmse
+0                    5  50903.299752
+1                   10  34774.194090
+2                   15  32895.099185
+
+As you can see, increasing the number of boosting rounds decreases the RMSE.</code></pre>
+</div>
+</div>
+</section>
+<section id="automated-boosting-round-selection-using-early_stopping" class="level3">
+<h3 class="anchored" data-anchor-id="automated-boosting-round-selection-using-early_stopping">Automated boosting round selection using early_stopping</h3>
+<p>Now, instead of attempting to cherry pick the best possible number of boosting rounds, you can very easily have XGBoost automatically select the number of boosting rounds for you within <code>xgb.cv()</code>. This is done using a technique called <strong>early stopping</strong>.</p>
+<p>Early stopping works by testing the XGBoost model after every boosting round against a hold-out dataset and stopping the creation of additional boosting rounds (thereby finishing training of the model early) if the hold-out metric (<code>"rmse"</code> in our case) does not improve for a given number of rounds. Here you will use the <code>early_stopping_rounds</code> parameter in <code>xgb.cv()</code> with a large possible number of boosting rounds (50). Bear in mind that if the holdout metric continuously improves up through when <code>num_boost_rounds</code> is reached, then early stopping does not occur.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your housing DMatrix: housing_dmatrix</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary for each tree: params</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">4</span>}</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform cross-validation with early-stopping: cv_results</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, nfold<span class="op">=</span><span class="dv">3</span>, params<span class="op">=</span>params, metrics<span class="op">=</span><span class="st">"rmse"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                    early_stopping_rounds<span class="op">=</span><span class="dv">10</span>, num_boost_round<span class="op">=</span><span class="dv">50</span>, as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cv_results</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    train-rmse-mean  train-rmse-std  test-rmse-mean  test-rmse-std
+0     141871.635216      403.633062   142640.653507     705.559723
+1     103057.033818       73.768079   104907.664683     111.117033
+2      75975.967655      253.727043    79262.056654     563.766693
+3      57420.530642      521.658273    61620.137859    1087.693428
+4      44552.956483      544.170426    50437.560906    1846.446643
+5      35763.948865      681.796675    43035.659539    2034.471115
+6      29861.464164      769.571418    38600.880800    2169.796804
+7      25994.675122      756.520639    36071.817710    2109.795408
+8      23306.836299      759.237848    34383.186387    1934.547433
+9      21459.770256      745.624640    33509.140338    1887.375358
+10     20148.721060      749.612186    32916.806725    1850.893437
+11     19215.382607      641.387200    32197.833474    1734.456654
+12     18627.388962      716.256240    31770.852340    1802.154296
+13     17960.695080      557.043324    31482.782172    1779.124406
+14     17559.736640      631.413137    31389.990252    1892.320326
+15     17205.713357      590.171774    31302.883291    1955.165882
+16     16876.571801      703.631953    31234.058914    1880.706205
+17     16597.662170      703.677363    31318.347820    1828.860754
+18     16330.460661      607.274258    31323.634893    1775.909992
+19     16005.972387      520.470815    31204.135450    1739.076237
+20     15814.300847      518.604822    31089.863868    1756.022175
+21     15493.405856      505.616461    31047.997697    1624.673447
+22     15270.734205      502.018639    31056.916210    1668.043691
+23     15086.381896      503.913078    31024.984403    1548.985086
+24     14917.608289      486.206137    30983.685376    1663.131135
+25     14709.589477      449.668262    30989.476981    1686.667218
+26     14457.286251      376.787759    30952.113767    1613.172390
+27     14185.567149      383.102597    31066.901381    1648.534545
+28     13934.066721      473.465580    31095.641882    1709.225578
+29     13749.644941      473.670743    31103.886799    1778.879849
+30     13549.836644      454.898742    30976.084872    1744.514518
+31     13413.484678      399.603422    30938.469354    1746.053330
+32     13275.915700      415.408595    30931.000055    1772.469405
+33     13085.878211      493.792795    30929.056846    1765.541040
+34     12947.181279      517.790033    30890.629160    1786.510472
+35     12846.027264      547.732747    30884.493051    1769.728787
+36     12702.378727      505.523140    30833.542124    1691.002007
+37     12532.244170      508.298300    30856.688154    1771.445485
+38     12384.055037      536.224929    30818.016568    1782.785175
+39     12198.443769      545.165604    30839.393263    1847.326671
+40     12054.583621      508.841802    30776.965294    1912.780332
+41     11897.036784      477.177932    30794.702627    1919.675130
+42     11756.221708      502.992363    30780.956160    1906.820178
+43     11618.846752      519.837483    30783.754746    1951.260120
+44     11484.080227      578.428500    30776.731276    1953.447810
+45     11356.552654      565.368946    30758.543732    1947.454939
+46     11193.557745      552.298986    30729.971937    1985.699239
+47     11071.315547      604.090125    30732.663173    1966.997252
+48     10950.778492      574.862853    30712.241251    1957.750615
+49     10824.865446      576.665678    30720.853939    1950.511037</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="overview-of-xgboosts-hyperparameters" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-xgboosts-hyperparameters">Overview of XGBoost’s hyperparameters</h2>
+<ul>
+<li>Common tree tunable parameters
+<ul>
+<li>learning rate: learning rate/eta</li>
+<li>gamma: min loss reduction to create new tree split</li>
+<li>lambda: L2 regularization on leaf weights</li>
+<li>alpha: L1 regularization on leaf weights</li>
+<li>max_depth: max depth per tree</li>
+<li>subsample: % samples used per tree</li>
+<li>colsample_bytree: % features used per tree</li>
+</ul></li>
+<li>Linear tunable parameters
+<ul>
+<li>lambda: L2 reg on weights</li>
+<li>alpha: L1 reg on weights</li>
+<li>lambda_bias: L2 reg term on bias</li>
+</ul></li>
+<li>You can also tune the number of estimators used for both base model types!</li>
+</ul>
+<section id="tuning-eta" class="level3">
+<h3 class="anchored" data-anchor-id="tuning-eta">Tuning eta</h3>
+<p>It’s time to practice tuning other XGBoost hyperparameters in earnest and observing their effect on model performance! You’ll begin by tuning the <code>"eta"</code>, also known as the learning rate.</p>
+<p>The learning rate in XGBoost is a parameter that can range between 0 and 1, with higher values of <code>"eta"</code> penalizing feature weights more strongly, causing much stronger regularization.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your housing DMatrix: housing_dmatrix</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary for each tree (boosting round)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">3</span>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of eta values and empty list to store final round rmse per xgboost model</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>eta_vals <span class="op">=</span> [<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="op">=</span> []</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Systematicallyvary the eta</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curr_val <span class="kw">in</span> eta_vals:</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    params[<span class="st">'eta'</span>] <span class="op">=</span> curr_val</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform cross-validation: cv_results</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                        early_stopping_rounds<span class="op">=</span><span class="dv">5</span>, num_boost_round<span class="op">=</span><span class="dv">10</span>, metrics<span class="op">=</span><span class="st">'rmse'</span>, seed<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                       as_pandas<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the final round rmse to best_rmse</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    best_rmse.append(cv_results[<span class="st">'test-rmse-mean'</span>].tail().values[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result DataFrame</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(<span class="bu">list</span>(<span class="bu">zip</span>(eta_vals, best_rmse)), columns<span class="op">=</span>[<span class="st">'eta'</span>, <span class="st">'best_rmse'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     eta      best_rmse
+0  0.001  195736.402543
+1  0.010  179932.183986
+2  0.100   79759.411808</code></pre>
+</div>
+</div>
+</section>
+<section id="tuning-max_depth" class="level3">
+<h3 class="anchored" data-anchor-id="tuning-max_depth">Tuning max_depth</h3>
+<p>In this exercise, your job is to tune <code>max_depth</code>, which is the parameter that dictates the maximum depth that each tree in a boosting round can grow to. Smaller values will lead to shallower trees, and larger values to deeper trees.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your housing DMatrix</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X, label<span class="op">=</span>y)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>}</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of max_depth values</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>max_depths <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="op">=</span> []</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curr_val <span class="kw">in</span> max_depths:</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    params[<span class="st">'max_depth'</span>] <span class="op">=</span> curr_val</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform cross-validation</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                       early_stopping_rounds<span class="op">=</span><span class="dv">5</span>, num_boost_round<span class="op">=</span><span class="dv">10</span>, metrics<span class="op">=</span><span class="st">'rmse'</span>, seed<span class="op">=</span><span class="dv">123</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                        as_pandas<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the final round rmse to best_rmse</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    best_rmse.append(cv_results[<span class="st">'test-rmse-mean'</span>].tail().values[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result DataFrame</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(<span class="bu">list</span>(<span class="bu">zip</span>(max_depths, best_rmse)), columns<span class="op">=</span>[<span class="st">'max_depth'</span>, <span class="st">'best_rmse'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   max_depth     best_rmse
+0          2  37957.469464
+1          5  35596.599504
+2         10  36065.547345
+3         20  36739.576068</code></pre>
+</div>
+</div>
+</section>
+<section id="tuning-colsample_bytree" class="level3">
+<h3 class="anchored" data-anchor-id="tuning-colsample_bytree">Tuning colsample_bytree</h3>
+<p>Now, it’s time to tune <code>"colsample_bytree"</code>. You’ve already seen this if you’ve ever worked with scikit-learn’s <code>RandomForestClassifier</code> or <code>RandomForestRegressor</code>, where it just was called <code>max_features</code>. In both xgboost and sklearn, this parameter (although named differently) simply specifies the fraction of features to choose from at every split in a given tree. In xgboost, <code>colsample_bytree</code> must be specified as a float between 0 and 1.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your housing DMatrix</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>housing_dmatrix <span class="op">=</span> xgb.DMatrix(data<span class="op">=</span>X,label<span class="op">=</span>y)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter dictionary</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>params<span class="op">=</span>{<span class="st">"objective"</span>:<span class="st">"reg:squarederror"</span>, <span class="st">"max_depth"</span>:<span class="dv">3</span>}</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of hyperparameter values: colsample_bytree_vals</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>colsample_bytree_vals <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="dv">1</span>]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="op">=</span> []</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Systematically vary the hyperparameter value</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> curr_val <span class="kw">in</span> colsample_bytree_vals:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    params[<span class="st">'colsample_bytree'</span>] <span class="op">=</span> curr_val</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform cross-validation</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    cv_results <span class="op">=</span> xgb.cv(dtrain<span class="op">=</span>housing_dmatrix, params<span class="op">=</span>params, nfold<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                 num_boost_round<span class="op">=</span><span class="dv">10</span>, early_stopping_rounds<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                 metrics<span class="op">=</span><span class="st">"rmse"</span>, as_pandas<span class="op">=</span><span class="va">True</span>, seed<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append the final round rmse to best_rmse</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    best_rmse.append(cv_results[<span class="st">"test-rmse-mean"</span>].tail().values[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the resultant DataFrame</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(<span class="bu">list</span>(<span class="bu">zip</span>(colsample_bytree_vals, best_rmse)),</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                   columns<span class="op">=</span>[<span class="st">"colsample_bytree"</span>,<span class="st">"best_rmse"</span>]))</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">There are several other individual parameters that you can tune, such as `'subsample'`, which dictates the fraction of the training data that is used during any given boosting round. Next up: Grid Search and Random Search to tune XGBoost hyperparameters more efficiently!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   colsample_bytree     best_rmse
+0               0.1  40918.116895
+1               0.5  35813.904168
+2               0.8  35995.678734
+3               1.0  35836.044343
+
+There are several other individual parameters that you can tune, such as `'subsample'`, which dictates the fraction of the training data that is used during any given boosting round. Next up: Grid Search and Random Search to tune XGBoost hyperparameters more efficiently!</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="review-of-grid-search-and-random-search" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-grid-search-and-random-search">Review of grid search and random search</h2>
+<ul>
+<li>Grid search: review
+<ul>
+<li>Search exhaustively over a given set of hyperparameters, once per set of hyperparameters</li>
+<li>Number of models = number of distinct values per hyperparameter multiplied across each hyperparameter</li>
+<li>Pick final model hyperparameter values that give best cross-validated evaluation metric value</li>
+</ul></li>
+<li>Random search: review
+<ul>
+<li>Create a (possibly infinte) range of hyperparameter values per hyperparameter that you would like to search over</li>
+<li>Set the number of iterations you would like for the random search to continue</li>
+<li>During each iteration, randomly draw a value in the range of specified values for each hyperparameter searched over and train/evaluate a model with those hyperparameters</li>
+<li>After you’ve reached the maximum number of iterations, select the hyperparameter configuration with the best evaluated score</li>
+</ul></li>
+</ul>
+<section id="grid-search-with-xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="grid-search-with-xgboost">Grid search with XGBoost</h3>
+<p>Now that you’ve learned how to tune parameters individually with XGBoost, let’s take your parameter tuning to the next level by using scikit-learn’s <code>GridSearch</code> and <code>RandomizedSearch</code> capabilities with internal cross-validation using the GridSearchCV and RandomizedSearchCV functions. You will use these to find the best model exhaustively from a collection of possible parameter values across multiple parameters simultaneously. Let’s get to work, starting with <code>GridSearchCV</code>!</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter grid: gbm_param_grid</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>gbm_param_grid <span class="op">=</span> {</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'colsample_bytree'</span>: [<span class="fl">0.3</span>, <span class="fl">0.7</span>],</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">50</span>],</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="dv">2</span>, <span class="dv">5</span>]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate the regressor: gbm</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>gbm <span class="op">=</span> xgb.XGBRegressor()</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform grid search: grid_mse</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>grid_mse <span class="op">=</span> GridSearchCV(param_grid<span class="op">=</span>gbm_param_grid, estimator<span class="op">=</span>gbm,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                        scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, cv<span class="op">=</span><span class="dv">4</span>, verbose<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit grid_mse to the data</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>grid_mse.fit(X, y)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the best parameters and lowest RMSE</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best parameters found: "</span>, grid_mse.best_params_)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Lowest RMSE found: "</span>, np.sqrt(np.<span class="bu">abs</span>(grid_mse.best_score_)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting 4 folds for each of 4 candidates, totalling 16 fits
+Best parameters found:  {'colsample_bytree': 0.3, 'max_depth': 5, 'n_estimators': 50}
+Lowest RMSE found:  28986.18703093561</code></pre>
+</div>
+</div>
+</section>
+<section id="random-search-with-xgboost" class="level3">
+<h3 class="anchored" data-anchor-id="random-search-with-xgboost">Random search with XGBoost</h3>
+<p>Often, <code>GridSearchCV</code> can be really time consuming, so in practice, you may want to use <code>RandomizedSearchCV</code> instead, as you will do in this exercise. The good news is you only have to make a few modifications to your <code>GridSearchCV</code> code to do <code>RandomizedSearchCV</code>. The key difference is you have to specify a <code>param_distributions</code> parameter instead of a <code>param_grid</code> parameter.</p>
+<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> RandomizedSearchCV</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parameter grid: gbm_param_grid</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>gbm_param_grid <span class="op">=</span> {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">25</span>],</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">12</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate the regressor: gbm</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>gbm <span class="op">=</span> xgb.XGBRegressor(n_estimators<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform random search: randomized_mse</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>randomized_mse <span class="op">=</span> RandomizedSearchCV(param_distributions<span class="op">=</span>gbm_param_grid, estimator<span class="op">=</span>gbm,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>                                    scoring<span class="op">=</span><span class="st">'neg_mean_squared_error'</span>, n_iter<span class="op">=</span><span class="dv">5</span>, cv<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                                   verbose<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit randomized_mse to the data</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>randomized_mse.fit(X, y)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the best parameters and lowest RMSE</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best parameters found: "</span>, randomized_mse.best_params_)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Lowest RMSE found: "</span>, np.sqrt(np.<span class="bu">abs</span>(randomized_mse.best_score_)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Fitting 4 folds for each of 5 candidates, totalling 20 fits
+Best parameters found:  {'n_estimators': 25, 'max_depth': 4}
+Lowest RMSE found:  29998.4522530019</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="limits-of-grid-search-and-random-search" class="level2">
+<h2 class="anchored" data-anchor-id="limits-of-grid-search-and-random-search">Limits of grid search and random search</h2>
+<ul>
+<li>limitations
+<ul>
+<li>Grid Search
+<ul>
+<li>Number of models you must build with every additionary new parameter grows very quickly</li>
+</ul></li>
+<li>Random Search
+<ul>
+<li>Parameter space to explore can be massive</li>
+<li>Randomly jumping throughtout the space looking for a “best” results becomes a waiting game</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

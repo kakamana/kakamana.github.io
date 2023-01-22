@@ -7,7 +7,9 @@
     "listing": "/index.html",
     "items": [
       "/posts/Classification with XGBoost/Classification with XGBoost.html",
+      "/posts/Fine Tuning XGBoost Model/Fine tunning your XGBoost model.html",
       "/posts/Regression with XGBoost/Regression with XGBoost.html",
+      "/posts/Using XGBoost in Pipelines/Using XGBoost in pipelines.html",
       "/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html",
       "/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html",
       "/posts/Logistic regression/Logistic regression.html",
