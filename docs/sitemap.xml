@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-22T21:20:31.562Z</lastmod>
+    <lastmod>2023-01-22T22:36:04.599Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -127,5 +127,25 @@
   <url>
     <loc>https://kakamana.github.io/posts/Feature extraction/Feature Extraction.html</loc>
     <lastmod>2023-01-22T21:20:06.625Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Introduction to data preprocessing/Introduction to Data Preprocessing.html</loc>
+    <lastmod>2023-01-22T22:31:38.823Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Standardizing data/Standardizing Data.html</loc>
+    <lastmod>2023-01-22T22:32:36.937Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Feature Engineering - Preprocessing/Feature Engineering.html</loc>
+    <lastmod>2023-01-22T22:34:12.786Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Selecting features for modeling/Selecting Features for Modeling.html</loc>
+    <lastmod>2023-01-22T22:35:01.907Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html</loc>
+    <lastmod>2023-01-22T22:35:45.844Z</lastmod>
   </url>
 </urlset>

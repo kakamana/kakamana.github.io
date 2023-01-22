@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-23">
+
+<title>Kakamana’s Blogs - Selecting Features for Modeling</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#selecting-features-for-modeling" id="toc-selecting-features-for-modeling" class="nav-link active" data-scroll-target="#selecting-features-for-modeling">Selecting Features for Modeling</a>
+  <ul class="collapse">
+  <li><a href="#feature-selection" id="toc-feature-selection" class="nav-link" data-scroll-target="#feature-selection">Feature selection</a>
+  <ul class="collapse">
+  <li><a href="#identifying-areas-for-feature-selection" id="toc-identifying-areas-for-feature-selection" class="nav-link" data-scroll-target="#identifying-areas-for-feature-selection">Identifying areas for feature selection</a></li>
+  </ul></li>
+  <li><a href="#removing-redundant-features" id="toc-removing-redundant-features" class="nav-link" data-scroll-target="#removing-redundant-features">Removing redundant features</a>
+  <ul class="collapse">
+  <li><a href="#selecting-relevant-features" id="toc-selecting-relevant-features" class="nav-link" data-scroll-target="#selecting-relevant-features">Selecting relevant features</a></li>
+  <li><a href="#checking-for-correlated-features" id="toc-checking-for-correlated-features" class="nav-link" data-scroll-target="#checking-for-correlated-features">Checking for correlated features</a></li>
+  </ul></li>
+  <li><a href="#selecting-features-using-text-vectors" id="toc-selecting-features-using-text-vectors" class="nav-link" data-scroll-target="#selecting-features-using-text-vectors">Selecting features using text vectors</a>
+  <ul class="collapse">
+  <li><a href="#exploring-text-vectors-part-1" id="toc-exploring-text-vectors-part-1" class="nav-link" data-scroll-target="#exploring-text-vectors-part-1">Exploring text vectors, part 1</a></li>
+  <li><a href="#exploring-text-vectors-part-2" id="toc-exploring-text-vectors-part-2" class="nav-link" data-scroll-target="#exploring-text-vectors-part-2">Exploring text vectors, part 2</a></li>
+  <li><a href="#training-naive-bayes-with-feature-selection" id="toc-training-naive-bayes-with-feature-selection" class="nav-link" data-scroll-target="#training-naive-bayes-with-feature-selection">Training Naive Bayes with feature selection</a></li>
+  </ul></li>
+  <li><a href="#dimensionality-reduction" id="toc-dimensionality-reduction" class="nav-link" data-scroll-target="#dimensionality-reduction">Dimensionality reduction</a>
+  <ul class="collapse">
+  <li><a href="#using-pca" id="toc-using-pca" class="nav-link" data-scroll-target="#using-pca">Using PCA</a></li>
+  <li><a href="#training-a-model-with-pca" id="toc-training-a-model-with-pca" class="nav-link" data-scroll-target="#training-a-model-with-pca">Training a model with PCA</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Selecting Features for Modeling</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">feature engineering</div>
+    <div class="quarto-category">PCA</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="selecting-features-for-modeling" class="level1">
+<h1>Selecting Features for Modeling</h1>
+<p>We are going to learn how to create a few different techniques to evaluate the most important features from your dataset. we will learn how to eliminate redundant features, use text vectors to reduce the number of features in your dataset, and use principal component analysis (PCA) to reduce the number of features in your dataset.</p>
+<p>This <strong>Selecting Features for Modeling</strong> is part of <a href="https://app.datacamp.com/learn/courses/preprocessing-for-machine-learning-in-python">Datacamp course: Preprocessing for Machine Learning in Python</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="feature-selection" class="level2">
+<h2 class="anchored" data-anchor-id="feature-selection">Feature selection</h2>
+<ul>
+<li>Selecting features to be used for modeling</li>
+<li>Doesn’t create new features</li>
+<li>Improve model’s performance</li>
+</ul>
+<section id="identifying-areas-for-feature-selection" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-areas-for-feature-selection">Identifying areas for feature selection</h3>
+<p>Take an exploratory look at the post-feature engineering <code>hiking</code> dataset.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hiking <span class="op">=</span> pd.read_json(<span class="st">'dataset/hiking.json'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>hiking.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Prop_ID</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Park_Name</th>
+      <th>Length</th>
+      <th>Difficulty</th>
+      <th>Other_Details</th>
+      <th>Accessible</th>
+      <th>Limited_Access</th>
+      <th>lat</th>
+      <th>lon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B057</td>
+      <td>Salt Marsh Nature Trail</td>
+      <td>Enter behind the Salt Marsh Nature Center, loc...</td>
+      <td>Marine Park</td>
+      <td>0.8 miles</td>
+      <td>None</td>
+      <td>&lt;p&gt;The first half of this mile-long trail foll...</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B073</td>
+      <td>Lullwater</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>1.0 mile</td>
+      <td>Easy</td>
+      <td>Explore the Lullwater to see how nature thrive...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>B073</td>
+      <td>Midwood</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.75 miles</td>
+      <td>Easy</td>
+      <td>Step back in time with a walk through Brooklyn...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B073</td>
+      <td>Peninsula</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.5 miles</td>
+      <td>Easy</td>
+      <td>Discover how the Peninsula has changed over th...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>B073</td>
+      <td>Waterfall</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.5 miles</td>
+      <td>Easy</td>
+      <td>Trace the source of the Lake on the Waterfall ...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="removing-redundant-features" class="level2">
+<h2 class="anchored" data-anchor-id="removing-redundant-features">Removing redundant features</h2>
+<ul>
+<li>Remove noisy features</li>
+<li>Remove correlated features
+<ul>
+<li>Statistically correlated: features move together directionally</li>
+<li>Linear models assume feature independence</li>
+<li>Pearson correlation coefficient</li>
+</ul></li>
+<li>Remove duplicated features</li>
+</ul>
+<section id="selecting-relevant-features" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-relevant-features">Selecting relevant features</h3>
+<p>Now let’s identify the redundant columns in the <code>volunteer</code> dataset and perform feature selection on the dataset to return a DataFrame of the relevant features.</p>
+<p>For example, if you explore the <code>volunteer</code> dataset in the console, you’ll see three features which are related to location: <code>locality</code>, <code>region</code>, and <code>postalcode</code>. They contain repeated information, so it would make sense to keep only one of the features.</p>
+<p>There are also features that have gone through the feature engineering process: columns like <code>Education</code> and <code>Emergency Preparedness</code> are a product of encoding the categorical variable <code>category_desc</code>, so <code>category_desc</code> itself is redundant now.</p>
+<p>Take a moment to examine the features of volunteer in the console, and try to identify the redundant features.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> pd.read_csv(<span class="st">'dataset/volunteer_sample.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>volunteer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>vol_requests</th>
+      <th>title</th>
+      <th>hits</th>
+      <th>category_desc</th>
+      <th>locality</th>
+      <th>region</th>
+      <th>postalcode</th>
+      <th>created_date</th>
+      <th>vol_requests_lognorm</th>
+      <th>created_month</th>
+      <th>Education</th>
+      <th>Emergency Preparedness</th>
+      <th>Environment</th>
+      <th>Health</th>
+      <th>Helping Neighbors in Need</th>
+      <th>Strengthening Communities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>Web designer</td>
+      <td>22</td>
+      <td>Strengthening Communities</td>
+      <td>5 22nd St\nNew York, NY 10010\n(40.74053152272...</td>
+      <td>NY</td>
+      <td>10010.0</td>
+      <td>2011-01-14</td>
+      <td>0.693147</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
+      <td>62</td>
+      <td>Strengthening Communities</td>
+      <td>NaN</td>
+      <td>NY</td>
+      <td>10026.0</td>
+      <td>2011-01-19</td>
+      <td>2.995732</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>500</td>
+      <td>Fight global hunger and support women farmers ...</td>
+      <td>14</td>
+      <td>Strengthening Communities</td>
+      <td>NaN</td>
+      <td>NY</td>
+      <td>2114.0</td>
+      <td>2011-01-21</td>
+      <td>6.214608</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15</td>
+      <td>Stop 'N' Swap</td>
+      <td>31</td>
+      <td>Environment</td>
+      <td>NaN</td>
+      <td>NY</td>
+      <td>10455.0</td>
+      <td>2011-01-28</td>
+      <td>2.708050</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>15</td>
+      <td>Queens Stop 'N' Swap</td>
+      <td>135</td>
+      <td>Environment</td>
+      <td>NaN</td>
+      <td>NY</td>
+      <td>11372.0</td>
+      <td>2011-01-28</td>
+      <td>2.708050</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>volunteer.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>Index(['vol_requests', 'title', 'hits', 'category_desc', 'locality', 'region',
+       'postalcode', 'created_date', 'vol_requests_lognorm', 'created_month',
+       'Education', 'Emergency Preparedness', 'Environment', 'Health',
+       'Helping Neighbors in Need', 'Strengthening Communities'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of redundant column names to drop</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> [<span class="st">"locality"</span>, <span class="st">"region"</span>, <span class="st">"category_desc"</span>, <span class="st">"created_date"</span>, <span class="st">"vol_requests"</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop those columns from the dataset</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>volunteer_subset <span class="op">=</span> volunteer.drop(to_drop, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the head of the new dataset</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>volunteer_subset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>title</th>
+      <th>hits</th>
+      <th>postalcode</th>
+      <th>vol_requests_lognorm</th>
+      <th>created_month</th>
+      <th>Education</th>
+      <th>Emergency Preparedness</th>
+      <th>Environment</th>
+      <th>Health</th>
+      <th>Helping Neighbors in Need</th>
+      <th>Strengthening Communities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Web designer</td>
+      <td>22</td>
+      <td>10010.0</td>
+      <td>0.693147</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
+      <td>62</td>
+      <td>10026.0</td>
+      <td>2.995732</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Fight global hunger and support women farmers ...</td>
+      <td>14</td>
+      <td>2114.0</td>
+      <td>6.214608</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Stop 'N' Swap</td>
+      <td>31</td>
+      <td>10455.0</td>
+      <td>2.708050</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Queens Stop 'N' Swap</td>
+      <td>135</td>
+      <td>11372.0</td>
+      <td>2.708050</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-for-correlated-features" class="level3">
+<h3 class="anchored" data-anchor-id="checking-for-correlated-features">Checking for correlated features</h3>
+<p>Let’s take a look at the <code>wine</code> dataset again, which is made up of continuous, numerical features. Run Pearson’s correlation coefficient on the dataset to determine which columns are good candidates for eliminating. Then, remove those columns from the DataFrame.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">'dataset/wine_sample.csv'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>wine.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Flavanoids</th>
+      <th>Total phenols</th>
+      <th>Malic acid</th>
+      <th>OD280/OD315 of diluted wines</th>
+      <th>Hue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.06</td>
+      <td>2.80</td>
+      <td>1.71</td>
+      <td>3.92</td>
+      <td>1.04</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.76</td>
+      <td>2.65</td>
+      <td>1.78</td>
+      <td>3.40</td>
+      <td>1.05</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.24</td>
+      <td>2.80</td>
+      <td>2.36</td>
+      <td>3.17</td>
+      <td>1.03</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.49</td>
+      <td>3.85</td>
+      <td>1.95</td>
+      <td>3.45</td>
+      <td>0.86</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.69</td>
+      <td>2.80</td>
+      <td>2.59</td>
+      <td>2.93</td>
+      <td>1.04</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the column correlations of the wine dataset</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(wine.corr())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              Flavanoids  Total phenols  Malic acid  \
+Flavanoids                      1.000000       0.864564   -0.411007   
+Total phenols                   0.864564       1.000000   -0.335167   
+Malic acid                     -0.411007      -0.335167    1.000000   
+OD280/OD315 of diluted wines    0.787194       0.699949   -0.368710   
+Hue                             0.543479       0.433681   -0.561296   
+
+                              OD280/OD315 of diluted wines       Hue  
+Flavanoids                                        0.787194  0.543479  
+Total phenols                                     0.699949  0.433681  
+Malic acid                                       -0.368710 -0.561296  
+OD280/OD315 of diluted wines                      1.000000  0.565468  
+Hue                                               0.565468  1.000000  </code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a minute to find the column where the correlation value is greater than 0.75 at least twice</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> <span class="st">"Flavanoids"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop that column from the DataFrame</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> wine.drop(to_drop, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="selecting-features-using-text-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-features-using-text-vectors">Selecting features using text vectors</h2>
+<section id="exploring-text-vectors-part-1" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-text-vectors-part-1">Exploring text vectors, part 1</h3>
+<p>Let’s expand on the text vector exploration method we just learned about, using the <code>volunteer</code> dataset’s title tf/idf vectors. In this first part of text vector exploration, we’re going to add to that function we learned about in the slides. We’ll return a list of numbers with the function. In the next exercise, we’ll write another function to collect the top words across all documents, extract them, and then use that list to filter down our <code>text_tfidf</code> vector.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vocab_csv <span class="op">=</span> pd.read_csv(<span class="st">'dataset/vocab.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>).to_dict()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> vocab_csv[<span class="st">'0'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> volunteer[[<span class="st">'category_desc'</span>, <span class="st">'title'</span>]]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Take the title text</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>title_text <span class="op">=</span> volunteer[<span class="st">'title'</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the vectorizer method</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>tfidf_vec <span class="op">=</span> TfidfVectorizer()</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the text into tf-idf vectors</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>text_tfidf <span class="op">=</span> tfidf_vec.fit_transform(title_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add in the rest of the parameters</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_weights(vocab, original_vocab, vector, vector_index, top_n):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    zipped <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(vector[vector_index].indices, vector[vector_index].data))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Let's transform that zipped dict into a series</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    zipped_series <span class="op">=</span> pd.Series({vocab[i]:zipped[i] <span class="cf">for</span> i <span class="kw">in</span> vector[vector_index].indices})</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Let's sort the series to pull out the top n weighted words</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    zipped_index <span class="op">=</span> zipped_series.sort_values(ascending<span class="op">=</span><span class="va">False</span>)[:top_n].index</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [original_vocab[i] <span class="cf">for</span> i <span class="kw">in</span> zipped_index]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the weighted words</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(return_weights(vocab, tfidf_vec.vocabulary_, text_tfidf, vector_index<span class="op">=</span><span class="dv">8</span>, top_n<span class="op">=</span><span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[189, 942, 466]</code></pre>
+</div>
+</div>
+</section>
+<section id="exploring-text-vectors-part-2" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-text-vectors-part-2">Exploring text vectors, part 2</h3>
+<p>Using the function we wrote in the previous exercise, we’re going to extract the top words from each document in the text vector, return a list of the word indices, and use that list to filter the text vector down to those top words.</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> words_to_filter(vocab, original_vocab, vector, top_n):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    filter_list <span class="op">=</span> []</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, vector.shape[<span class="dv">0</span>]):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># here we'll call the function from the previous exercise,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># and extend the list we're creating</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        filtered <span class="op">=</span> return_weights(vocab, original_vocab, vector, i, top_n)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        filter_list.extend(filtered)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the list in a set, so we don't get duplicate word indices</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">set</span>(filter_list)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function to get the list of word indices</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>filtered_words <span class="op">=</span> words_to_filter(vocab, tfidf_vec.vocabulary_, text_tfidf, top_n<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># By converting filtered_words back to a list,</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use it to filter the columns in the text vector</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>filtered_text <span class="op">=</span> text_tfidf[:, <span class="bu">list</span>(filtered_words)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="training-naive-bayes-with-feature-selection" class="level3">
+<h3 class="anchored" data-anchor-id="training-naive-bayes-with-feature-selection">Training Naive Bayes with feature selection</h3>
+<p>Let’s re-run the Naive Bayes text classification model we ran at the end of chapter 3, with our selection choices from the previous exercise, on the <code>volunteer</code> dataset’s <code>title</code> and <code>category_desc</code> columns.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> GaussianNB()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> volunteer[<span class="st">'category_desc'</span>]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset according to the class distribution of category_desc,</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># using the filtered_text vector</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(filtered_text.toarray(), y, stratify<span class="op">=</span>y)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model to the training data</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>nb.fit(X_train, y_train)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the model's accuracy</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nb.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5032258064516129</code></pre>
+</div>
+</div>
+<p>You can see that our accuracy score wasn’t that different from the score at the end of chapter 3. That’s okay; the <code>title</code> field is a very small text field, appropriate for demonstrating how filtering vectors works.</p>
+</section>
+</section>
+<section id="dimensionality-reduction" class="level2">
+<h2 class="anchored" data-anchor-id="dimensionality-reduction">Dimensionality reduction</h2>
+<ul>
+<li>Unsupervised learning method</li>
+<li>Combine/decomposes a feature space</li>
+<li>Feature extraction</li>
+<li>Principal component analysis
+<ul>
+<li>Linear transformation to uncorrelated space</li>
+<li>Captures as much variance as possible in each component</li>
+</ul></li>
+<li>PCA caveats
+<ul>
+<li>Difficult to interpret components</li>
+<li>End of preprocessing journey</li>
+</ul></li>
+</ul>
+<section id="using-pca" class="level3">
+<h3 class="anchored" data-anchor-id="using-pca">Using PCA</h3>
+<p>Let’s apply PCA to the <code>wine</code> dataset, to see if we can get an increase in our model’s accuracy.</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">'dataset/wine_types.csv'</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>wine.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="15">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Type</th>
+      <th>Alcohol</th>
+      <th>Malic acid</th>
+      <th>Ash</th>
+      <th>Alcalinity of ash</th>
+      <th>Magnesium</th>
+      <th>Total phenols</th>
+      <th>Flavanoids</th>
+      <th>Nonflavanoid phenols</th>
+      <th>Proanthocyanins</th>
+      <th>Color intensity</th>
+      <th>Hue</th>
+      <th>OD280/OD315 of diluted wines</th>
+      <th>Proline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>14.23</td>
+      <td>1.71</td>
+      <td>2.43</td>
+      <td>15.6</td>
+      <td>127</td>
+      <td>2.80</td>
+      <td>3.06</td>
+      <td>0.28</td>
+      <td>2.29</td>
+      <td>5.64</td>
+      <td>1.04</td>
+      <td>3.92</td>
+      <td>1065</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>13.20</td>
+      <td>1.78</td>
+      <td>2.14</td>
+      <td>11.2</td>
+      <td>100</td>
+      <td>2.65</td>
+      <td>2.76</td>
+      <td>0.26</td>
+      <td>1.28</td>
+      <td>4.38</td>
+      <td>1.05</td>
+      <td>3.40</td>
+      <td>1050</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>13.16</td>
+      <td>2.36</td>
+      <td>2.67</td>
+      <td>18.6</td>
+      <td>101</td>
+      <td>2.80</td>
+      <td>3.24</td>
+      <td>0.30</td>
+      <td>2.81</td>
+      <td>5.68</td>
+      <td>1.03</td>
+      <td>3.17</td>
+      <td>1185</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>14.37</td>
+      <td>1.95</td>
+      <td>2.50</td>
+      <td>16.8</td>
+      <td>113</td>
+      <td>3.85</td>
+      <td>3.49</td>
+      <td>0.24</td>
+      <td>2.18</td>
+      <td>7.80</td>
+      <td>0.86</td>
+      <td>3.45</td>
+      <td>1480</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>13.24</td>
+      <td>2.59</td>
+      <td>2.87</td>
+      <td>21.0</td>
+      <td>118</td>
+      <td>2.80</td>
+      <td>2.69</td>
+      <td>0.39</td>
+      <td>1.82</td>
+      <td>4.32</td>
+      <td>1.04</td>
+      <td>2.93</td>
+      <td>735</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up PCA and the X vector for dimensionality reduction</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>wine_X <span class="op">=</span> wine.drop(<span class="st">'Type'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA to the wine dataset X vector</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>transformed_X <span class="op">=</span> pca.fit_transform(wine_X)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the percentage of variance explained by the different components</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca.explained_variance_ratio_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[9.98091230e-01 1.73591562e-03 9.49589576e-05 5.02173562e-05
+ 1.23636847e-05 8.46213034e-06 2.80681456e-06 1.52308053e-06
+ 1.12783044e-06 7.21415811e-07 3.78060267e-07 2.12013755e-07
+ 8.25392788e-08]</code></pre>
+</div>
+</div>
+</section>
+<section id="training-a-model-with-pca" class="level3">
+<h3 class="anchored" data-anchor-id="training-a-model-with-pca">Training a model with PCA</h3>
+<p>Now that we have run PCA on the <code>wine</code> dataset, let’s try training a model with it.</p>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> wine[<span class="st">'Type'</span>]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsClassifier()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the transformed X and the y labels into training and test sets</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>X_wine_train, X_wine_test, y_wine_train, y_wine_test <span class="op">=</span> train_test_split(transformed_X, y)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit knn to the training data</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>knn.fit(X_wine_train, y_wine_train)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Score knn on the test data and print it out</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(knn.score(X_wine_test, y_wine_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.6888888888888889</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

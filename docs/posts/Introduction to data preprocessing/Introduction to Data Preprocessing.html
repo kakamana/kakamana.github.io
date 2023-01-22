@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-23">
+
+<title>Kakamana’s Blogs - Introduction to Data Preprocessing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-data-preprocessing" id="toc-introduction-to-data-preprocessing" class="nav-link active" data-scroll-target="#introduction-to-data-preprocessing">Introduction to Data Preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#what-is-data-preprocessing" id="toc-what-is-data-preprocessing" class="nav-link" data-scroll-target="#what-is-data-preprocessing">What is data preprocessing?</a>
+  <ul class="collapse">
+  <li><a href="#missing-data---columns" id="toc-missing-data---columns" class="nav-link" data-scroll-target="#missing-data---columns">Missing data - columns</a></li>
+  <li><a href="#missing-data---rows" id="toc-missing-data---rows" class="nav-link" data-scroll-target="#missing-data---rows">Missing data - rows</a></li>
+  </ul></li>
+  <li><a href="#working-with-data-types" id="toc-working-with-data-types" class="nav-link" data-scroll-target="#working-with-data-types">Working with data types</a>
+  <ul class="collapse">
+  <li><a href="#exploring-data-types" id="toc-exploring-data-types" class="nav-link" data-scroll-target="#exploring-data-types">Exploring data types</a></li>
+  <li><a href="#converting-a-column-type" id="toc-converting-a-column-type" class="nav-link" data-scroll-target="#converting-a-column-type">Converting a column type</a></li>
+  </ul></li>
+  <li><a href="#class-distribution" id="toc-class-distribution" class="nav-link" data-scroll-target="#class-distribution">Class distribution</a>
+  <ul class="collapse">
+  <li><a href="#class-imbalance" id="toc-class-imbalance" class="nav-link" data-scroll-target="#class-imbalance">Class imbalance</a></li>
+  <li><a href="#stratified-sampling" id="toc-stratified-sampling" class="nav-link" data-scroll-target="#stratified-sampling">Stratified sampling</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Data Preprocessing</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">EDA</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction-to-data-preprocessing" class="level1">
+<h1>Introduction to Data Preprocessing</h1>
+<p>In order to understand exactly what data preprocessing is all about, you will need to take the first steps in your preprocessing journey, which includes exploring data types and dealing with missing data.</p>
+<p>This <strong>Introduction to Data Preprocessing</strong> is part of <a href="https://app.datacamp.com/learn/courses/preprocessing-for-machine-learning-in-python">Datacamp course: Preprocessing for Machine Learning in Python</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="what-is-data-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-data-preprocessing">What is data preprocessing?</h2>
+<ul>
+<li>Data Preprocessing
+<ul>
+<li>Beyond cleaning and exploratory data analysis</li>
+<li>Prepping data for modeling</li>
+<li>Modeling in python requires numerical input</li>
+</ul></li>
+</ul>
+<section id="missing-data---columns" class="level3">
+<h3 class="anchored" data-anchor-id="missing-data---columns">Missing data - columns</h3>
+<p>We have a dataset comprised of volunteer information from New York City. The dataset has a number of features, but we want to get rid of features that have at least 3 missing values.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> pd.read_csv(<span class="st">'dataset/volunteer_opportunities.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>volunteer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>opportunity_id</th>
+      <th>content_id</th>
+      <th>vol_requests</th>
+      <th>event_time</th>
+      <th>title</th>
+      <th>hits</th>
+      <th>summary</th>
+      <th>is_priority</th>
+      <th>category_id</th>
+      <th>category_desc</th>
+      <th>...</th>
+      <th>end_date_date</th>
+      <th>status</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Community Board</th>
+      <th>Community Council</th>
+      <th>Census Tract</th>
+      <th>BIN</th>
+      <th>BBL</th>
+      <th>NTA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4996</td>
+      <td>37004</td>
+      <td>50</td>
+      <td>0</td>
+      <td>Volunteers Needed For Rise Up &amp; Stay Put! Home...</td>
+      <td>737</td>
+      <td>Building on successful events last summer and ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>July 30 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5008</td>
+      <td>37036</td>
+      <td>2</td>
+      <td>0</td>
+      <td>Web designer</td>
+      <td>22</td>
+      <td>Build a website for an Afghan business</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>February 01 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5016</td>
+      <td>37143</td>
+      <td>20</td>
+      <td>0</td>
+      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
+      <td>62</td>
+      <td>Please join us and the students from Mott Hall...</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>January 29 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5022</td>
+      <td>37237</td>
+      <td>500</td>
+      <td>0</td>
+      <td>Fight global hunger and support women farmers ...</td>
+      <td>14</td>
+      <td>The Oxfam Action Corps is a group of dedicated...</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>March 31 2012</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5055</td>
+      <td>37425</td>
+      <td>15</td>
+      <td>0</td>
+      <td>Stop 'N' Swap</td>
+      <td>31</td>
+      <td>Stop 'N' Swap reduces NYC's waste by finding n...</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>Environment</td>
+      <td>...</td>
+      <td>February 05 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 35 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>volunteer.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 665 entries, 0 to 664
+Data columns (total 35 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   opportunity_id      665 non-null    int64  
+ 1   content_id          665 non-null    int64  
+ 2   vol_requests        665 non-null    int64  
+ 3   event_time          665 non-null    int64  
+ 4   title               665 non-null    object 
+ 5   hits                665 non-null    int64  
+ 6   summary             665 non-null    object 
+ 7   is_priority         62 non-null     object 
+ 8   category_id         617 non-null    float64
+ 9   category_desc       617 non-null    object 
+ 10  amsl                0 non-null      float64
+ 11  amsl_unit           0 non-null      float64
+ 12  org_title           665 non-null    object 
+ 13  org_content_id      665 non-null    int64  
+ 14  addresses_count     665 non-null    int64  
+ 15  locality            595 non-null    object 
+ 16  region              665 non-null    object 
+ 17  postalcode          659 non-null    float64
+ 18  primary_loc         0 non-null      float64
+ 19  display_url         665 non-null    object 
+ 20  recurrence_type     665 non-null    object 
+ 21  hours               665 non-null    int64  
+ 22  created_date        665 non-null    object 
+ 23  last_modified_date  665 non-null    object 
+ 24  start_date_date     665 non-null    object 
+ 25  end_date_date       665 non-null    object 
+ 26  status              665 non-null    object 
+ 27  Latitude            0 non-null      float64
+ 28  Longitude           0 non-null      float64
+ 29  Community Board     0 non-null      float64
+ 30  Community Council   0 non-null      float64
+ 31  Census Tract        0 non-null      float64
+ 32  BIN                 0 non-null      float64
+ 33  BBL                 0 non-null      float64
+ 34  NTA                 0 non-null      float64
+dtypes: float64(13), int64(8), object(14)
+memory usage: 182.0+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>volunteer.dropna(axis<span class="op">=</span><span class="dv">1</span>, thresh<span class="op">=</span><span class="dv">3</span>).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(665, 24)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>volunteer.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>(665, 35)</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-data---rows" class="level3">
+<h3 class="anchored" data-anchor-id="missing-data---rows">Missing data - rows</h3>
+<p>Taking a look at the <code>volunteer</code> dataset again, we want to drop rows where the <code>category_desc</code> column values are missing. We’re going to do this using boolean indexing, by checking to see if we have any null values, and then filtering the dataset so that we only have rows with those values.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many values are missing in the category_desc column</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(volunteer[<span class="st">'category_desc'</span>].isnull().<span class="bu">sum</span>())</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the volunteer dataset</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>volunteer_subset <span class="op">=</span> volunteer[volunteer[<span class="st">'category_desc'</span>].notnull()]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the shape of the subset</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(volunteer_subset.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>48
+(617, 35)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="working-with-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-data-types">Working with data types</h2>
+<ul>
+<li>dtypes in pandas
+<ul>
+<li>object: string/mixed types</li>
+<li>int64: integer</li>
+<li>float64: float</li>
+<li>datetime64 (or timedelta): datetime</li>
+</ul></li>
+</ul>
+<section id="exploring-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-data-types">Exploring data types</h3>
+<p>Taking another look at the dataset comprised of volunteer information from New York City, we want to know what types we’ll be working with as we start to do more preprocessing.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>volunteer.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>opportunity_id          int64
+content_id              int64
+vol_requests            int64
+event_time              int64
+title                  object
+hits                    int64
+summary                object
+is_priority            object
+category_id           float64
+category_desc          object
+amsl                  float64
+amsl_unit             float64
+org_title              object
+org_content_id          int64
+addresses_count         int64
+locality               object
+region                 object
+postalcode            float64
+primary_loc           float64
+display_url            object
+recurrence_type        object
+hours                   int64
+created_date           object
+last_modified_date     object
+start_date_date        object
+end_date_date          object
+status                 object
+Latitude              float64
+Longitude             float64
+Community Board       float64
+Community Council     float64
+Census Tract          float64
+BIN                   float64
+BBL                   float64
+NTA                   float64
+dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="converting-a-column-type" class="level3">
+<h3 class="anchored" data-anchor-id="converting-a-column-type">Converting a column type</h3>
+<p>If you take a look at the <code>volunteer</code> dataset types, you’ll see that the column <code>hits</code> is type <code>object</code>. But, if you actually look at the column, you’ll see that it consists of integers. Let’s convert that column to type <code>int</code>.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the head of the hits column</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(volunteer[<span class="st">'hits'</span>].head())</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the hits column to type int</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>volunteer[<span class="st">'hits'</span>] <span class="op">=</span> volunteer[<span class="st">'hits'</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the dtypes of the dataset</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(volunteer.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    737
+1     22
+2     62
+3     14
+4     31
+Name: hits, dtype: int64
+opportunity_id          int64
+content_id              int64
+vol_requests            int64
+event_time              int64
+title                  object
+hits                    int32
+summary                object
+is_priority            object
+category_id           float64
+category_desc          object
+amsl                  float64
+amsl_unit             float64
+org_title              object
+org_content_id          int64
+addresses_count         int64
+locality               object
+region                 object
+postalcode            float64
+primary_loc           float64
+display_url            object
+recurrence_type        object
+hours                   int64
+created_date           object
+last_modified_date     object
+start_date_date        object
+end_date_date          object
+status                 object
+Latitude              float64
+Longitude             float64
+Community Board       float64
+Community Council     float64
+Census Tract          float64
+BIN                   float64
+BBL                   float64
+NTA                   float64
+dtype: object</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="class-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="class-distribution">Class distribution</h2>
+<ul>
+<li>Stratified sampling
+<ul>
+<li>A way of sampling that takes into account the distribution of classes or features in your dataset</li>
+</ul></li>
+</ul>
+<section id="class-imbalance" class="level3">
+<h3 class="anchored" data-anchor-id="class-imbalance">Class imbalance</h3>
+<p>In the <code>volunteer</code> dataset, we’re thinking about trying to predict the <code>category_desc</code> variable using the other features in the dataset. First, though, we need to know what the class distribution (and imbalance) is for that label.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>volunteer[<span class="st">'category_desc'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Strengthening Communities    307
+Helping Neighbors in Need    119
+Education                     92
+Health                        52
+Environment                   32
+Emergency Preparedness        15
+Name: category_desc, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="stratified-sampling" class="level3">
+<h3 class="anchored" data-anchor-id="stratified-sampling">Stratified sampling</h3>
+<p>We know that the distribution of variables in the <code>category_desc</code> column in the volunteer dataset is uneven. If we wanted to train a model to try to predict <code>category_desc</code>, we would want to train the model on a sample of data that is representative of the entire dataset. Stratified sampling is a way to achieve this.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data with all columns except category_desc</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>volunteer_X <span class="op">=</span> volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a category_desc labels dataset</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>volunteer_y <span class="op">=</span> volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>)[[<span class="st">'category_desc'</span>]]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use stratified sampling to split up the dataset according to the volunteer_y dataset</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(volunteer_X, volunteer_y, stratify<span class="op">=</span>volunteer_y)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the category_desc counts on the training y labels</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train[<span class="st">'category_desc'</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Strengthening Communities    230
+Helping Neighbors in Need     89
+Education                     69
+Health                        39
+Environment                   24
+Emergency Preparedness        11
+Name: category_desc, dtype: int64</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Warning: stratify sampling on <code>train_test_split</code> cannot handle the <code>NaN</code> data, so you need to drop NaN values before sampling</p>
+</blockquote>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

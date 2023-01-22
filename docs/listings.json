@@ -6,6 +6,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Feature Engineering - Preprocessing/Feature Engineering.html",
+      "/posts/Introduction to data preprocessing/Introduction to Data Preprocessing.html",
+      "/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html",
+      "/posts/Selecting features for modeling/Selecting Features for Modeling.html",
+      "/posts/Standardizing data/Standardizing Data.html",
       "/posts/Exploring high dimensional data/Exploring High Dimensional data.html",
       "/posts/Feature extraction/Feature Extraction.html",
       "/posts/Feature selection I - selection for feature information/Feature selection I - selection for feature information.html",

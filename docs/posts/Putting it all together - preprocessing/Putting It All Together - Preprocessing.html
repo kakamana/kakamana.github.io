@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-23">
+
+<title>Kakamana’s Blogs - Putting It All Together</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link active" data-scroll-target="#putting-it-all-together">Putting It All Together</a>
+  <ul class="collapse">
+  <li><a href="#ufos-and-preprocessing" id="toc-ufos-and-preprocessing" class="nav-link" data-scroll-target="#ufos-and-preprocessing">UFOs and preprocessing</a>
+  <ul class="collapse">
+  <li><a href="#checking-column-types" id="toc-checking-column-types" class="nav-link" data-scroll-target="#checking-column-types">Checking column types</a></li>
+  <li><a href="#dropping-missing-data" id="toc-dropping-missing-data" class="nav-link" data-scroll-target="#dropping-missing-data">Dropping missing data</a></li>
+  </ul></li>
+  <li><a href="#categorical-variables-and-standardization" id="toc-categorical-variables-and-standardization" class="nav-link" data-scroll-target="#categorical-variables-and-standardization">Categorical variables and standardization</a>
+  <ul class="collapse">
+  <li><a href="#extracting-numbers-from-strings" id="toc-extracting-numbers-from-strings" class="nav-link" data-scroll-target="#extracting-numbers-from-strings">Extracting numbers from strings</a></li>
+  <li><a href="#identifying-features-for-standardization" id="toc-identifying-features-for-standardization" class="nav-link" data-scroll-target="#identifying-features-for-standardization">Identifying features for standardization</a></li>
+  </ul></li>
+  <li><a href="#engineering-new-features" id="toc-engineering-new-features" class="nav-link" data-scroll-target="#engineering-new-features">Engineering new features</a>
+  <ul class="collapse">
+  <li><a href="#encoding-categorical-variables" id="toc-encoding-categorical-variables" class="nav-link" data-scroll-target="#encoding-categorical-variables">Encoding categorical variables</a></li>
+  <li><a href="#features-from-dates" id="toc-features-from-dates" class="nav-link" data-scroll-target="#features-from-dates">Features from dates</a></li>
+  <li><a href="#text-vectorization" id="toc-text-vectorization" class="nav-link" data-scroll-target="#text-vectorization">Text vectorization</a></li>
+  </ul></li>
+  <li><a href="#feature-selection-and-modeling" id="toc-feature-selection-and-modeling" class="nav-link" data-scroll-target="#feature-selection-and-modeling">Feature selection and modeling</a>
+  <ul class="collapse">
+  <li><a href="#selecting-the-ideal-dataset" id="toc-selecting-the-ideal-dataset" class="nav-link" data-scroll-target="#selecting-the-ideal-dataset">Selecting the ideal dataset</a></li>
+  <li><a href="#modeling-the-ufo-dataset-part-1" id="toc-modeling-the-ufo-dataset-part-1" class="nav-link" data-scroll-target="#modeling-the-ufo-dataset-part-1">Modeling the UFO dataset, part 1</a></li>
+  <li><a href="#modeling-the-ufo-dataset-part-2" id="toc-modeling-the-ufo-dataset-part-2" class="nav-link" data-scroll-target="#modeling-the-ufo-dataset-part-2">Modeling the UFO dataset, part 2</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Putting It All Together</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">feature engineering</div>
+    <div class="quarto-category">PCA</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="putting-it-all-together" class="level1">
+<h1>Putting It All Together</h1>
+<p>Now that we have explored all about preprocessing, lets try these techniques out on a dataset that records information on UFO sightings.</p>
+<p>This <strong>Putting It All Together</strong> is part of <a href="https://app.datacamp.com/learn/courses/preprocessing-for-machine-learning-in-python">Datacamp course: Preprocessing for Machine Learning in Python</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="ufos-and-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="ufos-and-preprocessing">UFOs and preprocessing</h2>
+<section id="checking-column-types" class="level3">
+<h3 class="anchored" data-anchor-id="checking-column-types">Checking column types</h3>
+<p>Take a look at the UFO dataset’s column types using the <code>dtypes</code> attribute. Two columns jump out for transformation: the seconds column, which is a numeric column but is being read in as <code>object</code>, and the <code>date</code> column, which can be transformed into the <code>datetime</code> type. That will make our feature engineering efforts easier later on.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ufo <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ufo_sightings_large.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ufo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>date</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+      <th>type</th>
+      <th>seconds</th>
+      <th>length_of_time</th>
+      <th>desc</th>
+      <th>recorded</th>
+      <th>lat</th>
+      <th>long</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11/3/2011 19:21</td>
+      <td>woodville</td>
+      <td>wi</td>
+      <td>us</td>
+      <td>unknown</td>
+      <td>1209600.0</td>
+      <td>2 weeks</td>
+      <td>Red blinking objects similar to airplanes or s...</td>
+      <td>12/12/2011</td>
+      <td>44.9530556</td>
+      <td>-92.291111</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10/3/2004 19:05</td>
+      <td>cleveland</td>
+      <td>oh</td>
+      <td>us</td>
+      <td>circle</td>
+      <td>30.0</td>
+      <td>30sec.</td>
+      <td>Many fighter jets flying towards UFO</td>
+      <td>10/27/2004</td>
+      <td>41.4994444</td>
+      <td>-81.695556</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9/25/2009 21:00</td>
+      <td>coon rapids</td>
+      <td>mn</td>
+      <td>us</td>
+      <td>cigar</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>Green&amp;#44 red&amp;#44 and blue pulses of light tha...</td>
+      <td>12/12/2009</td>
+      <td>45.1200000</td>
+      <td>-93.287500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11/21/2002 05:45</td>
+      <td>clemmons</td>
+      <td>nc</td>
+      <td>us</td>
+      <td>triangle</td>
+      <td>300.0</td>
+      <td>about 5 minutes</td>
+      <td>It was a large&amp;#44 triangular shaped flying ob...</td>
+      <td>12/23/2002</td>
+      <td>36.0213889</td>
+      <td>-80.382222</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8/19/2010 12:55</td>
+      <td>calgary (canada)</td>
+      <td>ab</td>
+      <td>ca</td>
+      <td>oval</td>
+      <td>0.0</td>
+      <td>2</td>
+      <td>A white spinning disc in the shape of an oval.</td>
+      <td>8/24/2010</td>
+      <td>51.083333</td>
+      <td>-114.083333</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the column types</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo.dtypes)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the type of seconds to float</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'seconds'</span>] <span class="op">=</span> ufo[<span class="st">'seconds'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the date column to type datetime</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(ufo[<span class="st">'date'</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the column types</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'seconds'</span>, <span class="st">'date'</span>]].dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>date               object
+city               object
+state              object
+country            object
+type               object
+seconds           float64
+length_of_time     object
+desc               object
+recorded           object
+lat                object
+long              float64
+dtype: object
+seconds           float64
+date       datetime64[ns]
+dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="dropping-missing-data" class="level3">
+<h3 class="anchored" data-anchor-id="dropping-missing-data">Dropping missing data</h3>
+<p>Let’s remove some of the rows where certain columns have missing values. We’re going to look at the <code>length_of_time</code> column, the <code>state</code> column, and the <code>type</code> column. If any of the values in these columns are missing, we’re going to drop the rows.</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many values are missing in the length_of_time, state, and type columns</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'length_of_time'</span>, <span class="st">'state'</span>, <span class="st">'type'</span>]].isnull().<span class="bu">sum</span>())</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only rows where length_of_time, state, and type are not null</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ufo_no_missing <span class="op">=</span> ufo[ufo[<span class="st">'length_of_time'</span>].notnull() <span class="op">&amp;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                     ufo[<span class="st">'state'</span>].notnull() <span class="op">&amp;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                     ufo[<span class="st">'type'</span>].notnull()]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the shape of the new dataset</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo_no_missing.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>length_of_time    143
+state             419
+type              159
+dtype: int64
+(4283, 11)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="categorical-variables-and-standardization" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-variables-and-standardization">Categorical variables and standardization</h2>
+<section id="extracting-numbers-from-strings" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-numbers-from-strings">Extracting numbers from strings</h3>
+<p>The <code>length_of_time</code> field in the UFO dataset is a text field that has the number of minutes within the string. Here, you’ll extract that number from that text field using regular expressions.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ufo <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ufo_sample.csv'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the type of seconds to float</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'seconds'</span>] <span class="op">=</span> ufo[<span class="st">'seconds'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the date column to type datetime</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(ufo[<span class="st">'date'</span>])</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_minutes(time_string):</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use \d+ to grab digits</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r'\d+'</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use match on th epattern and column</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    num <span class="op">=</span> re.match(pattern, time_string)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> num <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">int</span>(num.group(<span class="dv">0</span>))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the extraction to the length_of_time column</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'minutes'</span>] <span class="op">=</span> ufo[<span class="st">'length_of_time'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> row: return_minutes(row))</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the head of both of th ecolumns</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'length_of_time'</span>, <span class="st">'minutes'</span>]].head(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    length_of_time  minutes
+0  about 5 minutes      NaN
+1       10 minutes     10.0
+2        2 minutes      2.0
+3        2 minutes      2.0
+4        5 minutes      5.0
+5       10 minutes     10.0
+6        5 minutes      5.0
+7        5 minutes      5.0
+8        5 minutes      5.0
+9          1minute      1.0</code></pre>
+</div>
+</div>
+</section>
+<section id="identifying-features-for-standardization" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-features-for-standardization">Identifying features for standardization</h3>
+<p>In this section, you’ll investigate the variance of columns in the UFO dataset to determine which features should be standardized. After taking a look at the variances of the <code>seconds</code> and <code>minutes</code> column, you’ll see that the variance of the seconds column is extremely high. Because seconds and minutes are related to each other (an issue we’ll deal with when we select features for modeling), let’s log normlize the <code>seconds</code> column.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the variance of the seconds and minutes columns</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'seconds'</span>, <span class="st">'minutes'</span>]].var())</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Log normalize the seconds column</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'seconds_log'</span>] <span class="op">=</span> np.log(ufo[<span class="st">'seconds'</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the variance of just the seconds_log column</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[<span class="st">'seconds_log'</span>].var())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>seconds    424087.417474
+minutes       117.546372
+dtype: float64
+1.1223923881183004</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="engineering-new-features" class="level2">
+<h2 class="anchored" data-anchor-id="engineering-new-features">Engineering new features</h2>
+<section id="encoding-categorical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="encoding-categorical-variables">Encoding categorical variables</h3>
+<p>There are couple of columns in the UFO dataset that need to be encoded before they can be modeled through scikit-learn. You’ll do that transformation here, using both binary and one-hot encoding methods.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use Pandas to encode us values as 1 and others as 0</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'country_enc'</span>] <span class="op">=</span> ufo[<span class="st">'country'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="op">==</span> <span class="st">'us'</span> <span class="cf">else</span> <span class="dv">0</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the number of unique type values</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(ufo[<span class="st">'type'</span>].unique()))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a one-hot encoded set of the type values</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>type_set <span class="op">=</span> pd.get_dummies(ufo[<span class="st">'type'</span>])</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate this set back to the ufo DataFrame</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ufo <span class="op">=</span> pd.concat([ufo, type_set], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>21</code></pre>
+</div>
+</div>
+</section>
+<section id="features-from-dates" class="level3">
+<h3 class="anchored" data-anchor-id="features-from-dates">Features from dates</h3>
+<p>Another feature engineering task to perform is month and year extraction. Perform this task on the <code>date</code> column of the <code>ufo</code> dataset.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first 5 rows of the date column</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[<span class="st">'date'</span>].dtypes)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the month from the date column</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'month'</span>] <span class="op">=</span> ufo[<span class="st">'date'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> date: date.month)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the year from the date column</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>ufo[<span class="st">'year'</span>] <span class="op">=</span> ufo[<span class="st">'date'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> date: date.year)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the head of all three columns</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'date'</span>, <span class="st">'month'</span>, <span class="st">'year'</span>]].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>datetime64[ns]
+                 date  month  year
+0 2002-11-21 05:45:00     11  2002
+1 2012-06-16 23:00:00      6  2012
+2 2013-06-09 00:00:00      6  2013
+3 2013-04-26 23:27:00      4  2013
+4 2013-09-13 20:30:00      9  2013</code></pre>
+</div>
+</div>
+</section>
+<section id="text-vectorization" class="level3">
+<h3 class="anchored" data-anchor-id="text-vectorization">Text vectorization</h3>
+<p>Let’s transform the <code>desc</code> column in the UFO dataset into tf/idf vectors, since there’s likely something we can learn from this field.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the head of the desc field</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[<span class="st">'desc'</span>].head())</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the tfidf vectorizer object</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>vec <span class="op">=</span> TfidfVectorizer()</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use vec's fit_transform method on the desc field</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>desc_tfidf <span class="op">=</span> vec.fit_transform(ufo[<span class="st">'desc'</span>])</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the number of columns this creates</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(desc_tfidf.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    It was a large&amp;#44 triangular shaped flying ob...
+1    Dancing lights that would fly around and then ...
+2    Brilliant orange light or chinese lantern at o...
+3    Bright red light moving north to north west fr...
+4    North-east moving south-west. First 7 or so li...
+Name: desc, dtype: object
+(1866, 3422)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="feature-selection-and-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="feature-selection-and-modeling">Feature selection and modeling</h2>
+<ul>
+<li>Redundant features</li>
+<li>Text vectors</li>
+</ul>
+<section id="selecting-the-ideal-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-the-ideal-dataset">Selecting the ideal dataset</h3>
+<p>Let’s get rid of some of the unnecessary features. Because we have an encoded <code>country</code> column, <code>country_enc</code>, keep it and drop other columns related to location: <code>city</code>, <code>country</code>, <code>lat</code>, <code>long</code>, <code>state</code>.</p>
+<p>We have columns related to <code>month</code> and <code>year</code>, so we don’t need the <code>date</code> or <code>recorded</code> columns.</p>
+<p>We vectorized <code>desc</code>, so we don’t need it anymore. For now we’ll keep <code>type</code>.</p>
+<p>We’ll keep <code>seconds_log</code> and drop <code>seconds</code> and <code>minutes</code>.</p>
+<p>Let’s also get rid of the <code>length_of_time</code> column, which is unnecessary after extracting <code>minutes</code>.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add in the rest of the parameters</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_weights(vocab, original_vocab, vector, vector_index, top_n):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    zipped <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(vector[vector_index].indices, vector[vector_index].data))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Let's transform that zipped dict into a series</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    zipped_series <span class="op">=</span> pd.Series({vocab[i]:zipped[i] <span class="cf">for</span> i <span class="kw">in</span> vector[vector_index].indices})</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Let's sort the series to pull out the top n weighted words</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    zipped_index <span class="op">=</span> zipped_series.sort_values(ascending<span class="op">=</span><span class="va">False</span>)[:top_n].index</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [original_vocab[i] <span class="cf">for</span> i <span class="kw">in</span> zipped_index]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> words_to_filter(vocab, original_vocab, vector, top_n):</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    filter_list <span class="op">=</span> []</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, vector.shape[<span class="dv">0</span>]):</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># here we'll call the function from the previous exercise,</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># and extend the list we're creating</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        filtered <span class="op">=</span> return_weights(vocab, original_vocab, vector, i, top_n)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        filter_list.extend(filtered)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the list in a set, so we don't get duplicate word indices</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">set</span>(filter_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>vocab_csv <span class="op">=</span> pd.read_csv(<span class="st">'dataset/vocab_ufo.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>).to_dict()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> vocab_csv[<span class="st">'0'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the correlation between the seconds, seconds_log, and minutes columns</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ufo[[<span class="st">'seconds'</span>, <span class="st">'seconds_log'</span>, <span class="st">'minutes'</span>]].corr())</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a list of features to drop</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> [<span class="st">'city'</span>, <span class="st">'country'</span>, <span class="st">'date'</span>, <span class="st">'desc'</span>, <span class="st">'lat'</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">'length_of_time'</span>, <span class="st">'seconds'</span>, <span class="st">'minutes'</span>, <span class="st">'long'</span>, <span class="st">'state'</span>, <span class="st">'recorded'</span>]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop those features</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>ufo_dropped <span class="op">=</span> ufo.drop(to_drop, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's also filter some words out of the text vector we created</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>filtered_words <span class="op">=</span> words_to_filter(vocab, vec.vocabulary_, desc_tfidf, top_n<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              seconds  seconds_log   minutes
+seconds      1.000000     0.853371  0.980341
+seconds_log  0.853371     1.000000  0.824493
+minutes      0.980341     0.824493  1.000000</code></pre>
+</div>
+</div>
+</section>
+<section id="modeling-the-ufo-dataset-part-1" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-the-ufo-dataset-part-1">Modeling the UFO dataset, part 1</h3>
+<p>In this exercise, we’re going to build a k-nearest neighbor model to predict which country the UFO sighting took place in. Our <code>X</code> dataset has the log-normalized seconds column, the one-hot encoded type columns, as well as the month and year when the sighting took place. The <code>y</code> labels are the encoded country column, where 1 is <code>us</code> and 0 is <code>ca</code>.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ufo_dropped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>type</th>
+      <th>seconds_log</th>
+      <th>country_enc</th>
+      <th>changing</th>
+      <th>chevron</th>
+      <th>cigar</th>
+      <th>circle</th>
+      <th>cone</th>
+      <th>cross</th>
+      <th>cylinder</th>
+      <th>...</th>
+      <th>light</th>
+      <th>other</th>
+      <th>oval</th>
+      <th>rectangle</th>
+      <th>sphere</th>
+      <th>teardrop</th>
+      <th>triangle</th>
+      <th>unknown</th>
+      <th>month</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>triangle</td>
+      <td>5.703782</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>11</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>light</td>
+      <td>6.396930</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2012</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>light</td>
+      <td>4.787492</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>light</td>
+      <td>4.787492</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>sphere</td>
+      <td>5.703782</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1861</th>
+      <td>unknown</td>
+      <td>7.901007</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>8</td>
+      <td>2002</td>
+    </tr>
+    <tr>
+      <th>1862</th>
+      <td>oval</td>
+      <td>5.703782</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>2013</td>
+    </tr>
+    <tr>
+      <th>1863</th>
+      <td>changing</td>
+      <td>5.192957</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>11</td>
+      <td>2008</td>
+    </tr>
+    <tr>
+      <th>1864</th>
+      <td>circle</td>
+      <td>5.192957</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>1865</th>
+      <td>other</td>
+      <td>4.094345</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2005</td>
+    </tr>
+  </tbody>
+</table>
+<p>1866 rows × 26 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ufo_dropped.drop([<span class="st">'type'</span>, <span class="st">'country_enc'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ufo_dropped[<span class="st">'country_enc'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the features in the X set of data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['seconds_log', 'changing', 'chevron', 'cigar', 'circle', 'cone',
+       'cross', 'cylinder', 'diamond', 'disk', 'egg', 'fireball', 'flash',
+       'formation', 'light', 'other', 'oval', 'rectangle', 'sphere',
+       'teardrop', 'triangle', 'unknown', 'month', 'year'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsClassifier()</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the X and y sets using train_test_split, setting stratify=y</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>train_X, test_X, train_y, test_y <span class="op">=</span> train_test_split(X, y, stratify<span class="op">=</span>y)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit knn to the training sets</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>knn.fit(train_X, train_y)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the score of knn on the test sets</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(knn.score(test_X, test_y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.8586723768736617</code></pre>
+</div>
+</div>
+</section>
+<section id="modeling-the-ufo-dataset-part-2" class="level3">
+<h3 class="anchored" data-anchor-id="modeling-the-ufo-dataset-part-2">Modeling the UFO dataset, part 2</h3>
+<p>Finally, let’s build a model using the text vector we created, <code>desc_tfidf</code>, using the <code>filtered_words</code> list to create a filtered text vector. Let’s see if we can predict the <code>type</code> of the sighting based on the text. We’ll use a Naive Bayes model for this.</p>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ufo_dropped[<span class="st">'type'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> GaussianNB()</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the list of filtered words we created to filter the text vector</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>filtered_text <span class="op">=</span> desc_tfidf[:, <span class="bu">list</span>(filtered_words)]</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the X and y sets using train_test_split, setting stratify=y</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>train_X, test_X, train_y, test_y <span class="op">=</span> train_test_split(filtered_text.toarray(), y, stratify<span class="op">=</span>y)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit nb to the training sets</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>nb.fit(train_X, train_y)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the score of nb on the test sets</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nb.score(test_X, test_y))</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">As you can see, this model performs very poorly on this text data. This is a clear case where iteration would be necessary to figure out what subset of text improves the model, and if perhaps any of the other features are useful in predicting `type`."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.1841541755888651
+
+As you can see, this model performs very poorly on this text data. This is a clear case where iteration would be necessary to figure out what subset of text improves the model, and if perhaps any of the other features are useful in predicting `type`.</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

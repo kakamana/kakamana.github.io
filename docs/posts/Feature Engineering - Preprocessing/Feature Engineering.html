@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-23">
+
+<title>Kakamana’s Blogs - Feature Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link active" data-scroll-target="#feature-engineering">Feature Engineering</a>
+  <ul class="collapse">
+  <li><a href="#feature-engineering-1" id="toc-feature-engineering-1" class="nav-link" data-scroll-target="#feature-engineering-1">Feature engineering</a>
+  <ul class="collapse">
+  <li><a href="#identifying-areas-for-feature-engineering" id="toc-identifying-areas-for-feature-engineering" class="nav-link" data-scroll-target="#identifying-areas-for-feature-engineering">Identifying areas for feature engineering</a></li>
+  </ul></li>
+  <li><a href="#encoding-categorical-variables" id="toc-encoding-categorical-variables" class="nav-link" data-scroll-target="#encoding-categorical-variables">Encoding categorical variables</a>
+  <ul class="collapse">
+  <li><a href="#encoding-categorical-variables---binary" id="toc-encoding-categorical-variables---binary" class="nav-link" data-scroll-target="#encoding-categorical-variables---binary">Encoding categorical variables - binary</a></li>
+  <li><a href="#encoding-categorical-variables---one-hot" id="toc-encoding-categorical-variables---one-hot" class="nav-link" data-scroll-target="#encoding-categorical-variables---one-hot">Encoding categorical variables - one-hot</a></li>
+  </ul></li>
+  <li><a href="#engineering-numerical-features" id="toc-engineering-numerical-features" class="nav-link" data-scroll-target="#engineering-numerical-features">Engineering numerical features</a>
+  <ul class="collapse">
+  <li><a href="#engineering-numerical-features---taking-an-average" id="toc-engineering-numerical-features---taking-an-average" class="nav-link" data-scroll-target="#engineering-numerical-features---taking-an-average">Engineering numerical features - taking an average</a></li>
+  <li><a href="#engineering-numerical-features---datetime" id="toc-engineering-numerical-features---datetime" class="nav-link" data-scroll-target="#engineering-numerical-features---datetime">Engineering numerical features - datetime</a></li>
+  </ul></li>
+  <li><a href="#text-classification" id="toc-text-classification" class="nav-link" data-scroll-target="#text-classification">Text classification</a>
+  <ul class="collapse">
+  <li><a href="#engineering-features-from-strings---extraction" id="toc-engineering-features-from-strings---extraction" class="nav-link" data-scroll-target="#engineering-features-from-strings---extraction">Engineering features from strings - extraction</a></li>
+  <li><a href="#engineering-features-from-strings---tfidf" id="toc-engineering-features-from-strings---tfidf" class="nav-link" data-scroll-target="#engineering-features-from-strings---tfidf">Engineering features from strings - tf/idf</a></li>
+  <li><a href="#text-classification-using-tfidf-vectors" id="toc-text-classification-using-tfidf-vectors" class="nav-link" data-scroll-target="#text-classification-using-tfidf-vectors">Text classification using tf/idf vectors</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Feature Engineering</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">feature engineering</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="feature-engineering" class="level1">
+<h1>Feature Engineering</h1>
+<p>We will cover a variety of aspects of feature engineering in this section, including how to use the features already present in a dataset to create new, more useful, features, while also showing you how to encode, aggregate, and extract information from both numerical and textual features within a dataset.</p>
+<p>This <strong>Feature Engineering</strong> is part of <a href="https://app.datacamp.com/learn/courses/preprocessing-for-machine-learning-in-python">Datacamp course: Preprocessing for Machine Learning in Python</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="feature-engineering-1" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering-1">Feature engineering</h2>
+<ul>
+<li>Creation of new features based on existing features</li>
+<li>Insight into relationships between features</li>
+<li>Extract and expand data</li>
+<li>Dataset-dependent</li>
+</ul>
+<section id="identifying-areas-for-feature-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-areas-for-feature-engineering">Identifying areas for feature engineering</h3>
+<p>Take an exploratory look at the <code>volunteer</code> dataset, using the variable of that name. Which of the following columns would you want to perform a feature engineering task on?</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> pd.read_csv(<span class="st">'dataset/volunteer_opportunities.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>volunteer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>opportunity_id</th>
+      <th>content_id</th>
+      <th>vol_requests</th>
+      <th>event_time</th>
+      <th>title</th>
+      <th>hits</th>
+      <th>summary</th>
+      <th>is_priority</th>
+      <th>category_id</th>
+      <th>category_desc</th>
+      <th>...</th>
+      <th>end_date_date</th>
+      <th>status</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Community Board</th>
+      <th>Community Council</th>
+      <th>Census Tract</th>
+      <th>BIN</th>
+      <th>BBL</th>
+      <th>NTA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4996</td>
+      <td>37004</td>
+      <td>50</td>
+      <td>0</td>
+      <td>Volunteers Needed For Rise Up &amp; Stay Put! Home...</td>
+      <td>737</td>
+      <td>Building on successful events last summer and ...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>July 30 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5008</td>
+      <td>37036</td>
+      <td>2</td>
+      <td>0</td>
+      <td>Web designer</td>
+      <td>22</td>
+      <td>Build a website for an Afghan business</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>February 01 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5016</td>
+      <td>37143</td>
+      <td>20</td>
+      <td>0</td>
+      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
+      <td>62</td>
+      <td>Please join us and the students from Mott Hall...</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>January 29 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5022</td>
+      <td>37237</td>
+      <td>500</td>
+      <td>0</td>
+      <td>Fight global hunger and support women farmers ...</td>
+      <td>14</td>
+      <td>The Oxfam Action Corps is a group of dedicated...</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>Strengthening Communities</td>
+      <td>...</td>
+      <td>March 31 2012</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5055</td>
+      <td>37425</td>
+      <td>15</td>
+      <td>0</td>
+      <td>Stop 'N' Swap</td>
+      <td>31</td>
+      <td>Stop 'N' Swap reduces NYC's waste by finding n...</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>Environment</td>
+      <td>...</td>
+      <td>February 05 2011</td>
+      <td>approved</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 35 columns</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="encoding-categorical-variables" class="level2">
+<h2 class="anchored" data-anchor-id="encoding-categorical-variables">Encoding categorical variables</h2>
+<section id="encoding-categorical-variables---binary" class="level3">
+<h3 class="anchored" data-anchor-id="encoding-categorical-variables---binary">Encoding categorical variables - binary</h3>
+<p>Take a look at the <code>hiking</code> dataset. There are several columns here that need encoding, one of which is the <code>Accessible</code> column, which needs to be encoded in order to be modeled. Accessible is a binary feature, so it has two values - either <code>Y</code> or <code>N</code> - so it needs to be encoded into 1s and 0s. Use scikit-learn’s <code>LabelEncoder</code> method to do that transformation.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hiking <span class="op">=</span> pd.read_json(<span class="st">'dataset/hiking.json'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>hiking.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Prop_ID</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Park_Name</th>
+      <th>Length</th>
+      <th>Difficulty</th>
+      <th>Other_Details</th>
+      <th>Accessible</th>
+      <th>Limited_Access</th>
+      <th>lat</th>
+      <th>lon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>B057</td>
+      <td>Salt Marsh Nature Trail</td>
+      <td>Enter behind the Salt Marsh Nature Center, loc...</td>
+      <td>Marine Park</td>
+      <td>0.8 miles</td>
+      <td>None</td>
+      <td>&lt;p&gt;The first half of this mile-long trail foll...</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B073</td>
+      <td>Lullwater</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>1.0 mile</td>
+      <td>Easy</td>
+      <td>Explore the Lullwater to see how nature thrive...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>B073</td>
+      <td>Midwood</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.75 miles</td>
+      <td>Easy</td>
+      <td>Step back in time with a walk through Brooklyn...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>B073</td>
+      <td>Peninsula</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.5 miles</td>
+      <td>Easy</td>
+      <td>Discover how the Peninsula has changed over th...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>B073</td>
+      <td>Waterfall</td>
+      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+      <td>Prospect Park</td>
+      <td>0.5 miles</td>
+      <td>Easy</td>
+      <td>Trace the source of the Lake on the Waterfall ...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the LabelEncoder object</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> LabelEncoder()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the encoding to the "Accessible" column</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>hiking[<span class="st">'Accessible_enc'</span>] <span class="op">=</span> enc.fit_transform(hiking[<span class="st">'Accessible'</span>])</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the two columns</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>hiking[[<span class="st">'Accessible'</span>, <span class="st">'Accessible_enc'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Accessible</th>
+      <th>Accessible_enc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Y</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>N</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>N</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>N</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>N</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="encoding-categorical-variables---one-hot" class="level3">
+<h3 class="anchored" data-anchor-id="encoding-categorical-variables---one-hot">Encoding categorical variables - one-hot</h3>
+<p>One of the columns in the <code>volunteer</code> dataset, <code>category_desc</code>, gives category descriptions for the volunteer opportunities listed. Because it is a categorical variable with more than two categories, we need to use one-hot encoding to transform this column numerically. Use Pandas’ <code>get_dummies()</code> function to do so.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the category_desc column</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>category_enc <span class="op">=</span> pd.get_dummies(volunteer[<span class="st">'category_desc'</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the encoded columns</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_enc.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Education  Emergency Preparedness  Environment  Health  \
+0          0                       0            0       0   
+1          0                       0            0       0   
+2          0                       0            0       0   
+3          0                       0            0       0   
+4          0                       0            1       0   
+
+   Helping Neighbors in Need  Strengthening Communities  
+0                          0                          0  
+1                          0                          1  
+2                          0                          1  
+3                          0                          1  
+4                          0                          0  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="engineering-numerical-features" class="level2">
+<h2 class="anchored" data-anchor-id="engineering-numerical-features">Engineering numerical features</h2>
+<section id="engineering-numerical-features---taking-an-average" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-numerical-features---taking-an-average">Engineering numerical features - taking an average</h3>
+<p>A good use case for taking an aggregate statistic to create a new feature is to take the mean of columns. Here, you have a DataFrame of running times named <code>running_times_5k</code>. For each <code>name</code> in the dataset, take the mean of their 5 run times.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>running_times_5k <span class="op">=</span> pd.read_csv(<span class="st">'dataset/running_times_5k.csv'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>running_times_5k</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>run1</th>
+      <th>run2</th>
+      <th>run3</th>
+      <th>run4</th>
+      <th>run5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Sue</td>
+      <td>20.1</td>
+      <td>18.5</td>
+      <td>19.6</td>
+      <td>20.3</td>
+      <td>18.3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mark</td>
+      <td>16.5</td>
+      <td>17.1</td>
+      <td>16.9</td>
+      <td>17.6</td>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sean</td>
+      <td>23.5</td>
+      <td>25.1</td>
+      <td>25.2</td>
+      <td>24.6</td>
+      <td>23.9</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Erin</td>
+      <td>21.7</td>
+      <td>21.1</td>
+      <td>20.9</td>
+      <td>22.1</td>
+      <td>22.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Jenny</td>
+      <td>25.8</td>
+      <td>27.1</td>
+      <td>26.1</td>
+      <td>26.7</td>
+      <td>26.9</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Russell</td>
+      <td>30.9</td>
+      <td>29.6</td>
+      <td>31.4</td>
+      <td>30.4</td>
+      <td>29.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of the columns to average</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>run_columns <span class="op">=</span> [<span class="st">'run1'</span>, <span class="st">'run2'</span>, <span class="st">'run3'</span>, <span class="st">'run4'</span>, <span class="st">'run5'</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use apply to create a mean column</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>running_times_5k[<span class="st">'mean'</span>] <span class="op">=</span> running_times_5k.<span class="bu">apply</span>(<span class="kw">lambda</span> row: row[run_columns].mean(), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the results</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(running_times_5k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      name  run1  run2  run3  run4  run5   mean
+0      Sue  20.1  18.5  19.6  20.3  18.3  19.36
+1     Mark  16.5  17.1  16.9  17.6  17.3  17.08
+2     Sean  23.5  25.1  25.2  24.6  23.9  24.46
+3     Erin  21.7  21.1  20.9  22.1  22.2  21.60
+4    Jenny  25.8  27.1  26.1  26.7  26.9  26.52
+5  Russell  30.9  29.6  31.4  30.4  29.9  30.44</code></pre>
+</div>
+</div>
+</section>
+<section id="engineering-numerical-features---datetime" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-numerical-features---datetime">Engineering numerical features - datetime</h3>
+<p>There are several columns in the <code>volunteer</code> dataset comprised of datetimes. Let’s take a look at the <code>start_date_date</code> column and extract just the month to use as a feature for modeling.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, convert string column to date column</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>volunteer[<span class="st">'start_date_converted'</span>] <span class="op">=</span> pd.to_datetime(volunteer[<span class="st">'start_date_date'</span>])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract just the month from the converted column</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>volunteer[<span class="st">'start_date_month'</span>] <span class="op">=</span> volunteer[<span class="st">'start_date_converted'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> row: row.month)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the converted and new month columns</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>volunteer[[<span class="st">'start_date_converted'</span>, <span class="st">'start_date_month'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>start_date_converted</th>
+      <th>start_date_month</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2011-07-30</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2011-02-01</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2011-01-29</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2011-02-14</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2011-02-05</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="text-classification" class="level2">
+<h2 class="anchored" data-anchor-id="text-classification">Text classification</h2>
+<section id="engineering-features-from-strings---extraction" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-features-from-strings---extraction">Engineering features from strings - extraction</h3>
+<p>The <code>Length</code> column in the <code>hiking</code> dataset is a column of strings, but contained in the column is the mileage for the hike. We’re going to extract this mileage using regular expressions, and then use a lambda in Pandas to apply the extraction to the DataFrame.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Write a pattern to extract numbers and decimals</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_mileage(length):</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    pattern <span class="op">=</span> re.<span class="bu">compile</span>(<span class="vs">r'\d+\.\d+'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">==</span> <span class="va">None</span>:</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Search the text for matches</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    mile <span class="op">=</span> re.match(pattern, length)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If a value is returned, use group(0) to return the found value</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> mile <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">float</span>(mile.group(<span class="dv">0</span>))</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the Length column and take a look at both columns</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>hiking[<span class="st">'Length_num'</span>] <span class="op">=</span> hiking[<span class="st">'Length'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> row: return_mileage(row))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>hiking[[<span class="st">'Length'</span>, <span class="st">'Length_num'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Length</th>
+      <th>Length_num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.8 miles</td>
+      <td>0.80</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0 mile</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.75 miles</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.5 miles</td>
+      <td>0.50</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.5 miles</td>
+      <td>0.50</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="engineering-features-from-strings---tfidf" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-features-from-strings---tfidf">Engineering features from strings - tf/idf</h3>
+<p>Let’s transform the <code>volunteer</code> dataset’s <code>title</code> column into a text vector, to use in a prediction task in the next exercise.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to drop NaN for train_test_split</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> pd.read_csv(<span class="st">'dataset/volunteer_opportunities.csv'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Take the title text</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>title_text <span class="op">=</span> volunteer[<span class="st">'title'</span>]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the vectorizer method</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>tfidf_vec <span class="op">=</span> TfidfVectorizer()</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the text into tf-idf vectors</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>text_tfidf <span class="op">=</span> tfidf_vec.fit_transform(title_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="text-classification-using-tfidf-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="text-classification-using-tfidf-vectors">Text classification using tf/idf vectors</h3>
+<p>Now that we’ve encoded the <code>volunteer</code> dataset’s <code>title</code> column into tf/idf vectors, let’s use those vectors to try to predict the <code>category_desc</code> column.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> GaussianNB()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset according to the class distribution of category_desc</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> volunteer[<span class="st">'category_desc'</span>]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(text_tfidf.toarray(), y, stratify<span class="op">=</span>y)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model to the training data</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>nb.fit(X_train, y_train)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the model's accuracy</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(nb.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5032258064516129</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
