@@ -227,7 +227,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#removing-features-without-variance" id="toc-removing-features-without-variance" class="nav-link" data-scroll-target="#removing-features-without-variance">Removing features without variance</a></li>
   </ul></li>
-  <li><a href="#feature-selection-vs-feature-extraction" id="toc-feature-selection-vs-feature-extraction" class="nav-link" data-scroll-target="#feature-selection-vs-feature-extraction">Feature selection vs feature extraction</a></li>
+  <li><a href="#feature-selection-vs-feature-extraction" id="toc-feature-selection-vs-feature-extraction" class="nav-link" data-scroll-target="#feature-selection-vs-feature-extraction">Feature selection vs feature extraction</a>
+  <ul class="collapse">
+  <li><a href="#visually-detecting-redundant-features" id="toc-visually-detecting-redundant-features" class="nav-link" data-scroll-target="#visually-detecting-redundant-features">Visually detecting redundant features</a></li>
+  </ul></li>
+  <li><a href="#t-sne-visualization-of-high-dimensional" id="toc-t-sne-visualization-of-high-dimensional" class="nav-link" data-scroll-target="#t-sne-visualization-of-high-dimensional">t-SNE visualization of high-dimensional</a>
+  <ul class="collapse">
+  <li><a href="#fitting-t-sne-to-the-ansur-data" id="toc-fitting-t-sne-to-the-ansur-data" class="nav-link" data-scroll-target="#fitting-t-sne-to-the-ansur-data">Fitting t-SNE to the ANSUR data</a></li>
+  <li><a href="#t-sne-visualisation-of-dimensionality" id="toc-t-sne-visualisation-of-dimensionality" class="nav-link" data-scroll-target="#t-sne-visualisation-of-dimensionality">t-SNE visualisation of dimensionality</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -528,12 +536,323 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>be less complex</li>
 <li>require less disk space</li>
 <li>require less computation time</li>
-<li>have lower chance of model overfitting <img src="Images/feature.png" class="img-fluid" alt="feature"> <img src="feature.png" id="fig-feature" class="img-fluid" alt="feature"></li>
+<li>have lower chance of model overfitting</li>
 </ul></li>
 </ul></li>
 </ul>
+<div id="fig-feature" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="feature.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: feature</figcaption><p></p>
+</figure>
+</div>
+<section id="visually-detecting-redundant-features" class="level3">
+<h3 class="anchored" data-anchor-id="visually-detecting-redundant-features">Visually detecting redundant features</h3>
+<p>Data visualization is a crucial step in any data exploration. Let’s use Seaborn to explore some samples of the US Army ANSUR body measurement dataset.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ansur_df_1 <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ansur_df_1.csv'</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ansur_df_2 <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ansur_df_2.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot and color the points using the 'Gender' feature</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(ansur_df_1, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove one of the redundant features</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reduced_df <span class="op">=</span> ansur_df_1.drop(<span class="st">'body_height'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creat a pairplot and color the points using the 'Gender' feature</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(reduced_df, hue<span class="op">=</span><span class="st">'Gender'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot and color the points using the 'Gender' feature</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(ansur_df_2, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the redundant feature</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reduced_df <span class="op">=</span> ansur_df_2.drop([<span class="st">'n_legs'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot and color the points using the 'Gender' feature</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(reduced_df, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the body height (inches) and stature (meters) hold the same information in a different unit + all the individuals in the second sample have two legs.</p>
+</section>
+</section>
+<section id="t-sne-visualization-of-high-dimensional" class="level2">
+<h2 class="anchored" data-anchor-id="t-sne-visualization-of-high-dimensional">t-SNE visualization of high-dimensional</h2>
+<p><img src="t-SNE-1.png" id="fig-t-SNE-1" class="img-fluid" alt="t-SNE-1"> <img src="t-SNE-2.png" id="fig-t-SNE-2" class="img-fluid" alt="t-SNE-2"> <img src="t-SNE-3.png" id="fig-t-SNE-3" class="img-fluid" alt="t-SNE-3"></p>
+<section id="fitting-t-sne-to-the-ansur-data" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-t-sne-to-the-ansur-data">Fitting t-SNE to the ANSUR data</h3>
+<p>t-SNE is a great technique for visual exploration of high dimensional datasets. In this exercise, you’ll apply it to the ANSUR dataset. You’ll remove non-numeric columns from the pre-loaded dataset df and fit TSNE to his numeric dataset.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ansur_male <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_MALE.csv'</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ansur_female <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_FEMALE.csv'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat([ansur_male, ansur_female])</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Branch</th>
+      <th>Component</th>
+      <th>Gender</th>
+      <th>abdominalextensiondepthsitting</th>
+      <th>acromialheight</th>
+      <th>acromionradialelength</th>
+      <th>anklecircumference</th>
+      <th>axillaheight</th>
+      <th>balloffootcircumference</th>
+      <th>balloffootlength</th>
+      <th>...</th>
+      <th>waistdepth</th>
+      <th>waistfrontlengthsitting</th>
+      <th>waistheightomphalion</th>
+      <th>wristcircumference</th>
+      <th>wristheight</th>
+      <th>weight_kg</th>
+      <th>stature_m</th>
+      <th>BMI</th>
+      <th>BMI_class</th>
+      <th>Height_class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Combat Arms</td>
+      <td>Regular Army</td>
+      <td>Male</td>
+      <td>266</td>
+      <td>1467</td>
+      <td>337</td>
+      <td>222</td>
+      <td>1347</td>
+      <td>253</td>
+      <td>202</td>
+      <td>...</td>
+      <td>240</td>
+      <td>440</td>
+      <td>1054</td>
+      <td>175</td>
+      <td>853</td>
+      <td>81.5</td>
+      <td>1.776</td>
+      <td>25.838761</td>
+      <td>Overweight</td>
+      <td>Tall</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Combat Support</td>
+      <td>Regular Army</td>
+      <td>Male</td>
+      <td>233</td>
+      <td>1395</td>
+      <td>326</td>
+      <td>220</td>
+      <td>1293</td>
+      <td>245</td>
+      <td>193</td>
+      <td>...</td>
+      <td>225</td>
+      <td>371</td>
+      <td>1054</td>
+      <td>167</td>
+      <td>815</td>
+      <td>72.6</td>
+      <td>1.702</td>
+      <td>25.062103</td>
+      <td>Overweight</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Combat Support</td>
+      <td>Regular Army</td>
+      <td>Male</td>
+      <td>287</td>
+      <td>1430</td>
+      <td>341</td>
+      <td>230</td>
+      <td>1327</td>
+      <td>256</td>
+      <td>196</td>
+      <td>...</td>
+      <td>255</td>
+      <td>411</td>
+      <td>1041</td>
+      <td>180</td>
+      <td>831</td>
+      <td>92.9</td>
+      <td>1.735</td>
+      <td>30.861480</td>
+      <td>Overweight</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Combat Service Support</td>
+      <td>Regular Army</td>
+      <td>Male</td>
+      <td>234</td>
+      <td>1347</td>
+      <td>310</td>
+      <td>230</td>
+      <td>1239</td>
+      <td>262</td>
+      <td>199</td>
+      <td>...</td>
+      <td>205</td>
+      <td>399</td>
+      <td>968</td>
+      <td>176</td>
+      <td>793</td>
+      <td>79.4</td>
+      <td>1.655</td>
+      <td>28.988417</td>
+      <td>Overweight</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Combat Service Support</td>
+      <td>Regular Army</td>
+      <td>Male</td>
+      <td>250</td>
+      <td>1585</td>
+      <td>372</td>
+      <td>247</td>
+      <td>1478</td>
+      <td>267</td>
+      <td>224</td>
+      <td>...</td>
+      <td>214</td>
+      <td>379</td>
+      <td>1245</td>
+      <td>188</td>
+      <td>954</td>
+      <td>94.6</td>
+      <td>1.914</td>
+      <td>25.823034</td>
+      <td>Overweight</td>
+      <td>Tall</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 99 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-numeric columns in the dataset</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>non_numeric <span class="op">=</span> [<span class="st">'Branch'</span>, <span class="st">'Gender'</span>, <span class="st">'Component'</span>, <span class="st">'BMI_class'</span>, <span class="st">'Height_class'</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the non-numeric columns from df</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>df_numeric <span class="op">=</span> df.drop(non_numeric, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a t-SNE model with learning rate 50</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> TSNE(learning_rate<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fit and transform the t-SNE model on the numeric dataset</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>tsne_features <span class="op">=</span> m.fit_transform(df_numeric)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tsne_features.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\manifold\_t_sne.py:800: FutureWarning: The default initialization in TSNE will change from 'random' to 'pca' in 1.2.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(6068, 2)</code></pre>
+</div>
+</div>
+<p>t-SNE reduced the more than 90 features in the dataset to just 2 which you can now plot.</p>
+</section>
+<section id="t-sne-visualisation-of-dimensionality" class="level3">
+<h3 class="anchored" data-anchor-id="t-sne-visualisation-of-dimensionality">t-SNE visualisation of dimensionality</h3>
+<p>Time to look at the results of your hard work. In this exercise, you will visualize the output of t-SNE dimensionality reduction on the combined male and female Ansur dataset. You’ll create 3 scatterplots of the 2 t-SNE features (<code>'x'</code> and <code>'y'</code>) which were added to the dataset <code>df</code>. In each scatterplot you’ll color the points according to a different categorical variable.</p>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'x'</span>] <span class="op">=</span> tsne_features[:, <span class="dv">0</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'y'</span>] <span class="op">=</span> tsne_features[:, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points according to Army Component</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Component'</span>, data<span class="op">=</span>df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>&lt;AxesSubplot:xlabel='x', ylabel='y'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points by Army Branch</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Branch'</span>, data<span class="op">=</span>df)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points by Gender</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Gender'</span>, data<span class="op">=</span>df)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>There is a Male and a Female cluster. t-SNE found these gender differences in body shape without being told about them explicitly! From the second plot you learned there are more males in the Combat Arms Branch.</p>
 
 
+</section>
 </section>
 </section>
 
