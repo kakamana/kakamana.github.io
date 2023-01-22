@@ -7,6 +7,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/Exploring high dimensional data/Exploring High Dimensional data.html",
+      "/posts/Feature selection I - selection for feature information/Feature selection I - selection for feature information.html",
       "/posts/Classification with XGBoost/Classification with XGBoost.html",
       "/posts/Fine Tuning XGBoost Model/Fine tunning your XGBoost model.html",
       "/posts/Regression with XGBoost/Regression with XGBoost.html",
