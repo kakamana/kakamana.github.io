@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-01-24">
+
+<title>Kakamana’s Blogs - Time Series as Inputs to a Model</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#time-series-as-inputs-to-a-model" id="toc-time-series-as-inputs-to-a-model" class="nav-link active" data-scroll-target="#time-series-as-inputs-to-a-model">Time Series as Inputs to a Model</a>
+  <ul class="collapse">
+  <li><a href="#classifying-a-time-series" id="toc-classifying-a-time-series" class="nav-link" data-scroll-target="#classifying-a-time-series">Classifying a time series</a>
+  <ul class="collapse">
+  <li><a href="#many-repetitions-of-sounds" id="toc-many-repetitions-of-sounds" class="nav-link" data-scroll-target="#many-repetitions-of-sounds">Many repetitions of sounds</a></li>
+  <li><a href="#invariance-in-time" id="toc-invariance-in-time" class="nav-link" data-scroll-target="#invariance-in-time">Invariance in time</a></li>
+  <li><a href="#build-a-classification-model" id="toc-build-a-classification-model" class="nav-link" data-scroll-target="#build-a-classification-model">Build a classification model</a></li>
+  <li><a href="#improving-features-for-classification" id="toc-improving-features-for-classification" class="nav-link" data-scroll-target="#improving-features-for-classification">Improving features for classification</a></li>
+  <li><a href="#calculating-the-envelope-of-sound" id="toc-calculating-the-envelope-of-sound" class="nav-link" data-scroll-target="#calculating-the-envelope-of-sound">Calculating the envelope of sound</a></li>
+  <li><a href="#calculating-features-from-the-envelope" id="toc-calculating-features-from-the-envelope" class="nav-link" data-scroll-target="#calculating-features-from-the-envelope">Calculating features from the envelope</a></li>
+  <li><a href="#derivative-features-the-tempogram" id="toc-derivative-features-the-tempogram" class="nav-link" data-scroll-target="#derivative-features-the-tempogram">Derivative features: The tempogram</a></li>
+  </ul></li>
+  <li><a href="#the-spectrogram" id="toc-the-spectrogram" class="nav-link" data-scroll-target="#the-spectrogram">The spectrogram</a>
+  <ul class="collapse">
+  <li><a href="#spectrograms-of-heartbeat-audio" id="toc-spectrograms-of-heartbeat-audio" class="nav-link" data-scroll-target="#spectrograms-of-heartbeat-audio">Spectrograms of heartbeat audio</a></li>
+  <li><a href="#engineering-spectral-features" id="toc-engineering-spectral-features" class="nav-link" data-scroll-target="#engineering-spectral-features">Engineering spectral features</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Time Series as Inputs to a Model</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">time series</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 24, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="time-series-as-inputs-to-a-model" class="level1">
+<h1>Time Series as Inputs to a Model</h1>
+<p>To include time series in your machine learning pipeline, you use them as features in your model. We will briefly covers the common features that are extracted from time series for machine learning.</p>
+<p>This <strong>Time Series as Inputs to a Model</strong> is part of <a href="https://app.datacamp.com/learn/courses/machine-learning-for-time-series-data-in-python">Datacamp course: Machine Learning for Time Series Data in Python</a></p>
+<p>This is my learning experience of data science through DataCamp</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> librosa <span class="im">as</span> lr</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">5</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'fivethirtyeight'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="classifying-a-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="classifying-a-time-series">Classifying a time series</h2>
+<section id="many-repetitions-of-sounds" class="level3">
+<h3 class="anchored" data-anchor-id="many-repetitions-of-sounds">Many repetitions of sounds</h3>
+<p>In this exercise, you’ll start with perhaps the simplest classification technique: averaging across dimensions of a dataset and visually inspecting the result.</p>
+<p>You’ll use the heartbeat data described in the last chapter. Some recordings are normal heartbeat activity, while others are abnormal activity. Let’s see if you can spot the difference.</p>
+<p>Two DataFrames, <code>normal</code> and <code>abnormal</code>, each with the shape of <code>(n_times_points, n_audio_files)</code> containing the audio for several heartbeats are available in your workspace.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_plot_and_make_titles():</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, <span class="dv">0</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Normal Heartbeats"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, <span class="dv">1</span>].<span class="bu">set</span>(title<span class="op">=</span><span class="st">"Abnormal Heartbeats"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>normal <span class="op">=</span> pd.read_csv(<span class="st">'dataset/normal_sound.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>abnormal <span class="op">=</span> pd.read_csv(<span class="st">'dataset/abnormal_sound.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sfreq <span class="op">=</span> <span class="dv">2205</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">7</span>), sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the time array</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(normal)) <span class="op">/</span> sfreq</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the normal/abnormal audio so you can loop and plot</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>stacked_audio <span class="op">=</span> np.hstack([normal, abnormal]).T</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through each audio file / ax object and plot</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># .T.ravel() transposes the array, then unravels it into a 1-D vector for looping</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> iaudio, ax <span class="kw">in</span> <span class="bu">zip</span>(stacked_audio, axs.T.ravel()):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(time, iaudio)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>show_plot_and_make_titles()</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">As you can see there is a lot of variability in the raw data, let's see if you can average out some of that noise to notice a difference."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+As you can see there is a lot of variability in the raw data, let's see if you can average out some of that noise to notice a difference.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="invariance-in-time" class="level3">
+<h3 class="anchored" data-anchor-id="invariance-in-time">Invariance in time</h3>
+<p>While you should always start by visualizing your raw data, this is often uninformative when it comes to discriminating between two classes of data points. Data is usually noisy or exhibits complex patterns that aren’t discoverable by the naked eye.</p>
+<p>Another common technique to find simple differences between two sets of data is to average across multiple instances of the same class. This may remove noise and reveal underlying patterns (or, it may not).</p>
+<p>In this exercise, you’ll average across many instances of each class of heartbeat sound.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average across the audio files of each DataFrame</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mean_normal <span class="op">=</span> np.mean(normal, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>mean_abnormal <span class="op">=</span> np.mean(abnormal, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot each average over time</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax1.plot(time, mean_normal)<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ax1.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Normal Data'</span>)<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ax2.plot(time, mean_abnormal)<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>ax2.<span class="bu">set</span>(title<span class="op">=</span><span class="st">'Abnormal Data'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="build-a-classification-model" class="level3">
+<h3 class="anchored" data-anchor-id="build-a-classification-model">Build a classification model</h3>
+<p>While eye-balling differences is a useful way to gain an intuition for the data, let’s see if you can operationalize things with a model. In this exercise, you will use each repetition as a datapoint, and each moment in time as a feature to fit a classifier that attempts to predict abnormal vs.&nbsp;normal heartbeats using only the raw data.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>normal <span class="op">=</span> pd.read_csv(<span class="st">'dataset/heart_normal.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>abnormal <span class="op">=</span> pd.read_csv(<span class="st">'dataset/heart_abnormal.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>normal_train_idx <span class="op">=</span> np.random.choice(normal.shape[<span class="dv">1</span>], size<span class="op">=</span><span class="dv">22</span>, replace<span class="op">=</span><span class="va">False</span>).tolist()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>normal_test_idx <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(np.arange(normal.shape[<span class="dv">1</span>]).tolist()) <span class="op">-</span> <span class="bu">set</span>(normal_train_idx))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>abnormal_train_idx <span class="op">=</span> np.random.choice(abnormal.shape[<span class="dv">1</span>], size<span class="op">=</span><span class="dv">20</span>, replace<span class="op">=</span><span class="va">False</span>).tolist()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>abnormal_test_idx <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(np.arange(abnormal.shape[<span class="dv">1</span>]).tolist()) <span class="op">-</span> <span class="bu">set</span>(abnormal_train_idx))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.concat([normal.iloc[:, normal_train_idx],</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                     abnormal.iloc[:, abnormal_train_idx]], axis<span class="op">=</span><span class="dv">1</span>).to_numpy().T</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.concat([normal.iloc[:, normal_test_idx],</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                    abnormal.iloc[:, abnormal_test_idx]], axis<span class="op">=</span><span class="dv">1</span>).to_numpy().T</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.array([<span class="st">'normal'</span>] <span class="op">*</span> <span class="bu">len</span>(normal_train_idx) <span class="op">+</span> [<span class="st">'abnormal'</span>] <span class="op">*</span> <span class="bu">len</span>(abnormal_train_idx))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> np.array([<span class="st">'normal'</span>] <span class="op">*</span> <span class="bu">len</span>(normal_test_idx) <span class="op">+</span> [<span class="st">'abnormal'</span>] <span class="op">*</span> <span class="bu">len</span>(abnormal_test_idx))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> LinearSVC</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize and fit the model</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearSVC()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions and score them manually</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> model.predict(X_test)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">sum</span>(predictions <span class="op">==</span> y_test.squeeze()) <span class="op">/</span> <span class="bu">len</span>(y_test))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Note that your predictions didn't do so well. That's because the features you're using as inputs to the model (raw data) aren't very good at differentiating classes. Next, you'll explore how to calculate some more complex features that may improve the results."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5555555555555556
+
+Note that your predictions didn't do so well. That's because the features you're using as inputs to the model (raw data) aren't very good at differentiating classes. Next, you'll explore how to calculate some more complex features that may improve the results.</code></pre>
+</div>
+</div>
+</section>
+<section id="improving-features-for-classification" class="level3">
+<h3 class="anchored" data-anchor-id="improving-features-for-classification">Improving features for classification</h3>
+<ul>
+<li>The auditory envelope
+<ul>
+<li>Smooth the data to calculate the auditory envelope</li>
+<li>Releated to the total amount of audio energy present at each moment of time</li>
+</ul></li>
+<li>Smoothing over time
+<ul>
+<li>Instead of averaging over all time, we can do a local average</li>
+<li>This is called smoothing your timeseries</li>
+<li>It removes short-term noise, while retaining the general pattern</li>
+</ul></li>
+<li>Auditory features: The Tempogram
+<ul>
+<li>We can summarize more complex temporal information with timeseries-specific functions</li>
+<li><code>librosa</code> is a great library for auditory and timeseries feature engineering</li>
+<li>We can calculate summary statistics of tempo in the same way that we can for the envelope</li>
+</ul></li>
+</ul>
+</section>
+<section id="calculating-the-envelope-of-sound" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-the-envelope-of-sound">Calculating the envelope of sound</h3>
+<p>One of the ways you can improve the features available to your model is to remove some of the noise present in the data. In audio data, a common way to do this is to smooth the data and then rectify it so that the total amount of sound energy over time is more distinguishable. You’ll do this in the current exercise.</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>audio, sfreq <span class="op">=</span> lr.load(<span class="st">'dataset/files/murmur__201108222238.wav'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="bu">len</span>(audio)) <span class="op">/</span> sfreq</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>audio <span class="op">=</span> pd.DataFrame(audio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.plot(time[:<span class="dv">2205</span>], audio[:<span class="dv">2205</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rectify the audio signal</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>audio_rectified <span class="op">=</span> audio.<span class="bu">apply</span>(np.<span class="bu">abs</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the result</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.plot(time[:<span class="dv">2205</span>], audio_rectified[:<span class="dv">2205</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Smooth by applying a rolling mean</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>audio_rectified_smooth <span class="op">=</span> audio_rectified.rolling(<span class="dv">50</span>).mean()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the result</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.plot(time[:<span class="dv">2205</span>], audio_rectified_smooth[:<span class="dv">2205</span>])</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">By calculating the envelope of each sound and smoothing it, you've eliminated much of the noise and have a cleaner signal to tell you when a heartbeat is happening."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+By calculating the envelope of each sound and smoothing it, you've eliminated much of the noise and have a cleaner signal to tell you when a heartbeat is happening.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="calculating-features-from-the-envelope" class="level3">
+<h3 class="anchored" data-anchor-id="calculating-features-from-the-envelope">Calculating features from the envelope</h3>
+<p>Now that you’ve removed some of the noisier fluctuations in the audio, let’s see if this improves your ability to classify.</p>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate stats</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> np.mean(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>stds <span class="op">=</span> np.std(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>maxs <span class="op">=</span> np.<span class="bu">max</span>(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>labels<span class="op">=</span>np.array([<span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>       <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>       <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>       <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>       <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>       <span class="st">'murmur'</span>, <span class="st">'normal'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>, <span class="st">'murmur'</span>])</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the X and y array</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([means, stds, maxs])</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> labels.reshape([<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model and score on testing data</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>percent_score <span class="op">=</span> cross_val_score(model, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(percent_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Found input variables with inconsistent numbers of samples: [1, 60]</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate stats</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> np.mean(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>stds <span class="op">=</span> np.std(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>maxs <span class="op">=</span> np.<span class="bu">max</span>(audio_rectified_smooth[:<span class="dv">2205</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the X and y array</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([means, stds, maxs])</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> labels.reshape([<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model and score on testing data</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>percent_score <span class="op">=</span> cross_val_score(model, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(percent_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="derivative-features-the-tempogram" class="level3">
+<h3 class="anchored" data-anchor-id="derivative-features-the-tempogram">Derivative features: The tempogram</h3>
+<p>One benefit of cleaning up your data is that it lets you compute more sophisticated features. For example, the envelope calculation you performed is a common technique in computing tempo and rhythm features. In this exercise, you’ll use <code>librosa</code> to compute some tempo and rhythm features for heartbeat data, and fit a model once more.</p>
+<p>Note that <code>librosa</code> functions tend to only operate on numpy arrays instead of DataFrames, so we’ll access our Pandas data as a Numpy array with the <code>.values</code> attribute.</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>audio <span class="op">=</span> pd.read_csv(<span class="st">'dataset/heart_normal.csv'</span>,index_col<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the tempo of the sounds</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>tempos <span class="op">=</span> []</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col, i_audio <span class="kw">in</span> audio.items():</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    tempos.append(lr.beat.tempo(i_audio.values, sr<span class="op">=</span>sfreq, hop_length<span class="op">=</span><span class="dv">2</span><span class="op">**</span><span class="dv">6</span>, aggregate<span class="op">=</span><span class="va">None</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the list to an array so you can manipulate it more easily</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>tempos <span class="op">=</span> np.array(tempos)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate statistics of each tempo</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>tempos_mean <span class="op">=</span> tempos.mean(axis<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>tempos_std <span class="op">=</span> tempos.std(axis<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>tempos_max <span class="op">=</span> tempos.<span class="bu">max</span>(axis<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.00099522 -0.00338075 -0.00094784 ... -0.00023299 -0.00010334
+ -0.0003675 ] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 2.80759443e-04  3.80784913e-04  6.25667381e-05 ... -5.90919633e-04
+ -1.31961866e-03  6.51859853e-04] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00295301 0.00303359 0.00029151 ... 0.01680872 0.00876233 0.00444242] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00549661 0.01008847 0.00827173 ... 0.00813954 0.00619713 0.00364849] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00043319  0.00055414  0.00023211 ...  0.00016555 -0.00036832
+ -0.0012916 ] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00131579 -0.00015355 -0.00194486 ... -0.01591193 -0.01542908
+ -0.01310291] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.00169436 -0.00215661  0.0006191  ... -0.02194604 -0.02314005
+ -0.02326724] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00021126 -0.00194455  0.00614844 ... -0.00098258 -0.00219158
+ -0.00377412] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 4.16483199e-05 -1.46395949e-04  4.75105007e-05 ... -1.81124444e-04
+  1.68072991e-04 -6.40757207e-04] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00109218 -0.0055544  -0.00129727 ... -0.0003909   0.00268054
+  0.00576824] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-3.17522317e-05  5.89671458e-07 -1.28239612e-04 ...  2.21416631e-05
+ -6.30965107e-04 -7.45263591e-04] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-1.68890948e-03 -1.32481696e-03  1.01418654e-02 ...  4.14374081e-05
+  1.19807897e-03  1.22049963e-02] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00886944  0.00896404 -0.00719271 ...  0.00248993  0.00203395
+  0.00056616] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.01539746 -0.02647807 -0.04187883 ... -0.01472374 -0.00014676
+  0.0088793 ] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 4.97730616e-05 -3.91157118e-05 -1.05267245e-05 ...  4.12768350e-05
+ -3.41438931e-06 -7.40338146e-05] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00263497 0.00392065 0.00050858 ... 0.00199158 0.00321893 0.0036029 ] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00214691 0.00588722 0.00717673 ... 0.00150915 0.00094547 0.00029681] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00013853 -0.00022494 -0.00077886 ...  0.00027371 -0.0001696
+ -0.0007767 ] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[9.03067179e-04 2.53955345e-03 2.63813254e-03 ... 6.55362310e-05
+ 1.65422955e-06 3.77816723e-05] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.02368779  0.04664399  0.03966612 ... -0.00159054  0.00319402
+  0.00568775] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 0.00036906  0.00098006  0.00076451 ... -0.01618693 -0.01591166
+ -0.01216409] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 2.58310338e-05 -6.33218806e-05 -4.30757937e-05 ...  1.37505558e-04
+  9.46284199e-05 -1.37633097e-05] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00274239 0.00216137 0.00155329 ... 0.02098136 0.01238883 0.02040507] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[ 6.17577112e-04  4.75932844e-04 -2.37618315e-05 ...  5.41530571e-05
+ -1.66832266e-04  9.08635848e-05] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-7.84732215e-03 -1.80613808e-02 -1.71636231e-02 ... -1.40546661e-04
+ -1.09980232e-04 -1.59223055e-05] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.00325151  0.00729134  0.01644677 ... -0.06250024 -0.04183943
+ -0.01117085] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[0.00879901 0.017107   0.01501772 ... 0.00858655 0.00877825 0.01070163] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.36173704 -0.65184158 -0.36568254 ... -0.00933582  0.00322876
+  0.01983791] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))
+C:\Users\dghr201\AppData\Local\Temp\ipykernel_27096\3334237929.py:4: FutureWarning: Pass y=[-0.0016092  -0.00431922  0.00057256 ... -0.00097932  0.01224548
+  0.01697695] as keyword args. From version 0.10 passing these as positional arguments will result in an error
+  tempos.append(lr.beat.tempo(i_audio.values, sr=sfreq, hop_length=2**6, aggregate=None))</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the X and y arrays</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([means, stds, maxs, tempos_mean, tempos_std, tempos_max])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> labels.reshape([<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model and score on testing data</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>percent_score <span class="op">=</span> cross_val_score(model, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(percent_score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="the-spectrogram" class="level2">
+<h2 class="anchored" data-anchor-id="the-spectrogram">The spectrogram</h2>
+<ul>
+<li>Fourier transforms
+<ul>
+<li>Timeseries data can be described as a combination of quickly-changing things and slowly-changing things</li>
+<li>At each moment in time, we can describe the relative presence of fast- and slow-moving components</li>
+<li>The simplest way to do this is called a Fourier Transform</li>
+<li>This converts a single time series into an array that describe the timeseries as a combination of oscillations</li>
+</ul></li>
+<li>Spectrograms: combinations of windows Fourier transforms
+<ul>
+<li>A spectrogram is a collection of windowsed Fourier transforms over time</li>
+<li>Similar to how a rolling mean was calculated:
+<ul>
+<li>Choose a windows size and shape</li>
+<li>At a timepoint, calculate the FFT for that window</li>
+<li>Slide the window over by one</li>
+<li>Aggregate the results</li>
+</ul></li>
+<li>Called a Short-Time Fourier Transform (STFT)</li>
+</ul></li>
+<li>Spectral feature engineering
+<ul>
+<li>Each timeseries has a different spectral pattern</li>
+<li>We can calculate these spectral patterns by analyzing the spectrogram.</li>
+<li>For example, spectral bandwidth and spectran centroids describe where most of the energy is at each moment in time.</li>
+</ul></li>
+</ul>
+<section id="spectrograms-of-heartbeat-audio" class="level3">
+<h3 class="anchored" data-anchor-id="spectrograms-of-heartbeat-audio">Spectrograms of heartbeat audio</h3>
+<p>Spectral engineering is one of the most common techniques in machine learning for time series data. The first step in this process is to calculate a spectrogram of sound. This describes what spectral content (e.g., low and high pitches) are present in the sound over time. In this exercise, you’ll calculate a spectrogram of a heartbeat audio file.</p>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>audio, sfreq <span class="op">=</span> lr.load(<span class="st">'dataset/files/murmur__201108222246.wav'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> librosa.core <span class="im">import</span> stft, amplitude_to_db</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the STFT</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>HOP_LENGTH <span class="op">=</span> <span class="dv">2</span><span class="op">**</span><span class="dv">4</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># spec = stft(audio, hop_length=HOP_LENGTH, n_fft=2**7)</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For the test</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> pd.read_csv(<span class="st">'dataset/spec.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> spec.applymap(<span class="bu">complex</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.array(normal.index)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>audio <span class="op">=</span> pd.read_csv(<span class="st">'dataset/audio.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>).to_numpy().squeeze()</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>sfreq <span class="op">=</span> <span class="dv">2205</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> librosa.display <span class="im">import</span> specshow</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert into decibels</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>spec_db <span class="op">=</span> amplitude_to_db(spec)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the raw audio to the spectrogram of the audio</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(time,audio)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>specshow(spec_db, sr<span class="op">=</span>sfreq, x_axis<span class="op">=</span><span class="st">'time'</span>, y_axis<span class="op">=</span><span class="st">'hz'</span>, hop_length<span class="op">=</span>HOP_LENGTH)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Programs\Python\Python39\lib\site-packages\librosa\util\decorators.py:88: UserWarning: amplitude_to_db was called on complex input so phase information will be discarded. To suppress this warning, call amplitude_to_db(np.abs(S)) instead.
+  return f(*args, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-19-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="engineering-spectral-features" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-spectral-features">Engineering spectral features</h3>
+<p>As you can probably tell, there is a lot more information in a spectrogram compared to a raw audio file. By computing the spectral features, you have a much better idea of what’s going on. As such, there are all kinds of spectral features that you can compute using the spectrogram as a base. In this exercise, you’ll look at a few of these features.</p>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>spec <span class="op">=</span> np.array(np.<span class="bu">abs</span>(spec))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the spectral centroid and bandwidth for the spectrogram</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>bandwidths <span class="op">=</span> lr.feature.spectral_bandwidth(S<span class="op">=</span>spec)[<span class="dv">0</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>centroids <span class="op">=</span> lr.feature.spectral_centroid(S<span class="op">=</span>spec)[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#hide</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>times_spec <span class="op">=</span> np.array([ <span class="fl">0.</span>        ,  <span class="fl">0.00725624</span>,  <span class="fl">0.01451247</span>,  <span class="fl">0.02176871</span>,  <span class="fl">0.02902494</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.03628118</span>,  <span class="fl">0.04353741</span>,  <span class="fl">0.05079365</span>,  <span class="fl">0.05804989</span>,  <span class="fl">0.06530612</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.07256236</span>,  <span class="fl">0.07981859</span>,  <span class="fl">0.08707483</span>,  <span class="fl">0.09433107</span>,  <span class="fl">0.1015873</span> ,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.10884354</span>,  <span class="fl">0.11609977</span>,  <span class="fl">0.12335601</span>,  <span class="fl">0.13061224</span>,  <span class="fl">0.13786848</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.14512472</span>,  <span class="fl">0.15238095</span>,  <span class="fl">0.15963719</span>,  <span class="fl">0.16689342</span>,  <span class="fl">0.17414966</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.1814059</span> ,  <span class="fl">0.18866213</span>,  <span class="fl">0.19591837</span>,  <span class="fl">0.2031746</span> ,  <span class="fl">0.21043084</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.21768707</span>,  <span class="fl">0.22494331</span>,  <span class="fl">0.23219955</span>,  <span class="fl">0.23945578</span>,  <span class="fl">0.24671202</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.25396825</span>,  <span class="fl">0.26122449</span>,  <span class="fl">0.26848073</span>,  <span class="fl">0.27573696</span>,  <span class="fl">0.2829932</span> ,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.29024943</span>,  <span class="fl">0.29750567</span>,  <span class="fl">0.3047619</span> ,  <span class="fl">0.31201814</span>,  <span class="fl">0.31927438</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.32653061</span>,  <span class="fl">0.33378685</span>,  <span class="fl">0.34104308</span>,  <span class="fl">0.34829932</span>,  <span class="fl">0.35555556</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.36281179</span>,  <span class="fl">0.37006803</span>,  <span class="fl">0.37732426</span>,  <span class="fl">0.3845805</span> ,  <span class="fl">0.39183673</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.39909297</span>,  <span class="fl">0.40634921</span>,  <span class="fl">0.41360544</span>,  <span class="fl">0.42086168</span>,  <span class="fl">0.42811791</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.43537415</span>,  <span class="fl">0.44263039</span>,  <span class="fl">0.44988662</span>,  <span class="fl">0.45714286</span>,  <span class="fl">0.46439909</span>,</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.47165533</span>,  <span class="fl">0.47891156</span>,  <span class="fl">0.4861678</span> ,  <span class="fl">0.49342404</span>,  <span class="fl">0.50068027</span>,</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.50793651</span>,  <span class="fl">0.51519274</span>,  <span class="fl">0.52244898</span>,  <span class="fl">0.52970522</span>,  <span class="fl">0.53696145</span>,</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.54421769</span>,  <span class="fl">0.55147392</span>,  <span class="fl">0.55873016</span>,  <span class="fl">0.56598639</span>,  <span class="fl">0.57324263</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.58049887</span>,  <span class="fl">0.5877551</span> ,  <span class="fl">0.59501134</span>,  <span class="fl">0.60226757</span>,  <span class="fl">0.60952381</span>,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.61678005</span>,  <span class="fl">0.62403628</span>,  <span class="fl">0.63129252</span>,  <span class="fl">0.63854875</span>,  <span class="fl">0.64580499</span>,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.65306122</span>,  <span class="fl">0.66031746</span>,  <span class="fl">0.6675737</span> ,  <span class="fl">0.67482993</span>,  <span class="fl">0.68208617</span>,</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.6893424</span> ,  <span class="fl">0.69659864</span>,  <span class="fl">0.70385488</span>,  <span class="fl">0.71111111</span>,  <span class="fl">0.71836735</span>,</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.72562358</span>,  <span class="fl">0.73287982</span>,  <span class="fl">0.74013605</span>,  <span class="fl">0.74739229</span>,  <span class="fl">0.75464853</span>,</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.76190476</span>,  <span class="fl">0.769161</span>  ,  <span class="fl">0.77641723</span>,  <span class="fl">0.78367347</span>,  <span class="fl">0.79092971</span>,</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.79818594</span>,  <span class="fl">0.80544218</span>,  <span class="fl">0.81269841</span>,  <span class="fl">0.81995465</span>,  <span class="fl">0.82721088</span>,</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.83446712</span>,  <span class="fl">0.84172336</span>,  <span class="fl">0.84897959</span>,  <span class="fl">0.85623583</span>,  <span class="fl">0.86349206</span>,</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.8707483</span> ,  <span class="fl">0.87800454</span>,  <span class="fl">0.88526077</span>,  <span class="fl">0.89251701</span>,  <span class="fl">0.89977324</span>,</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.90702948</span>,  <span class="fl">0.91428571</span>,  <span class="fl">0.92154195</span>,  <span class="fl">0.92879819</span>,  <span class="fl">0.93605442</span>,</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.94331066</span>,  <span class="fl">0.95056689</span>,  <span class="fl">0.95782313</span>,  <span class="fl">0.96507937</span>,  <span class="fl">0.9723356</span> ,</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.97959184</span>,  <span class="fl">0.98684807</span>,  <span class="fl">0.99410431</span>,  <span class="fl">1.00136054</span>,  <span class="fl">1.00861678</span>,</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.01587302</span>,  <span class="fl">1.02312925</span>,  <span class="fl">1.03038549</span>,  <span class="fl">1.03764172</span>,  <span class="fl">1.04489796</span>,</span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.0521542</span> ,  <span class="fl">1.05941043</span>,  <span class="fl">1.06666667</span>,  <span class="fl">1.0739229</span> ,  <span class="fl">1.08117914</span>,</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.08843537</span>,  <span class="fl">1.09569161</span>,  <span class="fl">1.10294785</span>,  <span class="fl">1.11020408</span>,  <span class="fl">1.11746032</span>,</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.12471655</span>,  <span class="fl">1.13197279</span>,  <span class="fl">1.13922902</span>,  <span class="fl">1.14648526</span>,  <span class="fl">1.1537415</span> ,</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.16099773</span>,  <span class="fl">1.16825397</span>,  <span class="fl">1.1755102</span> ,  <span class="fl">1.18276644</span>,  <span class="fl">1.19002268</span>,</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.19727891</span>,  <span class="fl">1.20453515</span>,  <span class="fl">1.21179138</span>,  <span class="fl">1.21904762</span>,  <span class="fl">1.22630385</span>,</span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.23356009</span>,  <span class="fl">1.24081633</span>,  <span class="fl">1.24807256</span>,  <span class="fl">1.2553288</span> ,  <span class="fl">1.26258503</span>,</span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.26984127</span>,  <span class="fl">1.27709751</span>,  <span class="fl">1.28435374</span>,  <span class="fl">1.29160998</span>,  <span class="fl">1.29886621</span>,</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.30612245</span>,  <span class="fl">1.31337868</span>,  <span class="fl">1.32063492</span>,  <span class="fl">1.32789116</span>,  <span class="fl">1.33514739</span>,</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.34240363</span>,  <span class="fl">1.34965986</span>,  <span class="fl">1.3569161</span> ,  <span class="fl">1.36417234</span>,  <span class="fl">1.37142857</span>,</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.37868481</span>,  <span class="fl">1.38594104</span>,  <span class="fl">1.39319728</span>,  <span class="fl">1.40045351</span>,  <span class="fl">1.40770975</span>,</span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.41496599</span>,  <span class="fl">1.42222222</span>,  <span class="fl">1.42947846</span>,  <span class="fl">1.43673469</span>,  <span class="fl">1.44399093</span>,</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.45124717</span>,  <span class="fl">1.4585034</span> ,  <span class="fl">1.46575964</span>,  <span class="fl">1.47301587</span>,  <span class="fl">1.48027211</span>,</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.48752834</span>,  <span class="fl">1.49478458</span>,  <span class="fl">1.50204082</span>,  <span class="fl">1.50929705</span>,  <span class="fl">1.51655329</span>,</span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.52380952</span>,  <span class="fl">1.53106576</span>,  <span class="fl">1.538322</span>  ,  <span class="fl">1.54557823</span>,  <span class="fl">1.55283447</span>,</span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.5600907</span> ,  <span class="fl">1.56734694</span>,  <span class="fl">1.57460317</span>,  <span class="fl">1.58185941</span>,  <span class="fl">1.58911565</span>,</span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.59637188</span>,  <span class="fl">1.60362812</span>,  <span class="fl">1.61088435</span>,  <span class="fl">1.61814059</span>,  <span class="fl">1.62539683</span>,</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.63265306</span>,  <span class="fl">1.6399093</span> ,  <span class="fl">1.64716553</span>,  <span class="fl">1.65442177</span>,  <span class="fl">1.661678</span>  ,</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.66893424</span>,  <span class="fl">1.67619048</span>,  <span class="fl">1.68344671</span>,  <span class="fl">1.69070295</span>,  <span class="fl">1.69795918</span>,</span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.70521542</span>,  <span class="fl">1.71247166</span>,  <span class="fl">1.71972789</span>,  <span class="fl">1.72698413</span>,  <span class="fl">1.73424036</span>,</span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.7414966</span> ,  <span class="fl">1.74875283</span>,  <span class="fl">1.75600907</span>,  <span class="fl">1.76326531</span>,  <span class="fl">1.77052154</span>,</span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.77777778</span>,  <span class="fl">1.78503401</span>,  <span class="fl">1.79229025</span>,  <span class="fl">1.79954649</span>,  <span class="fl">1.80680272</span>,</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.81405896</span>,  <span class="fl">1.82131519</span>,  <span class="fl">1.82857143</span>,  <span class="fl">1.83582766</span>,  <span class="fl">1.8430839</span> ,</span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.85034014</span>,  <span class="fl">1.85759637</span>,  <span class="fl">1.86485261</span>,  <span class="fl">1.87210884</span>,  <span class="fl">1.87936508</span>,</span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.88662132</span>,  <span class="fl">1.89387755</span>,  <span class="fl">1.90113379</span>,  <span class="fl">1.90839002</span>,  <span class="fl">1.91564626</span>,</span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.92290249</span>,  <span class="fl">1.93015873</span>,  <span class="fl">1.93741497</span>,  <span class="fl">1.9446712</span> ,  <span class="fl">1.95192744</span>,</span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.95918367</span>,  <span class="fl">1.96643991</span>,  <span class="fl">1.97369615</span>,  <span class="fl">1.98095238</span>,  <span class="fl">1.98820862</span>,</span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.99546485</span>,  <span class="fl">2.00272109</span>,  <span class="fl">2.00997732</span>,  <span class="fl">2.01723356</span>,  <span class="fl">2.0244898</span> ,</span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.03174603</span>,  <span class="fl">2.03900227</span>,  <span class="fl">2.0462585</span> ,  <span class="fl">2.05351474</span>,  <span class="fl">2.06077098</span>,</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.06802721</span>,  <span class="fl">2.07528345</span>,  <span class="fl">2.08253968</span>,  <span class="fl">2.08979592</span>,  <span class="fl">2.09705215</span>,</span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.10430839</span>,  <span class="fl">2.11156463</span>,  <span class="fl">2.11882086</span>,  <span class="fl">2.1260771</span> ,  <span class="fl">2.13333333</span>,</span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.14058957</span>,  <span class="fl">2.1478458</span> ,  <span class="fl">2.15510204</span>,  <span class="fl">2.16235828</span>,  <span class="fl">2.16961451</span>,</span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.17687075</span>,  <span class="fl">2.18412698</span>,  <span class="fl">2.19138322</span>,  <span class="fl">2.19863946</span>,  <span class="fl">2.20589569</span>,</span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.21315193</span>,  <span class="fl">2.22040816</span>,  <span class="fl">2.2276644</span> ,  <span class="fl">2.23492063</span>,  <span class="fl">2.24217687</span>,</span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.24943311</span>,  <span class="fl">2.25668934</span>,  <span class="fl">2.26394558</span>,  <span class="fl">2.27120181</span>,  <span class="fl">2.27845805</span>,</span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.28571429</span>,  <span class="fl">2.29297052</span>,  <span class="fl">2.30022676</span>,  <span class="fl">2.30748299</span>,  <span class="fl">2.31473923</span>,</span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.32199546</span>,  <span class="fl">2.3292517</span> ,  <span class="fl">2.33650794</span>,  <span class="fl">2.34376417</span>,  <span class="fl">2.35102041</span>,</span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.35827664</span>,  <span class="fl">2.36553288</span>,  <span class="fl">2.37278912</span>,  <span class="fl">2.38004535</span>,  <span class="fl">2.38730159</span>,</span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.39455782</span>,  <span class="fl">2.40181406</span>,  <span class="fl">2.40907029</span>,  <span class="fl">2.41632653</span>,  <span class="fl">2.42358277</span>,</span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.430839</span>  ,  <span class="fl">2.43809524</span>,  <span class="fl">2.44535147</span>,  <span class="fl">2.45260771</span>,  <span class="fl">2.45986395</span>,</span>
+<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.46712018</span>,  <span class="fl">2.47437642</span>,  <span class="fl">2.48163265</span>,  <span class="fl">2.48888889</span>,  <span class="fl">2.49614512</span>,</span>
+<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.50340136</span>,  <span class="fl">2.5106576</span> ,  <span class="fl">2.51791383</span>,  <span class="fl">2.52517007</span>,  <span class="fl">2.5324263</span> ,</span>
+<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.53968254</span>,  <span class="fl">2.54693878</span>,  <span class="fl">2.55419501</span>,  <span class="fl">2.56145125</span>,  <span class="fl">2.56870748</span>,</span>
+<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.57596372</span>,  <span class="fl">2.58321995</span>,  <span class="fl">2.59047619</span>,  <span class="fl">2.59773243</span>,  <span class="fl">2.60498866</span>,</span>
+<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.6122449</span> ,  <span class="fl">2.61950113</span>,  <span class="fl">2.62675737</span>,  <span class="fl">2.63401361</span>,  <span class="fl">2.64126984</span>,</span>
+<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.64852608</span>,  <span class="fl">2.65578231</span>,  <span class="fl">2.66303855</span>,  <span class="fl">2.67029478</span>,  <span class="fl">2.67755102</span>,</span>
+<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.68480726</span>,  <span class="fl">2.69206349</span>,  <span class="fl">2.69931973</span>,  <span class="fl">2.70657596</span>,  <span class="fl">2.7138322</span> ,</span>
+<span id="cb29-77"><a href="#cb29-77" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.72108844</span>,  <span class="fl">2.72834467</span>,  <span class="fl">2.73560091</span>,  <span class="fl">2.74285714</span>,  <span class="fl">2.75011338</span>,</span>
+<span id="cb29-78"><a href="#cb29-78" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.75736961</span>,  <span class="fl">2.76462585</span>,  <span class="fl">2.77188209</span>,  <span class="fl">2.77913832</span>,  <span class="fl">2.78639456</span>,</span>
+<span id="cb29-79"><a href="#cb29-79" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.79365079</span>,  <span class="fl">2.80090703</span>,  <span class="fl">2.80816327</span>,  <span class="fl">2.8154195</span> ,  <span class="fl">2.82267574</span>,</span>
+<span id="cb29-80"><a href="#cb29-80" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.82993197</span>,  <span class="fl">2.83718821</span>,  <span class="fl">2.84444444</span>,  <span class="fl">2.85170068</span>,  <span class="fl">2.85895692</span>,</span>
+<span id="cb29-81"><a href="#cb29-81" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.86621315</span>,  <span class="fl">2.87346939</span>,  <span class="fl">2.88072562</span>,  <span class="fl">2.88798186</span>,  <span class="fl">2.8952381</span> ,</span>
+<span id="cb29-82"><a href="#cb29-82" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.90249433</span>,  <span class="fl">2.90975057</span>,  <span class="fl">2.9170068</span> ,  <span class="fl">2.92426304</span>,  <span class="fl">2.93151927</span>,</span>
+<span id="cb29-83"><a href="#cb29-83" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.93877551</span>,  <span class="fl">2.94603175</span>,  <span class="fl">2.95328798</span>,  <span class="fl">2.96054422</span>,  <span class="fl">2.96780045</span>,</span>
+<span id="cb29-84"><a href="#cb29-84" aria-hidden="true" tabindex="-1"></a>        <span class="fl">2.97505669</span>,  <span class="fl">2.98231293</span>,  <span class="fl">2.98956916</span>,  <span class="fl">2.9968254</span> ,  <span class="fl">3.00408163</span>,</span>
+<span id="cb29-85"><a href="#cb29-85" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.01133787</span>,  <span class="fl">3.0185941</span> ,  <span class="fl">3.02585034</span>,  <span class="fl">3.03310658</span>,  <span class="fl">3.04036281</span>,</span>
+<span id="cb29-86"><a href="#cb29-86" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.04761905</span>,  <span class="fl">3.05487528</span>,  <span class="fl">3.06213152</span>,  <span class="fl">3.06938776</span>,  <span class="fl">3.07664399</span>,</span>
+<span id="cb29-87"><a href="#cb29-87" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.08390023</span>,  <span class="fl">3.09115646</span>,  <span class="fl">3.0984127</span> ,  <span class="fl">3.10566893</span>,  <span class="fl">3.11292517</span>,</span>
+<span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.12018141</span>,  <span class="fl">3.12743764</span>,  <span class="fl">3.13469388</span>,  <span class="fl">3.14195011</span>,  <span class="fl">3.14920635</span>,</span>
+<span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.15646259</span>,  <span class="fl">3.16371882</span>,  <span class="fl">3.17097506</span>,  <span class="fl">3.17823129</span>,  <span class="fl">3.18548753</span>,</span>
+<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.19274376</span>,  <span class="fl">3.2</span>       ,  <span class="fl">3.20725624</span>,  <span class="fl">3.21451247</span>,  <span class="fl">3.22176871</span>,</span>
+<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.22902494</span>,  <span class="fl">3.23628118</span>,  <span class="fl">3.24353741</span>,  <span class="fl">3.25079365</span>,  <span class="fl">3.25804989</span>,</span>
+<span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.26530612</span>,  <span class="fl">3.27256236</span>,  <span class="fl">3.27981859</span>,  <span class="fl">3.28707483</span>,  <span class="fl">3.29433107</span>,</span>
+<span id="cb29-93"><a href="#cb29-93" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.3015873</span> ,  <span class="fl">3.30884354</span>,  <span class="fl">3.31609977</span>,  <span class="fl">3.32335601</span>,  <span class="fl">3.33061224</span>,</span>
+<span id="cb29-94"><a href="#cb29-94" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.33786848</span>,  <span class="fl">3.34512472</span>,  <span class="fl">3.35238095</span>,  <span class="fl">3.35963719</span>,  <span class="fl">3.36689342</span>,</span>
+<span id="cb29-95"><a href="#cb29-95" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.37414966</span>,  <span class="fl">3.3814059</span> ,  <span class="fl">3.38866213</span>,  <span class="fl">3.39591837</span>,  <span class="fl">3.4031746</span> ,</span>
+<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.41043084</span>,  <span class="fl">3.41768707</span>,  <span class="fl">3.42494331</span>,  <span class="fl">3.43219955</span>,  <span class="fl">3.43945578</span>,</span>
+<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.44671202</span>,  <span class="fl">3.45396825</span>,  <span class="fl">3.46122449</span>,  <span class="fl">3.46848073</span>,  <span class="fl">3.47573696</span>,</span>
+<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.4829932</span> ,  <span class="fl">3.49024943</span>,  <span class="fl">3.49750567</span>,  <span class="fl">3.5047619</span> ,  <span class="fl">3.51201814</span>,</span>
+<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.51927438</span>,  <span class="fl">3.52653061</span>,  <span class="fl">3.53378685</span>,  <span class="fl">3.54104308</span>,  <span class="fl">3.54829932</span>,</span>
+<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.55555556</span>,  <span class="fl">3.56281179</span>,  <span class="fl">3.57006803</span>,  <span class="fl">3.57732426</span>,  <span class="fl">3.5845805</span> ,</span>
+<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.59183673</span>,  <span class="fl">3.59909297</span>,  <span class="fl">3.60634921</span>,  <span class="fl">3.61360544</span>,  <span class="fl">3.62086168</span>,</span>
+<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.62811791</span>,  <span class="fl">3.63537415</span>,  <span class="fl">3.64263039</span>,  <span class="fl">3.64988662</span>,  <span class="fl">3.65714286</span>,</span>
+<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.66439909</span>,  <span class="fl">3.67165533</span>,  <span class="fl">3.67891156</span>,  <span class="fl">3.6861678</span> ,  <span class="fl">3.69342404</span>,</span>
+<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.70068027</span>,  <span class="fl">3.70793651</span>,  <span class="fl">3.71519274</span>,  <span class="fl">3.72244898</span>,  <span class="fl">3.72970522</span>,</span>
+<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.73696145</span>,  <span class="fl">3.74421769</span>,  <span class="fl">3.75147392</span>,  <span class="fl">3.75873016</span>,  <span class="fl">3.76598639</span>,</span>
+<span id="cb29-106"><a href="#cb29-106" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.77324263</span>,  <span class="fl">3.78049887</span>,  <span class="fl">3.7877551</span> ,  <span class="fl">3.79501134</span>,  <span class="fl">3.80226757</span>,</span>
+<span id="cb29-107"><a href="#cb29-107" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.80952381</span>,  <span class="fl">3.81678005</span>,  <span class="fl">3.82403628</span>,  <span class="fl">3.83129252</span>,  <span class="fl">3.83854875</span>,</span>
+<span id="cb29-108"><a href="#cb29-108" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.84580499</span>,  <span class="fl">3.85306122</span>,  <span class="fl">3.86031746</span>,  <span class="fl">3.8675737</span> ,  <span class="fl">3.87482993</span>,</span>
+<span id="cb29-109"><a href="#cb29-109" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.88208617</span>,  <span class="fl">3.8893424</span> ,  <span class="fl">3.89659864</span>,  <span class="fl">3.90385488</span>,  <span class="fl">3.91111111</span>,</span>
+<span id="cb29-110"><a href="#cb29-110" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.91836735</span>,  <span class="fl">3.92562358</span>,  <span class="fl">3.93287982</span>,  <span class="fl">3.94013605</span>,  <span class="fl">3.94739229</span>,</span>
+<span id="cb29-111"><a href="#cb29-111" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.95464853</span>,  <span class="fl">3.96190476</span>,  <span class="fl">3.969161</span>  ,  <span class="fl">3.97641723</span>,  <span class="fl">3.98367347</span>,</span>
+<span id="cb29-112"><a href="#cb29-112" aria-hidden="true" tabindex="-1"></a>        <span class="fl">3.99092971</span>,  <span class="fl">3.99818594</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert spectrogram to decibels for visualization</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>spec_db <span class="op">=</span> amplitude_to_db(spec)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display these features on top of the spectrogram</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> specshow(spec_db, x_axis<span class="op">=</span><span class="st">'time'</span>, y_axis<span class="op">=</span><span class="st">'hz'</span>, hop_length<span class="op">=</span>HOP_LENGTH)<span class="op">;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>ax.plot(times_spec, centroids)<span class="op">;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>ax.fill_between(times_spec, centroids <span class="op">-</span> bandwidths <span class="op">/</span> <span class="dv">2</span>, centroids <span class="op">+</span> bandwidths <span class="op">/</span> <span class="dv">2</span>, alpha<span class="op">=</span><span class="fl">.5</span>)<span class="op">;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(ylim<span class="op">=</span>[<span class="va">None</span>, <span class="dv">6000</span>])<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>AttributeError: 'QuadMesh' object has no attribute 'plot'</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Time Series as Inputs to a Model_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-22T22:36:04.599Z</lastmod>
+    <lastmod>2023-01-27T05:33:24.566Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -147,5 +147,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html</loc>
     <lastmod>2023-01-22T22:35:45.844Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html</loc>
+    <lastmod>2023-01-23T22:50:45.020Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Time series as inputs to model/Time Series as Inputs to a Model.html</loc>
+    <lastmod>2023-01-23T23:01:40.711Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html</loc>
+    <lastmod>2023-01-27T05:31:50.242Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Predicting time series data/Predicting Time Series Data.html</loc>
+    <lastmod>2023-01-27T05:32:26.840Z</lastmod>
   </url>
 </urlset>

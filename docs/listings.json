@@ -6,6 +6,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Predicting time series data/Predicting Time Series Data.html",
+      "/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html",
+      "/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html",
+      "/posts/Time series as inputs to model/Time Series as Inputs to a Model.html",
       "/posts/Feature Engineering - Preprocessing/Feature Engineering.html",
       "/posts/Introduction to data preprocessing/Introduction to Data Preprocessing.html",
       "/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html",
