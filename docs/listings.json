@@ -2,13 +2,17 @@
   {
     "listing": "/archive.html",
     "items": [
-      "/posts/Regression Discontinuity/Regression Discontinuity.html"
+      "/posts/Fuzzy Regression Discontinuity Designs/Fuzzy Regression Discontinuity Design.html",
+      "/posts/Regression Discontinuity/Regression Discontinuity.html",
+      "/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Fuzzy Regression Discontinuity Designs/Fuzzy Regression Discontinuity Design.html",
       "/posts/Regression Discontinuity/Regression Discontinuity.html",
+      "/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html",
       "/posts/Predicting time series data/Predicting Time Series Data.html",
       "/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html",
       "/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html",
