@@ -1,11 +1,14 @@
 [
   {
     "listing": "/archive.html",
-    "items": []
+    "items": [
+      "/posts/Regression Discontinuity/Regression Discontinuity.html"
+    ]
   },
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Regression Discontinuity/Regression Discontinuity.html",
       "/posts/Predicting time series data/Predicting Time Series Data.html",
       "/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html",
       "/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html",
