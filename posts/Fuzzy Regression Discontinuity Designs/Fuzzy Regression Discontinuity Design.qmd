@@ -15,23 +15,23 @@ image: "fuzzyThumbnail.png"
 
 This article includes:
 
-What is regression discontinuity design
-A brief introduction about fuzzy discontinuity design
-Elaboration of fuzzy regression discontinuities
-Fuzzy Regression Discontinuity Design with Instrument Variable
-Python code example
-Sharp vs Fuzzy discontinuities
-Conclusion
-Quick references
+* What is regression discontinuity design
+* A brief introduction about fuzzy discontinuity design
+* Elaboration of fuzzy regression discontinuities
+* Fuzzy Regression Discontinuity Design with Instrument Variable
+* Python code example
+* Sharp vs Fuzzy discontinuities
+* Conclusion
+* Quick references
 
 
-What is regression discontinuity design:
+## **What is regression discontinuity design:**
 As part of causal inference, statistical techniques are utilized to identify causal relationships between variables. Regression analysis is an important method for causal inference. However, sometimes the relationship between the independent and dependent variables is not linear, and there is a discontinuity in the relationship. This is where regression discontinuity occurs.
 
-A brief introduction about fuzzy discontinuity design:
+## **A brief introduction about fuzzy discontinuity design:**
 A fuzzy regression discontinuity design (FRDD) is a research design that estimates causal effects based upon regression discontinuity. FRDD is used when there is a discontinuity in the outcome variable at a specific threshold, but the assignment of individuals to treatment and control groups is not entirely determined by the threshold. When the treatment or intervention is assigned based upon a continuous score that is correlated with the outcome variable but not perfectly, this can occur.
 
-Elaboration of fuzzy regression discontinuities:
+## **Elaboration of fuzzy regression discontinuities:**
 An important component of FRDD is estimating the causal effect of the treatment or intervention on the outcome variable based on variations in the assignment to a treatment or control group. Individuals are assigned to treatment or control groups based on their distance from the threshold, but some degree of noise or randomness is allowed.
 
 According to FRDD, the outcome variable undergoes a sharp discontinuity at the threshold, but the assignment to a treatment or control group is not perfectly determined by this discontinuity. Using a fuzzy score that reflects the degree of uncertainty associated with group assignment, it is possible to quantify the degree of noise in group assignment.
@@ -40,7 +40,7 @@ Let's illustrate the concept with an example. Suppose a school district is consi
 
 We can use FRDD to estimate this effect. First, we collect data on test scores, school size, location, and other relevant variables for all schools within the district. Based on the distance each school has from the threshold of 60, we assign each school to the treatment or control group, but with some degree of randomness. The relationship between test scores and resources received can be estimated through regression modeling, adjusting for other relevant variables in the process.
 
-Fuzzy Regression Discontinuity Design with Instrument Variable:
+## **Fuzzy Regression Discontinuity Design with Instrument Variable:**
 As a result of fuzzy RD designs, the Local Average Treatment Effect (LATE) is calculated for the units just above and just below the fuzzy threshold, indicating the average causal effect. An instrument variable must be correlated with the independent variable around the fuzzy threshold, but not with the error term in fuzzy RD designs. The instrument variable serves as a proxy for the independent variable and can be used to identify the causal effect by accounting for endogeneity.
 
 Assuming constant effects and linearity in the independent variable 𝑋𝑖: 𝑌𝑖0 = 𝛼 + 𝛽𝑋𝑖 + 𝜂𝑖 𝑌𝑖1 = 𝑌𝑖0 + 𝜏
@@ -60,7 +60,7 @@ Fuzzy RD designs estimate the LATE at the fuzzy threshold using the first stage 
 where 𝑍𝑖 is the instrument variable for unit 𝑖, and 𝜖1𝑖 and 𝜖2𝑖 are the error terms. The first stage equation estimates the relationship between the instrument variable and the independent variable, and the second stage equation estimates the relationship between the treatment assignment and the outcome variable, controlling for the endogeneity.
 
 
-Python code example:
+## **Python code example:**
 
 Here's an example Python code to illustrate the process:
 
@@ -127,10 +127,10 @@ This code uses Seaborn's library to plot the relationship between the predicted 
 
 In the plot, we can clearly see that the test scores are discontinuous around the median of the predicted values of the independent variable, as well as a significant difference in test scores between the treatment and control groups. For the units that are just above and just below the median of the predicted values of the independent variable, the LATE at the fuzzy threshold can be interpreted as the causal effect of the treatment on the test scores.
 
-Sharp vs Fuzzy discontinuities:
+## **Sharp vs Fuzzy discontinuities:**
 
 ![](sharpVsFuzzy.png)
 
-Conclusion:
+## **Conclusion:**
 To conclude, Fuzzy Regression Discontinuity Designs (FRDD) are an extremely useful tool when the relationship between the independent and dependent variables discontinues, but the assignment to treatment or control groups is not entirely determined by the threshold. Using a regression analysis, we can estimate the causal effect of the independent variable on the dependent variable by introducing some degree of randomness or noise into the assignment.
 
