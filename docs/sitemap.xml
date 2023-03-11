@@ -2,182 +2,182 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kakamana.github.io/about.html</loc>
-    <lastmod>2023-02-27T11:13:24.639Z</lastmod>
+    <lastmod>2023-03-11T13:07:55.152Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/archive.html</loc>
-    <lastmod>2023-02-27T11:21:14.878Z</lastmod>
+    <lastmod>2023-03-11T13:08:01.294Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-11T12:51:25.432Z</lastmod>
+    <lastmod>2023-03-11T13:08:04.663Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
-    <lastmod>2023-02-27T11:13:32.077Z</lastmod>
+    <lastmod>2023-03-11T13:08:05.785Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Classification/Classification.html</loc>
-    <lastmod>2023-02-27T11:13:33.040Z</lastmod>
+    <lastmod>2023-03-11T13:08:06.817Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Classification with XGBoost/Classification with XGBoost.html</loc>
-    <lastmod>2023-02-27T11:13:33.928Z</lastmod>
+    <lastmod>2023-03-11T13:08:07.761Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation and experimental design/Correlation and experimental design.html</loc>
-    <lastmod>2023-02-27T11:13:34.746Z</lastmod>
+    <lastmod>2023-03-11T13:08:08.647Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation in a nutshell/Correlation in a nutshell.html</loc>
-    <lastmod>2023-02-27T11:13:35.691Z</lastmod>
+    <lastmod>2023-03-11T13:08:09.609Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Distribution (pdf, cdf) of iris dataset/Distribution (pdf, cdf) of iris data set.html</loc>
-    <lastmod>2023-02-27T11:13:36.668Z</lastmod>
+    <lastmod>2023-03-11T13:08:10.634Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Exploring high dimensional data/Exploring High Dimensional data.html</loc>
-    <lastmod>2023-02-27T11:13:37.548Z</lastmod>
+    <lastmod>2023-03-11T13:08:11.559Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Feature Engineering - Preprocessing/Feature Engineering.html</loc>
-    <lastmod>2023-02-27T11:13:38.362Z</lastmod>
+    <lastmod>2023-03-11T13:08:12.552Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Feature extraction/Feature Extraction.html</loc>
-    <lastmod>2023-02-27T11:13:39.374Z</lastmod>
+    <lastmod>2023-03-11T13:08:13.771Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Feature selection I - selection for feature information/Feature selection I - selection for feature information.html</loc>
-    <lastmod>2023-02-27T11:13:40.319Z</lastmod>
+    <lastmod>2023-03-11T13:08:14.860Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Feature selection II - selecting for model accuracy/Feature Selection II - Selecting for Model Accuracy.html</loc>
-    <lastmod>2023-02-27T11:13:41.312Z</lastmod>
+    <lastmod>2023-03-11T13:08:15.982Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Fine Tuning Model/Fine Tuning Model.html</loc>
-    <lastmod>2023-02-27T11:13:42.293Z</lastmod>
+    <lastmod>2023-03-11T13:08:16.996Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Fine Tuning XGBoost Model/Fine tunning your XGBoost model.html</loc>
-    <lastmod>2023-02-27T11:13:43.174Z</lastmod>
+    <lastmod>2023-03-11T13:08:17.932Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Fuzzy Regression Discontinuity Designs/Fuzzy Regression Discontinuity Design.html</loc>
-    <lastmod>2023-02-28T05:50:48.047Z</lastmod>
+    <lastmod>2023-03-11T13:08:19.393Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Intoducting to sampling/Introduction to Sampling.html</loc>
-    <lastmod>2023-02-27T11:13:45.381Z</lastmod>
+    <lastmod>2023-03-11T13:08:20.276Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Introduction to data preprocessing/Introduction to Data Preprocessing.html</loc>
-    <lastmod>2023-02-27T11:13:46.215Z</lastmod>
+    <lastmod>2023-03-11T13:08:21.108Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Introduction to hypothesis testing/Introduction to Hypothesis Testing.html</loc>
-    <lastmod>2023-02-27T11:13:47.399Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Logistic regression/Logistic regression.html</loc>
-    <lastmod>2023-02-27T11:13:48.397Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Loss function/Loss function.html</loc>
-    <lastmod>2023-02-27T11:13:49.296Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Predicting time series data/Predicting Time Series Data.html</loc>
-    <lastmod>2023-02-27T11:13:50.265Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Predictions and model objects/Predictions and model objects.html</loc>
-    <lastmod>2023-02-27T11:13:51.199Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Preprocessing and Pipelines/Preprocessing and pipelines.html</loc>
-    <lastmod>2023-02-27T11:13:52.181Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html</loc>
-    <lastmod>2023-02-27T11:13:53.074Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Quantifying model fit/Quantifying model fit.html</loc>
-    <lastmod>2023-02-27T11:13:54.053Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Random numbers and probability/Random numbers and probability.html</loc>
-    <lastmod>2023-02-27T11:13:54.933Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Regression/Regression.html</loc>
-    <lastmod>2023-02-27T11:13:56.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Regression Discontinuity/Regression Discontinuity.html</loc>
-    <lastmod>2023-02-27T11:13:57.346Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Regression with XGBoost/Regression with XGBoost.html</loc>
-    <lastmod>2023-02-27T11:13:58.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Sampling Distribution/Sampling Distributions.html</loc>
-    <lastmod>2023-02-27T11:13:59.185Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Sampling Methods/Sampling Methods.html</loc>
-    <lastmod>2023-02-27T11:14:00.317Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Selecting features for modeling/Selecting Features for Modeling.html</loc>
-    <lastmod>2023-02-27T11:14:01.803Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html</loc>
-    <lastmod>2023-02-27T11:14:03.280Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html</loc>
-    <lastmod>2023-02-27T11:14:04.428Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Simple Logistic Regression Modeling/Simple Logistic Regression Modeling.html</loc>
-    <lastmod>2023-02-27T11:14:05.652Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Standardizing data/Standardizing Data.html</loc>
-    <lastmod>2023-02-27T11:14:06.478Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Summary of statistics/Summary Of Statistics.html</loc>
-    <lastmod>2023-02-27T11:16:55.458Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Support vector machines/Support Vector Machines.html</loc>
-    <lastmod>2023-02-27T11:14:08.369Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html</loc>
-    <lastmod>2023-02-27T11:14:09.341Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Time series as inputs to model/Time Series as Inputs to a Model.html</loc>
-    <lastmod>2023-02-27T11:14:10.445Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Using XGBoost in Pipelines/Using XGBoost in pipelines.html</loc>
-    <lastmod>2023-02-27T11:14:11.706Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html</loc>
-    <lastmod>2023-02-27T11:14:13.058Z</lastmod>
+    <lastmod>2023-03-11T13:08:22.311Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Introduction to networks in network analysis/Introduction to networks.html</loc>
-    <lastmod>2023-03-11T12:50:07.602Z</lastmod>
+    <lastmod>2023-03-11T13:08:23.371Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Logistic regression/Logistic regression.html</loc>
+    <lastmod>2023-03-11T13:08:24.433Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Loss function/Loss function.html</loc>
+    <lastmod>2023-03-11T13:08:25.349Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Predicting time series data/Predicting Time Series Data.html</loc>
+    <lastmod>2023-03-11T13:08:26.368Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Predictions and model objects/Predictions and model objects.html</loc>
+    <lastmod>2023-03-11T13:08:27.344Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Preprocessing and Pipelines/Preprocessing and pipelines.html</loc>
+    <lastmod>2023-03-11T13:08:28.455Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Putting it all together - preprocessing/Putting It All Together - Preprocessing.html</loc>
+    <lastmod>2023-03-11T13:08:29.364Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Quantifying model fit/Quantifying model fit.html</loc>
+    <lastmod>2023-03-11T13:08:30.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Random numbers and probability/Random numbers and probability.html</loc>
+    <lastmod>2023-03-11T13:08:31.177Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Regression/Regression.html</loc>
+    <lastmod>2023-03-11T13:08:32.249Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Regression Discontinuity/Regression Discontinuity.html</loc>
+    <lastmod>2023-03-11T13:08:33.694Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Regression with XGBoost/Regression with XGBoost.html</loc>
+    <lastmod>2023-03-11T13:08:34.578Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Sampling Distribution/Sampling Distributions.html</loc>
+    <lastmod>2023-03-11T13:08:35.458Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Sampling Methods/Sampling Methods.html</loc>
+    <lastmod>2023-03-11T13:08:36.403Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Selecting features for modeling/Selecting Features for Modeling.html</loc>
+    <lastmod>2023-03-11T13:08:37.308Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html</loc>
+    <lastmod>2023-03-11T13:08:38.647Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Simple linear regression modeling/Simple Linear Regression Modeling.html</loc>
+    <lastmod>2023-03-11T13:08:39.554Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Simple Logistic Regression Modeling/Simple Logistic Regression Modeling.html</loc>
+    <lastmod>2023-03-11T13:08:40.651Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Standardizing data/Standardizing Data.html</loc>
+    <lastmod>2023-03-11T13:08:41.492Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Summary of statistics/Summary Of Statistics.html</loc>
+    <lastmod>2023-03-11T13:08:42.365Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Support vector machines/Support Vector Machines.html</loc>
+    <lastmod>2023-03-11T13:08:43.285Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Time series and machine learning primer/Time Series and Machine Learning Primer.html</loc>
+    <lastmod>2023-03-11T13:08:44.298Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Time series as inputs to model/Time Series as Inputs to a Model.html</loc>
+    <lastmod>2023-03-11T13:08:45.389Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Using XGBoost in Pipelines/Using XGBoost in pipelines.html</loc>
+    <lastmod>2023-03-11T13:08:46.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html</loc>
+    <lastmod>2023-03-11T13:08:47.524Z</lastmod>
   </url>
 </urlset>
