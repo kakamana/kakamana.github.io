@@ -10,6 +10,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Conforming to statistical assumptions/Conforming to statistical assumptions.html",
+      "/posts/Creating features in feature engineering/Creating features in feature engineering.html",
+      "/posts/Dealing with messy data/Dealing with messy data.html",
+      "/posts/Dealing with text data/Dealing with text data.html",
       "/posts/Bringing it all together for network analysis/Bringing it all together - Network Analysis.html",
       "/posts/Important nodes in network analysis/Important nodes - Network analysis.html",
       "/posts/Introduction to networks in network analysis/Introduction to networks.html",

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-03-19">
+
+<title>Kakamana’s Blogs - Dealing with messy data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dealing-with-messy-data" id="toc-dealing-with-messy-data" class="nav-link active" data-scroll-target="#dealing-with-messy-data">Dealing with messy data</a>
+  <ul class="collapse">
+  <li><a href="#why-do-missing-values-exist" id="toc-why-do-missing-values-exist" class="nav-link" data-scroll-target="#why-do-missing-values-exist">Why do missing values exist?</a></li>
+  <li><a href="#finding-the-missing-values" id="toc-finding-the-missing-values" class="nav-link" data-scroll-target="#finding-the-missing-values">Finding the missing values</a></li>
+  <li><a href="#dealing-with-missing-values-i" id="toc-dealing-with-missing-values-i" class="nav-link" data-scroll-target="#dealing-with-missing-values-i">Dealing with missing values (I)</a></li>
+  <li><a href="#replacing-missing-values-with-constants" id="toc-replacing-missing-values-with-constants" class="nav-link" data-scroll-target="#replacing-missing-values-with-constants">Replacing missing values with constants</a></li>
+  <li><a href="#dealing-with-missing-values-ii" id="toc-dealing-with-missing-values-ii" class="nav-link" data-scroll-target="#dealing-with-missing-values-ii">Dealing with missing values (II)</a></li>
+  </ul></li>
+  <li><a href="#fill-missing-values-with-the-mean" id="toc-fill-missing-values-with-the-mean" class="nav-link" data-scroll-target="#fill-missing-values-with-the-mean">Fill missing values with the mean</a></li>
+  <li><a href="#round-the-stackoverflowjobsrecommend-values" id="toc-round-the-stackoverflowjobsrecommend-values" class="nav-link" data-scroll-target="#round-the-stackoverflowjobsrecommend-values">Round the StackOverflowJobsRecommend values</a></li>
+  <li><a href="#print-the-top-5-rows" id="toc-print-the-top-5-rows" class="nav-link" data-scroll-target="#print-the-top-5-rows">Print the top 5 rows</a>
+  <ul class="collapse">
+  <li><a href="#dealing-with-other-data-issues" id="toc-dealing-with-other-data-issues" class="nav-link" data-scroll-target="#dealing-with-other-data-issues">Dealing with other data issues</a></li>
+  <li><a href="#dealing-with-stray-characters-ii" id="toc-dealing-with-stray-characters-ii" class="nav-link" data-scroll-target="#dealing-with-stray-characters-ii">Dealing with stray characters (II)</a></li>
+  <li><a href="#method-chaining" id="toc-method-chaining" class="nav-link" data-scroll-target="#method-chaining">Method chaining</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Dealing with messy data</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">feature engineering</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">data wrangling</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 19, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="dealing-with-messy-data" class="level1">
+<h1>Dealing with messy data</h1>
+<p>This chapter will introduce us to messy, incomplete data. In this lesson, we’ll learn how to find missing values in our data and explore multiple approaches to dealing with them. We’ll also use string manipulation to get rid of unwanted characters.</p>
+<p>This <strong>Dealing with messy data</strong> is part of <a href="" title="https://campus.datacamp.com/courses/feature-engineering-for-machine-learning-in-python">Datacamp course: Feature engineering for machine learning in Python</a></p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="why-do-missing-values-exist" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-missing-values-exist">Why do missing values exist?</h2>
+<pre><code>How gaps in data occur
+    * Data not being collected properly
+    * Collection and management errors
+    * Data intentionally being omitted
+    * Could be created due to transformations of the data
+Why we care?
+    * Some models cannot work with missing data (Nulls/NaN)
+    * Missing data may be a sign a wider data issue
+    * Missing data can be a useful feature</code></pre>
+<p>How sparse is my data?</p>
+<p>Most data sets contain missing values, often represented as NaN (Not a Number). If you are working with Pandas you can easily check how many missing values exist in each column.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>so_survey_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/Combined_DS_v10.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>so_survey_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>SurveyDate</th>
+      <th>FormalEducation</th>
+      <th>ConvertedSalary</th>
+      <th>Hobby</th>
+      <th>Country</th>
+      <th>StackOverflowJobsRecommend</th>
+      <th>VersionControl</th>
+      <th>Age</th>
+      <th>Years Experience</th>
+      <th>Gender</th>
+      <th>RawSalary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2/28/18 20:20</td>
+      <td>Bachelor's degree (BA. BS. B.Eng.. etc.)</td>
+      <td>NaN</td>
+      <td>Yes</td>
+      <td>South Africa</td>
+      <td>NaN</td>
+      <td>Git</td>
+      <td>21</td>
+      <td>13</td>
+      <td>Male</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6/28/18 13:26</td>
+      <td>Bachelor's degree (BA. BS. B.Eng.. etc.)</td>
+      <td>70841.0</td>
+      <td>Yes</td>
+      <td>Sweeden</td>
+      <td>7.0</td>
+      <td>Git;Subversion</td>
+      <td>38</td>
+      <td>9</td>
+      <td>Male</td>
+      <td>70,841.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6/6/18 3:37</td>
+      <td>Bachelor's degree (BA. BS. B.Eng.. etc.)</td>
+      <td>NaN</td>
+      <td>No</td>
+      <td>Sweeden</td>
+      <td>8.0</td>
+      <td>Git</td>
+      <td>45</td>
+      <td>11</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5/9/18 1:06</td>
+      <td>Some college/university study without earning ...</td>
+      <td>21426.0</td>
+      <td>Yes</td>
+      <td>Sweeden</td>
+      <td>NaN</td>
+      <td>Zip file back-ups</td>
+      <td>46</td>
+      <td>12</td>
+      <td>Male</td>
+      <td>21,426.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4/12/18 22:41</td>
+      <td>Bachelor's degree (BA. BS. B.Eng.. etc.)</td>
+      <td>41671.0</td>
+      <td>Yes</td>
+      <td>UK</td>
+      <td>8.0</td>
+      <td>Git</td>
+      <td>39</td>
+      <td>7</td>
+      <td>Male</td>
+      <td>£41,671.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the DataFrame</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sub_df <span class="op">=</span> so_survey_df[[<span class="st">'Age'</span>,<span class="st">'Gender'</span>]]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the number of non-missing values</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sub_df.notnull().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Age       999
+Gender    693
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="finding-the-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-missing-values">Finding the missing values</h2>
+<p>While having a summary of how much of your data is missing can be useful, often you will need to find the exact locations of these missing values</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sub_df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Age</th>
+      <th>Gender</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>21</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>45</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>46</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>39</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>39</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>34</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>24</td>
+      <td>Female</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>23</td>
+      <td>Male</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>36</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the locations of the missing values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sub_df.head(<span class="dv">10</span>).isnull())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Age  Gender
+0  False   False
+1  False   False
+2  False    True
+3  False   False
+4  False   False
+5  False   False
+6  False   False
+7  False   False
+8  False   False
+9  False    True</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the locations of the non-missing values</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sub_df.head(<span class="dv">10</span>).notnull())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Age  Gender
+0  True    True
+1  True    True
+2  True   False
+3  True    True
+4  True    True
+5  True    True
+6  True    True
+7  True    True
+8  True    True
+9  True   False</code></pre>
+</div>
+</div>
+</section>
+<section id="dealing-with-missing-values-i" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-missing-values-i">Dealing with missing values (I)</h2>
+<pre><code>Issues with deletion
+    It deletes vaild data points
+    Relies on randomness
+    Reduces information</code></pre>
+<p>Listwise deletion</p>
+<p>The simplest way to deal with missing values in your dataset is to remove them, also called ‘listwise deletion’.</p>
+<p>Sometimes you’ll want to remove all missing values in your data, and sometimes you’ll just want to remove a column if too many values are missing in it.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(999, 11)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new DataFrame dropping all incomplete rows</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>no_missing_values_rows <span class="op">=</span> so_survey_df.dropna()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of the new DataFrame</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(no_missing_values_rows.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(264, 11)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new DataFrame dropping all columns with incomplete rows</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>no_missing_values_cols <span class="op">=</span> so_survey_df.dropna(how<span class="op">=</span><span class="st">'any'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of the new DataFrame</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(no_missing_values_cols.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(999, 7)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop all rows where Gender is missing</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>no_gender <span class="op">=</span> so_survey_df.dropna(subset<span class="op">=</span>[<span class="st">'Gender'</span>])</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of the new DataFrame</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(no_gender.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(693, 11)</code></pre>
+</div>
+</div>
+</section>
+<section id="replacing-missing-values-with-constants" class="level2">
+<h2 class="anchored" data-anchor-id="replacing-missing-values-with-constants">Replacing missing values with constants</h2>
+<p>In many cases, removing all missing data may be the right thing to do, but you’re omitting a lot of information.</p>
+<p>It’s possible to find categorical columns with missing values that are valid information in themselves, like someone refusing to answer a survey question. Fill in all missing values with a new category entirely, like ‘No response given’.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the count of occurrences</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'Gender'</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Male                                                                         632
+Female                                                                        53
+Female;Male                                                                    2
+Transgender                                                                    2
+Female;Male;Transgender;Non-binary. genderqueer. or gender non-conforming      1
+Male;Non-binary. genderqueer. or gender non-conforming                         1
+Non-binary. genderqueer. or gender non-conforming                              1
+Female;Transgender                                                             1
+Name: Gender, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace missing values</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'Gender'</span>].fillna(<span class="st">'Not Given'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the count of each value</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'Gender'</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Male                                                                         632
+Not Given                                                                    306
+Female                                                                        53
+Female;Male                                                                    2
+Transgender                                                                    2
+Female;Male;Transgender;Non-binary. genderqueer. or gender non-conforming      1
+Male;Non-binary. genderqueer. or gender non-conforming                         1
+Non-binary. genderqueer. or gender non-conforming                              1
+Female;Transgender                                                             1
+Name: Gender, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="dealing-with-missing-values-ii" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-missing-values-ii">Dealing with missing values (II)</h2>
+<pre><code>Deleting missing values
+    Can't delete rows with missing values in the test set
+What else can you do?
+    Categorical columns: Replace missing values with the most common occurring value or with a string that flags missing values such as 'None'
+    Numerical columns: Replace missing values with a suitable value</code></pre>
+<p>Filling continuous missing values</p>
+<p>In the last lesson, you dealt with different methods of removing data missing values and filling in missing values with a fixed string. These approaches are valid in many cases, particularly when dealing with categorical columns but have limited use when working with continuous values. In these cases, it may be most valid to fill the missing values in the column with a value calculated from the entries present in the column.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'StackOverflowJobsRecommend'</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>0    NaN
+1    7.0
+2    8.0
+3    NaN
+4    8.0
+Name: StackOverflowJobsRecommend, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill missing values with the mean</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'StackOverflowJobsRecommend'</span>].fillna(so_survey_df[<span class="st">'StackOverflowJobsRecommend'</span>].mean(), inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first five rows of StackOverflowJobsRecommend column</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'StackOverflowJobsRecommend'</span>].head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    7.061602
+1    7.000000
+2    8.000000
+3    7.061602
+4    8.000000
+Name: StackOverflowJobsRecommend, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="fill-missing-values-with-the-mean" class="level1">
+<h1>Fill missing values with the mean</h1>
+<p>so_survey_df[‘StackOverflowJobsRecommend’].fillna(so_survey_df[‘StackOverflowJobsRecommend’].mean(), inplace=True)</p>
+</section>
+<section id="round-the-stackoverflowjobsrecommend-values" class="level1">
+<h1>Round the StackOverflowJobsRecommend values</h1>
+<p>so_survey_df[‘StackOverflowJobsRecommend’] = round(so_survey_df[‘StackOverflowJobsRecommend’])</p>
+</section>
+<section id="print-the-top-5-rows" class="level1">
+<h1>Print the top 5 rows</h1>
+<p>print(so_survey_df[‘StackOverflowJobsRecommend’].head())</p>
+<section id="dealing-with-other-data-issues" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-other-data-issues">Dealing with other data issues</h2>
+<p>Dealing with stray characters (I)</p>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'RawSalary'</span>] <span class="op">=</span> so_survey_df[<span class="st">'RawSalary'</span>].<span class="bu">str</span>.replace(<span class="st">','</span>, <span class="st">''</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the dollar signs in the column</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'RawSalary'</span>] <span class="op">=</span> so_survey_df[<span class="st">'RawSalary'</span>].<span class="bu">str</span>.replace(<span class="st">'$'</span>, <span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Temp\ipykernel_28724\3444689385.py:4: FutureWarning: The default value of regex will change from True to False in a future version. In addition, single character regular expressions will *not* be treated as literal strings when regex=True.
+  so_survey_df['RawSalary'] = so_survey_df['RawSalary'].str.replace('$', '')</code></pre>
+</div>
+</div>
+</section>
+<section id="dealing-with-stray-characters-ii" class="level2">
+<h2 class="anchored" data-anchor-id="dealing-with-stray-characters-ii">Dealing with stray characters (II)</h2>
+<p>In the last exercise, you could tell quickly based off of the df.head() call which characters were causing an issue. In many cases this will not be so apparent. There will often be values deep within a column that are preventing you from casting a column as a numeric type so that it can be used in a model or further feature engineering.</p>
+<p>One approach to finding these values is to force the column to the data type desired using pd.to_numeric(), coercing any values causing issues to NaN, Then filtering the DataFrame by just the rows containing the NaN values.</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attempt to convert the column to numeric values</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>numeric_vals <span class="op">=</span> pd.to_numeric(so_survey_df[<span class="st">'RawSalary'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the indexes of missing values</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>idx <span class="op">=</span> numeric_vals.isna()</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the relevant rows</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'RawSalary'</span>][idx])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0            NaN
+2            NaN
+4      £41671.00
+6            NaN
+8            NaN
+         ...    
+989          NaN
+990          NaN
+992          NaN
+994          NaN
+997          NaN
+Name: RawSalary, Length: 401, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the offending characters</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'RawSalary'</span>] <span class="op">=</span> so_survey_df[<span class="st">'RawSalary'</span>].<span class="bu">str</span>.replace(<span class="st">'£'</span>, <span class="st">''</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the column to float</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'RawSalary'</span>] <span class="op">=</span> so_survey_df[<span class="st">'RawSalary'</span>].astype(<span class="bu">float</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the column</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'RawSalary'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0            NaN
+1        70841.0
+2            NaN
+3        21426.0
+4        41671.0
+         ...    
+994          NaN
+995      58746.0
+996      55000.0
+997          NaN
+998    1000000.0
+Name: RawSalary, Length: 999, dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="method-chaining" class="level2">
+<h2 class="anchored" data-anchor-id="method-chaining">Method chaining</h2>
+<p>When applying multiple operations on the same column (like in the previous exercises), you made the changes in several steps, assigning the results back in each step. However, when applying multiple successive operations on the same column, you can “chain” these operations together for clarity and ease of management. This can be achieved by calling multiple methods sequentially:</p>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>so_survey_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/Combined_DS_v10.csv'</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Use method chaining</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>so_survey_df[<span class="st">'RawSalary'</span>] <span class="op">=</span> so_survey_df[<span class="st">'RawSalary'</span>]<span class="op">\</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                              .<span class="bu">str</span>.replace(<span class="st">','</span>,<span class="st">''</span>)<span class="op">\</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                              .<span class="bu">str</span>.replace(<span class="st">'$'</span>,<span class="st">''</span>)<span class="op">\</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>                              .<span class="bu">str</span>.replace(<span class="st">'£'</span>,<span class="st">''</span>)<span class="op">\</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                              .astype(<span class="bu">float</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the RawSalary column</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(so_survey_df[<span class="st">'RawSalary'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0            NaN
+1        70841.0
+2            NaN
+3        21426.0
+4        41671.0
+         ...    
+994          NaN
+995      58746.0
+996      55000.0
+997          NaN
+998    1000000.0
+Name: RawSalary, Length: 999, dtype: float64</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Temp\ipykernel_28724\2032499489.py:3: FutureWarning: The default value of regex will change from True to False in a future version. In addition, single character regular expressions will *not* be treated as literal strings when regex=True.
+  so_survey_df['RawSalary'] = so_survey_df['RawSalary']\</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-12T10:53:06.971Z</lastmod>
+    <lastmod>2023-03-21T03:34:27.979Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -191,5 +191,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Validating and inspecting time series/Validating and Inspecting Time Series Models.html</loc>
     <lastmod>2023-03-12T10:53:49.736Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Creating features in feature engineering/Creating features in feature engineering.html</loc>
+    <lastmod>2023-03-21T03:30:47.539Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Dealing with messy data/Dealing with messy data.html</loc>
+    <lastmod>2023-03-21T03:31:53.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Conforming to statistical assumptions/Conforming to statistical assumptions.html</loc>
+    <lastmod>2023-03-21T03:32:49.629Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Dealing with text data/Dealing with text data.html</loc>
+    <lastmod>2023-03-21T03:33:50.676Z</lastmod>
   </url>
 </urlset>
