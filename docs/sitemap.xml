@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-21T03:34:27.979Z</lastmod>
+    <lastmod>2023-03-22T08:43:31.621Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -207,5 +207,9 @@
   <url>
     <loc>https://kakamana.github.io/posts/Dealing with text data/Dealing with text data.html</loc>
     <lastmod>2023-03-21T03:33:50.676Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html</loc>
+    <lastmod>2023-03-22T08:42:53.658Z</lastmod>
   </url>
 </urlset>
