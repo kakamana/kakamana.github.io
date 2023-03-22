@@ -11,6 +11,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html",
+      "/posts/Validation basic for modeling/Validation basic for modeling.html",
       "/posts/Conforming to statistical assumptions/Conforming to statistical assumptions.html",
       "/posts/Creating features in feature engineering/Creating features in feature engineering.html",
       "/posts/Dealing with messy data/Dealing with messy data.html",
