@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-22T11:36:48.460Z</lastmod>
+    <lastmod>2023-03-22T12:32:58.612Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -214,6 +214,14 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Validation basic for modeling/Validation basic for modeling.html</loc>
-    <lastmod>2023-03-22T11:36:45.237Z</lastmod>
+    <lastmod>2023-03-22T11:40:20.038Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/cross validation in modeling/Cross validation in modeling.html</loc>
+    <lastmod>2023-03-22T12:06:16.304Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Selecting best model with hyperparameter tunning/Selecting best model with hyperparameter tunning.html</loc>
+    <lastmod>2023-03-22T12:32:14.247Z</lastmod>
   </url>
 </urlset>
