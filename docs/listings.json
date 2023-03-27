@@ -11,6 +11,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/Regular expression and word tokenization/Regular expressions & word tokenization.html",
+      "/posts/Simple topic identification/Simple topic identification.html",
       "/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html",
       "/posts/cross validation in modeling/Cross validation in modeling.html",
       "/posts/Selecting best model with hyperparameter tunning/Selecting best model with hyperparameter tunning.html",
