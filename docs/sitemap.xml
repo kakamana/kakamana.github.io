@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-22T12:32:58.612Z</lastmod>
+    <lastmod>2023-03-27T05:24:09.354Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -223,5 +223,9 @@
   <url>
     <loc>https://kakamana.github.io/posts/Selecting best model with hyperparameter tunning/Selecting best model with hyperparameter tunning.html</loc>
     <lastmod>2023-03-22T12:32:14.247Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Regular expression and word tokenization/Regular expressions & word tokenization.html</loc>
+    <lastmod>2023-03-27T05:23:18.516Z</lastmod>
   </url>
 </urlset>
