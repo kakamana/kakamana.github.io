@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-27T10:25:10.599Z</lastmod>
+    <lastmod>2023-03-30T04:41:10.721Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -226,10 +226,18 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Regular expression and word tokenization/Regular expressions & word tokenization.html</loc>
-    <lastmod>2023-03-27T05:23:18.516Z</lastmod>
+    <lastmod>2023-03-30T04:39:26.965Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Simple topic identification/Simple topic identification.html</loc>
-    <lastmod>2023-03-27T10:24:59.907Z</lastmod>
+    <lastmod>2023-03-30T04:40:44.841Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Building fake news classifier/Building fake news classifier.html</loc>
+    <lastmod>2023-03-30T04:36:51.400Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Named entity recognition/Named-entity recognition.html</loc>
+    <lastmod>2023-03-30T04:38:47.755Z</lastmod>
   </url>
 </urlset>

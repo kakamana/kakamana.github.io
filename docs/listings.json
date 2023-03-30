@@ -10,6 +10,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Building fake news classifier/Building fake news classifier.html",
+      "/posts/Named entity recognition/Named-entity recognition.html",
       "/posts/Regular expression and word tokenization/Regular expressions & word tokenization.html",
       "/posts/Simple topic identification/Simple topic identification.html",
       "/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html",
