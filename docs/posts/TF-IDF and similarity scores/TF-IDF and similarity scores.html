@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-03-30">
+
+<title>Kakamana’s Blogs - TF-IDF and similarity scores</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tf-idf-and-similarity-scores" id="toc-tf-idf-and-similarity-scores" class="nav-link active" data-scroll-target="#tf-idf-and-similarity-scores">TF-IDF and similarity scores</a></li>
+  <li><a href="#building-tf-idf-document-vectors" id="toc-building-tf-idf-document-vectors" class="nav-link" data-scroll-target="#building-tf-idf-document-vectors">Building tf-idf document vectors</a>
+  <ul class="collapse">
+  <li><a href="#tf-idf-vectors-for-ted-talks" id="toc-tf-idf-vectors-for-ted-talks" class="nav-link" data-scroll-target="#tf-idf-vectors-for-ted-talks">tf-idf vectors for TED talks</a></li>
+  </ul></li>
+  <li><a href="#cosine-similarity" id="toc-cosine-similarity" class="nav-link" data-scroll-target="#cosine-similarity">Cosine similarity</a>
+  <ul class="collapse">
+  <li><a href="#computing-dot-product" id="toc-computing-dot-product" class="nav-link" data-scroll-target="#computing-dot-product">Computing dot product</a></li>
+  <li><a href="#cosine-similarity-matrix-of-a-corpus" id="toc-cosine-similarity-matrix-of-a-corpus" class="nav-link" data-scroll-target="#cosine-similarity-matrix-of-a-corpus">Cosine similarity matrix of a corpus</a></li>
+  <li><a href="#building-a-plot-line-based-recommender" id="toc-building-a-plot-line-based-recommender" class="nav-link" data-scroll-target="#building-a-plot-line-based-recommender">Building a plot line based recommender</a></li>
+  <li><a href="#comparing-linear_kernel-and-cosine_similarity" id="toc-comparing-linear_kernel-and-cosine_similarity" class="nav-link" data-scroll-target="#comparing-linear_kernel-and-cosine_similarity">Comparing linear_kernel and cosine_similarity</a></li>
+  <li><a href="#the-recommender-function" id="toc-the-recommender-function" class="nav-link" data-scroll-target="#the-recommender-function">The recommender function</a></li>
+  <li><a href="#plot-recommendation-engine" id="toc-plot-recommendation-engine" class="nav-link" data-scroll-target="#plot-recommendation-engine">Plot recommendation engine</a></li>
+  </ul></li>
+  <li><a href="#ted-talk-recommender" id="toc-ted-talk-recommender" class="nav-link" data-scroll-target="#ted-talk-recommender">TED talk recommender</a></li>
+  <li><a href="#beyond-n-grams-word-embeddings" id="toc-beyond-n-grams-word-embeddings" class="nav-link" data-scroll-target="#beyond-n-grams-word-embeddings">Beyond n-grams: word embeddings</a>
+  <ul class="collapse">
+  <li><a href="#generating-word-vectors" id="toc-generating-word-vectors" class="nav-link" data-scroll-target="#generating-word-vectors">Generating word vectors</a></li>
+  <li><a href="#computing-similarity-of-pink-floyd-songs" id="toc-computing-similarity-of-pink-floyd-songs" class="nav-link" data-scroll-target="#computing-similarity-of-pink-floyd-songs">Computing similarity of Pink Floyd songs</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">TF-IDF and similarity scores</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">nlp</div>
+    <div class="quarto-category">feature engineering</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="tf-idf-and-similarity-scores" class="level1">
+<h1>TF-IDF and similarity scores</h1>
+<p>The cosine similarity score and TF-IDF weights will be computed between two vectors in this course. Using these concepts, you will create a movie recommendation system and a TED Talk recommendation system. In addition, you will learn about word embeddings and use word vector representations to compute similarities between various Pink Floyd songs.</p>
+<p>This <strong>TF-IDF and similarity scores</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/feature-engineering-for-nlp-in-python">Datacamp course: Introduction to Natural Language Processing in Python</a> This course teaches techniques for extracting useful information from text and converting it into a format suitable for ML models. You will learn about POS tagging, named entity recognition, readability scores, n-gram and tf-idf models, and how to implement them using scikit-learn and spaCy. Additionally, you will learn how to calculate the similarity between two documents. During this process, you will be able to predict the sentiment of movie reviews and build recommenders for movies and Ted Talks. In the course of this course, you will learn how to engineer critical features from any text and solve some of the most challenging problems in data science.</p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="building-tf-idf-document-vectors" class="level1">
+<h1>Building tf-idf document vectors</h1>
+<pre><code>n-gram modeling
+    Weight of dimension dependent on the frequency of the word corresponding to the dimension
+Applications
+    Automatically detect stopwords
+    Search
+    Recommender systems
+    Better performance in predictive modeling for some cases
+Term frequency-inverse document frequency
+    Proportional to term frequency
+    Inverse function of the number of documents in which it occurs
+    Mathematical formula</code></pre>
+<p><img src="tf-idf-1.png" class="img-fluid"></p>
+<section id="tf-idf-vectors-for-ted-talks" class="level2">
+<h2 class="anchored" data-anchor-id="tf-idf-vectors-for-ted-talks">tf-idf vectors for TED talks</h2>
+<p>In this exercise, you have been given a corpus ted which contains the transcripts of 500 TED Talks. Your task is to generate the tf-idf vectors for these talks.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ted.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>transcript</th>
+      <th>url</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>We're going to talk — my — a new lecture, just...</td>
+      <td>https://www.ted.com/talks/al_seckel_says_our_b...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>This is a representation of your brain, and yo...</td>
+      <td>https://www.ted.com/talks/aaron_o_connell_maki...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>It's a great honor today to share with you The...</td>
+      <td>https://www.ted.com/talks/carter_emmart_demos_...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>My passions are music, technology and making t...</td>
+      <td>https://www.ted.com/talks/jared_ficklin_new_wa...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>It used to be that if you wanted to get a comp...</td>
+      <td>https://www.ted.com/talks/jeremy_howard_the_wo...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ted <span class="op">=</span> df[<span class="st">'transcript'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create TfidfVectorizer object</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> TfidfVectorizer()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate matrix of word vectors</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> vectorizer.fit_transform(ted)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of tfidf_matrix</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tfidf_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(510, 29168)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You now know how to generate tf-idf vectors for a given corpus of text. You can use these vectors to perform predictive modeling just like we did with CountVectorizer. In the next few lessons, we will see another extremely useful application of the vectorized form of documents: generating recommendations."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+You now know how to generate tf-idf vectors for a given corpus of text. You can use these vectors to perform predictive modeling just like we did with CountVectorizer. In the next few lessons, we will see another extremely useful application of the vectorized form of documents: generating recommendations.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cosine-similarity" class="level1">
+<h1>Cosine similarity</h1>
+<p><img src="tf-idf-2.png" class="img-fluid"></p>
+<section id="computing-dot-product" class="level2">
+<h2 class="anchored" data-anchor-id="computing-dot-product">Computing dot product</h2>
+<p>In this exercise, we will learn to compute the dot product between two vectors, A = (1, 3) and B = (-2, 2), using the numpy library. More specifically, we will use the np.dot() function to compute the dot product of two numpy arrays.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>])</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute dot product</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>dot_prod <span class="op">=</span> np.dot(A, B)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print dot product</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dot_prod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>4</code></pre>
+</div>
+</div>
+</section>
+<section id="cosine-similarity-matrix-of-a-corpus" class="level2">
+<h2 class="anchored" data-anchor-id="cosine-similarity-matrix-of-a-corpus">Cosine similarity matrix of a corpus</h2>
+<p>In this exercise, you have been given a corpus, which is a list containing five sentences. You have to compute the cosine similarity matrix which contains the pairwise cosine similarity score for every pair of sentences (vectorized using tf-idf).</p>
+<p>Remember, the value corresponding to the ith row and jth column of a similarity matrix denotes the similarity score for the ith and jth vector.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> [<span class="st">'The sun is the largest celestial body in the solar system'</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">'The solar system consists of the sun and eight revolving planets'</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Ra was the Egyptian Sun God'</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">'The Pyramids were the pinnacle of Egyptian architecture'</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">'The quick brown fox jumps over the lazy dog'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an instance of tf-idf Vectorizer</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the tf-idf vectors for the corpus</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf_vectorizer.fit_transform(corpus)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compute and print the cosine similarity matrix</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>cosine_sim <span class="op">=</span> cosine_similarity(tfidf_matrix, tfidf_matrix)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cosine_sim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.         0.36413198 0.18314713 0.18435251 0.16336438]
+ [0.36413198 1.         0.15054075 0.21704584 0.11203887]
+ [0.18314713 0.15054075 1.         0.21318602 0.07763512]
+ [0.18435251 0.21704584 0.21318602 1.         0.12960089]
+ [0.16336438 0.11203887 0.07763512 0.12960089 1.        ]]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">As you will see in a subsequent lesson, computing the cosine similarity matrix lies at the heart of many practical systems such as recommenders. From our similarity matrix, we see that the first and the second sentence are the most similar. Also the fifth sentence has, on average, the lowest pairwise cosine scores. This is intuitive as it contains entities that are not present in the other sentences."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+As you will see in a subsequent lesson, computing the cosine similarity matrix lies at the heart of many practical systems such as recommenders. From our similarity matrix, we see that the first and the second sentence are the most similar. Also the fifth sentence has, on average, the lowest pairwise cosine scores. This is intuitive as it contains entities that are not present in the other sentences.</code></pre>
+</div>
+</div>
+</section>
+<section id="building-a-plot-line-based-recommender" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-plot-line-based-recommender">Building a plot line based recommender</h2>
+<pre><code>Steps
+    Text preprocessing
+    Generate tf-idf vectors
+    Generate cosine-similarity matrix
+The recommender function
+    Take a movie title, cosine similarity matrix and indices series as arguments
+    Extract pairwise cosine similarity scores for the movie
+    Sort the scores in descending order
+    Output titles corresponding to the highest scores
+    Ignore the highest similarity score (of 1)</code></pre>
+</section>
+<section id="comparing-linear_kernel-and-cosine_similarity" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-linear_kernel-and-cosine_similarity">Comparing linear_kernel and cosine_similarity</h2>
+<p>In this exercise, you have been given tfidf_matrix which contains the tf-idf vectors of a thousand documents. Your task is to generate the cosine similarity matrix for these vectors first using cosine_similarity and then, using linear_kernel.</p>
+<p>We will then compare the computation times for both functions.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Record start time</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> time.time()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute cosine similarity matrix</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>cosine_sim <span class="op">=</span> cosine_similarity(tfidf_matrix, tfidf_matrix)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cosine similarity matrix</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cosine_sim)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print time taken</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Time taken: </span><span class="sc">%s</span><span class="st"> seconds"</span> <span class="op">%</span> (time.time() <span class="op">-</span> start))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.         0.36413198 0.18314713 0.18435251 0.16336438]
+ [0.36413198 1.         0.15054075 0.21704584 0.11203887]
+ [0.18314713 0.15054075 1.         0.21318602 0.07763512]
+ [0.18435251 0.21704584 0.21318602 1.         0.12960089]
+ [0.16336438 0.11203887 0.07763512 0.12960089 1.        ]]
+Time taken: 0.0009968280792236328 seconds</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> linear_kernel</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Record start time</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>start <span class="op">=</span> time.time()</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute cosine similarity matrix</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>cosine_sim <span class="op">=</span> linear_kernel(tfidf_matrix, tfidf_matrix)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cosine similarity matrix</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cosine_sim)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print time taken</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Time taken: </span><span class="sc">%s</span><span class="st"> seconds"</span> <span class="op">%</span> (time.time() <span class="op">-</span> start))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.         0.36413198 0.18314713 0.18435251 0.16336438]
+ [0.36413198 1.         0.15054075 0.21704584 0.11203887]
+ [0.18314713 0.15054075 1.         0.21318602 0.07763512]
+ [0.18435251 0.21704584 0.21318602 1.         0.12960089]
+ [0.16336438 0.11203887 0.07763512 0.12960089 1.        ]]
+Time taken: 0.0009999275207519531 seconds</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Notice how both linear_kernel and cosine_similarity produced the same result. However, linear_kernel took a smaller amount of time to execute. When you're working with a very large amount of data and your vectors are in the tf-idf representation, it is good practice to default to linear_kernel to improve performance. (NOTE: In case, you see linear_kernel taking more time, it's because the dataset we're dealing with is extremely small and Python's time module is incapable of capture such minute time differences accurately)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Notice how both linear_kernel and cosine_similarity produced the same result. However, linear_kernel took a smaller amount of time to execute. When you're working with a very large amount of data and your vectors are in the tf-idf representation, it is good practice to default to linear_kernel to improve performance. (NOTE: In case, you see linear_kernel taking more time, it's because the dataset we're dealing with is extremely small and Python's time module is incapable of capture such minute time differences accurately)</code></pre>
+</div>
+</div>
+</section>
+<section id="the-recommender-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-recommender-function">The recommender function</h2>
+<p>In this exercise, we will build a recommender function get_recommendations(), as discussed in the lesson. As we know, it takes in a title, a cosine similarity matrix, and a movie title and index mapping as arguments and outputs a list of 10 titles most similar to the original title (excluding the title itself).</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> pd.read_csv(<span class="st">'dataset/movie_metadata.csv'</span>).dropna()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>metadata.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>id</th>
+      <th>title</th>
+      <th>overview</th>
+      <th>tagline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>49026.0</td>
+      <td>The Dark Knight Rises</td>
+      <td>Following the death of District Attorney Harve...</td>
+      <td>The Legend Ends</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>414.0</td>
+      <td>Batman Forever</td>
+      <td>The Dark Knight of Gotham City confronts a das...</td>
+      <td>Courage now, truth always...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>268.0</td>
+      <td>Batman</td>
+      <td>The Dark Knight of Gotham City begins his war ...</td>
+      <td>Have you ever danced with the devil in the pal...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>364.0</td>
+      <td>Batman Returns</td>
+      <td>Having defeated the Joker, Batman now faces th...</td>
+      <td>The Bat, the Cat, the Penguin.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>415.0</td>
+      <td>Batman &amp; Robin</td>
+      <td>Along with crime-fighting partner Robin and ne...</td>
+      <td>Strength. Courage. Honor. And loyalty.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> pd.Series(metadata.index, index<span class="op">=</span>metadata[<span class="st">'title'</span>]).drop_duplicates()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_recommendations(title, cosine_sim, indices):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the index of the movie that matches the title</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> indices[title]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the pairwsie similarity scores</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> <span class="bu">list</span>(<span class="bu">enumerate</span>(cosine_sim[idx]))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort the movies based on the similarity scores</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> <span class="bu">sorted</span>(sim_scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the scores for 10 most similar movies</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> sim_scores[<span class="dv">1</span>:<span class="dv">11</span>]</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the movie indices</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    movie_indices <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> sim_scores]</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the top 10 most similar movies</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> metadata[<span class="st">'title'</span>].iloc[movie_indices]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="plot-recommendation-engine" class="level2">
+<h2 class="anchored" data-anchor-id="plot-recommendation-engine">Plot recommendation engine</h2>
+<p>In this exercise, we will build a recommendation engine that suggests movies based on similarity of plot lines. You have been given a get_recommendations() function that takes in the title of a movie, a similarity matrix and an indices series as its arguments and outputs a list of most similar movies.</p>
+<p>You have also been given a movie_plots Series that contains the plot lines of several movies. Your task is to generate a cosine similarity matrix for the tf-idf vectors of these plots.</p>
+<p>Consequently, we will check the potency of our engine by generating recommendations for one of my favorite movies, The Dark Knight Rises.</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>movie_plots <span class="op">=</span> metadata[<span class="st">'overview'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tfidf <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the TF-IDF matrix</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf.fit_transform(movie_plots)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the cosine similarity matrix</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>cosine_sim <span class="op">=</span> linear_kernel(tfidf_matrix, tfidf_matrix)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate recommendations</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_recommendations(<span class="st">"The Dark Knight Rises"</span>, cosine_sim, indices))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1                              Batman Forever
+2                                      Batman
+8                  Batman: Under the Red Hood
+3                              Batman Returns
+9                            Batman: Year One
+10    Batman: The Dark Knight Returns, Part 1
+11    Batman: The Dark Knight Returns, Part 2
+5                Batman: Mask of the Phantasm
+7                               Batman Begins
+4                              Batman &amp; Robin
+Name: title, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You've just built your very first recommendation system. Notice how the recommender correctly identifies 'The Dark Knight Rises' as a Batman movie and recommends other Batman movies as a result. This sytem is, of course, very primitive and there are a host of ways in which it could be improved. One method would be to look at the cast, crew and genre in addition to the plot to generate recommendations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+You've just built your very first recommendation system. Notice how the recommender correctly identifies 'The Dark Knight Rises' as a Batman movie and recommends other Batman movies as a result. This sytem is, of course, very primitive and there are a host of ways in which it could be improved. One method would be to look at the cast, crew and genre in addition to the plot to generate recommendations</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="ted-talk-recommender" class="level1">
+<h1>TED talk recommender</h1>
+<p>n this exercise, we will build a recommendation system that suggests TED Talks based on their transcripts. You have been given a get_recommendations() function that takes in the title of a talk, a similarity matrix and an indices series as its arguments, and outputs a list of most similar talks.</p>
+<p>You have also been given a transcripts series that contains the transcripts of around 500 TED talks. Your task is to generate a cosine similarity matrix for the tf-idf vectors of the talk transcripts.</p>
+<p>Consequently, we will generate recommendations for a talk titled ‘5 ways to kill your dreams’ by Brazilian entrepreneur Bel Pesce.</p>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ted <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ted_clean.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ted.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Unnamed: 0.1</th>
+      <th>title</th>
+      <th>url</th>
+      <th>transcript</th>
+    </tr>
+    <tr>
+      <th>Unnamed: 0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1407.0</td>
+      <td>10 top time-saving tech tips</td>
+      <td>https://www.ted.com/talks/david_pogue_10_top_t...</td>
+      <td>I've noticed something interesting about socie...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1524.0</td>
+      <td>Who am I? Think again</td>
+      <td>https://www.ted.com/talks/hetain_patel_who_am_...</td>
+      <td>Hetain Patel: (In Chinese)Yuyu Rau: Hi, I'm He...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2393.0</td>
+      <td>"Awoo"</td>
+      <td>https://www.ted.com/talks/sofi_tukker_awoo\n</td>
+      <td>(Music)Sophie Hawley-Weld: OK, you don't have ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2313.0</td>
+      <td>What I learned from 2,000 obituaries</td>
+      <td>https://www.ted.com/talks/lux_narayan_what_i_l...</td>
+      <td>Joseph Keller used to jog around the Stanford ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1633.0</td>
+      <td>Why giving away our wealth has been the most s...</td>
+      <td>https://www.ted.com/talks/bill_and_melinda_gat...</td>
+      <td>Chris Anderson: So, this is an interview with ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_recommendations(title, cosine_sim, indices):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the index of the movie that matches the title</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> indices[title]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the pairwsie similarity scores</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> <span class="bu">list</span>(<span class="bu">enumerate</span>(cosine_sim[idx]))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort the movies based on the similarity scores</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> <span class="bu">sorted</span>(sim_scores, key<span class="op">=</span><span class="kw">lambda</span> x: x[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the scores for 10 most similar movies</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    sim_scores <span class="op">=</span> sim_scores[<span class="dv">1</span>:<span class="dv">11</span>]</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the movie indices</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    talk_indices <span class="op">=</span> [i[<span class="dv">0</span>] <span class="cf">for</span> i <span class="kw">in</span> sim_scores]</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the top 10 most similar movies</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ted[<span class="st">'title'</span>].iloc[talk_indices]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>indices <span class="op">=</span> pd.Series(ted.index, index<span class="op">=</span>ted[<span class="st">'title'</span>]).drop_duplicates()</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>transcripts <span class="op">=</span> ted[<span class="st">'transcript'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tfidf <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the TF-IDF matrix</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf.fit_transform(transcripts)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the cosine similarity matrix</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>cosine_sim <span class="op">=</span> linear_kernel(tfidf_matrix, tfidf_matrix)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate recommendations</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_recommendations(<span class="st">'5 ways to kill your dreams'</span>, cosine_sim, indices))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: np.nan is an invalid document, expected byte or unicode string.</code></pre>
+</div>
+</div>
+</section>
+<section id="beyond-n-grams-word-embeddings" class="level1">
+<h1>Beyond n-grams: word embeddings</h1>
+<pre><code>Word embeddings
+    Mapping words into an n-dimensional vector space
+    Produced using deep learning and huge amounts of data
+    Discern how similar two words are to each other
+    Used to detect synonyms and antonyms
+    Captures complex relationships
+    Dependent on spacy model; independent of dataset you use</code></pre>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>spacy download en_core_web_lg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collecting en-core-web-lg==3.5.0
+  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.5.0/en_core_web_lg-3.5.0-py3-none-any.whl (587.7 MB)
+Requirement already satisfied: spacy&lt;3.6.0,&gt;=3.5.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from en-core-web-lg==3.5.0) (3.5.1)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (4.64.1)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.0.9)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (21.3)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.0.8)
+Requirement already satisfied: wasabi&lt;1.2.0,&gt;=0.9.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.1.1)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.0.7)
+Requirement already satisfied: smart-open&lt;7.0.0,&gt;=5.2.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (6.3.0)
+Requirement already satisfied: thinc&lt;8.2.0,&gt;=8.1.8 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (8.1.9)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.0.4)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.28.1)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.3.0)
+Requirement already satisfied: typer&lt;0.8.0,&gt;=0.3.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (0.7.0)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.11.0,&gt;=1.7.4 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.10.7)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.3 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.4.6)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.11 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.0.12)
+Requirement already satisfied: numpy&gt;=1.15.0 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.23.2)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.0.8)
+Requirement already satisfied: pathy&gt;=0.10.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (0.10.1)
+Requirement already satisfied: jinja2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.1.2)
+Requirement already satisfied: setuptools in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (57.4.0)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.0.9)
+Requirement already satisfied: typing-extensions&gt;=4.2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from pydantic!=1.8,!=1.8.1,&lt;1.11.0,&gt;=1.7.4-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (4.3.0)
+Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.1.1)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2022.6.15)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (3.3)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (1.26.12)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.7.8 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from thinc&lt;8.2.0,&gt;=8.1.8-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (0.7.9)
+Requirement already satisfied: confection&lt;1.0.0,&gt;=0.0.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from thinc&lt;8.2.0,&gt;=8.1.8-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (0.0.4)
+Requirement already satisfied: colorama in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from tqdm&lt;5.0.0,&gt;=4.38.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (0.4.6)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from typer&lt;0.8.0,&gt;=0.3.0-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (8.1.3)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from jinja2-&gt;spacy&lt;3.6.0,&gt;=3.5.0-&gt;en-core-web-lg==3.5.0) (2.1.1)
+Installing collected packages: en-core-web-lg
+Successfully installed en-core-web-lg-3.5.0
+[+] Download and installation successful
+You can now load the package via spacy.load('en_core_web_lg')</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-03-31 14:08:26.663141: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2023-03-31 14:08:26.663196: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2023-03-31 14:08:51.185043: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'nvcuda.dll'; dlerror: nvcuda.dll not found
+2023-03-31 14:08:51.185081: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
+2023-03-31 14:08:51.317771: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: DHR0201L
+2023-03-31 14:08:51.318117: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: DHR0201L
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: You are using pip version 21.2.3; however, version 23.0.1 is available.
+You should consider upgrading via the 'C:\Users\dghr201\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip' command.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_lg'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="generating-word-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="generating-word-vectors">Generating word vectors</h2>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sent <span class="op">=</span> <span class="st">'I like apples and orange'</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the doc object</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(sent)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute pairwise similarity scores</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token1 <span class="kw">in</span> doc:</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> token2 <span class="kw">in</span> doc:</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(token1.text, token2.text, token1.similarity(token2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>I I 1.0
+I like 0.3184410631656647
+I apples 0.1975560337305069
+I and -0.0979200005531311
+I orange 0.06804359704256058
+like I 0.3184410631656647
+like like 1.0
+like apples 0.29574331641197205
+like and 0.24359610676765442
+like orange 0.3216366171836853
+apples I 0.1975560337305069
+apples like 0.29574331641197205
+apples apples 1.0
+apples and 0.24472734332084656
+apples orange 0.5736395120620728
+and I -0.0979200005531311
+and like 0.24359610676765442
+and apples 0.24472734332084656
+and and 1.0
+and orange 0.2520448565483093
+orange I 0.06804359704256058
+orange like 0.3216366171836853
+orange apples 0.5736395120620728
+orange and 0.2520448565483093
+orange orange 1.0</code></pre>
+</div>
+</div>
+</section>
+<section id="computing-similarity-of-pink-floyd-songs" class="level2">
+<h2 class="anchored" data-anchor-id="computing-similarity-of-pink-floyd-songs">Computing similarity of Pink Floyd songs</h2>
+<p>In this final exercise, you have been given lyrics of three songs by the British band Pink Floyd, namely ‘High Hopes’, ‘Hey You’ and ‘Mother’. The lyrics to these songs are available as hopes, hey and mother respectively.</p>
+<p>Your task is to compute the pairwise similarity between mother and hopes, and mother and hey.</p>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'dataset/mother.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    mother <span class="op">=</span> f.read()</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'dataset/hopes.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    hopes <span class="op">=</span> f.read()</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'dataset/hey.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    hey <span class="op">=</span> f.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mother_doc <span class="op">=</span> nlp(mother)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>hopes_doc <span class="op">=</span> nlp(hopes)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>hey_doc <span class="op">=</span> nlp(hey)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print similarity between mother and hopes</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mother_doc.similarity(hopes_doc))</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print similarity between mother and hey</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(mother_doc.similarity(hey_doc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5779929666352768
+0.9465446706762218</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

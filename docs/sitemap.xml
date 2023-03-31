@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-30T04:41:10.721Z</lastmod>
+    <lastmod>2023-03-31T10:43:11.350Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -239,5 +239,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Named entity recognition/Named-entity recognition.html</loc>
     <lastmod>2023-03-30T04:38:47.755Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Basic features and readability scores/Basic features and readability scores.html</loc>
+    <lastmod>2023-03-31T10:30:19.617Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/N-Gram models/N-Gram models.html</loc>
+    <lastmod>2023-03-31T10:39:26.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Text preprocessing POS tagging and NER/Text preprocessing, POS tagging and NER.html</loc>
+    <lastmod>2023-03-31T10:41:13.997Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/TF-IDF and similarity scores/TF-IDF and similarity scores.html</loc>
+    <lastmod>2023-03-31T10:42:46.035Z</lastmod>
   </url>
 </urlset>

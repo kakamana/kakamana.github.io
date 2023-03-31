@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-03-30">
+
+<title>Kakamana’s Blogs - N-Gram models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#n-gram-models" id="toc-n-gram-models" class="nav-link active" data-scroll-target="#n-gram-models">N-Gram models</a>
+  <ul class="collapse">
+  <li><a href="#building-a-bag-of-words-model" id="toc-building-a-bag-of-words-model" class="nav-link" data-scroll-target="#building-a-bag-of-words-model">Building a bag of words model</a></li>
+  <li><a href="#bow-model-for-movie-taglines" id="toc-bow-model-for-movie-taglines" class="nav-link" data-scroll-target="#bow-model-for-movie-taglines">BoW model for movie taglines</a></li>
+  <li><a href="#analyzing-dimensionality-and-preprocessing" id="toc-analyzing-dimensionality-and-preprocessing" class="nav-link" data-scroll-target="#analyzing-dimensionality-and-preprocessing">Analyzing dimensionality and preprocessing</a></li>
+  <li><a href="#mapping-feature-indices-with-feature-names" id="toc-mapping-feature-indices-with-feature-names" class="nav-link" data-scroll-target="#mapping-feature-indices-with-feature-names">Mapping feature indices with feature names</a></li>
+  </ul></li>
+  <li><a href="#building-a-bow-naive-bayes-classifier" id="toc-building-a-bow-naive-bayes-classifier" class="nav-link" data-scroll-target="#building-a-bow-naive-bayes-classifier">Building a BoW Naive Bayes classifier</a>
+  <ul class="collapse">
+  <li><a href="#bow-vectors-for-movie-reviews" id="toc-bow-vectors-for-movie-reviews" class="nav-link" data-scroll-target="#bow-vectors-for-movie-reviews">BoW vectors for movie reviews</a></li>
+  <li><a href="#predicting-the-sentiment-of-a-movie-review" id="toc-predicting-the-sentiment-of-a-movie-review" class="nav-link" data-scroll-target="#predicting-the-sentiment-of-a-movie-review">Predicting the sentiment of a movie review</a></li>
+  </ul></li>
+  <li><a href="#building-n-gram-models" id="toc-building-n-gram-models" class="nav-link" data-scroll-target="#building-n-gram-models">Building n-gram models</a>
+  <ul class="collapse">
+  <li><a href="#n-gram-models-for-movie-tag-lines" id="toc-n-gram-models-for-movie-tag-lines" class="nav-link" data-scroll-target="#n-gram-models-for-movie-tag-lines">n-gram models for movie tag lines</a></li>
+  <li><a href="#higher-order-n-grams-for-sentiment-analysis" id="toc-higher-order-n-grams-for-sentiment-analysis" class="nav-link" data-scroll-target="#higher-order-n-grams-for-sentiment-analysis">Higher order n-grams for sentiment analysis</a></li>
+  <li><a href="#comparing-performance-of-n-gram-models" id="toc-comparing-performance-of-n-gram-models" class="nav-link" data-scroll-target="#comparing-performance-of-n-gram-models">Comparing performance of n-gram models</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">N-Gram models</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">nlp</div>
+    <div class="quarto-category">feature engineering</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="n-gram-models" class="level1">
+<h1>N-Gram models</h1>
+<p>Learn about n-gram modeling and use it to perform sentiment analysis on movie reviews</p>
+<p>This <strong>N-Gram models</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/feature-engineering-for-nlp-in-python">Datacamp course: Introduction to Natural Language Processing in Python</a> This course teaches techniques for extracting useful information from text and converting it into a format suitable for ML models. You will learn about POS tagging, named entity recognition, readability scores, n-gram and tf-idf models, and how to implement them using scikit-learn and spaCy. Additionally, you will learn how to calculate the similarity between two documents. During this process, you will be able to predict the sentiment of movie reviews and build recommenders for movies and Ted Talks. In the course of this course, you will learn how to engineer critical features from any text and solve some of the most challenging problems in data science.</p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install spacy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: Ignoring invalid distribution -rotobuf (c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages)
+WARNING: You are using pip version 21.2.3; however, version 23.0.1 is available.
+You should consider upgrading via the 'C:\Users\dghr201\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip' command.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: spacy in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (3.5.1)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (3.0.8)
+Requirement already satisfied: typer&lt;0.8.0,&gt;=0.3.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (0.7.0)
+Requirement already satisfied: thinc&lt;8.2.0,&gt;=8.1.8 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (8.1.9)
+Requirement already satisfied: setuptools in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (57.4.0)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (3.3.0)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (2.0.7)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (2.0.8)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (2.28.1)
+Requirement already satisfied: smart-open&lt;7.0.0,&gt;=5.2.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (6.3.0)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (1.0.9)
+Requirement already satisfied: pathy&gt;=0.10.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (0.10.1)
+Requirement already satisfied: numpy&gt;=1.15.0 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from spacy) (1.23.2)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (21.3)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (1.0.4)
+Requirement already satisfied: jinja2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (3.1.2)
+Requirement already satisfied: wasabi&lt;1.2.0,&gt;=0.9.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (1.1.1)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.11.0,&gt;=1.7.4 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (1.10.7)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.11 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (3.0.12)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.3 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from spacy) (2.4.6)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from spacy) (4.64.1)
+Requirement already satisfied: pyparsing!=3.0.5,&gt;=2.0.2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from packaging&gt;=20.0-&gt;spacy) (3.0.9)
+Requirement already satisfied: typing-extensions&gt;=4.2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from pydantic!=1.8,!=1.8.1,&lt;1.11.0,&gt;=1.7.4-&gt;spacy) (4.3.0)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (3.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2022.6.15)
+Requirement already satisfied: charset-normalizer&lt;3,&gt;=2 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2.1.1)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (1.26.12)
+Requirement already satisfied: confection&lt;1.0.0,&gt;=0.0.1 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from thinc&lt;8.2.0,&gt;=8.1.8-&gt;spacy) (0.0.4)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.7.8 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from thinc&lt;8.2.0,&gt;=8.1.8-&gt;spacy) (0.7.9)
+Requirement already satisfied: colorama in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from tqdm&lt;5.0.0,&gt;=4.38.0-&gt;spacy) (0.4.6)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in c:\users\dghr201\appdata\roaming\python\python39\site-packages (from typer&lt;0.8.0,&gt;=0.3.0-&gt;spacy) (8.1.3)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in c:\users\dghr201\appdata\local\programs\python\python39\lib\site-packages (from jinja2-&gt;spacy) (2.1.1)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="building-a-bag-of-words-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-bag-of-words-model">Building a bag of words model</h2>
+<ul>
+<li>Bag of words model
+<ul>
+<li>Extract word tokens</li>
+<li>Compute frequency of word tokens</li>
+<li>Construct a word vector out of these frequencies and vocabulary of corpus</li>
+</ul></li>
+</ul>
+</section>
+<section id="bow-model-for-movie-taglines" class="level2">
+<h2 class="anchored" data-anchor-id="bow-model-for-movie-taglines">BoW model for movie taglines</h2>
+<p>In this exercise, you have been provided with a corpus of more than 7000 movie tag lines. Your job is to generate the bag of words representation bow_matrix for these taglines. For this exercise, we will ignore the text preprocessing step and generate bow_matrix directly.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>movies <span class="op">=</span> pd.read_csv(<span class="st">'dataset/movie_overviews.csv'</span>).dropna()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>movies[<span class="st">'tagline'</span>] <span class="op">=</span> movies[<span class="st">'tagline'</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>movies.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+      <th>overview</th>
+      <th>tagline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>8844</td>
+      <td>Jumanji</td>
+      <td>When siblings Judy and Peter discover an encha...</td>
+      <td>roll the dice and unleash the excitement!</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>15602</td>
+      <td>Grumpier Old Men</td>
+      <td>A family wedding reignites the ancient feud be...</td>
+      <td>still yelling. still fighting. still ready for...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>31357</td>
+      <td>Waiting to Exhale</td>
+      <td>Cheated on, mistreated and stepped on, the wom...</td>
+      <td>friends are the people who let you be yourself...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11862</td>
+      <td>Father of the Bride Part II</td>
+      <td>Just when George Banks has recovered from his ...</td>
+      <td>just when his world is back to normal... he's ...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>949</td>
+      <td>Heat</td>
+      <td>Obsessive master thief, Neil McCauley leads a ...</td>
+      <td>a los angeles crime saga</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> movies[<span class="st">'tagline'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create CountVectorizer object</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate matrix of word vectors</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>bow_matrix <span class="op">=</span> vectorizer.fit_transform(corpus)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of bow_matrix</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bow_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(7033, 6614)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You now know how to generate a bag of words representation for a given corpus of documents. Notice that the word vectors created have more than 6600 dimensions. However, most of these dimensions have a value of zero since most words do not occur in a particular tagline."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+You now know how to generate a bag of words representation for a given corpus of documents. Notice that the word vectors created have more than 6600 dimensions. However, most of these dimensions have a value of zero since most words do not occur in a particular tagline.</code></pre>
+</div>
+</div>
+</section>
+<section id="analyzing-dimensionality-and-preprocessing" class="level2">
+<h2 class="anchored" data-anchor-id="analyzing-dimensionality-and-preprocessing">Analyzing dimensionality and preprocessing</h2>
+<p>You have been provided with a lem_corpus that contains lowercased, lemmatized, and stopword-free versions of the movie taglines from the previous exercise.</p>
+<p>In this exercise, you are required to generate the bag of words representation bow_lem_matrix for these lemmatized taglines and to compare its shape to that of the bow_matrix obtained in the previous exercise.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python3 <span class="op">-</span>m spacy download en_core_web_sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings &gt; Manage App Execution Aliases.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_sm'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stopwords <span class="op">=</span> spacy.lang.en.stop_words.STOP_WORDS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>lem_corpus <span class="op">=</span> corpus.<span class="bu">apply</span>(<span class="kw">lambda</span> row: <span class="st">' '</span>.join([t.lemma_ <span class="cf">for</span> t <span class="kw">in</span> nlp(row)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                                <span class="cf">if</span> t.lemma_ <span class="kw">not</span> <span class="kw">in</span> stopwords</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                                <span class="kw">and</span> t.lemma_.isalpha()]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lem_corpus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>1                            roll dice unleash excitement
+2                                   yell fight ready love
+3                            friend people let let forget
+4                              world normal surprise life
+5                                  los angeles crime saga
+                              ...                        
+9091                         kingsglaive final fantasy xv
+9093                       happen vegas stay vegas happen
+9095    decorate officer devote family man defend hono...
+9097                              god incarnate city doom
+9098                                      band know story
+Name: tagline, Length: 7033, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate of word vectors</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>bow_lem_matrix <span class="op">=</span> vectorizer.fit_transform(lem_corpus)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the shape of how_lem_matrix</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bow_lem_matrix.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(7033, 4941)</code></pre>
+</div>
+</div>
+</section>
+<section id="mapping-feature-indices-with-feature-names" class="level2">
+<h2 class="anchored" data-anchor-id="mapping-feature-indices-with-feature-names">Mapping feature indices with feature names</h2>
+<p>In the previous exercise, we learned that CountVectorizer does not necessarily index the vocabulary alphabetically. In this exercise, we will learn how to map each feature index to its corresponding feature name.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> [<span class="st">'The lion is the king of the jungle'</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">'Lions have lifespans of a decade'</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">'The lion is an endangered species'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate matrix of word vectors</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>bow_matrix <span class="op">=</span> vectorizer.fit_transform(sentences)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert bow_matrix into a DataFrame</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>bow_df <span class="op">=</span> pd.DataFrame(bow_matrix.toarray())</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Map the column names to vocabulary</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>bow_df.columns <span class="op">=</span> vectorizer.get_feature_names()</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print bow_df</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>bow_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\dghr201\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
+  warnings.warn(msg, category=FutureWarning)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>an</th>
+      <th>decade</th>
+      <th>endangered</th>
+      <th>have</th>
+      <th>is</th>
+      <th>jungle</th>
+      <th>king</th>
+      <th>lifespans</th>
+      <th>lion</th>
+      <th>lions</th>
+      <th>of</th>
+      <th>species</th>
+      <th>the</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Observe that the column names refer to the token whose frequency is being recorded. As an example, since the first column name is an, the first feature represents how often 'an' occurs in a given sentence. As a result of get_feature_names(), we receive a list corresponding to the mapping between the feature indexes and the vocabulary names."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Observe that the column names refer to the token whose frequency is being recorded. As an example, since the first column name is an, the first feature represents how often 'an' occurs in a given sentence. As a result of get_feature_names(), we receive a list corresponding to the mapping between the feature indexes and the vocabulary names.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="building-a-bow-naive-bayes-classifier" class="level1">
+<h1>Building a BoW Naive Bayes classifier</h1>
+<ul>
+<li>Steps
+<ul>
+<li>Text preprocessing</li>
+<li>Building a bag-of-words model (or representation)</li>
+<li>Machine Learning</li>
+</ul></li>
+</ul>
+<section id="bow-vectors-for-movie-reviews" class="level2">
+<h2 class="anchored" data-anchor-id="bow-vectors-for-movie-reviews">BoW vectors for movie reviews</h2>
+<p>You are given two pandas Series, X_train and X_test, which contain movie reviews. They represent the training and testing review data, respectively. Your task is to preprocess the reviews and generate BoW vectors for these two sets using CountVectorizer.</p>
+<p>After we have generated the BoW vector matrices X_train_bow and X_test_bow, we will be able to apply a machine learning model to them and conduct sentiment analysis.</p>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>movie_reviews <span class="op">=</span> pd.read_csv(<span class="st">'dataset/movie_reviews_clean.csv'</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>movie_reviews.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>review</th>
+      <th>sentiment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>this anime series starts out great interesting...</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>some may go for a film like this but i most as...</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>i ve seen this piece of perfection during the ...</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>this movie is likely the worst movie i ve ever...</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>it ll soon be 10 yrs since this movie was rele...</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> movie_reviews[<span class="st">'review'</span>]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> movie_reviews[<span class="st">'sentiment'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer(lowercase<span class="op">=</span><span class="va">True</span>, stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit and transform X_train</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>X_train_bow <span class="op">=</span> vectorizer.fit_transform(X_train)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform X_test</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>X_test_bow <span class="op">=</span> vectorizer.transform(X_test)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print shape of X_train_bow and X_test_bow</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train_bow.shape)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_test_bow.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(757, 15158)
+(253, 15158)</code></pre>
+</div>
+</div>
+</section>
+<section id="predicting-the-sentiment-of-a-movie-review" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-the-sentiment-of-a-movie-review">Predicting the sentiment of a movie review</h2>
+<p>For the training and test movie review data, you generated bag-of-words representations in the previous exercise. In this exercise, we will use this model to train a Naive Bayes classifier that can detect the sentiment of a movie review and compute its accuracy by using this model. This model can only classify a review as either positive (1) or negative (0) since it is a binary classification problem. It is incapable of detecting neutral reviews.</p>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> MultinomialNB</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a MultinomialNB object</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> MultinomialNB()</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the classifier</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train_bow, y_train)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure the accuracy</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> clf.score(X_test_bow, y_test)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy of the classifier on the test set is </span><span class="sc">%.3f</span><span class="st">"</span> <span class="op">%</span> accuracy)</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the sentiment of a negative review</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> <span class="st">'The movie was terrible. The music was underwhelming and the acting mediocre.'</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> clf.predict(vectorizer.transform([review]))[<span class="dv">0</span>]</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The sentiment predicted by the classifier is </span><span class="sc">%i</span><span class="st">"</span> <span class="op">%</span> (prediction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Input y contains NaN.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="building-n-gram-models" class="level1">
+<h1>Building n-gram models</h1>
+<pre><code>BoW shortcomings
+    Example
+        The movie was good and not boring -&gt; positive
+        The movie was not good and boring -&gt; negative
+    Exactly the same BoW representation!
+    Context of the words is lost.
+    Sentiment dependent on the position of not
+n-grams
+    Contiguous sequence of n elements (or words) in a given document.
+    Bi-grams / Tri-grams
+n-grams Shortcomings
+    Increase number of dimension, occurs curse of dimensionality
+    Higher order n-grams are rare</code></pre>
+<section id="n-gram-models-for-movie-tag-lines" class="level2">
+<h2 class="anchored" data-anchor-id="n-gram-models-for-movie-tag-lines">n-gram models for movie tag lines</h2>
+<p>In this exercise, we have been provided with a corpus of more than 9000 movie tag lines. Our job is to generate n-gram models up to n equal to 1, n equal to 2 and n equal to 3 for this data and discover the number of features for each model.</p>
+<p>We will then compare the number of features generated for each model.</p>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>vectorizer_ng1 <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ng1 <span class="op">=</span> vectorizer_ng1.fit_transform(corpus)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate n-grams upto n=2</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>vectorizer_ng2 <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>ng2 <span class="op">=</span> vectorizer_ng2.fit_transform(corpus)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate n-grams upto n=3</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>vectorizer_ng3 <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>ng3 <span class="op">=</span> vectorizer_ng3.fit_transform(corpus)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the number of features for each model</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ng1, ng2 and ng3 have </span><span class="sc">%i</span><span class="st">, </span><span class="sc">%i</span><span class="st"> and </span><span class="sc">%i</span><span class="st"> features respectively"</span> <span class="op">%</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>      (ng1.shape[<span class="dv">1</span>], ng2.shape[<span class="dv">1</span>], ng3.shape[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>ng1, ng2 and ng3 have 6614, 37100 and 76881 features respectively</code></pre>
+</div>
+</div>
+</section>
+<section id="higher-order-n-grams-for-sentiment-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="higher-order-n-grams-for-sentiment-analysis">Higher order n-grams for sentiment analysis</h2>
+<p>Similar to a previous exercise, we are going to build a classifier that can detect if the review of a particular movie is positive or negative. However, this time, we will use n-grams up to n=2 for the task.</p>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ng_vectorizer <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>X_train_ng <span class="op">=</span> ng_vectorizer.fit_transform(X_train)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>X_test_ng <span class="op">=</span> ng_vectorizer.transform(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>clf_ng <span class="op">=</span> MultinomialNB()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the classifier</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>clf_ng.fit(X_train_ng, y_train)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure the accuracy</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> clf_ng.score(X_test_ng, y_test)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The accuracy of the classifier on the test set is </span><span class="sc">%.3f</span><span class="st">"</span> <span class="op">%</span> accuracy)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the sentiment of a negative review</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> <span class="st">'The movie was not good. The plot had several holes and the acting lacked panache'</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> clf_ng.predict(ng_vectorizer.transform([review]))[<span class="dv">0</span>]</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The sentiment predicted by the classifier is </span><span class="sc">%i</span><span class="st">"</span> <span class="op">%</span> (prediction))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Input y contains NaN.</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-performance-of-n-gram-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-performance-of-n-gram-models">Comparing performance of n-gram models</h2>
+<p>You now know how to conduct sentiment analysis by converting text into various n-gram representations and feeding them to a classifier. In this exercise, we will conduct sentiment analysis for the same movie reviews from before using two n-gram models: unigrams and n-grams upto n equal to 3.</p>
+<p>We will then compare the performance using three criteria: accuracy of the model on the test set, time taken to execute the program and the number of features created when generating the n-gram representation.</p>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the data into training and test sets</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>train_X, test_X, train_y, test_y <span class="op">=</span> train_test_split(movie_reviews[<span class="st">'review'</span>],</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>                                                    movie_reviews[<span class="st">'sentiment'</span>],</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                                                    test_size<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>                                                    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>                                                    stratify<span class="op">=</span>movie_reviews[<span class="st">'sentiment'</span>])</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Generateing ngrams</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>train_X <span class="op">=</span> vectorizer.fit_transform(train_X)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>test_X <span class="op">=</span> vectorizer.transform(test_X)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit classifier</span></span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> MultinomialNB()</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>clf.fit(train_X, train_y)</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the accuracy, time and number of dimensions</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The program took </span><span class="sc">%.3f</span><span class="st"> seconds to complete. The accuracy on the test set is </span><span class="sc">%.2f</span><span class="st">. "</span> <span class="op">%</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>      (time.time() <span class="op">-</span> start_time, clf.score(test_X, test_y)))</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The ngram representation had </span><span class="sc">%i</span><span class="st"> features."</span> <span class="op">%</span> (train_X.shape[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Input y contains NaN.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting the data into training and test sets</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>train_X, test_X, train_y, test_y <span class="op">=</span> train_test_split(movie_reviews[<span class="st">'review'</span>],</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                                                    movie_reviews[<span class="st">'sentiment'</span>],</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>                                                    test_size<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>                                                    random_state<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                                                    stratify<span class="op">=</span>movie_reviews[<span class="st">'sentiment'</span>])</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generateing ngrams</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>vectorizer <span class="op">=</span> CountVectorizer(ngram_range<span class="op">=</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>train_X <span class="op">=</span> vectorizer.fit_transform(train_X)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>test_X <span class="op">=</span> vectorizer.transform(test_X)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit classifier</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> MultinomialNB()</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>clf.fit(train_X, train_y)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the accuracy, time and number of dimensions</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The program took </span><span class="sc">%.3f</span><span class="st"> seconds to complete. The accuracy on the test set is </span><span class="sc">%.2f</span><span class="st">. "</span> <span class="op">%</span></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>      (time.time() <span class="op">-</span> start_time, clf.score(test_X, test_y)))</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The ngram representation had </span><span class="sc">%i</span><span class="st"> features."</span> <span class="op">%</span> (train_X.shape[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: Input y contains NaN.</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
