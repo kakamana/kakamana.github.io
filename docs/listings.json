@@ -10,7 +10,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/High level API in intro to tensorflow/High Level APIs.html",
       "/posts/Introduction to tensorflow/Introduction to TensorFlow.html",
+      "/posts/Neural networks in intro to tensorflow/Neural Networks.html",
       "/posts/Basic features and readability scores/Basic features and readability scores.html",
       "/posts/N-Gram models/N-Gram models.html",
       "/posts/TF-IDF and similarity scores/TF-IDF and similarity scores.html",

@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-01T14:14:49.511Z</lastmod>
+    <lastmod>2023-04-01T20:48:19.756Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -263,5 +263,13 @@
   <url>
     <loc>https://kakamana.github.io/posts/Linear models/Linear models.html</loc>
     <lastmod>2023-04-01T14:13:56.594Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Neural networks in intro to tensorflow/Neural Networks.html</loc>
+    <lastmod>2023-04-01T20:46:47.809Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/High level API in intro to tensorflow/High Level APIs.html</loc>
+    <lastmod>2023-04-01T20:47:38.048Z</lastmod>
   </url>
 </urlset>
