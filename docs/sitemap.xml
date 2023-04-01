@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-03-31T10:43:11.350Z</lastmod>
+    <lastmod>2023-04-01T14:14:49.511Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
@@ -255,5 +255,13 @@
   <url>
     <loc>https://kakamana.github.io/posts/TF-IDF and similarity scores/TF-IDF and similarity scores.html</loc>
     <lastmod>2023-03-31T10:42:46.035Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Introduction to tensorflow/Introduction to TensorFlow.html</loc>
+    <lastmod>2023-04-01T14:13:11.544Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Linear models/Linear models.html</loc>
+    <lastmod>2023-04-01T14:13:56.594Z</lastmod>
   </url>
 </urlset>

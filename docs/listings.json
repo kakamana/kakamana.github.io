@@ -10,10 +10,12 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Introduction to tensorflow/Introduction to TensorFlow.html",
       "/posts/Basic features and readability scores/Basic features and readability scores.html",
       "/posts/N-Gram models/N-Gram models.html",
       "/posts/TF-IDF and similarity scores/TF-IDF and similarity scores.html",
       "/posts/Building fake news classifier/Building fake news classifier.html",
+      "/posts/Linear models/Linear models.html",
       "/posts/Named entity recognition/Named-entity recognition.html",
       "/posts/Regular expression and word tokenization/Regular expressions & word tokenization.html",
       "/posts/Simple topic identification/Simple topic identification.html",
