@@ -10,6 +10,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Building deep learning models with keras/Building deep learning models with keras.html",
+      "/posts/Fine-tuning keras models/Fine-tuning keras models.html",
+      "/posts/Optimize a neural network with backward propagation/Optimizing a neural network with backward propagation.html",
+      "/posts/Basics of deep learning and neural netowrks/Basics of deep learning and neural networks.html",
       "/posts/High level API in intro to tensorflow/High Level APIs.html",
       "/posts/Introduction to tensorflow/Introduction to TensorFlow.html",
       "/posts/Neural networks in intro to tensorflow/Neural Networks.html",
