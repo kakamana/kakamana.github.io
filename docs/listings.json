@@ -10,6 +10,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Mulitple outputs/Multiple Outputs.html",
+      "/posts/Multiple inputs in Keras/Multiple Inputs, 3 Inputs and Beyond.html",
+      "/posts/The Keras Functional API/The Keras Functional API.html",
+      "/posts/Two Input Networks Using Categorical Embeddings, Shared Layers, and Merge Layers/Two Input Networks Using Categorical Embeddings, Shared Layers, and Merge Layers.html",
       "/posts/Advance model architecture/Advanced Model Architectures.html",
       "/posts/Improving your model performance/Improving Your Model Performance.html",
       "/posts/Introducing Keras/Introducing Keras.html",

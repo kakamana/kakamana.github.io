@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-08">
+
+<title>Kakamana’s Blogs - Multiple Outputs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#multiple-outputs" id="toc-multiple-outputs" class="nav-link active" data-scroll-target="#multiple-outputs">Multiple Outputs</a></li>
+  <li><a href="#two-output-models" id="toc-two-output-models" class="nav-link" data-scroll-target="#two-output-models">Two-output models</a>
+  <ul class="collapse">
+  <li><a href="#simple-two-output-model" id="toc-simple-two-output-model" class="nav-link" data-scroll-target="#simple-two-output-model">Simple two-output model</a></li>
+  <li><a href="#fit-a-model-with-two-outputs" id="toc-fit-a-model-with-two-outputs" class="nav-link" data-scroll-target="#fit-a-model-with-two-outputs">Fit a model with two outputs</a></li>
+  <li><a href="#inspect-the-model-i" id="toc-inspect-the-model-i" class="nav-link" data-scroll-target="#inspect-the-model-i">Inspect the model (I)</a></li>
+  <li><a href="#evaluate-the-model" id="toc-evaluate-the-model" class="nav-link" data-scroll-target="#evaluate-the-model">Evaluate the model</a></li>
+  </ul></li>
+  <li><a href="#single-model-for-classification-and-regression" id="toc-single-model-for-classification-and-regression" class="nav-link" data-scroll-target="#single-model-for-classification-and-regression">Single model for classification and regression</a>
+  <ul class="collapse">
+  <li><a href="#classification-and-regression-in-one-model" id="toc-classification-and-regression-in-one-model" class="nav-link" data-scroll-target="#classification-and-regression-in-one-model">Classification and regression in one model</a></li>
+  <li><a href="#compile-and-fit-the-model" id="toc-compile-and-fit-the-model" class="nav-link" data-scroll-target="#compile-and-fit-the-model">Compile and fit the model</a></li>
+  <li><a href="#inspect-the-model-ii" id="toc-inspect-the-model-ii" class="nav-link" data-scroll-target="#inspect-the-model-ii">Inspect the model (II)</a></li>
+  <li><a href="#evaluate-on-new-data-with-two-metrics" id="toc-evaluate-on-new-data-with-two-metrics" class="nav-link" data-scroll-target="#evaluate-on-new-data-with-two-metrics">Evaluate on new data with two metrics</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multiple Outputs</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">deep learning</div>
+    <div class="quarto-category">tensorflow</div>
+    <div class="quarto-category">keraas</div>
+    <div class="quarto-category">neural network</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 8, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="multiple-outputs" class="level1">
+<h1>Multiple Outputs</h1>
+<p>You will build neural networks with multiple outputs in this chapter, which can be used to solve regression problems with multiple targets. Additionally, you will build a model that simultaneously solves a regression problem and a classification problem.</p>
+<p>This <strong>Multiple Outputs</strong> is part of [Datacamp course: Advanced Deep Learning with Keras] You will learn how to use the versatile Keras functional API to solve a variety of problems. The course will begin with simple, multi-layer dense networks (also known as multi-layer perceptrons) and progress to more sophisticated architectures. This course will cover how to construct models with multiple inputs and a single output, as well as how to share weights between layers in a model. Additionally, we will discuss advanced topics such as category embeddings and multiple output networks. This course will teach you how to train a network that performs both classification and regression.</p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="two-output-models" class="level1">
+<h1>Two-output models</h1>
+<section id="simple-two-output-model" class="level2">
+<h2 class="anchored" data-anchor-id="simple-two-output-model">Simple two-output model</h2>
+<p>In this exercise, you will use the tournament data to build one model that makes two predictions: the scores of both teams in a given game. Your inputs will be the seed difference of the two teams, as well as the predicted score difference from the model you built in chapter 3.</p>
+<p>The output from your model will be the predicted score for team 1 as well as team 2. This is called “multiple target regression”: one model making more than one prediction</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Input, Dense</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Model</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the input</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>input_tensor <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">2</span>, ))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the output</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>output_tensor <span class="op">=</span> Dense(<span class="dv">2</span>)(input_tensor)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a model</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(input_tensor, output_tensor)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the model</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'mean_absolute_error'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metal device set to: Apple M2 Pro</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-a-model-with-two-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="fit-a-model-with-two-outputs">Fit a model with two outputs</h2>
+<p>Now that you’ve defined your 2-output model, fit it to the tournament data. I’ve split the data into games_tourney_train and games_tourney_test, so use the training set to fit for now.</p>
+<p>This model will use the pre-tournament seeds, as well as your pre-tournament predictions from the regular season model you built previously in this course.</p>
+<p>As a reminder, this model will predict the scores of both teams.</p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>games_tourney <span class="op">=</span> pd.read_csv(<span class="st">'dataset/games_tourney.csv'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>games_tourney.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>season</th>
+      <th>team_1</th>
+      <th>team_2</th>
+      <th>home</th>
+      <th>seed_diff</th>
+      <th>score_diff</th>
+      <th>score_1</th>
+      <th>score_2</th>
+      <th>won</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1985</td>
+      <td>288</td>
+      <td>73</td>
+      <td>0</td>
+      <td>-3</td>
+      <td>-9</td>
+      <td>41</td>
+      <td>50</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1985</td>
+      <td>5929</td>
+      <td>73</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6</td>
+      <td>61</td>
+      <td>55</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1985</td>
+      <td>9884</td>
+      <td>73</td>
+      <td>0</td>
+      <td>5</td>
+      <td>-4</td>
+      <td>59</td>
+      <td>63</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1985</td>
+      <td>73</td>
+      <td>288</td>
+      <td>0</td>
+      <td>3</td>
+      <td>9</td>
+      <td>50</td>
+      <td>41</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1985</td>
+      <td>3920</td>
+      <td>410</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-9</td>
+      <td>54</td>
+      <td>63</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>games_season <span class="op">=</span> pd.read_csv(<span class="st">'dataset/games_season.csv'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>games_season.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>season</th>
+      <th>team_1</th>
+      <th>team_2</th>
+      <th>home</th>
+      <th>score_diff</th>
+      <th>score_1</th>
+      <th>score_2</th>
+      <th>won</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1985</td>
+      <td>3745</td>
+      <td>6664</td>
+      <td>0</td>
+      <td>17</td>
+      <td>81</td>
+      <td>64</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1985</td>
+      <td>126</td>
+      <td>7493</td>
+      <td>1</td>
+      <td>7</td>
+      <td>77</td>
+      <td>70</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1985</td>
+      <td>288</td>
+      <td>3593</td>
+      <td>1</td>
+      <td>7</td>
+      <td>63</td>
+      <td>56</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1985</td>
+      <td>1846</td>
+      <td>9881</td>
+      <td>1</td>
+      <td>16</td>
+      <td>70</td>
+      <td>54</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1985</td>
+      <td>2675</td>
+      <td>10298</td>
+      <td>1</td>
+      <td>12</td>
+      <td>86</td>
+      <td>74</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Embedding, Input, Flatten, Concatenate, Dense</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Model</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the unique number of teams</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>n_teams <span class="op">=</span> np.unique(games_season[<span class="st">'team_1'</span>]).shape[<span class="dv">0</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an embedding layer</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>team_lookup <span class="op">=</span> Embedding(input_dim<span class="op">=</span>n_teams,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                        output_dim<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                        input_length<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                        name<span class="op">=</span><span class="st">'Team-Strength'</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an input layer for the team ID</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>teamid_in <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">1</span>, ))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Lookup the input in the team strength embedding layer</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>strength_lookup <span class="op">=</span> team_lookup(teamid_in)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the output</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>strength_lookup_flat <span class="op">=</span> Flatten()(strength_lookup)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the operations into a single, re-usable model</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>team_strength_model <span class="op">=</span> Model(teamid_in, strength_lookup_flat, name<span class="op">=</span><span class="st">'Team-Strength-Model'</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an Input for each team</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>team_in_1 <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">1</span>, ), name<span class="op">=</span><span class="st">'Team-1-In'</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>team_in_2 <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">1</span>, ), name<span class="op">=</span><span class="st">'Team-2-In'</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an input for home vs away</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>home_in <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">1</span>, ), name<span class="op">=</span><span class="st">'Home-In'</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Lookup the team inputs in the team strength model</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>team_1_strength <span class="op">=</span> team_strength_model(team_in_1)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>team_2_strength <span class="op">=</span> team_strength_model(team_in_2)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the team strengths with the home input using a Concatenate layer,</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># then add a Dense layer</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> Concatenate()([team_1_strength, team_2_strength, home_in])</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> Dense(<span class="dv">1</span>)(out)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a model</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>p_model <span class="op">=</span> Model([team_in_1, team_in_2, home_in], out)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the model</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>p_model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'mean_absolute_error'</span>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model to the games_season dataset</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>p_model.fit([games_season[<span class="st">'team_1'</span>], games_season[<span class="st">'team_2'</span>], games_season[<span class="st">'home'</span>]],</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>          games_season[<span class="st">'score_diff'</span>],</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>          epochs<span class="op">=</span><span class="dv">1</span>, verbose<span class="op">=</span><span class="va">True</span>, validation_split<span class="op">=</span><span class="fl">0.1</span>, batch_size<span class="op">=</span><span class="dv">2048</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>games_tourney[<span class="st">'pred'</span>] <span class="op">=</span> p_model.predict([games_tourney[<span class="st">'team_1'</span>],</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>                                       games_tourney[<span class="st">'team_2'</span>],</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                                       games_tourney[<span class="st">'home'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-04-08 01:04:42.790937: W tensorflow/tsl/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>138/138 [==============================] - 3s 11ms/step - loss: 12.2298 - val_loss: 11.6713
+133/133 [==============================] - 0s 2ms/step</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>games_tourney_train <span class="op">=</span> games_tourney[games_tourney[<span class="st">'season'</span>] <span class="op">&lt;=</span> <span class="dv">2010</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>games_tourney_test <span class="op">=</span> games_tourney[games_tourney[<span class="st">'season'</span>] <span class="op">&gt;</span> <span class="dv">2010</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.fit(games_tourney_train[[<span class="st">'seed_diff'</span>, <span class="st">'pred'</span>]],</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          games_tourney_train[[<span class="st">'score_1'</span>, <span class="st">'score_2'</span>]],</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          verbose<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>          epochs<span class="op">=</span><span class="dv">10000</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>          batch_size<span class="op">=</span><span class="dv">256</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="inspect-the-model-i" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-the-model-i">Inspect the model (I)</h2>
+<p>Now that you’ve fit your model, let’s take a look at it. You can use the .get_weights() method to inspect your model’s weights.</p>
+<p>The input layer will have 4 weights: 2 for each input times 2 for each output.</p>
+<p>The output layer will have 2 weights, one for each output.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the model's weights</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.get_weights())</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the column means of the training data</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(games_tourney_train.mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[array([[ 0.57821244, -0.66847074],
+       [23.578228  , 21.29037   ]], dtype=float32), array([67.67261, 68.08015], dtype=float32)]
+season        1997.548544
+team_1        5560.890777
+team_2        5560.890777
+home             0.000000
+seed_diff        0.000000
+score_diff       0.000000
+score_1         71.786711
+score_2         71.786711
+won              0.500000
+pred             0.141091
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluate-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="evaluate-the-model">Evaluate the model</h2>
+<p>Now that you’ve fit your model and inspected it’s weights to make sure it makes sense, evaluate it on the tournament test set to see how well it performs on new data.</p>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.evaluate(games_tourney_test[[<span class="st">'seed_diff'</span>, <span class="st">'pred'</span>]],</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                     games_tourney_test[[<span class="st">'score_1'</span>, <span class="st">'score_2'</span>]],</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                     verbose<span class="op">=</span><span class="va">False</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>8.862776756286621</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="single-model-for-classification-and-regression" class="level1">
+<h1>Single model for classification and regression</h1>
+<section id="classification-and-regression-in-one-model" class="level2">
+<h2 class="anchored" data-anchor-id="classification-and-regression-in-one-model">Classification and regression in one model</h2>
+<p>Now you will create a different kind of 2-output model. This time, you will predict the score difference, instead of both team’s scores and then you will predict the probability that team 1 won the game. This is a pretty cool model: it is going to do both classification and regression!</p>
+<p>In this model, turn off the bias, or intercept for each layer. Your inputs (seed difference and predicted score difference) have a mean of very close to zero, and your outputs both have means that are close to zero, so your model shouldn’t need the bias term to fit the data well.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>input_tensor <span class="op">=</span> Input(shape<span class="op">=</span>(<span class="dv">2</span>, ))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the first output</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>output_tensor_1 <span class="op">=</span> Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'linear'</span>, use_bias<span class="op">=</span><span class="va">False</span>)(input_tensor)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the second output(use the first output as input here)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>output_tensor_2 <span class="op">=</span> Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, use_bias<span class="op">=</span><span class="va">False</span>)(output_tensor_1)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a model with 2 outputs</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(input_tensor, [output_tensor_1, output_tensor_2])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.utils <span class="im">import</span> plot_model</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plot_model(model, to_file<span class="op">=</span><span class="st">'Images/multi_output_model.png'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> plt.imread(<span class="st">'Images/multi_output_model.png'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plt.imshow(data)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Multiple Outputs_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="compile-and-fit-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="compile-and-fit-the-model">Compile and fit the model</h2>
+<p>Now that you have a model with 2 outputs, compile it with 2 loss functions: mean absolute error (MAE) for ‘score_diff’ and binary cross-entropy (also known as logloss) for ‘won’. Then fit the model with ‘seed_diff’ and ‘pred’ as inputs. For outputs, predict ‘score_diff’ and ‘won’.</p>
+<p>This model can use the scores of the games to make sure that close games (small score diff) have lower win probabilities than blowouts (large score diff).</p>
+<p>The regression problem is easier than the classification problem because MAE punishes the model less for a loss due to random chance. For example, if score_diff is -1 and won is 0, that means team_1 had some bad luck and lost by a single free throw. The data for the easy problem helps the model find a solution to the hard problem.</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.optimizers <span class="im">import</span> Adam</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile the model with 2 losses and the Adam optimizer with a higher learning rate</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(loss<span class="op">=</span>[<span class="st">'mean_absolute_error'</span>, <span class="st">'binary_crossentropy'</span>], optimizer<span class="op">=</span>Adam(lr<span class="op">=</span><span class="fl">0.01</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the model to the tournament training data, with 2 inputs and 2 outputs</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>model.fit(games_tourney_train[[<span class="st">'seed_diff'</span>, <span class="st">'pred'</span>]],</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>          [games_tourney_train[[<span class="st">'score_diff'</span>]], games_tourney_train[[<span class="st">'won'</span>]]],</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>          epochs<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>          verbose<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>          batch_size<span class="op">=</span><span class="dv">16384</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.
+WARNING:absl:`lr` is deprecated in Keras optimizer, please use `learning_rate` or use the legacy optimizer, e.g.,tf.keras.optimizers.legacy.Adam.
+WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/M2 Macs. Falling back to the legacy Keras optimizer, i.e., `tf.keras.optimizers.legacy.Adam`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/20
+1/1 [==============================] - 1s 832ms/step - loss: 11.3476 - dense_2_loss: 10.6665 - dense_3_loss: 0.6811
+Epoch 2/20
+1/1 [==============================] - 0s 13ms/step - loss: 11.3453 - dense_2_loss: 10.6633 - dense_3_loss: 0.6820
+Epoch 3/20
+1/1 [==============================] - 0s 12ms/step - loss: 11.3429 - dense_2_loss: 10.6601 - dense_3_loss: 0.6828
+Epoch 4/20
+1/1 [==============================] - 0s 12ms/step - loss: 11.3406 - dense_2_loss: 10.6569 - dense_3_loss: 0.6837
+Epoch 5/20
+1/1 [==============================] - 0s 11ms/step - loss: 11.3382 - dense_2_loss: 10.6537 - dense_3_loss: 0.6846
+Epoch 6/20
+1/1 [==============================] - 0s 10ms/step - loss: 11.3359 - dense_2_loss: 10.6504 - dense_3_loss: 0.6855
+Epoch 7/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3336 - dense_2_loss: 10.6472 - dense_3_loss: 0.6863
+Epoch 8/20
+1/1 [==============================] - 0s 12ms/step - loss: 11.3312 - dense_2_loss: 10.6440 - dense_3_loss: 0.6872
+Epoch 9/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3289 - dense_2_loss: 10.6408 - dense_3_loss: 0.6881
+Epoch 10/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3266 - dense_2_loss: 10.6376 - dense_3_loss: 0.6890
+Epoch 11/20
+1/1 [==============================] - 0s 10ms/step - loss: 11.3243 - dense_2_loss: 10.6344 - dense_3_loss: 0.6898
+Epoch 12/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3219 - dense_2_loss: 10.6312 - dense_3_loss: 0.6907
+Epoch 13/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3196 - dense_2_loss: 10.6280 - dense_3_loss: 0.6916
+Epoch 14/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3173 - dense_2_loss: 10.6248 - dense_3_loss: 0.6924
+Epoch 15/20
+1/1 [==============================] - 0s 8ms/step - loss: 11.3150 - dense_2_loss: 10.6216 - dense_3_loss: 0.6933
+Epoch 16/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3126 - dense_2_loss: 10.6184 - dense_3_loss: 0.6942
+Epoch 17/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3103 - dense_2_loss: 10.6152 - dense_3_loss: 0.6951
+Epoch 18/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3080 - dense_2_loss: 10.6121 - dense_3_loss: 0.6959
+Epoch 19/20
+1/1 [==============================] - 0s 17ms/step - loss: 11.3056 - dense_2_loss: 10.6089 - dense_3_loss: 0.6968
+Epoch 20/20
+1/1 [==============================] - 0s 9ms/step - loss: 11.3033 - dense_2_loss: 10.6057 - dense_3_loss: 0.6977</code></pre>
+</div>
+</div>
+</section>
+<section id="inspect-the-model-ii" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-the-model-ii">Inspect the model (II)</h2>
+<p>Now you should take a look at the weights for this model. In particular, note the last weight of the model. This weight converts the predicted score difference to a predicted win probability. If you multiply the predicted score difference by the last weight of the model and then apply the sigmoid function, you get the win probability of the game.</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the model weights</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.get_weights())</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the training data means</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(games_tourney_train.mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[array([[ 0.33446303],
+       [-1.1826252 ]], dtype=float32), array([[1.3517005]], dtype=float32)]
+season        1997.548544
+team_1        5560.890777
+team_2        5560.890777
+home             0.000000
+seed_diff        0.000000
+score_diff       0.000000
+score_1         71.786711
+score_2         71.786711
+won              0.500000
+pred             0.141091
+dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> expit <span class="im">as</span> sigmoid</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Weight from the model</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>weight<span class="op">=</span><span class="fl">0.14</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the approximate win probability predicted close game</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sigmoid(<span class="dv">1</span> <span class="op">*</span> weight))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the approximate win probability predicted blowout game</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sigmoid(<span class="dv">10</span> <span class="op">*</span> weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.5349429451582145
+0.8021838885585818</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluate-on-new-data-with-two-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="evaluate-on-new-data-with-two-metrics">Evaluate on new data with two metrics</h2>
+<p>Now that you’ve fit your model and inspected its weights to make sure they make sense, evaluate your model on the tournament test set to see how well it does on new data.</p>
+<p>Note that in this case, Keras will return 3 numbers: the first number will be the sum of both the loss functions, and then the next 2 numbers will be the loss functions you used when defining the model.</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.evaluate(games_tourney_test[[<span class="st">'seed_diff'</span>, <span class="st">'pred'</span>]],</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                    [games_tourney_test[[<span class="st">'score_diff'</span>]], games_tourney_test[[<span class="st">'won'</span>]]],</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                     verbose<span class="op">=</span><span class="va">False</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[11.036083221435547, 10.24341106414795, 0.7926721572875977]</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

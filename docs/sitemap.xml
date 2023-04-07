@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-07T18:30:36.592Z</lastmod>
+    <lastmod>2023-04-07T21:38:07.275Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -303,5 +303,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Validation basic for modeling/Validation basic for modeling.html</loc>
     <lastmod>2023-04-07T18:32:15.879Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/The Keras Functional API/The Keras Functional API.html</loc>
+    <lastmod>2023-04-07T21:32:00.563Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Two Input Networks Using Categorical Embeddings, Shared Layers, and Merge Layers/Two Input Networks Using Categorical Embeddings, Shared Layers, and Merge Layers.html</loc>
+    <lastmod>2023-04-07T21:33:03.573Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Multiple inputs in Keras/Multiple Inputs, 3 Inputs and Beyond.html</loc>
+    <lastmod>2023-04-07T21:34:35.246Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Mulitple outputs/Multiple Outputs.html</loc>
+    <lastmod>2023-04-07T21:37:36.174Z</lastmod>
   </url>
 </urlset>
