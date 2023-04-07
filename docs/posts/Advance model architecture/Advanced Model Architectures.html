@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-06">
+
+<title>Kakamana’s Blogs - Advanced Model Architectures</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#advanced-model-architectures" id="toc-advanced-model-architectures" class="nav-link active" data-scroll-target="#advanced-model-architectures">Advanced Model Architectures</a></li>
+  <li><a href="#advanced-model-architectures-1" id="toc-advanced-model-architectures-1" class="nav-link" data-scroll-target="#advanced-model-architectures-1">Advanced Model Architectures</a>
+  <ul class="collapse">
+  <li><a href="#tensors-layers-and-autoencoders" id="toc-tensors-layers-and-autoencoders" class="nav-link" data-scroll-target="#tensors-layers-and-autoencoders">Tensors, layers, and autoencoders</a></li>
+  <li><a href="#its-a-flow-of-tensors" id="toc-its-a-flow-of-tensors" class="nav-link" data-scroll-target="#its-a-flow-of-tensors">It’s a flow of tensors</a></li>
+  <li><a href="#neural-separation" id="toc-neural-separation" class="nav-link" data-scroll-target="#neural-separation">Neural separation</a></li>
+  <li><a href="#building-an-autoencoder" id="toc-building-an-autoencoder" class="nav-link" data-scroll-target="#building-an-autoencoder">Building an autoencoder</a></li>
+  <li><a href="#de-noising-like-an-autoencoder" id="toc-de-noising-like-an-autoencoder" class="nav-link" data-scroll-target="#de-noising-like-an-autoencoder">De-noising like an autoencoder</a></li>
+  </ul></li>
+  <li><a href="#intro-to-cnns" id="toc-intro-to-cnns" class="nav-link" data-scroll-target="#intro-to-cnns">Intro to CNNs</a>
+  <ul class="collapse">
+  <li><a href="#building-a-cnn-model" id="toc-building-a-cnn-model" class="nav-link" data-scroll-target="#building-a-cnn-model">Building a CNN model</a></li>
+  <li><a href="#looking-at-convolutions" id="toc-looking-at-convolutions" class="nav-link" data-scroll-target="#looking-at-convolutions">Looking at convolutions</a></li>
+  <li><a href="#preparing-your-input-image" id="toc-preparing-your-input-image" class="nav-link" data-scroll-target="#preparing-your-input-image">Preparing your input image</a></li>
+  <li><a href="#using-a-real-world-model" id="toc-using-a-real-world-model" class="nav-link" data-scroll-target="#using-a-real-world-model">Using a real world model</a></li>
+  <li><a href="#custom-dog-image" id="toc-custom-dog-image" class="nav-link" data-scroll-target="#custom-dog-image">Custom dog image</a></li>
+  </ul></li>
+  <li><a href="#intro-to-lstms" id="toc-intro-to-lstms" class="nav-link" data-scroll-target="#intro-to-lstms">Intro to LSTMs</a>
+  <ul class="collapse">
+  <li><a href="#text-prediction-with-lstms" id="toc-text-prediction-with-lstms" class="nav-link" data-scroll-target="#text-prediction-with-lstms">Text prediction with LSTMs</a></li>
+  <li><a href="#build-your-lstm-model" id="toc-build-your-lstm-model" class="nav-link" data-scroll-target="#build-your-lstm-model">Build your LSTM model</a></li>
+  <li><a href="#decode-your-predictions" id="toc-decode-your-predictions" class="nav-link" data-scroll-target="#decode-your-predictions">Decode your predictions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Advanced Model Architectures</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">deep learning</div>
+    <div class="quarto-category">tensorflow</div>
+    <div class="quarto-category">keras</div>
+    <div class="quarto-category">neural network</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 6, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="advanced-model-architectures" class="level1">
+<h1>Advanced Model Architectures</h1>
+<p>Now is the time to learn more about advanced architectures! As you build a network that predicts the next word in a sentence, you will learn more about recurrent neural networks and working with text as you build an autoencoder to reconstruct noisy images, visualize convolutional neural network activations, and use deep pre-trained models to classify images.</p>
+<p>This <strong>Advanced Model Architectures</strong> is part of [Datacamp course: Introduction to Deep Learning with Keras] There is no denying that deep learning is here to stay! A powerful innovation tool, it is used to solve complex problems arising from unstructured data. It is among the frameworks that make it easier to develop deep learning models, and it is versatile enough to build industry-ready models quickly. In this course, you will learn regression and save the earth by predicting asteroid trajectory, apply binary classification to distinguish real and fake dollar bills, learn to apply multiclass classification to decide who threw which dart at a dart board, and use neural networks to reconstruct noisy images. Additionally, you will learn how to tune your models to enhance their performance during training.</p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="advanced-model-architectures-1" class="level1">
+<h1>Advanced Model Architectures</h1>
+<section id="tensors-layers-and-autoencoders" class="level2">
+<h2 class="anchored" data-anchor-id="tensors-layers-and-autoencoders">Tensors, layers, and autoencoders</h2>
+<ul>
+<li>Tensors
+<ul>
+<li>main data structures used in deep learning.</li>
+<li>Inputs/Outputs and transformations in neural networks are all presented using tensors</li>
+</ul></li>
+<li>Autoencoders</li>
+</ul>
+<p><img src="advnace-1.png" class="img-fluid"></p>
+<ul>
+<li>Use cases
+<ul>
+<li>Dimensionality reduction:
+<ul>
+<li>Smaller dimensional space representation of our inputs</li>
+</ul></li>
+<li>De-noising data:
+<ul>
+<li>If trained with clean data, irrelevant noise will be filtered out during reconstruction</li>
+</ul></li>
+<li>Anormaly detection
+<ul>
+<li>A poor reconstruction will result when the model is fed with unseen inputs</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="its-a-flow-of-tensors" class="level2">
+<h2 class="anchored" data-anchor-id="its-a-flow-of-tensors">It’s a flow of tensors</h2>
+<p>If you have already built a model, you can use the model.layers and the tf.keras.backend to build functions that, provided with a valid input tensor, return the corresponding output tensor.</p>
+<p>This is a useful tool when we want to obtain the output of a network at an intermediate layer.</p>
+<p>For instance, if you get the input and output from the first layer of a network, you can build an inp_to_out function that returns the result of carrying out forward propagation through only the first layer for a given input tensor.</p>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>banknote <span class="op">=</span> pd.read_csv(<span class="st">'dataset/banknotes.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>banknote.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>variace</th>
+      <th>skewness</th>
+      <th>curtosis</th>
+      <th>entropy</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.62160</td>
+      <td>8.6661</td>
+      <td>-2.8073</td>
+      <td>-0.44699</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.54590</td>
+      <td>8.1674</td>
+      <td>-2.4586</td>
+      <td>-1.46210</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.86600</td>
+      <td>-2.6383</td>
+      <td>1.9242</td>
+      <td>0.10645</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.45660</td>
+      <td>9.5228</td>
+      <td>-4.0112</td>
+      <td>-3.59440</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.32924</td>
+      <td>-4.4552</td>
+      <td>4.5718</td>
+      <td>-0.98880</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> banknote.drop([<span class="st">'class'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ((X <span class="op">-</span> X.mean()) <span class="op">/</span> X.std()).to_numpy()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> banknote[<span class="st">'class'</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras <span class="im">import</span> Sequential</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">2</span>, input_shape<span class="op">=</span>(<span class="dv">4</span>, ), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metal device set to: Apple M2 Pro
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense (Dense)               (None, 2)                 10        
+                                                                 
+ dense_1 (Dense)             (None, 1)                 3         
+                                                                 
+=================================================================
+Total params: 13
+Trainable params: 13
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow.keras.backend <span class="im">as</span> K</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Input tensor from the 1st layer of the model</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>inp <span class="op">=</span> model.layers[<span class="dv">0</span>].<span class="bu">input</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Output tensor from the 1st layer of the model</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> model.layers[<span class="dv">0</span>].output</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function from inputs to outputs</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>inp_to_out <span class="op">=</span> K.function([inp], [out])</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results of passing X_test through the 1st layer</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inp_to_out([X_test]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[array([[0.        , 0.37549245],
+       [0.        , 0.        ],
+       [0.        , 1.1705389 ],
+       [0.80350095, 0.        ],
+       [0.        , 0.45659196],
+       [0.        , 0.39465803],
+       [0.        , 0.2937718 ],
+       [1.6936306 , 0.        ],
+       [0.        , 1.7320554 ],
+       [1.6993406 , 0.24986142],
+       [0.        , 0.0130935 ],
+       [0.        , 0.        ],
+       [1.242307  , 0.        ],
+       [2.1809785 , 0.        ],
+       [0.        , 0.        ],
+       [0.10098183, 1.4647627 ],
+       [1.3819088 , 0.        ],
+       [0.        , 1.5719738 ],
+       [0.        , 0.3431489 ],
+       [0.        , 0.        ],
+       [1.4292371 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.47683764],
+       [0.        , 1.0398089 ],
+       [0.69826394, 0.        ],
+       [1.8231996 , 0.1518383 ],
+       [0.19345874, 0.        ],
+       [2.0786335 , 0.        ],
+       [1.7724708 , 0.        ],
+       [0.        , 0.37743545],
+       [0.        , 0.9601868 ],
+       [1.5003294 , 0.        ],
+       [2.1864011 , 0.        ],
+       [1.3651726 , 0.50950533],
+       [0.9512666 , 0.        ],
+       [0.        , 1.0006309 ],
+       [0.        , 1.0246115 ],
+       [0.        , 0.7420771 ],
+       [1.4149433 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [1.3642219 , 0.46315208],
+       [0.6822637 , 0.44779772],
+       [1.2197626 , 0.        ],
+       [0.        , 0.8023678 ],
+       [3.0379872 , 0.        ],
+       [1.0023434 , 0.5733885 ],
+       [0.        , 0.        ],
+       [0.        , 1.9805212 ],
+       [0.        , 0.        ],
+       [0.        , 0.8462728 ],
+       [0.        , 0.        ],
+       [0.41133392, 0.396342  ],
+       [1.8531082 , 0.        ],
+       [0.        , 1.3839779 ],
+       [0.        , 0.        ],
+       [2.197113  , 0.        ],
+       [1.0838579 , 0.        ],
+       [0.5885806 , 0.        ],
+       [0.        , 1.5197667 ],
+       [0.        , 0.        ],
+       [0.        , 1.5575926 ],
+       [3.0960293 , 0.        ],
+       [1.7432804 , 0.        ],
+       [0.        , 1.8278891 ],
+       [0.        , 0.24996898],
+       [0.        , 0.        ],
+       [3.0219853 , 0.        ],
+       [1.1064217 , 0.8184391 ],
+       [3.1221542 , 0.        ],
+       [0.        , 0.03845035],
+       [0.        , 0.45214215],
+       [0.44748574, 0.9297856 ],
+       [0.        , 0.68025804],
+       [0.41268438, 0.3487688 ],
+       [0.04583725, 0.        ],
+       [1.5883161 , 0.01920176],
+       [0.        , 1.9603978 ],
+       [1.815204  , 0.01541543],
+       [0.        , 0.55857277],
+       [1.0656844 , 0.58844024],
+       [0.06546828, 1.1626966 ],
+       [0.        , 0.        ],
+       [1.0784036 , 0.        ],
+       [0.86395097, 0.26222232],
+       [0.        , 1.4465377 ],
+       [0.29322046, 0.42026457],
+       [0.77806246, 0.5933256 ],
+       [2.8007777 , 0.        ],
+       [0.        , 1.3130655 ],
+       [0.        , 0.3838975 ],
+       [0.        , 0.77335227],
+       [0.        , 0.43116805],
+       [0.        , 0.8187542 ],
+       [0.        , 0.5691173 ],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 1.2105324 ],
+       [0.        , 0.6683744 ],
+       [2.6871805 , 0.        ],
+       [0.        , 1.576623  ],
+       [0.        , 1.7979519 ],
+       [1.4149102 , 0.        ],
+       [0.        , 1.7295202 ],
+       [1.8238373 , 0.        ],
+       [0.        , 0.        ],
+       [0.67428875, 0.        ],
+       [1.7480347 , 0.        ],
+       [2.145006  , 0.        ],
+       [0.        , 0.        ],
+       [0.32031894, 0.2607703 ],
+       [0.        , 0.        ],
+       [0.        , 0.6326635 ],
+       [0.        , 0.        ],
+       [1.3515104 , 0.17855638],
+       [0.        , 0.        ],
+       [1.7645774 , 0.        ],
+       [0.42124277, 0.        ],
+       [0.        , 0.        ],
+       [1.7474351 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 1.4870965 ],
+       [0.        , 0.3388745 ],
+       [0.        , 0.96994126],
+       [0.        , 0.6266229 ],
+       [0.5805801 , 0.54575163],
+       [0.        , 0.        ],
+       [0.        , 0.4109331 ],
+       [0.        , 0.        ],
+       [0.        , 0.5057498 ],
+       [1.9864713 , 0.        ],
+       [0.48652747, 0.        ],
+       [1.7786927 , 0.        ],
+       [3.7561402 , 0.        ],
+       [0.30513093, 1.0392137 ],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.25900382],
+       [1.4487793 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 1.077708  ],
+       [0.        , 0.        ],
+       [3.4231462 , 0.        ],
+       [1.7313973 , 0.        ],
+       [0.        , 0.5502673 ],
+       [0.        , 0.        ],
+       [0.        , 1.2172674 ],
+       [0.        , 0.03463185],
+       [0.        , 1.9237142 ],
+       [0.64094967, 1.0707436 ],
+       [0.        , 0.04918486],
+       [0.        , 0.        ],
+       [0.39635363, 0.79355884],
+       [2.0931787 , 0.        ],
+       [0.        , 1.6677037 ],
+       [0.        , 0.77816635],
+       [0.        , 1.0718096 ],
+       [1.1238068 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.3486092 ],
+       [1.1254191 , 0.        ],
+       [0.        , 0.6752286 ],
+       [0.        , 0.        ],
+       [0.        , 0.06280209],
+       [1.1808344 , 0.        ],
+       [1.3216628 , 0.        ],
+       [1.7229823 , 0.        ],
+       [2.0050302 , 0.        ],
+       [0.        , 0.90579164],
+       [0.        , 0.07136095],
+       [1.1891456 , 0.        ],
+       [0.        , 0.5639721 ],
+       [0.        , 1.8011869 ],
+       [1.9583603 , 0.        ],
+       [2.039433  , 0.        ],
+       [1.7335049 , 0.1367445 ],
+       [0.15039636, 0.5245586 ],
+       [1.6244404 , 0.        ],
+       [0.        , 0.24477994],
+       [1.8833904 , 0.        ],
+       [0.        , 0.        ],
+       [2.1456828 , 0.        ],
+       [0.06797472, 1.1545227 ],
+       [0.        , 0.6102477 ],
+       [0.        , 0.97216463],
+       [2.3681862 , 0.        ],
+       [0.        , 0.5635488 ],
+       [0.        , 1.7373589 ],
+       [0.22155677, 0.        ],
+       [0.        , 1.6336868 ],
+       [3.065762  , 0.        ],
+       [1.5924762 , 0.        ],
+       [1.0035732 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 1.85818   ],
+       [0.        , 0.        ],
+       [0.        , 0.34124735],
+       [0.69382626, 0.315381  ],
+       [1.1751639 , 0.        ],
+       [1.7070895 , 0.        ],
+       [0.        , 0.5228194 ],
+       [1.4166987 , 0.        ],
+       [0.11257983, 0.        ],
+       [1.5593911 , 0.        ],
+       [0.        , 0.        ],
+       [2.2255094 , 0.        ],
+       [0.7979871 , 0.        ],
+       [0.        , 0.18750837],
+       [0.41734374, 0.        ],
+       [3.1221542 , 0.        ],
+       [0.        , 1.6958407 ],
+       [0.0459449 , 0.        ],
+       [0.35276502, 0.55390406],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [2.105369  , 0.        ],
+       [1.6274002 , 0.        ],
+       [0.        , 0.        ],
+       [1.9817121 , 0.        ],
+       [0.        , 0.39465803],
+       [2.0020473 , 0.        ],
+       [0.9793646 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.59752274],
+       [0.        , 0.        ],
+       [1.2058305 , 0.        ],
+       [0.        , 0.88647825],
+       [0.        , 0.91598856],
+       [1.358753  , 0.27229068],
+       [0.        , 0.1669504 ],
+       [0.        , 1.3026557 ],
+       [0.        , 1.8060746 ],
+       [0.        , 0.24329005],
+       [0.        , 1.610624  ],
+       [0.9264726 , 0.7765587 ],
+       [0.        , 0.89599144],
+       [0.        , 1.2729251 ],
+       [3.688808  , 0.        ],
+       [0.48192278, 0.822033  ],
+       [0.9809349 , 0.67755866],
+       [0.        , 0.7946866 ],
+       [1.4353545 , 0.        ],
+       [0.34804404, 0.24274996],
+       [3.2713344 , 0.        ],
+       [2.7760239 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.        ],
+       [1.5827352 , 0.27386668],
+       [0.4189049 , 0.48474896],
+       [1.7800095 , 0.        ],
+       [0.        , 1.5644    ],
+       [0.03132896, 0.34841686],
+       [0.        , 0.54557   ],
+       [0.        , 1.5803874 ],
+       [0.34840798, 1.0118514 ],
+       [0.        , 0.        ],
+       [0.32658067, 0.54882336],
+       [1.7252634 , 0.        ],
+       [0.09108783, 0.02495453],
+       [1.5466074 , 0.        ],
+       [0.7881525 , 0.        ],
+       [0.        , 0.6773982 ],
+       [1.3724287 , 0.        ],
+       [0.        , 0.5134398 ],
+       [0.1160419 , 0.4974357 ],
+       [1.2189462 , 0.        ],
+       [0.        , 0.        ],
+       [1.1679615 , 0.57351726],
+       [0.        , 0.15649372],
+       [0.3726089 , 0.9017478 ],
+       [0.        , 0.6686817 ],
+       [0.5684481 , 0.02686873],
+       [1.8689233 , 0.        ],
+       [0.        , 1.1575441 ],
+       [0.        , 1.6906269 ],
+       [0.        , 0.816877  ],
+       [1.8398101 , 0.        ],
+       [0.        , 0.48919895],
+       [1.516718  , 0.        ],
+       [1.777486  , 0.        ],
+       [2.2003236 , 0.        ],
+       [0.76204586, 0.        ],
+       [1.538575  , 0.        ],
+       [0.        , 2.028227  ],
+       [0.        , 0.75489354],
+       [1.269642  , 0.        ],
+       [1.5364683 , 0.40972048],
+       [0.        , 0.49915534],
+       [0.26579776, 0.        ],
+       [0.        , 0.        ],
+       [0.09593216, 1.4901001 ],
+       [0.42137474, 0.5429996 ],
+       [1.7456713 , 0.        ],
+       [0.45864594, 1.1253911 ],
+       [1.2692437 , 0.        ],
+       [0.        , 0.        ],
+       [1.7700084 , 0.        ],
+       [0.        , 0.06035864],
+       [1.6737996 , 0.        ],
+       [0.        , 0.        ],
+       [2.1129045 , 0.        ],
+       [1.9910865 , 0.        ],
+       [0.6714376 , 0.        ],
+       [0.3954507 , 0.63959926],
+       [0.        , 0.9654005 ],
+       [0.8447262 , 0.        ],
+       [0.        , 1.3931822 ],
+       [0.7133221 , 0.6368634 ],
+       [0.5731597 , 0.06631845],
+       [0.41781852, 0.30369937],
+       [2.1999269 , 0.        ],
+       [1.8163741 , 0.        ],
+       [0.        , 0.        ],
+       [0.        , 0.08380598],
+       [1.4117547 , 0.4217252 ],
+       [0.        , 1.6243527 ],
+       [3.065762  , 0.        ],
+       [2.0629985 , 0.        ],
+       [0.        , 0.34125647],
+       [2.3749108 , 0.        ],
+       [0.        , 1.3590873 ],
+       [1.4549739 , 0.        ],
+       [0.        , 0.11551914],
+       [0.        , 1.0082576 ],
+       [0.46179688, 0.4511228 ],
+       [1.6254805 , 0.        ],
+       [2.1958346 , 0.        ],
+       [0.        , 0.        ],
+       [0.98309064, 0.        ],
+       [0.9360188 , 0.40081674],
+       [0.        , 1.4476349 ],
+       [0.7580173 , 0.7194294 ],
+       [0.        , 0.        ],
+       [2.5446153 , 0.        ],
+       [0.        , 0.11104237],
+       [2.1926975 , 0.        ],
+       [0.74133575, 0.        ],
+       [0.        , 0.67770857],
+       [1.5960879 , 0.50949365],
+       [0.28525358, 0.0856876 ],
+       [0.        , 0.8938494 ],
+       [0.        , 1.7360221 ],
+       [1.4473945 , 0.        ],
+       [0.8033388 , 0.6682485 ],
+       [0.9077512 , 0.66146827],
+       [0.4199238 , 0.23709951],
+       [1.5749146 , 0.18939644],
+       [1.6605623 , 0.        ],
+       [0.14609009, 0.        ],
+       [0.        , 0.        ],
+       [0.72675824, 0.79868126],
+       [0.        , 0.49259654],
+       [0.06683069, 0.33397   ],
+       [0.        , 0.8815694 ],
+       [0.        , 0.        ],
+       [0.        , 0.6011565 ],
+       [0.        , 0.        ],
+       [0.655474  , 0.32405606],
+       [2.8831096 , 0.        ],
+       [0.32197267, 0.        ],
+       [0.7891792 , 0.        ],
+       [0.        , 0.        ],
+       [1.2404824 , 0.57880586],
+       [0.        , 1.6082227 ],
+       [0.        , 0.48475215],
+       [1.3595093 , 0.        ],
+       [0.        , 0.        ],
+       [0.4740765 , 0.884644  ],
+       [0.        , 1.9149888 ],
+       [0.17719437, 1.269549  ],
+       [2.4637482 , 0.        ],
+       [0.        , 1.9930475 ],
+       [0.        , 0.        ],
+       [0.        , 1.4054403 ],
+       [0.        , 0.03241685],
+       [0.        , 1.0035914 ],
+       [1.1201029 , 0.        ],
+       [0.        , 1.023931  ],
+       [0.42296836, 0.67176056],
+       [2.0657082 , 0.        ],
+       [0.21039039, 0.28634548],
+       [0.        , 0.58284056],
+       [0.        , 1.0934013 ],
+       [2.519268  , 0.        ],
+       [0.66955346, 0.        ],
+       [0.        , 0.917456  ],
+       [1.5495468 , 0.        ],
+       [1.2930192 , 0.        ],
+       [1.9903916 , 0.        ],
+       [0.        , 0.        ],
+       [0.0496307 , 0.        ],
+       [0.        , 0.49773932],
+       [1.258089  , 0.16016045],
+       [3.4000864 , 0.        ],
+       [1.3097886 , 0.        ],
+       [0.39841253, 1.1097382 ],
+       [0.6334289 , 0.        ],
+       [2.740962  , 0.        ],
+       [0.3577386 , 0.23633905],
+       [0.        , 0.        ],
+       [1.9621279 , 0.        ],
+       [0.12779573, 1.0938519 ],
+       [1.6681826 , 0.15242702],
+       [0.14252542, 0.        ],
+       [0.        , 1.4179412 ],
+       [0.        , 0.9199592 ],
+       [0.        , 0.48779106],
+       [2.3392625 , 0.        ],
+       [0.        , 1.3699207 ],
+       [0.        , 1.7364304 ],
+       [2.2403967 , 0.        ]], dtype=float32)]</code></pre>
+</div>
+</div>
+</section>
+<section id="neural-separation" class="level2">
+<h2 class="anchored" data-anchor-id="neural-separation">Neural separation</h2>
+<p>Put on your gloves because you’re going to perform brain surgery!</p>
+<p>Neurons learn by updating their weights to output values that help them better distinguish between the different output classes in your dataset. You will make use of the inp_to_out() function you just built to visualize the output of two neurons in the first layer of the Banknote Authentication model as it learns.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot():</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">5</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">8</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, a <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        a.scatter(layer_outputs[i][:, <span class="dv">0</span>], layer_outputs[i][:, <span class="dv">1</span>], c<span class="op">=</span>y_test, edgecolors<span class="op">=</span><span class="st">'none'</span>)<span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        a.set_title(<span class="st">'Test Accuracy: </span><span class="sc">{:3.1f}</span><span class="st"> %'</span>.<span class="bu">format</span>(<span class="bu">float</span>(test_accuracies[i]) <span class="op">*</span> <span class="fl">100.</span>))<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'sgd'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>layer_outputs <span class="op">=</span> []</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>test_accuracies <span class="op">=</span> []</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">21</span>):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Train model for 1 epoch</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> model.fit(X_train, y_train, batch_size<span class="op">=</span><span class="dv">16</span>, epochs<span class="op">=</span><span class="dv">1</span>, verbose<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span> <span class="dv">4</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the output of the first layer</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        layer_outputs.append(inp_to_out([X_test])[<span class="dv">0</span>])</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#layer_output = inp_to_out([X_test])[0]</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Evaluate model accuracy for this epoch</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        test_accuracies.append(model.evaluate(X_test, y_test)[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-04-07 19:41:35.562033: W tensorflow/tsl/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>13/13 [==============================] - 0s 6ms/step - loss: 0.6392 - accuracy: 0.6383
+13/13 [==============================] - 0s 4ms/step - loss: 0.6001 - accuracy: 0.6845
+13/13 [==============================] - 0s 4ms/step - loss: 0.5550 - accuracy: 0.7451
+13/13 [==============================] - 0s 4ms/step - loss: 0.5094 - accuracy: 0.7985
+13/13 [==============================] - 0s 4ms/step - loss: 0.4662 - accuracy: 0.8180
+13/13 [==============================] - 0s 4ms/step - loss: 0.4256 - accuracy: 0.8447</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">That took a while! If you take a look at the graphs you can see how the neurons are learning to spread out the classes during training. Click in between graphs fast, it’s like a movie!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+That took a while! If you take a look at the graphs you can see how the neurons are learning to spread out the classes during training. Click in between graphs fast, it’s like a movie!</code></pre>
+</div>
+</div>
+</section>
+<section id="building-an-autoencoder" class="level2">
+<h2 class="anchored" data-anchor-id="building-an-autoencoder">Building an autoencoder</h2>
+<p>Autoencoders have several interesting applications like anomaly detection or image denoising. They aim at producing an output identical to its inputs. The input will be compressed into a lower dimensional space, encoded. The model then learns to decode it back to its original form.</p>
+<p>You will encode and decode the MNIST dataset of handwritten digits, the hidden layer will encode a 32-dimensional representation of the image, which originally consists of 784 pixels (28 x 28). The autoencoder will essentially learn to turn the 784 pixels original image into a compressed 32 pixels image and learn how to use that encoded representation to bring back the original 784 pixels image.</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.datasets <span class="im">import</span> mnist</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>(X_train, y_train), (X_test, y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X_test.astype(<span class="st">'float32'</span>) <span class="op">/</span> <span class="fl">255.</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> X_train.reshape((<span class="bu">len</span>(X_train), np.prod(X_train.shape[<span class="dv">1</span>:])))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> X_test.reshape((<span class="bu">len</span>(X_test), np.prod(X_test.shape[<span class="dv">1</span>:])))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>X_test_noise <span class="op">=</span> np.load(<span class="st">'dataset/X_test_MNIST_noise.npy'</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>X_test_noise <span class="op">=</span> X_test_noise.reshape((<span class="bu">len</span>(X_test_noise), np.prod(X_test.shape[<span class="dv">1</span>:])))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>y_test_noise <span class="op">=</span> np.load(<span class="st">'dataset/y_test_MNIST.npy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>autoencoder <span class="op">=</span> Sequential(name<span class="op">=</span><span class="st">'autoencoder'</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a dense layer with input the original image pixels and neurons the encoded representation</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>autoencoder.add(Dense(<span class="dv">32</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>, ), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an output layer with as many neurons as the original image pixels</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>autoencoder.add(Dense(<span class="dv">784</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile your model with adadelta</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>autoencoder.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize your model structure</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>autoencoder.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "autoencoder"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_2 (Dense)             (None, 32)                25120     
+                                                                 
+ dense_3 (Dense)             (None, 784)               25872     
+                                                                 
+=================================================================
+Total params: 50,992
+Trainable params: 50,992
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+</div>
+</div>
+</section>
+<section id="de-noising-like-an-autoencoder" class="level2">
+<h2 class="anchored" data-anchor-id="de-noising-like-an-autoencoder">De-noising like an autoencoder</h2>
+<p>Okay, you have just built an autoencoder model. Let’s see how it handles a more challenging task.</p>
+<p>First, you will build a model that encodes images, and you will check how different digits are represented with show_encodings(). To build the encoder you will make use of your autoencoder, that has already being trained. You will just use the first half of the network, which contains the input and the bottleneck output. That way, you will obtain a 32 number output which represents the encoded version of the input image.</p>
+<p>Then, you will apply your autoencoder to noisy images from MNIST, it should be able to clean the noisy artifacts.</p>
+<p>The digits in this noisy dataset look like this: <img src="advance-2.png" class="img-fluid"></p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_encodings(encoded_imgs,number<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="dv">5</span>  <span class="co"># how many digits we will display</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    original <span class="op">=</span> X_test_noise</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    original <span class="op">=</span> original[np.where(y_test_noise <span class="op">==</span> number)]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    encoded_imgs <span class="op">=</span> encoded_imgs[np.where(y_test_noise <span class="op">==</span> number)]</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>))</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.title('Original '+str(number)+' vs Encoded representation')</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">min</span>(n,<span class="bu">len</span>(original))):</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># display original imgs</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> plt.subplot(<span class="dv">2</span>, n, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        plt.imshow(original[i].reshape(<span class="dv">28</span>, <span class="dv">28</span>))</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        plt.gray()</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        ax.get_xaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        ax.get_yaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># display encoded imgs</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> plt.subplot(<span class="dv">2</span>, n, i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> n)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>        plt.imshow(np.tile(encoded_imgs[i],(<span class="dv">32</span>,<span class="dv">1</span>)))</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        plt.gray()</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        ax.get_xaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        ax.get_yaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compare_plot(original,decoded_imgs):</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="dv">4</span>  <span class="co"># How many digits we will display</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">4</span>))</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display original</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> plt.subplot(<span class="dv">2</span>, n, i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>        plt.imshow(original[i].reshape(<span class="dv">28</span>, <span class="dv">28</span>))</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>        plt.gray()</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>        ax.get_xaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        ax.get_yaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Display reconstruction</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> plt.subplot(<span class="dv">2</span>, n, i <span class="op">+</span> <span class="dv">1</span> <span class="op">+</span> n)</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>        plt.imshow(decoded_imgs[i].reshape(<span class="dv">28</span>, <span class="dv">28</span>))</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>        plt.gray()</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>        ax.get_xaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>        ax.get_yaxis().set_visible(<span class="va">False</span>)</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">'Noisy vs Decoded images'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>autoencoder.fit(X_train, X_train,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                epochs<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                batch_size<span class="op">=</span><span class="dv">256</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                shuffle<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                validation_data<span class="op">=</span>(X_test, X_test), verbose<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>encoder <span class="op">=</span> Sequential()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>encoder.add(autoencoder.layers[<span class="dv">0</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Encode the noisy images and show the encodings for your favorite number [0-9]</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>encodings <span class="op">=</span> encoder.predict(X_test_noise)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>show_encodings(encodings, number<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>4/4 [==============================] - 0s 23ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>decoder_layer <span class="op">=</span> autoencoder.layers[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>decoder <span class="op">=</span> tf.keras.models.Model()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on the noisy images with your autoencoder</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>decoded_imgs <span class="op">=</span> autoencoder.predict(X_test)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot noisy vs decoded images</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>compare_plot(X_test, decoded_imgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>313/313 [==============================] - 0s 1ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>decoded_imgs <span class="op">=</span> autoencoder.predict(X_test_noise)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot noisy vs decoded images</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>compare_plot(X_test_noise, decoded_imgs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>4/4 [==============================] - 0s 6ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-18-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="intro-to-cnns" class="level1">
+<h1>Intro to CNNs</h1>
+<p><img src="advance-3.png" class="img-fluid"> <img src="advance-4.png" class="img-fluid"> <img src="advance-5.png" class="img-fluid"> <img src="advance-6.png" class="img-fluid"> <img src="advance-7.png" class="img-fluid"></p>
+<section id="building-a-cnn-model" class="level2">
+<h2 class="anchored" data-anchor-id="building-a-cnn-model">Building a CNN model</h2>
+<p>Building a CNN model in Keras isn’t much more difficult than building any of the models you’ve already built throughout the course! You just need to make use of convolutional layers.</p>
+<p>You’re going to build a shallow convolutional model that classifies the MNIST dataset of digits. The same one you de-noised with your autoencoder!. The images are 28×28 pixels and just have one channel.</p>
+<p>Go ahead and build this small convolutional model!</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the Conv2D and Flatten layers and instantiate model</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Conv2D,Flatten</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a convolutional layer of 32 filters of size 3x3</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">32</span>, kernel_size <span class="op">=</span> <span class="dv">3</span>, input_shape <span class="op">=</span> (<span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>), activation <span class="op">=</span> <span class="st">'relu'</span>))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a convolutional layer of 16 filters of size 3x3</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>model.add(Conv2D(<span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, activation <span class="op">=</span> <span class="st">'relu'</span>))</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the previous layer output</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>model.add(Flatten())</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add as many outputs as classes with softmax activation</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">10</span>, activation <span class="op">=</span> <span class="st">'softmax'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="looking-at-convolutions" class="level2">
+<h2 class="anchored" data-anchor-id="looking-at-convolutions">Looking at convolutions</h2>
+<p>Inspecting the activations of a convolutional layer is a cool thing. You have to do it at least once in your lifetime!</p>
+<p>To do so, you will build a new model with the Keras Model object, which takes in a list of inputs and a list of outputs. The output you will provide to this new model is the first convolutional layer outputs when given an MNIST digit as input image.</p>
+<p>Let’s look at the convolutional masks that were learned in the first convolutional layer of this model!</p>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_2"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 26, 26, 32)        320       
+                                                                 
+ conv2d_1 (Conv2D)           (None, 24, 24, 16)        4624      
+                                                                 
+ flatten (Flatten)           (None, 9216)              0         
+                                                                 
+ dense_4 (Dense)             (None, 10)                92170     
+                                                                 
+=================================================================
+Total params: 97,114
+Trainable params: 97,114
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(X_train, y_train), (X_test, y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> np.reshape(X_train, [<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>])</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> np.reshape(X_test, [<span class="op">-</span><span class="dv">1</span>, <span class="dv">28</span>, <span class="dv">28</span>, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'sparse_categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">30</span>, batch_size<span class="op">=</span><span class="dv">32</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/30
+1875/1875 [==============================] - 9s 4ms/step - loss: 0.2244 - accuracy: 0.9488
+Epoch 2/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0712 - accuracy: 0.9783
+Epoch 3/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0523 - accuracy: 0.9841
+Epoch 4/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0402 - accuracy: 0.9877
+Epoch 5/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0308 - accuracy: 0.9906
+Epoch 6/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0259 - accuracy: 0.9920
+Epoch 7/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0253 - accuracy: 0.9930
+Epoch 8/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0188 - accuracy: 0.9946
+Epoch 9/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0201 - accuracy: 0.9947
+Epoch 10/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0144 - accuracy: 0.9959
+Epoch 11/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0171 - accuracy: 0.9958
+Epoch 12/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0165 - accuracy: 0.9960
+Epoch 13/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0167 - accuracy: 0.9965
+Epoch 14/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0185 - accuracy: 0.9967
+Epoch 15/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0112 - accuracy: 0.9973
+Epoch 16/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0199 - accuracy: 0.9965
+Epoch 17/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0169 - accuracy: 0.9971
+Epoch 18/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0161 - accuracy: 0.9972
+Epoch 19/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0135 - accuracy: 0.9978
+Epoch 20/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0165 - accuracy: 0.9979
+Epoch 21/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0179 - accuracy: 0.9976
+Epoch 22/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0153 - accuracy: 0.9976
+Epoch 23/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0159 - accuracy: 0.9980
+Epoch 24/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0181 - accuracy: 0.9977
+Epoch 25/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0162 - accuracy: 0.9981
+Epoch 26/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0154 - accuracy: 0.9981
+Epoch 27/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0187 - accuracy: 0.9982
+Epoch 28/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0141 - accuracy: 0.9982
+Epoch 29/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0101 - accuracy: 0.9987
+Epoch 30/30
+1875/1875 [==============================] - 8s 4ms/step - loss: 0.0119 - accuracy: 0.9987</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain a reference to the outputs of the first layer</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>first_layer_output <span class="op">=</span> model.layers[<span class="dv">0</span>].output</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a model using the model's input and the first layer output</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>first_layer_model <span class="op">=</span> tf.keras.models.Model(inputs <span class="op">=</span> model.layers[<span class="dv">0</span>].<span class="bu">input</span>, outputs <span class="op">=</span> first_layer_output)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use this model to predict on X_test</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>activations <span class="op">=</span> first_layer_model.predict(X_test)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">8</span>))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the activations of first digit of X_test for the 15th filter</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].matshow(activations[<span class="dv">0</span>,:,:,<span class="dv">14</span>], cmap <span class="op">=</span> <span class="st">'viridis'</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the same but for the 18th filter now</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].matshow(activations[<span class="dv">0</span>,:,:,<span class="dv">17</span>], cmap <span class="op">=</span> <span class="st">'viridis'</span>)</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>313/313 [==============================] - 0s 996us/step</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-23-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Each neuron filter of the first layer learned a different convolution. The 15th filter (a.k.a convolutional mask) learned to detect horizontal traces in your digits. On the other hand, filter 18th seems to be checking for vertical traces"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="preparing-your-input-image" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-your-input-image">Preparing your input image</h2>
+<p>The original ResNet50 model was trained with images of size 224 x 224 pixels and a number of preprocessing operations; like the subtraction of the mean pixel value in the training set for all training images. You need to pre-process the images you want to predict on in the same way.</p>
+<p>When predicting on a single image you need it to fit the model’s input shape, which in this case looks like this: (batch-size, width, height, channels),np.expand_dims with parameter axis = 0 adds the batch-size dimension, representing that a single image will be passed to predict. This batch-size dimension value is 1, since we are only predicting on one image.</p>
+<p>You will go over these preprocessing steps as you prepare this dog’s (named Ivy) image into one that can be classified by ResNet50.</p>
+<p><img src="advance-8.png" class="img-fluid"></p>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.preprocessing <span class="im">import</span> image</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications.resnet50 <span class="im">import</span> preprocess_input</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the image with the right target size for your model</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> image.load_img(<span class="st">'dataset/dog.png'</span>, target_size<span class="op">=</span>(<span class="dv">224</span>, <span class="dv">224</span>))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn it into an array</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>img_array <span class="op">=</span> image.img_to_array(img)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand the dimensions of the image, this is so that it fits the expected model input format</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>img_expanded <span class="op">=</span> np.expand_dims(img_array, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Pre-process the img in the same way original images were</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>img_ready <span class="op">=</span> preprocess_input(img_expanded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="using-a-real-world-model" class="level2">
+<h2 class="anchored" data-anchor-id="using-a-real-world-model">Using a real world model</h2>
+<p>Okay, so Ivy’s picture is ready to be used by ResNet50. It is stored in img_ready and now looks like this: dogp ResNet50 is a model trained on the Imagenet dataset that is able to distinguish between 1000 different labeled objects. ResNet50 is a deep model with 50 layers, you can check it in 3D here. It’s time to use this trained model to find out Ivy’s breed!</p>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.applications.resnet50 <span class="im">import</span> ResNet50, decode_predictions</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a ResNet50 model with 'imagenet' weights</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ResNet50(weights<span class="op">=</span><span class="st">'imagenet'</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict with ResNet50 on your already processed img</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(img_ready)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Decode the first 3 predictions</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Predicted:'</span>, decode_predictions(preds, top<span class="op">=</span><span class="dv">3</span>)[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/resnet/resnet50_weights_tf_dim_ordering_tf_kernels.h5
+102967424/102967424 [==============================] - 16s 0us/step
+1/1 [==============================] - 2s 2s/step
+Downloading data from https://storage.googleapis.com/download.tensorflow.org/data/imagenet_class_index.json
+35363/35363 [==============================] - 0s 9us/step
+Predicted: [('n02088364', 'beagle', 0.90737635), ('n02089867', 'Walker_hound', 0.06626681), ('n02089973', 'English_foxhound', 0.018850895)]</code></pre>
+</div>
+</div>
+</section>
+<section id="custom-dog-image" class="level2">
+<h2 class="anchored" data-anchor-id="custom-dog-image">Custom dog image</h2>
+<div class="cell" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> image.load_img(<span class="st">'dataset/grace.jpg'</span>, target_size<span class="op">=</span>(<span class="dv">224</span>, <span class="dv">224</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>img_array <span class="op">=</span> image.img_to_array(img)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>img_expanded <span class="op">=</span> np.expand_dims(img_array, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>img_ready <span class="op">=</span> preprocess_input(img_expanded)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plt.imshow(img)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(img_ready)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Decode the first 3 predictions</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Predicted:'</span>, decode_predictions(preds, top<span class="op">=</span><span class="dv">3</span>)[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/1 [==============================] - 0s 27ms/step
+Predicted: [('n02085936', 'Maltese_dog', 0.17497465), ('n02098286', 'West_Highland_white_terrier', 0.12481641), ('n02086240', 'Shih-Tzu', 0.09362529)]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="intro-to-lstms" class="level1">
+<h1>Intro to LSTMs</h1>
+<ul>
+<li>Recurrent Neural Network (RNN)</li>
+</ul>
+<p><img src="advance-9.png" class="img-fluid"></p>
+<ul>
+<li>Long Short Term Memory (LSTM)</li>
+</ul>
+<p><img src="advance-10.png" class="img-fluid"></p>
+<ul>
+<li>When to use LSTM?
+<ul>
+<li>Image captioning</li>
+<li>Speech to text</li>
+<li>Text translation</li>
+<li>Document summarization</li>
+<li>Text generation</li>
+<li>Musical composition</li>
+</ul></li>
+</ul>
+<p><img src="advance-11.png" class="img-fluid"></p>
+<p><img src="advance-12.png" class="img-fluid"></p>
+<p><img src="advance-13.png" class="img-fluid"></p>
+<p><img src="advance-14.png" class="img-fluid"></p>
+<section id="text-prediction-with-lstms" class="level2">
+<h2 class="anchored" data-anchor-id="text-prediction-with-lstms">Text prediction with LSTMs</h2>
+<p>During the following exercises you will build a toy LSTM model that is able to predict the next word using a small text dataset. This dataset consist of cleaned quotes from the The Lord of the Ring movies.</p>
+<p>You will turn this text into sequences of length 4 and make use of the Keras Tokenizer to prepare the features and labels for your model!</p>
+<p>The Keras Tokenizer is already imported for you to use. It assigns a unique number to each unique word, and stores the mappings in a dictionary. This is important since the model deals with numbers but we later will want to decode the output numbers back into words</p>
+<div class="cell" data-execution_count="31">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">it is not the strength of the body but the strength of the spirit it is useless to meet revenge</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="st">with revenge it will heal nothing even the smallest person can change the course of history all we have</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">to decide is what to do with the time that is given us the burned hand teaches best after that advice about</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="st">fire goes to the heart END</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="32">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.preprocessing.text <span class="im">import</span> Tokenizer</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split text into an array of words</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>words <span class="op">=</span> text.split()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sentences of 4 words each, moving one word at a time</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>sentences <span class="op">=</span> []</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>, <span class="bu">len</span>(words) <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    sentences.append(<span class="st">' '</span>.join(words[i <span class="op">-</span> <span class="dv">4</span>: i]))</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a Tokenizer, then fit it on the sentences</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> Tokenizer()</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>tokenizer.fit_on_texts(sentences)</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn sentences into a sequence of numbers</span></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>sequences <span class="op">=</span> tokenizer.texts_to_sequences(sentences)</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sentences: </span><span class="ch">\n</span><span class="st"> </span><span class="sc">{}</span><span class="st"> </span><span class="ch">\n</span><span class="st"> Sequences: </span><span class="ch">\n</span><span class="st"> </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(sentences[:<span class="dv">5</span>], sequences[:<span class="dv">5</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sentences: 
+ ['it is not the', 'is not the strength', 'not the strength of', 'the strength of the', 'strength of the body'] 
+ Sequences: 
+ [[5, 3, 43, 1], [3, 43, 1, 6], [43, 1, 6, 4], [1, 6, 4, 1], [6, 4, 1, 10]]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="33">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Your sentences are now sequences of numbers, check that identical words are assigned the same number."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Your sentences are now sequences of numbers, check that identical words are assigned the same number.</code></pre>
+</div>
+</div>
+</section>
+<section id="build-your-lstm-model" class="level2">
+<h2 class="anchored" data-anchor-id="build-your-lstm-model">Build your LSTM model</h2>
+<p>You’ve already prepared your sequences of text. It’s time to build your LSTM model!</p>
+<p>Remember your sequences had 4 words each, your model will be trained on the first three words of each sequence, predicting the 4th one. You are going to use an Embedding layer that will essentially learn to turn words into vectors. These vectors will then be passed to a simple LSTM layer. Our output is a Dense layer with as many neurons as words in the vocabulary and softmax activation. This is because we want to obtain the highest probable next word out of all possible words.</p>
+<div class="cell" data-execution_count="34">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>vocab_size <span class="op">=</span> <span class="bu">len</span>(tokenizer.word_counts) <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>vocab_size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<pre><code>46</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="35">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Embedding, LSTM</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an Embedding layer with the right parameters</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>model.add(Embedding(input_dim<span class="op">=</span>vocab_size, input_length<span class="op">=</span><span class="dv">3</span>, output_dim<span class="op">=</span><span class="dv">8</span>))</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a 32 unit LSTM layer</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>model.add(LSTM(<span class="dv">32</span>))</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a hidden Dense layer of 32 units</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>model.add(Dense(vocab_size, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_3"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ embedding (Embedding)       (None, 3, 8)              368       
+                                                                 
+ lstm (LSTM)                 (None, 32)                5248      
+                                                                 
+ dense_5 (Dense)             (None, 32)                1056      
+                                                                 
+ dense_6 (Dense)             (None, 46)                1518      
+                                                                 
+=================================================================
+Total params: 8,190
+Trainable params: 8,190
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="36">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You'll see that this model is powerful enough to learn text relationships, we aren't using a lot of text in this tiny example and our sequences are quite short. This model is to be trained as usual, you would just need to compile it with an optimizer like adam and use crossentropy loss. This is because we have modeled this next word prediction task as a classification problem with all the unique words in our vocabulary as candidate classes."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+You'll see that this model is powerful enough to learn text relationships, we aren't using a lot of text in this tiny example and our sequences are quite short. This model is to be trained as usual, you would just need to compile it with an optimizer like adam and use crossentropy loss. This is because we have modeled this next word prediction task as a classification problem with all the unique words in our vocabulary as candidate classes.</code></pre>
+</div>
+</div>
+</section>
+<section id="decode-your-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="decode-your-predictions">Decode your predictions</h2>
+<p>Your LSTM model has already been trained for you so that you don’t have to wait. It’s time to define a function that decodes its predictions.</p>
+<p>Since you are predicting on a model that uses the softmax function,argmax() is used to obtain the position of the output layer with the highest probability, that is the index representing the most probable next word.</p>
+<p>The tokenizer you previously created and fitted, is loaded for you. You will be making use of its internal index_word dictionary to turn the model’s next word prediction (which is an integer) into the actual written word it represents.</p>
+<p>You’re very close to experimenting with your model!</p>
+<div class="cell" data-execution_count="37">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.utils <span class="im">import</span> to_categorical</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>np_sequences <span class="op">=</span> np.array(sequences)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np_sequences.shape)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np_sequences[:, :<span class="dv">3</span>]</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np_sequences[:, <span class="dv">3</span>]</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> to_categorical(y, num_classes<span class="op">=</span>vocab_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(64, 4)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="38">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X, y, epochs<span class="op">=</span><span class="dv">500</span>, verbose<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="39">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_text(test_text, model<span class="op">=</span>model):</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(test_text.split()) <span class="op">!=</span> <span class="dv">3</span>:</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'Text input should be 3 words'</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Turn the test_text into a sequence of numbers</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    test_seq <span class="op">=</span> tokenizer.texts_to_sequences([test_text])</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    test_seq <span class="op">=</span> np.array(test_seq)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the model passed as a parameter to predict the next word</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model.predict(test_seq).argmax(axis<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the word that maps to the prediction</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tokenizer.index_word[pred]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="40">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>predict_text(<span class="st">'meet revenge with'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/1 [==============================] - 1s 626ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>'revenge'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>predict_text(<span class="st">'the course of'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/1 [==============================] - 0s 10ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>'history'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="43">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>predict_text(<span class="st">'strength of the'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/1 [==============================] - 0s 11ms/step</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>'body'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="44">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_graphs(history, string):</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>    plt.plot(history.history[string])</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">'Epochs'</span>)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(string)</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>plot_graphs(history, <span class="st">'accuracy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Advanced Model Architectures_files/figure-html/cell-41-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="45">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>text <span class="op">=</span> <span class="st">'meet revenge with'</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>story <span class="op">=</span> [text]</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> predict_text(text)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result <span class="op">==</span> <span class="st">"end"</span>:</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>    story.append(result)</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">+=</span> <span class="st">' '</span> <span class="op">+</span> result</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> <span class="st">' '</span>.join(text.split()[<span class="dv">1</span>:])</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>story <span class="op">=</span> <span class="st">" "</span>.join(<span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> story)</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Final story : </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(story))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1/1 [==============================] - 0s 12ms/step
+1/1 [==============================] - 0s 12ms/step
+1/1 [==============================] - 0s 12ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 11ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 8ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 8ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 8ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 10ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 8ms/step
+1/1 [==============================] - 0s 9ms/step
+1/1 [==============================] - 0s 8ms/step
+Final story : meet revenge with revenge it will heal nothing even the smallest person can change the course of history all we have to decide is what to do with the time that is given us the burned hand teaches best after that advice about fire goes to the heart</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

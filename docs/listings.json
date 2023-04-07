@@ -10,7 +10,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Advance model architecture/Advanced Model Architectures.html",
+      "/posts/Improving your model performance/Improving Your Model Performance.html",
+      "/posts/Introducing Keras/Introducing Keras.html",
       "/posts/Building deep learning models with keras/Building deep learning models with keras.html",
+      "/posts/Going deeper in deep learning with keras/Going Deeper.html",
       "/posts/Fine-tuning keras models/Fine-tuning keras models.html",
       "/posts/Optimize a neural network with backward propagation/Optimizing a neural network with backward propagation.html",
       "/posts/Basics of deep learning and neural netowrks/Basics of deep learning and neural networks.html",
