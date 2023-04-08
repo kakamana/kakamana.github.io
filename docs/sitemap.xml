@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-08T14:00:52.183Z</lastmod>
+    <lastmod>2023-04-08T20:32:40.646Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -335,5 +335,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html</loc>
     <lastmod>2023-04-08T14:00:22.242Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Image Processing With Neural Networks/Image Processing With Neural Networks.html</loc>
+    <lastmod>2023-04-08T20:32:02.799Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Using Convolutions/Using Convolutions.html</loc>
+    <lastmod>2023-04-08T20:31:17.690Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Understanding and Improving Deep Convolutional Networks/Understanding and Improving Deep Convolutional Networks.html</loc>
+    <lastmod>2023-04-08T20:29:58.958Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Going Deeper convolutions in keras/Going Deeper.html</loc>
+    <lastmod>2023-04-08T20:30:29.060Z</lastmod>
   </url>
 </urlset>
