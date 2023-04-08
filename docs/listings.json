@@ -10,6 +10,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html",
+      "/posts/Filters, Contrast, Transformation and Morphology/Filters, Contrast, Transformation and Morphology.html",
+      "/posts/Image restoration, Noise, Segmentation and Contours/Image restoration, Noise, Segmentation and Contours.html",
+      "/posts/Introducing Image Processing and scikit-image/Introducing Image Processing and scikit-image.html",
       "/posts/Mulitple outputs/Multiple Outputs.html",
       "/posts/Multiple inputs in Keras/Multiple Inputs, 3 Inputs and Beyond.html",
       "/posts/The Keras Functional API/The Keras Functional API.html",

@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-07T21:38:07.275Z</lastmod>
+    <lastmod>2023-04-08T14:00:52.183Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -319,5 +319,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Mulitple outputs/Multiple Outputs.html</loc>
     <lastmod>2023-04-07T21:37:36.174Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Introducing Image Processing and scikit-image/Introducing Image Processing and scikit-image.html</loc>
+    <lastmod>2023-04-08T13:57:05.181Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Filters, Contrast, Transformation and Morphology/Filters, Contrast, Transformation and Morphology.html</loc>
+    <lastmod>2023-04-08T13:58:01.292Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Image restoration, Noise, Segmentation and Contours/Image restoration, Noise, Segmentation and Contours.html</loc>
+    <lastmod>2023-04-08T13:59:33.456Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html</loc>
+    <lastmod>2023-04-08T14:00:22.242Z</lastmod>
   </url>
 </urlset>
