@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-09">
+
+<title>Kakamana’s Blogs - Grid Search</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#grid-search" id="toc-grid-search" class="nav-link active" data-scroll-target="#grid-search">Grid search</a></li>
+  <li><a href="#introducing-grid-search" id="toc-introducing-grid-search" class="nav-link" data-scroll-target="#introducing-grid-search">Introducing Grid Search</a>
+  <ul class="collapse">
+  <li><a href="#build-grid-search-functions" id="toc-build-grid-search-functions" class="nav-link" data-scroll-target="#build-grid-search-functions">Build Grid Search functions</a></li>
+  <li><a href="#iteratively-tune-multiple-hyperparameters" id="toc-iteratively-tune-multiple-hyperparameters" class="nav-link" data-scroll-target="#iteratively-tune-multiple-hyperparameters">Iteratively tune multiple hyperparameters</a></li>
+  </ul></li>
+  <li><a href="#grid-search-with-scikit-learn" id="toc-grid-search-with-scikit-learn" class="nav-link" data-scroll-target="#grid-search-with-scikit-learn">Grid Search with Scikit Learn</a>
+  <ul class="collapse">
+  <li><a href="#gridsearchcv-with-scikit-learn" id="toc-gridsearchcv-with-scikit-learn" class="nav-link" data-scroll-target="#gridsearchcv-with-scikit-learn">GridSearchCV with Scikit Learn</a></li>
+  </ul></li>
+  <li><a href="#understanding-a-grid-search-output" id="toc-understanding-a-grid-search-output" class="nav-link" data-scroll-target="#understanding-a-grid-search-output">Understanding a grid search output</a>
+  <ul class="collapse">
+  <li><a href="#exploring-the-grid-search-results" id="toc-exploring-the-grid-search-results" class="nav-link" data-scroll-target="#exploring-the-grid-search-results">Exploring the grid search results</a></li>
+  <li><a href="#analyzing-the-best-results" id="toc-analyzing-the-best-results" class="nav-link" data-scroll-target="#analyzing-the-best-results">Analyzing the best results</a></li>
+  <li><a href="#using-the-best-results" id="toc-using-the-best-results" class="nav-link" data-scroll-target="#using-the-best-results">Using the best results</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Grid Search</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">datacamp</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">deep learning</div>
+    <div class="quarto-category">hyperparameter</div>
+    <div class="quarto-category">gridsearch</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 9, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="grid-search" class="level1">
+<h1>Grid search</h1>
+<p>The purpose of this chapter is to introduce you to a popular automated hyperparameter tuning method referred to as Grid Search. In this lesson, you will gain an understanding of what it is, how it works, and how to conduct a Grid Search using Scikit Learn. Afterwards, you will learn how to analyze the output of a Grid Search and gain practical experience in doing so.</p>
+<p>This <strong>Grid search</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/hyperparameter-tuning-in-python">Datacamp course: Hyperparameter Tuning in Python</a> Hyperparameters play a significant role in the development of powerful machine learning models. However, with increasingly complex models with numerous options available, how can you efficiently identify the best settings for your particular issue? You will gain practical experience using some common methodologies for automated hyperparameter tuning in Python using Scikit Learn. Among these are Grid Search, Random Search, and advanced optimization methodologies such as Bayesian and Genetic algorithms. To dramatically increase the efficiency and effectiveness of your machine learning model creation, you will use a dataset predicting credit card defaults.</p>
+<p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="introducing-grid-search" class="level1">
+<h1>Introducing Grid Search</h1>
+<section id="build-grid-search-functions" class="level2">
+<h2 class="anchored" data-anchor-id="build-grid-search-functions">Build Grid Search functions</h2>
+<p>In data science it is a great idea to try building algorithms, models and processes ‘from scratch’ so you can really understand what is happening at a deeper level. Of course there are great packages and libraries for this work (and we will get to that very soon!) but building from scratch will give you a great edge in your data science work.</p>
+<p>In this exercise, you will create a function to take in 2 hyperparameters, build models and return results. You will use this function in a future exercise.</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>credit_card <span class="op">=</span> pd.read_csv(<span class="st">'dataset/credit-card-full.csv'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># To change categorical variable with dummy variables</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>credit_card <span class="op">=</span> pd.get_dummies(credit_card, columns<span class="op">=</span>[<span class="st">'SEX'</span>, <span class="st">'EDUCATION'</span>, <span class="st">'MARRIAGE'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> credit_card.drop([<span class="st">'ID'</span>, <span class="st">'default payment next month'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> credit_card[<span class="st">'default payment next month'</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>credit_card.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>LIMIT_BAL</th>
+      <th>AGE</th>
+      <th>PAY_0</th>
+      <th>PAY_2</th>
+      <th>PAY_3</th>
+      <th>PAY_4</th>
+      <th>PAY_5</th>
+      <th>PAY_6</th>
+      <th>BILL_AMT1</th>
+      <th>...</th>
+      <th>SEX_2</th>
+      <th>EDUCATION_1</th>
+      <th>EDUCATION_2</th>
+      <th>EDUCATION_3</th>
+      <th>EDUCATION_4</th>
+      <th>EDUCATION_5</th>
+      <th>EDUCATION_6</th>
+      <th>MARRIAGE_1</th>
+      <th>MARRIAGE_2</th>
+      <th>MARRIAGE_3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>20000</td>
+      <td>24</td>
+      <td>2</td>
+      <td>2</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-2</td>
+      <td>-2</td>
+      <td>3913</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>120000</td>
+      <td>26</td>
+      <td>-1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2682</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>90000</td>
+      <td>34</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>29239</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>50000</td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>46990</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>50000</td>
+      <td>57</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8617</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 32 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingClassifier</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the function</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gbm_grid_search(learn_rate, max_depth):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the model</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> GradientBoostingClassifier(learning_rate<span class="op">=</span>learn_rate, max_depth<span class="op">=</span>max_depth)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use the model to make predictions</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> model.fit(X_train, y_train).predict(X_test)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return the hyperparameters and score</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ([learn_rate, max_depth, accuracy_score(y_test, predictions)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="iteratively-tune-multiple-hyperparameters" class="level2">
+<h2 class="anchored" data-anchor-id="iteratively-tune-multiple-hyperparameters">Iteratively tune multiple hyperparameters</h2>
+<p>In this exercise, you will build on the function you previously created to take in 2 hyperparameters, build a model and return the results. You will now use that to loop through some values and then extend this function and loop with another hyperparameter.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>results_list <span class="op">=</span> []</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>learn_rate_list <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>max_depth_list <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the for loop</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> learn_rate <span class="kw">in</span> learn_rate_list:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_depth <span class="kw">in</span> max_depth_list:</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        results_list.append(gbm_grid_search(learn_rate, max_depth))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>pprint(results_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0.01, 2, 0.8245555555555556],
+ [0.01, 4, 0.8201111111111111],
+ [0.01, 6, 0.8184444444444444],
+ [0.1, 2, 0.8254444444444444],
+ [0.1, 4, 0.8235555555555556],
+ [0.1, 6, 0.8197777777777778],
+ [0.5, 2, 0.8208888888888889],
+ [0.5, 4, 0.8041111111111111],
+ [0.5, 6, 0.79]]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gbm_grid_search_extended(learn_rate, max_depth, subsample):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extend the model creation section</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> GradientBoostingClassifier(learning_rate<span class="op">=</span>learn_rate, max_depth<span class="op">=</span>max_depth,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                       subsample<span class="op">=</span>subsample)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> model.fit(X_train, y_train).predict(X_test)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extend the return part</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>([learn_rate, max_depth, subsample, accuracy_score(y_test, predictions)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>subsample_list <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">0.6</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> learn_rate <span class="kw">in</span> learn_rate_list:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_depth <span class="kw">in</span> max_depth_list:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extend the for loop</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> subsample <span class="kw">in</span> subsample_list:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extend the results to include the new hyperparameter</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            results_list.append(gbm_grid_search_extended(learn_rate, max_depth, subsample))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>pprint(results_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0.01, 2, 0.8245555555555556],
+ [0.01, 4, 0.8201111111111111],
+ [0.01, 6, 0.8184444444444444],
+ [0.1, 2, 0.8254444444444444],
+ [0.1, 4, 0.8235555555555556],
+ [0.1, 6, 0.8197777777777778],
+ [0.5, 2, 0.8208888888888889],
+ [0.5, 4, 0.8041111111111111],
+ [0.5, 6, 0.79],
+ [0.01, 2, 0.4, 0.8244444444444444],
+ [0.01, 2, 0.6, 0.8245555555555556],
+ [0.01, 4, 0.4, 0.8213333333333334],
+ [0.01, 4, 0.6, 0.8212222222222222],
+ [0.01, 6, 0.4, 0.8182222222222222],
+ [0.01, 6, 0.6, 0.8193333333333334],
+ [0.1, 2, 0.4, 0.8246666666666667],
+ [0.1, 2, 0.6, 0.8247777777777778],
+ [0.1, 4, 0.4, 0.8232222222222222],
+ [0.1, 4, 0.6, 0.8232222222222222],
+ [0.1, 6, 0.4, 0.8168888888888889],
+ [0.1, 6, 0.6, 0.8202222222222222],
+ [0.5, 2, 0.4, 0.8164444444444444],
+ [0.5, 2, 0.6, 0.8182222222222222],
+ [0.5, 4, 0.4, 0.806],
+ [0.5, 4, 0.6, 0.802],
+ [0.5, 6, 0.4, 0.7744444444444445],
+ [0.5, 6, 0.6, 0.779]]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gbm_grid_search_extended(learn_rate, max_depth, subsample):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extend the model creation section</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> GradientBoostingClassifier(learning_rate<span class="op">=</span>learn_rate, max_depth<span class="op">=</span>max_depth,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                       subsample<span class="op">=</span>subsample)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    predictions <span class="op">=</span> model.fit(X_train, y_train).predict(X_test)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extend the return part</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>([learn_rate, max_depth, subsample, accuracy_score(y_test, predictions)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>subsample_list <span class="op">=</span> [<span class="fl">0.4</span>, <span class="fl">0.6</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> learn_rate <span class="kw">in</span> learn_rate_list:</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> max_depth <span class="kw">in</span> max_depth_list:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extend the for loop</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> subsample <span class="kw">in</span> subsample_list:</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extend the results to include the new hyperparameter</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            results_list.append(gbm_grid_search_extended(learn_rate, max_depth, subsample))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>pprint(results_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0.01, 2, 0.8245555555555556],
+ [0.01, 4, 0.8201111111111111],
+ [0.01, 6, 0.8184444444444444],
+ [0.1, 2, 0.8254444444444444],
+ [0.1, 4, 0.8235555555555556],
+ [0.1, 6, 0.8197777777777778],
+ [0.5, 2, 0.8208888888888889],
+ [0.5, 4, 0.8041111111111111],
+ [0.5, 6, 0.79],
+ [0.01, 2, 0.4, 0.8244444444444444],
+ [0.01, 2, 0.6, 0.8245555555555556],
+ [0.01, 4, 0.4, 0.8213333333333334],
+ [0.01, 4, 0.6, 0.8212222222222222],
+ [0.01, 6, 0.4, 0.8182222222222222],
+ [0.01, 6, 0.6, 0.8193333333333334],
+ [0.1, 2, 0.4, 0.8246666666666667],
+ [0.1, 2, 0.6, 0.8247777777777778],
+ [0.1, 4, 0.4, 0.8232222222222222],
+ [0.1, 4, 0.6, 0.8232222222222222],
+ [0.1, 6, 0.4, 0.8168888888888889],
+ [0.1, 6, 0.6, 0.8202222222222222],
+ [0.5, 2, 0.4, 0.8164444444444444],
+ [0.5, 2, 0.6, 0.8182222222222222],
+ [0.5, 4, 0.4, 0.806],
+ [0.5, 4, 0.6, 0.802],
+ [0.5, 6, 0.4, 0.7744444444444445],
+ [0.5, 6, 0.6, 0.779],
+ [0.01, 2, 0.4, 0.8242222222222222],
+ [0.01, 2, 0.6, 0.8245555555555556],
+ [0.01, 4, 0.4, 0.8191111111111111],
+ [0.01, 4, 0.6, 0.8221111111111111],
+ [0.01, 6, 0.4, 0.8193333333333334],
+ [0.01, 6, 0.6, 0.8191111111111111],
+ [0.1, 2, 0.4, 0.8252222222222222],
+ [0.1, 2, 0.6, 0.8263333333333334],
+ [0.1, 4, 0.4, 0.8225555555555556],
+ [0.1, 4, 0.6, 0.824],
+ [0.1, 6, 0.4, 0.819],
+ [0.1, 6, 0.6, 0.8203333333333334],
+ [0.5, 2, 0.4, 0.818],
+ [0.5, 2, 0.6, 0.8183333333333334],
+ [0.5, 4, 0.4, 0.8055555555555556],
+ [0.5, 4, 0.6, 0.7985555555555556],
+ [0.5, 6, 0.4, 0.7787777777777778],
+ [0.5, 6, 0.6, 0.7761111111111111]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="grid-search-with-scikit-learn" class="level1">
+<h1>Grid Search with Scikit Learn</h1>
+<ul>
+<li>Steps in a Grid Search
+<ul>
+<li>An algorithm to tune the hyperparameters (or estimator)</li>
+<li>Defining which hyperparameters to tune</li>
+<li>Defining a range of values for each hyperparameter</li>
+<li>Setting a cross-validatoin scheme</li>
+<li>Defining a score function so we can decide which square on our grid was ‘the best’</li>
+<li>Include extra useful information or functions</li>
+</ul></li>
+</ul>
+<section id="gridsearchcv-with-scikit-learn" class="level2">
+<h2 class="anchored" data-anchor-id="gridsearchcv-with-scikit-learn">GridSearchCV with Scikit Learn</h2>
+<p>The GridSearchCV module from Scikit Learn provides many useful features to assist with efficiently undertaking a grid search. You will now put your learning into practice by creating a GridSearchCV object with certain parameters.</p>
+<p>The desired options are:</p>
+<ul>
+<li>A Random Forest Estimator, with the split criterion as ‘entropy’</li>
+<li>5-fold cross validation</li>
+<li>The hyperparameters max_depth (2, 4, 8, 15) and max_features (‘auto’ vs ‘sqrt’)</li>
+<li>Use roc_auc to score the models</li>
+<li>Use 4 cores for processing in parallel</li>
+<li>Ensure you refit the best model and return training scores</li>
+</ul>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Random Forest Classifier with specified criterion</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>rf_class <span class="op">=</span> RandomForestClassifier(criterion<span class="op">=</span><span class="st">'entropy'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the parametergrid</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>:[<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">15</span>],</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_features'</span>:[<span class="st">'auto'</span>, <span class="st">'sqrt'</span>]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a GridSearchCV object</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>grid_rf_class <span class="op">=</span> GridSearchCV(</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    estimator<span class="op">=</span>rf_class,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    param_grid<span class="op">=</span>param_grid,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    scoring<span class="op">=</span><span class="st">'roc_auc'</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    n_jobs<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    cv<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    refit<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    return_train_score<span class="op">=</span><span class="va">True</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid_rf_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>GridSearchCV(cv=5, estimator=RandomForestClassifier(criterion='entropy'),
+             n_jobs=4,
+             param_grid={'max_depth': [2, 4, 8, 15],
+                         'max_features': ['auto', 'sqrt']},
+             return_train_score=True, scoring='roc_auc')</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="understanding-a-grid-search-output" class="level1">
+<h1>Understanding a grid search output</h1>
+<section id="exploring-the-grid-search-results" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-grid-search-results">Exploring the grid search results</h2>
+<p>You will now explore the cv_results_ property of the GridSearchCV object defined in the video. This is a dictionary that we can read into a pandas DataFrame and contains a lot of useful information about the grid search we just undertook.</p>
+<p>A reminder of the different column types in this property:</p>
+<ul>
+<li>time_ columns</li>
+<li>param_ columns (one for each hyperparameter) and the singular params column (with all hyperparameter settings)</li>
+<li>a train_score column for each cv fold including the mean_train_score and std_train_score columns</li>
+<li>a test_score column for each cv fold including the mean_test_score and std_test_score columns</li>
+<li>a rank_test_score column with a number from 1 to n (number of iterations) ranking the rows based on their mean_test_score</li>
+</ul>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>grid_rf_class.fit(X_train, y_train)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the cv_results property into adataframe &amp; print it out</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cv_results_df <span class="op">=</span> pd.DataFrame(grid_rf_class.cv_results_)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_results_df)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the column with a dictionary of hyperparameters used</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>column <span class="op">=</span> cv_results_df.loc[:, [<span class="st">"params"</span>]]</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(column)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the row that had the best mean test score</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>best_row <span class="op">=</span> cv_results_df[cv_results_df[<span class="st">'rank_test_score'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(
+/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/sklearn/ensemble/_forest.py:424: FutureWarning: `max_features='auto'` has been deprecated in 1.1 and will be removed in 1.3. To keep the past behaviour, explicitly set `max_features='sqrt'` or remove this parameter as it is also the default value for RandomForestClassifiers and ExtraTreesClassifiers.
+  warn(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   mean_fit_time  std_fit_time  mean_score_time  std_score_time  \
+0       0.553439      0.009132         0.013463        0.000448   
+1       0.531026      0.009878         0.013239        0.000555   
+2       0.914235      0.011106         0.017581        0.000717   
+3       0.945417      0.020631         0.017516        0.000926   
+4       1.644313      0.017119         0.026537        0.000673   
+5       1.627506      0.009529         0.026094        0.000421   
+6       2.613335      0.021025         0.041663        0.000498   
+7       2.599870      0.028571         0.041664        0.000323   
+
+  param_max_depth param_max_features  \
+0               2               auto   
+1               2               sqrt   
+2               4               auto   
+3               4               sqrt   
+4               8               auto   
+5               8               sqrt   
+6              15               auto   
+7              15               sqrt   
+
+                                      params  split0_test_score  \
+0   {'max_depth': 2, 'max_features': 'auto'}           0.766386   
+1   {'max_depth': 2, 'max_features': 'sqrt'}           0.763033   
+2   {'max_depth': 4, 'max_features': 'auto'}           0.770331   
+3   {'max_depth': 4, 'max_features': 'sqrt'}           0.769073   
+4   {'max_depth': 8, 'max_features': 'auto'}           0.774115   
+5   {'max_depth': 8, 'max_features': 'sqrt'}           0.772641   
+6  {'max_depth': 15, 'max_features': 'auto'}           0.766062   
+7  {'max_depth': 15, 'max_features': 'sqrt'}           0.769417   
+
+   split1_test_score  split2_test_score  ...  mean_test_score  std_test_score  \
+0           0.762023           0.763215  ...         0.766701        0.003842   
+1           0.762789           0.761229  ...         0.765009        0.003320   
+2           0.766002           0.766667  ...         0.771341        0.004908   
+3           0.766696           0.768804  ...         0.771745        0.004521   
+4           0.770093           0.777018  ...         0.777718        0.005363   
+5           0.769696           0.774317  ...         0.776565        0.005625   
+6           0.765904           0.773864  ...         0.774454        0.007813   
+7           0.767425           0.775033  ...         0.775002        0.005939   
+
+   rank_test_score  split0_train_score  split1_train_score  \
+0                7            0.768926            0.770673   
+1                8            0.770699            0.768162   
+2                6            0.779433            0.779525   
+3                5            0.777827            0.780215   
+4                1            0.829605            0.830069   
+5                2            0.828698            0.827135   
+6                4            0.974661            0.973459   
+7                3            0.975158            0.971872   
+
+   split2_train_score  split3_train_score  split4_train_score  \
+0            0.770016            0.768063            0.769712   
+1            0.768304            0.767662            0.766671   
+2            0.777968            0.777477            0.777491   
+3            0.779218            0.777710            0.777653   
+4            0.828715            0.826782            0.825327   
+5            0.827792            0.825685            0.827783   
+6            0.972964            0.973317            0.975256   
+7            0.974634            0.972400            0.974306   
+
+   mean_train_score  std_train_score  
+0          0.769478         0.000903  
+1          0.768300         0.001329  
+2          0.778379         0.000916  
+3          0.778525         0.001025  
+4          0.828100         0.001786  
+5          0.827418         0.001000  
+6          0.973932         0.000874  
+7          0.973674         0.001296  
+
+[8 rows x 22 columns]
+                                      params
+0   {'max_depth': 2, 'max_features': 'auto'}
+1   {'max_depth': 2, 'max_features': 'sqrt'}
+2   {'max_depth': 4, 'max_features': 'auto'}
+3   {'max_depth': 4, 'max_features': 'sqrt'}
+4   {'max_depth': 8, 'max_features': 'auto'}
+5   {'max_depth': 8, 'max_features': 'sqrt'}
+6  {'max_depth': 15, 'max_features': 'auto'}
+7  {'max_depth': 15, 'max_features': 'sqrt'}
+   mean_fit_time  std_fit_time  mean_score_time  std_score_time  \
+4       1.644313      0.017119         0.026537        0.000673   
+
+  param_max_depth param_max_features  \
+4               8               auto   
+
+                                     params  split0_test_score  \
+4  {'max_depth': 8, 'max_features': 'auto'}           0.774115   
+
+   split1_test_score  split2_test_score  ...  mean_test_score  std_test_score  \
+4           0.770093           0.777018  ...         0.777718        0.005363   
+
+   rank_test_score  split0_train_score  split1_train_score  \
+4                1            0.829605            0.830069   
+
+   split2_train_score  split3_train_score  split4_train_score  \
+4            0.828715            0.826782            0.825327   
+
+   mean_train_score  std_train_score  
+4            0.8281         0.001786  
+
+[1 rows x 22 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="analyzing-the-best-results" class="level2">
+<h2 class="anchored" data-anchor-id="analyzing-the-best-results">Analyzing the best results</h2>
+<p>At the end of the day, we primarily care about the best performing ‘square’ in a grid search. Luckily Scikit Learn’s gridSearchCV objects have a number of parameters that provide key information on just the best square (or row in cv_results_).</p>
+<p>Three properties you will explore are:</p>
+<ul>
+<li>best_score_ – The score (here ROC_AUC) from the best-performing square.</li>
+<li>best_index_ – The index of the row in cv_results_ containing information on the best-performing square.</li>
+<li>best_params_ – A dictionary of the parameters that gave the best score, for example ‘max_depth’: 10</li>
+</ul>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>best_score <span class="op">=</span> grid_rf_class.best_score_</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_score)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a variable from the row related to the best-performing square</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>cv_results_df <span class="op">=</span> pd.DataFrame(grid_rf_class.cv_results_)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>best_row <span class="op">=</span> cv_results_df.loc[[grid_rf_class.best_index_]]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_row)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the max_depth parameter from the best-performing square and print</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>best_max_depth <span class="op">=</span> grid_rf_class.best_params_[<span class="st">'max_depth'</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(best_max_depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.777717676012218
+   mean_fit_time  std_fit_time  mean_score_time  std_score_time  \
+4       1.644313      0.017119         0.026537        0.000673   
+
+  param_max_depth param_max_features  \
+4               8               auto   
+
+                                     params  split0_test_score  \
+4  {'max_depth': 8, 'max_features': 'auto'}           0.774115   
+
+   split1_test_score  split2_test_score  ...  mean_test_score  std_test_score  \
+4           0.770093           0.777018  ...         0.777718        0.005363   
+
+   rank_test_score  split0_train_score  split1_train_score  \
+4                1            0.829605            0.830069   
+
+   split2_train_score  split3_train_score  split4_train_score  \
+4            0.828715            0.826782            0.825327   
+
+   mean_train_score  std_train_score  
+4            0.8281         0.001786  
+
+[1 rows x 22 columns]
+8</code></pre>
+</div>
+</div>
+</section>
+<section id="using-the-best-results" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-best-results">Using the best results</h2>
+<p>While it is interesting to analyze the results of our grid search, our final goal is practical in nature; we want to make predictions on our test set using our estimator object.</p>
+<p>We can access this object through the best_estimator_ property of our grid search object.</p>
+<p>In this exercise we will take a look inside the best_estimator_ property and then use this to make predictions on our test set for credit card defaults and generate a variety of scores. Remember to use predict_proba rather than predict since we need probability values rather than class labels for our roc_auc score. We use a slice [:,1] to get probabilities of the positive class.</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix, roc_auc_score</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># See what type of object the best_estimator_property is</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(grid_rf_class.best_estimator_))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an array of predictions directly using the best_estimator_property</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> grid_rf_class.best_estimator_.predict(X_test)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look to confirm it worked, this should be an array of 1's and 0's</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predictions[<span class="dv">0</span>:<span class="dv">5</span>])</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Now create a confusion matrix</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Confusion Matrix </span><span class="ch">\n</span><span class="st">"</span>, confusion_matrix(y_test, predictions))</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the ROC-AUC score</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>predictions_proba <span class="op">=</span> grid_rf_class.best_estimator_.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"ROC-AUC Score </span><span class="ch">\n</span><span class="st">"</span>, roc_auc_score(y_test, predictions_proba))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'sklearn.ensemble._forest.RandomForestClassifier'&gt;
+[0 0 0 0 0]
+Confusion Matrix 
+ [[6712  331]
+ [1248  709]]
+ROC-AUC Score 
+ 0.7819188805230386</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

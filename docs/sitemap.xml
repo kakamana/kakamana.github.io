@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-08T20:32:40.646Z</lastmod>
+    <lastmod>2023-04-09T04:24:42.340Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -351,5 +351,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Going Deeper convolutions in keras/Going Deeper.html</loc>
     <lastmod>2023-04-08T20:30:29.060Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Informed Search In Hyperparameter Tunning/Informed Search.html</loc>
+    <lastmod>2023-04-09T04:19:33.127Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Random Search in Hyperparameter Tunning/Random Search.html</loc>
+    <lastmod>2023-04-09T04:20:31.095Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Grid Search In Hyperparameter Tunning/Grid search.html</loc>
+    <lastmod>2023-04-09T04:23:20.860Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Hyperparameters and Parameters/Hyperparameters and Parameters.html</loc>
+    <lastmod>2023-04-09T04:23:57.747Z</lastmod>
   </url>
 </urlset>
