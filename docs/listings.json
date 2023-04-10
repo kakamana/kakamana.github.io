@@ -10,9 +10,13 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Ensembles & Pipelines - machine learning with PySpark/Ensembles & Pipelines.html",
+      "/posts/Regression - machine learning with PySPark/Regression - machine learning with PySpark.html",
+      "/posts/Classification - machine learning with PySpark/Classification - machine learning with PySpark.html",
       "/posts/Grid Search In Hyperparameter Tunning/Grid search.html",
       "/posts/Hyperparameters and Parameters/Hyperparameters and Parameters.html",
       "/posts/Informed Search In Hyperparameter Tunning/Informed Search.html",
+      "/posts/Introduction of machine learning with PySpark/Introduction of machine learning with PySpark.html",
       "/posts/Random Search in Hyperparameter Tunning/Random Search.html",
       "/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html",
       "/posts/Filters, Contrast, Transformation and Morphology/Filters, Contrast, Transformation and Morphology.html",

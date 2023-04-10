@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-09T04:24:42.340Z</lastmod>
+    <lastmod>2023-04-10T22:04:57.499Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -367,5 +367,21 @@
   <url>
     <loc>https://kakamana.github.io/posts/Hyperparameters and Parameters/Hyperparameters and Parameters.html</loc>
     <lastmod>2023-04-09T04:23:57.747Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Ensembles & Pipelines - machine learning with PySpark/Ensembles & Pipelines.html</loc>
+    <lastmod>2023-04-10T21:57:46.037Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Regression - machine learning with PySPark/Regression - machine learning with PySpark.html</loc>
+    <lastmod>2023-04-10T21:58:36.420Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Classification - machine learning with PySpark/Classification - machine learning with PySpark.html</loc>
+    <lastmod>2023-04-10T22:01:39.210Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Introduction of machine learning with PySpark/Introduction of machine learning with PySpark.html</loc>
+    <lastmod>2023-04-10T22:02:24.208Z</lastmod>
   </url>
 </urlset>
