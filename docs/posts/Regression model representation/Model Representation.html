@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-16">
+
+<title>Kakamana’s Blogs - Regression model representation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#regression-model-representation" id="toc-regression-model-representation" class="nav-link active" data-scroll-target="#regression-model-representation">Regression model representation</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  </ul></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a>
+  <ul class="collapse">
+  <li><a href="#number-of-training-examples-m" id="toc-number-of-training-examples-m" class="nav-link" data-scroll-target="#number-of-training-examples-m">Number of training examples <code>m</code></a></li>
+  <li><a href="#training-example-x_i-y_i" id="toc-training-example-x_i-y_i" class="nav-link" data-scroll-target="#training-example-x_i-y_i">Training example <code>x_i, y_i</code></a></li>
+  <li><a href="#plotting-the-data" id="toc-plotting-the-data" class="nav-link" data-scroll-target="#plotting-the-data">Plotting the data</a></li>
+  <li><a href="#model-function" id="toc-model-function" class="nav-link" data-scroll-target="#model-function">Model function</a>
+  <ul class="collapse">
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction">Prediction</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#congratulations" id="toc-congratulations" class="nav-link" data-scroll-target="#congratulations">Congratulations!</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Regression model representation</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">supervised learning</div>
+    <div class="quarto-category">regression</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 16, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="regression-model-representation" class="level1">
+<h1>Regression model representation</h1>
+<p>This <strong>Regression model representation</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 1: Supervised Machine Learning: Regression and Classification</a> In this course we will learn the difference between supervised and unsupervised learning and regression and classification tasks. Develop a linear regression model. Understand and implement the purpose of a cost function. Understand and implement gradient descent as a machine learning training method.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<p><img src="modelRep-1.png" class="img-fluid"></p>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<p>In this lab course you will: - Learn to implement the model <span class="math inline">\(f_{w,b}\)</span> for linear regression with one variable</p>
+</section>
+<section id="notation" class="level2">
+<h2 class="anchored" data-anchor-id="notation">Notation</h2>
+<p>Here is a summary of some of the notation you will encounter.</p>
+<p>|General <img width="70/"> <br> Notation <img width="70/"> | Description<img width="350/">| Python (if applicable) | |: ————|: ————————————————————|| | <span class="math inline">\(a\)</span> | scalar, non bold || | <span class="math inline">\(\mathbf{a}\)</span> | vector, bold || | <strong>Regression</strong> | | | | | <span class="math inline">\(\mathbf{x}\)</span> | Training Example feature values (in this lab - Size (1000 sqft)) | <code>x_train</code> | | <span class="math inline">\(\mathbf{y}\)</span> | Training Example targets (in this lab Price (1000s of dollars)) | <code>y_train</code> | <span class="math inline">\(x^{(i)}\)</span>, <span class="math inline">\(y^{(i)}\)</span> | <span class="math inline">\(i_{th}\)</span>Training Example | <code>x_i</code>, <code>y_i</code>| | m | Number of training examples | <code>m</code>| | <span class="math inline">\(w\)</span> | parameter: weight | <code>w</code> | | <span class="math inline">\(b\)</span> | parameter: bias | <code>b</code> | | <span class="math inline">\(f_{w,b}(x^{(i)})\)</span> | The result of the model evaluation at <span class="math inline">\(x^{(i)}\)</span> parameterized by <span class="math inline">\(w,b\)</span>: <span class="math inline">\(f_{w,b}(x^{(i)}) = wx^{(i)}+b\)</span> | <code>f_wb</code> |</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:36:08.569246Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:36:08.571382Z&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.style.use('./deeplearning.mplstyle')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="problem-statement" class="level1">
+<h1>Problem Statement</h1>
+<p><img align="left" src="C1_W1_L3_S1_trainingdata.png" style=" width:380px; padding: 10px;  "></p>
+<p>As in the lecture, you will use the motivating example of housing price prediction. This lab will use a simple data set with only two data points - a house with 1000 square feet(sqft) sold for \$300,000 and a house with 2000 square feet sold for \$500,000. These two points will constitute our <em>data or training set</em>. In this lab, the units of size are 1000 sqft and the units of price are 1000s of dollars.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Size (1000 sqft)</th>
+<th>Price (1000s of dollars)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1.0</td>
+<td>300</td>
+</tr>
+<tr class="even">
+<td>2.0</td>
+<td>500</td>
+</tr>
+</tbody>
+</table>
+<p>You would like to fit a linear regression model (shown above as the blue straight line) through these two points, so you can then predict price for other houses - say, a house with 1200 sqft.</p>
+<p>Please run the following code cell to create your <code>x_train</code> and <code>y_train</code> variables. The data is stored in one-dimensional NumPy arrays.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:39:39.594851Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:39:39.598937Z&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x_train is the input variable (size in 1000 square feet)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train is the target (price in 1000s of dollars)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x_train <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.array([<span class="fl">300.0</span>, <span class="fl">500.0</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"x_train = </span><span class="sc">{</span>x_train<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"y_train = </span><span class="sc">{</span>y_train<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>x_train = [1. 2.]
+y_train = [300. 500.]</code></pre>
+</div>
+</div>
+<section id="number-of-training-examples-m" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-training-examples-m">Number of training examples <code>m</code></h3>
+<p>You will use <code>m</code> to denote the number of training examples. Numpy arrays have a <code>.shape</code> parameter. <code>x_train.shape</code> returns a python tuple with an entry for each dimension. <code>x_train.shape[0]</code> is the length of the array and number of examples as shown below.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:40:42.922231Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:40:42.926310Z&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># m is the number of training examples</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"x_train.shape: </span><span class="sc">{</span>x_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> x_train.shape[<span class="dv">0</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of training examples is: </span><span class="sc">{</span>m<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>x_train.shape: (2,)
+Number of training examples is: 2</code></pre>
+</div>
+</div>
+<p>One can also use the Python <code>len()</code> function as shown below.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:41:25.068319Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:41:25.077299Z&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># m is the number of training examples</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">len</span>(x_train)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of training examples is: </span><span class="sc">{</span>m<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of training examples is: 2</code></pre>
+</div>
+</div>
+</section>
+<section id="training-example-x_i-y_i" class="level3">
+<h3 class="anchored" data-anchor-id="training-example-x_i-y_i">Training example <code>x_i, y_i</code></h3>
+<p>You will use (x<span class="math inline">\(^{(i)}\)</span>, y<span class="math inline">\(^{(i)}\)</span>) to denote the <span class="math inline">\(i^{th}\)</span> training example. Since Python is zero indexed, (x<span class="math inline">\(^{(0)}\)</span>, y<span class="math inline">\(^{(0)}\)</span>) is (1.0, 300.0) and (x<span class="math inline">\(^{(1)}\)</span>, y<span class="math inline">\(^{(1)}\)</span>) is (2.0, 500.0).</p>
+<p>To access a value in a Numpy array, one indexes the array with the desired offset. For example the syntax to access location zero of <code>x_train</code> is <code>x_train[0]</code>. Run the next code block below to get the <span class="math inline">\(i^{th}\)</span> training example.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:42:56.164379Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:42:56.178494Z&quot;}" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span> <span class="co"># Change this to 1 to see (x^1, y^1)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>x_i <span class="op">=</span> x_train[i]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>y_i <span class="op">=</span> y_train[i]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"(x^(</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">), y^(</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">)) = (</span><span class="sc">{</span>x_i<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>y_i<span class="sc">}</span><span class="ss">)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(x^(0), y^(0)) = (1.0, 300.0)</code></pre>
+</div>
+</div>
+</section>
+<section id="plotting-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-the-data">Plotting the data</h3>
+<p>You can plot these two points using the <code>scatter()</code> function in the <code>matplotlib</code> library, as shown in the cell below. - The function arguments <code>marker</code> and <code>c</code> show the points as red crosses (the default is blue dots).</p>
+<p>You can use other functions in the <code>matplotlib</code> library to set the title and labels to display</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:43:58.473384Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:43:58.623468Z&quot;}" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data points</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_train, y_train, marker<span class="op">=</span><span class="st">'x'</span>, c<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the title</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Housing Prices"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the y-axis label</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Price (in 1000s of dollars)'</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the x-axis label</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Size (1000 sqft)'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Model Representation_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="model-function" class="level2">
+<h2 class="anchored" data-anchor-id="model-function">Model function</h2>
+<p><img align="left" src="C1_W1_L3_S1_model.png" style=" width:380px; padding: 10px; "> As described in lecture, the model function for linear regression (which is a function that maps from <code>x</code> to <code>y</code>) is represented as</p>
+<p><span class="math display">\[ f_{w,b}(x^{(i)}) = wx^{(i)} + b \tag{1}\]</span></p>
+<p>The formula above is how you can represent straight lines - different values of <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span> give you different straight lines on the plot. <br> <br> <br> <br> <br></p>
+<p>Let’s try to get a better intuition for this through the code blocks below. Let’s start with <span class="math inline">\(w = 100\)</span> and <span class="math inline">\(b = 100\)</span>.</p>
+<p><strong>Note: You can come back to this cell to adjust the model’s w and b parameters</strong></p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:44:52.089474Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:44:52.095483Z&quot;}" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"w: </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"b: </span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>w: 100
+b: 100</code></pre>
+</div>
+</div>
+<p>Now, let’s compute the value of <span class="math inline">\(f_{w,b}(x^{(i)})\)</span> for your two data points. You can explicitly write this out for each data point as -</p>
+<p>for <span class="math inline">\(x^{(0)}\)</span>, <code>f_wb = w * x[0] + b</code></p>
+<p>for <span class="math inline">\(x^{(1)}\)</span>, <code>f_wb = w * x[1] + b</code></p>
+<p>For a large number of data points, this can get unwieldy and repetitive. So instead, you can calculate the function output in a <code>for</code> loop as shown in the <code>compute_model_output</code> function below. &gt; <strong>Note</strong>: The argument description <code>(ndarray (m,))</code> describes a Numpy n-dimensional array of shape (m,). <code>(scalar)</code> describes an argument without dimensions, just a magnitude. &gt; <strong>Note</strong>: <code>np.zero(n)</code> will return a one-dimensional numpy array with <span class="math inline">\(n\)</span> entries</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:45:53.279627Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:45:53.286216Z&quot;}" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_model_output(x, w, b):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Computes the prediction of a linear model</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">      x (ndarray (m,)): Data, m examples</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">      w,b (scalar)    : model parameters</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">      y (ndarray (m,)): target values</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> x.shape[<span class="dv">0</span>]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    f_wb <span class="op">=</span> np.zeros(m)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m):</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        f_wb[i] <span class="op">=</span> w <span class="op">*</span> x[i] <span class="op">+</span> b</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f_wb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:46:14.353665Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:46:14.424001Z&quot;}" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tmp_f_wb <span class="op">=</span> compute_model_output(x_train, w, b,)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot our model prediction</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>plt.plot(x_train, tmp_f_wb, c<span class="op">=</span><span class="st">'b'</span>,label<span class="op">=</span><span class="st">'Our Prediction'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data points</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_train, y_train, marker<span class="op">=</span><span class="st">'x'</span>, c<span class="op">=</span><span class="st">'r'</span>,label<span class="op">=</span><span class="st">'Actual Values'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the title</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Housing Prices"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the y-axis label</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Price (in 1000s of dollars)'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the x-axis label</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Size (1000 sqft)'</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Model Representation_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="prediction" class="level3">
+<h3 class="anchored" data-anchor-id="prediction">Prediction</h3>
+<p>Now that we have a model, we can use it to make our original prediction. Let’s predict the price of a house with 1200 sqft. Since the units of <span class="math inline">\(x\)</span> are in 1000’s of sqft, <span class="math inline">\(x\)</span> is 1.2.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:48:14.704825Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:48:14.714025Z&quot;}" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>x_i <span class="op">=</span> <span class="fl">1.2</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>cost_1200sqft <span class="op">=</span> w <span class="op">*</span> x_i <span class="op">+</span> b</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"$</span><span class="sc">{</span>cost_1200sqft<span class="sc">:.0f}</span><span class="ss"> thousand dollars"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$340 thousand dollars</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="congratulations" class="level1">
+<h1>Congratulations!</h1>
+<p>In this lab you have learned: - Linear regression builds a model which establishes a relationship between features and targets - In the example above, the feature was house size and the target was house price - for simple linear regression, the model has two parameters <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span> whose values are ‘fit’ using <em>training data</em>. - once a model’s parameters have been determined, the model can be used to make predictions on novel data.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

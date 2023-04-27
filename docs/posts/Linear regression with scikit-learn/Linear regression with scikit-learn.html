@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-24">
+
+<title>Kakamana’s Blogs - Linear regression with scikit-learn</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#linear-regression-with-scikit-learn" id="toc-linear-regression-with-scikit-learn" class="nav-link active" data-scroll-target="#linear-regression-with-scikit-learn">Linear regression with scikit-learn</a></li>
+  <li><a href="#optional-lab-linear-regression-using-scikit-learn" id="toc-optional-lab-linear-regression-using-scikit-learn" class="nav-link" data-scroll-target="#optional-lab-linear-regression-using-scikit-learn">Optional Lab: Linear Regression using Scikit-Learn</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
+  </ul></li>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a>
+  <ul class="collapse">
+  <li><a href="#load-the-data-set" id="toc-load-the-data-set" class="nav-link" data-scroll-target="#load-the-data-set">Load the data set</a></li>
+  <li><a href="#scalenormalize-the-training-data" id="toc-scalenormalize-the-training-data" class="nav-link" data-scroll-target="#scalenormalize-the-training-data">Scale/normalize the training data</a></li>
+  <li><a href="#create-and-fit-the-regression-model" id="toc-create-and-fit-the-regression-model" class="nav-link" data-scroll-target="#create-and-fit-the-regression-model">Create and fit the regression model</a></li>
+  <li><a href="#view-parameters" id="toc-view-parameters" class="nav-link" data-scroll-target="#view-parameters">View parameters</a></li>
+  <li><a href="#make-predictions" id="toc-make-predictions" class="nav-link" data-scroll-target="#make-predictions">Make predictions</a></li>
+  <li><a href="#plot-results" id="toc-plot-results" class="nav-link" data-scroll-target="#plot-results">Plot Results</a></li>
+  <li><a href="#congratulations" id="toc-congratulations" class="nav-link" data-scroll-target="#congratulations">Congratulations!</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Linear regression with scikit-learn</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">supervised learning</div>
+    <div class="quarto-category">linear regression</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 24, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="linear-regression-with-scikit-learn" class="level1">
+<h1>Linear regression with scikit-learn</h1>
+<p>A popular open source toolkit that implements linear regression is demonstrated in this optional lab. Open source machine learning library Scikit-Learn is used by many practitioners in many of the world’s leading AI, internet, and machine learning companies.</p>
+<p>You may use tools like Scikit Learn to train your models if you are currently or in the future using machine learning in your job.</p>
+<p>This <strong>Linear regression with scikit-learn</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 1: Supervised Machine Learning: Regression and Classification</a> In this course we will learn the difference between supervised and unsupervised learning and regression and classification tasks. Develop a linear regression model. Understand and implement the purpose of a cost function. Understand and implement gradient descent as a machine learning training method.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+</section>
+<section id="optional-lab-linear-regression-using-scikit-learn" class="level1">
+<h1>Optional Lab: Linear Regression using Scikit-Learn</h1>
+<p>There is an open-source, commercially usable machine learning toolkit called <a href="https://scikit-learn.org/stable/index.html">scikit-learn</a>. This toolkit contains implementations of many of the algorithms that you will work with in this course.</p>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<p>In this lab you will: - Utilize scikit-learn to implement linear regression using Gradient Descent</p>
+</section>
+<section id="tools" class="level2">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<p>You will utilize functions from scikit-learn as well as matplotlib and NumPy.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:46:31.631459Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:46:33.445915Z&quot;}" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> SGDRegressor</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_multi <span class="im">import</span>  load_house_data</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_common <span class="im">import</span> dlc</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'deeplearning.mplstyle'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="gradient-descent" class="level1">
+<h1>Gradient Descent</h1>
+<p>Scikit-learn has a gradient descent regression model <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDRegressor.html#examples-using-sklearn-linear-model-sgdregressor">sklearn.linear_model.SGDRegressor</a>. Like your previous implementation of gradient descent, this model performs best with normalized inputs. <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler">sklearn.preprocessing.StandardScaler</a> will perform z-score normalization as in a previous lab. Here it is referred to as ‘standard score’.</p>
+<section id="load-the-data-set" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-data-set">Load the data set</h3>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:47:08.269138Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:47:08.273649Z&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> load_house_data()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X_features <span class="op">=</span> [<span class="st">'size(sqft)'</span>,<span class="st">'bedrooms'</span>,<span class="st">'floors'</span>,<span class="st">'age'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="scalenormalize-the-training-data" class="level3">
+<h3 class="anchored" data-anchor-id="scalenormalize-the-training-data">Scale/normalize the training data</h3>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:47:41.313681Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:47:41.315497Z&quot;}" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X_norm <span class="op">=</span> scaler.fit_transform(X_train)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peak to Peak range by column in Raw        X:</span><span class="sc">{</span>np<span class="sc">.</span>ptp(X_train,axis<span class="op">=</span><span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peak to Peak range by column in Normalized X:</span><span class="sc">{</span>np<span class="sc">.</span>ptp(X_norm,axis<span class="op">=</span><span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Peak to Peak range by column in Raw        X:[2.41e+03 4.00e+00 1.00e+00 9.50e+01]
+Peak to Peak range by column in Normalized X:[5.85 6.14 2.06 3.69]</code></pre>
+</div>
+</div>
+</section>
+<section id="create-and-fit-the-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="create-and-fit-the-regression-model">Create and fit the regression model</h3>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:48:06.201415Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:48:06.209103Z&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sgdr <span class="op">=</span> SGDRegressor(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sgdr.fit(X_norm, y_train)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sgdr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"number of iterations completed: </span><span class="sc">{</span>sgdr<span class="sc">.</span>n_iter_<span class="sc">}</span><span class="ss">, number of weight updates: </span><span class="sc">{</span>sgdr<span class="sc">.</span>t_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>SGDRegressor()
+number of iterations completed: 108, number of weight updates: 10693.0</code></pre>
+</div>
+</div>
+</section>
+<section id="view-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="view-parameters">View parameters</h3>
+<p>Note, the parameters are associated with the <em>normalized</em> input data. The fit parameters are very close to those found in the previous lab with this data.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:48:47.946760Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:48:47.948625Z&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>b_norm <span class="op">=</span> sgdr.intercept_</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>w_norm <span class="op">=</span> sgdr.coef_</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"model parameters:                   w: </span><span class="sc">{</span>w_norm<span class="sc">}</span><span class="ss">, b:</span><span class="sc">{</span>b_norm<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>( <span class="st">"model parameters from previous lab: w: [110.56 -21.27 -32.71 -37.97], b: 363.16"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>model parameters:                   w: [109.82 -20.91 -32.29 -38.11], b:[363.18]
+model parameters from previous lab: w: [110.56 -21.27 -32.71 -37.97], b: 363.16</code></pre>
+</div>
+</div>
+</section>
+<section id="make-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="make-predictions">Make predictions</h3>
+<p>Predict the targets of the training data. Use both the <code>predict</code> routine and compute using <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span>.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:49:12.823578Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:49:12.829285Z&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a prediction using sgdr.predict()</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y_pred_sgd <span class="op">=</span> sgdr.predict(X_norm)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make a prediction using w,b.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> np.dot(X_norm, w_norm) <span class="op">+</span> b_norm</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"prediction using np.dot() and sgdr.predict match: </span><span class="sc">{</span>(y_pred <span class="op">==</span> y_pred_sgd)<span class="sc">.</span><span class="bu">all</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prediction on training set:</span><span class="ch">\n</span><span class="sc">{</span>y_pred[:<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span> )</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Target values </span><span class="ch">\n</span><span class="sc">{</span>y_train[:<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prediction using np.dot() and sgdr.predict match: True
+Prediction on training set:
+[295.2  485.84 389.65 492.  ]
+Target values 
+[300.  509.8 394.  540. ]</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-results" class="level3">
+<h3 class="anchored" data-anchor-id="plot-results">Plot Results</h3>
+<p>Let’s plot the predictions versus the target values.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:49:41.154806Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:49:41.327091Z&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot predictions and targets vs original features</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>,<span class="dv">4</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">3</span>),sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ax)):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    ax[i].scatter(X_train[:,i],y_train, label <span class="op">=</span> <span class="st">'target'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    ax[i].set_xlabel(X_features[i])</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    ax[i].scatter(X_train[:,i],y_pred,color<span class="op">=</span>dlc[<span class="st">"dlorange"</span>], label <span class="op">=</span> <span class="st">'predict'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Price"</span>)<span class="op">;</span> ax[<span class="dv">0</span>].legend()<span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"target versus prediction using z-score normalized model"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Linear regression with scikit-learn_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="congratulations" class="level2">
+<h2 class="anchored" data-anchor-id="congratulations">Congratulations!</h2>
+<p>In this lab you: - utilized an open-source machine learning toolkit, scikit-learn - implemented linear regression using gradient descent and feature normalization from that toolkit</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-24">
+
+<title>Kakamana’s Blogs - Feature scaling and learning rate</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#feature-scaling-and-learning-rate-multi-variable" id="toc-feature-scaling-and-learning-rate-multi-variable" class="nav-link active" data-scroll-target="#feature-scaling-and-learning-rate-multi-variable">Feature scaling and learning rate (Multi-variable)</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
+  <li><a href="#notation" id="toc-notation" class="nav-link" data-scroll-target="#notation">Notation</a></li>
+  </ul></li>
+  <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a>
+  <ul class="collapse">
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset:</a></li>
+  <li><a href="#learning-rate" id="toc-learning-rate" class="nav-link" data-scroll-target="#learning-rate">Learning Rate</a>
+  <ul class="collapse">
+  <li><a href="#alpha-9.9e-7" id="toc-alpha-9.9e-7" class="nav-link" data-scroll-target="#alpha-9.9e-7"><span class="math inline">\(\alpha\)</span> = 9.9e-7</a></li>
+  <li><a href="#alpha-9e-7" id="toc-alpha-9e-7" class="nav-link" data-scroll-target="#alpha-9e-7"><span class="math inline">\(\alpha\)</span> = 9e-7</a></li>
+  <li><a href="#alpha-1e-7" id="toc-alpha-1e-7" class="nav-link" data-scroll-target="#alpha-1e-7"><span class="math inline">\(\alpha\)</span> = 1e-7</a></li>
+  </ul></li>
+  <li><a href="#feature-scaling" id="toc-feature-scaling" class="nav-link" data-scroll-target="#feature-scaling">Feature Scaling</a>
+  <ul class="collapse">
+  <li><a href="#z-score-normalization" id="toc-z-score-normalization" class="nav-link" data-scroll-target="#z-score-normalization">z-score normalization</a></li>
+  </ul></li>
+  <li><a href="#congratulations" id="toc-congratulations" class="nav-link" data-scroll-target="#congratulations">Congratulations!</a></li>
+  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Feature scaling and learning rate</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">supervised learning</div>
+    <div class="quarto-category">feature scaling</div>
+    <div class="quarto-category">gradient descent</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 24, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="feature-scaling-and-learning-rate-multi-variable" class="level1">
+<h1>Feature scaling and learning rate (Multi-variable)</h1>
+<p>Additionally, this exercise allows you to examine how feature scaling is accomplished in code and how different choices of learning rate alpha can result in a better or worse model training. As a result, you will gain a deeper understanding of feature scaling and learning rate alpha.</p>
+<p>This <strong>Feature scaling and learning rate</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 1: Supervised Machine Learning: Regression and Classification</a> In this course we will learn the difference between supervised and unsupervised learning and regression and classification tasks. Develop a linear regression model. Understand and implement the purpose of a cost function. Understand and implement gradient descent as a machine learning training method.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<section id="goals" class="level2">
+<h2 class="anchored" data-anchor-id="goals">Goals</h2>
+<p>In this lab you will: - Utilize the multiple variables routines developed in the previous lab - run Gradient Descent on a data set with multiple features - explore the impact of the <em>learning rate alpha</em> on gradient descent - improve performance of gradient descent by <em>feature scaling</em> using z-score normalization</p>
+</section>
+<section id="tools" class="level2">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<p>You will utilize the functions developed in the last lab as well as matplotlib and NumPy.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:40:23.446570Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:40:23.449473Z&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_multi <span class="im">import</span>  load_house_data, run_gradient_descent</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_multi <span class="im">import</span>  norm_plot, plt_equal_scale, plot_cost_i_w</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_common <span class="im">import</span> dlc</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'deeplearning.mplstyle'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="notation" class="level2">
+<h2 class="anchored" data-anchor-id="notation">Notation</h2>
+<p>|General <br> Notation | Description| Python (if applicable) | |: ————|: ————————————————————|| | <span class="math inline">\(a\)</span> | scalar, non bold || | <span class="math inline">\(\mathbf{a}\)</span> | vector, bold || | <span class="math inline">\(\mathbf{A}\)</span> | matrix, bold capital || | <strong>Regression</strong> | | | | | <span class="math inline">\(\mathbf{X}\)</span> | training example maxtrix | <code>X_train</code> | | <span class="math inline">\(\mathbf{y}\)</span> | training example targets | <code>y_train</code> | <span class="math inline">\(\mathbf{x}^{(i)}\)</span>, <span class="math inline">\(y^{(i)}\)</span> | <span class="math inline">\(i_{th}\)</span>Training Example | <code>X[i]</code>, <code>y[i]</code>| | m | number of training examples | <code>m</code>| | n | number of features in each example | <code>n</code>| | <span class="math inline">\(\mathbf{w}\)</span> | parameter: weight, | <code>w</code> | | <span class="math inline">\(b\)</span> | parameter: bias | <code>b</code> | | <span class="math inline">\(f_{\mathbf{w},b}(\mathbf{x}^{(i)})\)</span> | The result of the model evaluation at <span class="math inline">\(\mathbf{x}^{(i)}\)</span> parameterized by <span class="math inline">\(\mathbf{w},b\)</span>: <span class="math inline">\(f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = \mathbf{w} \cdot \mathbf{x}^{(i)}+b\)</span> | <code>f_wb</code> | |<span class="math inline">\(\frac{\partial J(\mathbf{w},b)}{\partial w_j}\)</span>| the gradient or partial derivative of cost with respect to a parameter <span class="math inline">\(w_j\)</span> |<code>dj_dw[j]</code>| |<span class="math inline">\(\frac{\partial J(\mathbf{w},b)}{\partial b}\)</span>| the gradient or partial derivative of cost with respect to a parameter <span class="math inline">\(b\)</span>| <code>dj_db</code>|</p>
+<p><img src="featureScaling-1.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="problem-statement" class="level1">
+<h1>Problem Statement</h1>
+<p>As in the previous labs, you will use the motivating example of housing price prediction. The training data set contains many examples with 4 features (size, bedrooms, floors and age) shown in the table below. Note, in this lab, the Size feature is in sqft while earlier labs utilized 1000 sqft. This data set is larger than the previous lab.</p>
+<p>We would like to build a linear regression model using these values so we can then predict the price for other houses - say, a house with 1200 sqft, 3 bedrooms, 1 floor, 40 years old.</p>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">Dataset:</h2>
+<table class="table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 15%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Size (sqft)</th>
+<th>Number of Bedrooms</th>
+<th>Number of floors</th>
+<th>Age of Home</th>
+<th>Price (1000s dollars)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>952</td>
+<td>2</td>
+<td>1</td>
+<td>65</td>
+<td>271.5</td>
+</tr>
+<tr class="even">
+<td>1244</td>
+<td>3</td>
+<td>2</td>
+<td>64</td>
+<td>232</td>
+</tr>
+<tr class="odd">
+<td>1947</td>
+<td>3</td>
+<td>2</td>
+<td>17</td>
+<td>509.8</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:44:09.189326Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:44:09.231437Z&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> load_house_data()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X_features <span class="op">=</span> [<span class="st">'size(sqft)'</span>,<span class="st">'bedrooms'</span>,<span class="st">'floors'</span>,<span class="st">'age'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s view the dataset and its features by plotting each feature versus price.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:44:42.010179Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:44:42.195587Z&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>), sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ax)):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ax[i].scatter(X_train[:,i],y_train)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ax[i].set_xlabel(X_features[i])</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Price (1000's)"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Plotting each feature vs.&nbsp;the target, price, provides some indication of which features have the strongest influence on price. Above, increasing size also increases price. Bedrooms and floors don’t seem to have a strong impact on price. Newer houses have higher prices than older houses.</p>
+<p><a name="toc_15456_5"></a> ## Gradient Descent With Multiple Variables Here are the equations you developed in the last lab on gradient descent for multiple variables.:</p>
+<p><span class="math display">\[\begin{align*} \text{repeat}&amp;\text{ until convergence:} \; \lbrace \newline\;
+&amp; w_j := w_j -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial w_j} \tag{1}  \; &amp; \text{for j = 0..n-1}\newline
+&amp;b\ \ := b -  \alpha \frac{\partial J(\mathbf{w},b)}{\partial b}  \newline \rbrace
+\end{align*}\]</span></p>
+<p>where, n is the number of features, parameters <span class="math inline">\(w_j\)</span>, <span class="math inline">\(b\)</span>, are updated simultaneously and where</p>
+<p><span class="math display">\[
+\begin{align}
+\frac{\partial J(\mathbf{w},b)}{\partial w_j}  &amp;= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})x_{j}^{(i)} \tag{2}  \\
+\frac{\partial J(\mathbf{w},b)}{\partial b}  &amp;= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)}) \tag{3}
+\end{align}
+\]</span> * m is the number of training examples in the data set</p>
+<ul>
+<li><span class="math inline">\(f_{\mathbf{w},b}(\mathbf{x}^{(i)})\)</span> is the model’s prediction, while <span class="math inline">\(y^{(i)}\)</span> is the target value</li>
+</ul>
+</section>
+<section id="learning-rate" class="level2">
+<h2 class="anchored" data-anchor-id="learning-rate">Learning Rate</h2>
+<figure class="figure">
+<img src="C1_W2_Lab06_learningrate.PNG" style="width:1200px;" class="figure-img">
+</figure>
+<p>The lectures discussed some of the issues related to setting the learning rate <span class="math inline">\(\alpha\)</span>. The learning rate controls the size of the update to the parameters. See equation (1) above. It is shared by all the parameters.</p>
+<p>Let’s run gradient descent and try a few settings of <span class="math inline">\(\alpha\)</span> on our data set</p>
+<section id="alpha-9.9e-7" class="level3">
+<h3 class="anchored" data-anchor-id="alpha-9.9e-7"><span class="math inline">\(\alpha\)</span> = 9.9e-7</h3>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:50:35.280477Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:50:35.286096Z&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set alpha to 9.9e-7</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>_, _, hist <span class="op">=</span> run_gradient_descent(X_train, y_train, <span class="dv">10</span>, alpha <span class="op">=</span> <span class="fl">9.9e-7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration Cost          w0       w1       w2       w3       b       djdw0    djdw1    djdw2    djdw3    djdb  
+---------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+        0 9.55884e+04  5.5e-01  1.0e-03  5.1e-04  1.2e-02  3.6e-04 -5.5e+05 -1.0e+03 -5.2e+02 -1.2e+04 -3.6e+02
+        1 1.28213e+05 -8.8e-02 -1.7e-04 -1.0e-04 -3.4e-03 -4.8e-05  6.4e+05  1.2e+03  6.2e+02  1.6e+04  4.1e+02
+        2 1.72159e+05  6.5e-01  1.2e-03  5.9e-04  1.3e-02  4.3e-04 -7.4e+05 -1.4e+03 -7.0e+02 -1.7e+04 -4.9e+02
+        3 2.31358e+05 -2.1e-01 -4.0e-04 -2.3e-04 -7.5e-03 -1.2e-04  8.6e+05  1.6e+03  8.3e+02  2.1e+04  5.6e+02
+        4 3.11100e+05  7.9e-01  1.4e-03  7.1e-04  1.5e-02  5.3e-04 -1.0e+06 -1.8e+03 -9.5e+02 -2.3e+04 -6.6e+02
+        5 4.18517e+05 -3.7e-01 -7.1e-04 -4.0e-04 -1.3e-02 -2.1e-04  1.2e+06  2.1e+03  1.1e+03  2.8e+04  7.5e+02
+        6 5.63212e+05  9.7e-01  1.7e-03  8.7e-04  1.8e-02  6.6e-04 -1.3e+06 -2.5e+03 -1.3e+03 -3.1e+04 -8.8e+02
+        7 7.58122e+05 -5.8e-01 -1.1e-03 -6.2e-04 -1.9e-02 -3.4e-04  1.6e+06  2.9e+03  1.5e+03  3.8e+04  1.0e+03
+        8 1.02068e+06  1.2e+00  2.2e-03  1.1e-03  2.3e-02  8.3e-04 -1.8e+06 -3.3e+03 -1.7e+03 -4.2e+04 -1.2e+03
+        9 1.37435e+06 -8.7e-01 -1.7e-03 -9.1e-04 -2.7e-02 -5.2e-04  2.1e+06  3.9e+03  2.0e+03  5.1e+04  1.4e+03
+w,b found by gradient descent: w: [-0.87 -0.   -0.   -0.03], b: -0.00</code></pre>
+</div>
+</div>
+<p>It appears the learning rate is too high. The solution does not converge. Cost is <em>increasing</em> rather than decreasing. Let’s plot the result:</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:51:30.003666Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:51:30.112187Z&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_cost_i_w(X_train, y_train, hist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The plot on the right shows the value of one of the parameters, <span class="math inline">\(w_0\)</span>. At each iteration, it is overshooting the optimal value and as a result, cost ends up <em>increasing</em> rather than approaching the minimum. Note that this is not a completely accurate picture as there are 4 parameters being modified each pass rather than just one. This plot is only showing <span class="math inline">\(w_0\)</span> with the other parameters fixed at benign values. In this and later plots you may notice the blue and orange lines being slightly off.</p>
+</section>
+<section id="alpha-9e-7" class="level3">
+<h3 class="anchored" data-anchor-id="alpha-9e-7"><span class="math inline">\(\alpha\)</span> = 9e-7</h3>
+<p>Let’s try a bit smaller value and see what happens.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:53:40.936982Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:53:40.949054Z&quot;}" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set alpha to 9e-7</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>_,_,hist <span class="op">=</span> run_gradient_descent(X_train, y_train, <span class="dv">10</span>, alpha <span class="op">=</span> <span class="fl">9e-7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration Cost          w0       w1       w2       w3       b       djdw0    djdw1    djdw2    djdw3    djdb  
+---------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+        0 6.64616e+04  5.0e-01  9.1e-04  4.7e-04  1.1e-02  3.3e-04 -5.5e+05 -1.0e+03 -5.2e+02 -1.2e+04 -3.6e+02
+        1 6.18990e+04  1.8e-02  2.1e-05  2.0e-06 -7.9e-04  1.9e-05  5.3e+05  9.8e+02  5.2e+02  1.3e+04  3.4e+02
+        2 5.76572e+04  4.8e-01  8.6e-04  4.4e-04  9.5e-03  3.2e-04 -5.1e+05 -9.3e+02 -4.8e+02 -1.1e+04 -3.4e+02
+        3 5.37137e+04  3.4e-02  3.9e-05  2.8e-06 -1.6e-03  3.8e-05  4.9e+05  9.1e+02  4.8e+02  1.2e+04  3.2e+02
+        4 5.00474e+04  4.6e-01  8.2e-04  4.1e-04  8.0e-03  3.2e-04 -4.8e+05 -8.7e+02 -4.5e+02 -1.1e+04 -3.1e+02
+        5 4.66388e+04  5.0e-02  5.6e-05  2.5e-06 -2.4e-03  5.6e-05  4.6e+05  8.5e+02  4.5e+02  1.2e+04  2.9e+02
+        6 4.34700e+04  4.5e-01  7.8e-04  3.8e-04  6.4e-03  3.2e-04 -4.4e+05 -8.1e+02 -4.2e+02 -9.8e+03 -2.9e+02
+        7 4.05239e+04  6.4e-02  7.0e-05  1.2e-06 -3.3e-03  7.3e-05  4.3e+05  7.9e+02  4.2e+02  1.1e+04  2.7e+02
+        8 3.77849e+04  4.4e-01  7.5e-04  3.5e-04  4.9e-03  3.2e-04 -4.1e+05 -7.5e+02 -3.9e+02 -9.1e+03 -2.7e+02
+        9 3.52385e+04  7.7e-02  8.3e-05 -1.1e-06 -4.2e-03  8.9e-05  4.0e+05  7.4e+02  3.9e+02  1.0e+04  2.5e+02
+w,b found by gradient descent: w: [ 7.74e-02  8.27e-05 -1.06e-06 -4.20e-03], b: 0.00</code></pre>
+</div>
+</div>
+<p>Cost is decreasing throughout the run showing that alpha is not too large.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:54:47.264050Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:54:47.362212Z&quot;}" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_cost_i_w(X_train, y_train, hist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>On the left, you see that cost is decreasing as it should. On the right, you can see that <span class="math inline">\(w_0\)</span> is still oscillating around the minimum, but it is decreasing each iteration rather than increasing. Note above that <code>dj_dw[0]</code> changes sign with each iteration as <code>w[0]</code> jumps over the optimal value. This alpha value will converge. You can vary the number of iterations to see how it behaves.</p>
+</section>
+<section id="alpha-1e-7" class="level3">
+<h3 class="anchored" data-anchor-id="alpha-1e-7"><span class="math inline">\(\alpha\)</span> = 1e-7</h3>
+<p>Let’s try a bit smaller value for <span class="math inline">\(\alpha\)</span> and see what happens.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:56:24.817313Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:56:24.827366Z&quot;}" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set alpha to 1e-7</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>_,_,hist <span class="op">=</span> run_gradient_descent(X_train, y_train, <span class="dv">10</span>, alpha <span class="op">=</span> <span class="fl">1e-7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration Cost          w0       w1       w2       w3       b       djdw0    djdw1    djdw2    djdw3    djdb  
+---------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+        0 4.42313e+04  5.5e-02  1.0e-04  5.2e-05  1.2e-03  3.6e-05 -5.5e+05 -1.0e+03 -5.2e+02 -1.2e+04 -3.6e+02
+        1 2.76461e+04  9.8e-02  1.8e-04  9.2e-05  2.2e-03  6.5e-05 -4.3e+05 -7.9e+02 -4.0e+02 -9.5e+03 -2.8e+02
+        2 1.75102e+04  1.3e-01  2.4e-04  1.2e-04  2.9e-03  8.7e-05 -3.4e+05 -6.1e+02 -3.1e+02 -7.3e+03 -2.2e+02
+        3 1.13157e+04  1.6e-01  2.9e-04  1.5e-04  3.5e-03  1.0e-04 -2.6e+05 -4.8e+02 -2.4e+02 -5.6e+03 -1.8e+02
+        4 7.53002e+03  1.8e-01  3.3e-04  1.7e-04  3.9e-03  1.2e-04 -2.1e+05 -3.7e+02 -1.9e+02 -4.2e+03 -1.4e+02
+        5 5.21639e+03  2.0e-01  3.5e-04  1.8e-04  4.2e-03  1.3e-04 -1.6e+05 -2.9e+02 -1.5e+02 -3.1e+03 -1.1e+02
+        6 3.80242e+03  2.1e-01  3.8e-04  1.9e-04  4.5e-03  1.4e-04 -1.3e+05 -2.2e+02 -1.1e+02 -2.3e+03 -8.6e+01
+        7 2.93826e+03  2.2e-01  3.9e-04  2.0e-04  4.6e-03  1.4e-04 -9.8e+04 -1.7e+02 -8.6e+01 -1.7e+03 -6.8e+01
+        8 2.41013e+03  2.3e-01  4.1e-04  2.1e-04  4.7e-03  1.5e-04 -7.7e+04 -1.3e+02 -6.5e+01 -1.2e+03 -5.4e+01
+        9 2.08734e+03  2.3e-01  4.2e-04  2.1e-04  4.8e-03  1.5e-04 -6.0e+04 -1.0e+02 -4.9e+01 -7.5e+02 -4.3e+01
+w,b found by gradient descent: w: [2.31e-01 4.18e-04 2.12e-04 4.81e-03], b: 0.00</code></pre>
+</div>
+</div>
+<p>Cost is decreasing throughout the run showing that <span class="math inline">\(\alpha\)</span> is not too large.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T22:56:52.754694Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T22:56:52.857575Z&quot;}" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_cost_i_w(X_train,y_train,hist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>On the left, you see that cost is decreasing as it should. On the right you can see that <span class="math inline">\(w_0\)</span> is decreasing without crossing the minimum. Note above that <code>dj_w0</code> is negative throughout the run. This solution will also converge, though not quite as quickly as the previous example.</p>
+</section>
+</section>
+<section id="feature-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="feature-scaling">Feature Scaling</h2>
+<figure class="figure">
+<img src="C1_W2_Lab06_featurescalingheader.PNG" style="width:1200px;" class="figure-img">
+</figure>
+<p>The lectures described the importance of rescaling the dataset so the features have a similar range. If you are interested in the details of why this is the case, click on the ‘details’ header below. If not, the section below will walk through an implementation of how to do feature scaling.</p>
+<details>
+<summary>
+&lt;font size=‘3’, color=‘darkgreen’&gt;<b>Details</b>
+</summary>
+<p>Let’s look again at the situation with <span class="math inline">\(\alpha\)</span> = 9e-7. This is pretty close to the maximum value we can set <span class="math inline">\(\alpha\)</span> to without diverging. This is a short run showing the first few iterations:</p>
+<figure class="figure">
+<img src="C1_W2_Lab06_ShortRun.PNG" style="width:1200px;" class="figure-img">
+</figure>
+<p>Above, while cost is being decreased, its clear that <span class="math inline">\(w_0\)</span> is making more rapid progress than the other parameters due to its much larger gradient.</p>
+<p>The graphic below shows the result of a very long run with <span class="math inline">\(\alpha\)</span> = 9e-7. This takes several hours.</p>
+<figure class="figure">
+<img src="C1_W2_Lab06_LongRun.PNG" style="width:1200px;" class="figure-img">
+</figure>
+<p>Above, you can see cost decreased slowly after its initial reduction. Notice the difference between <code>w0</code> and <code>w1</code>,<code>w2</code>,<code>w3</code> as well as <code>dj_dw0</code> and <code>dj_dw1-3</code>. <code>w0</code> reaches its near final value very quickly and <code>dj_dw0</code> has quickly decreased to a small value showing that <code>w0</code> is near the final value. The other parameters were reduced much more slowly.</p>
+Why is this? Is there something we can improve? See below:
+<figure class="figure">
+<center>
+<img src="C1_W2_Lab06_scale.PNG" class="figure-img">
+</center>
+</figure>
+<p>The figure above shows why <span class="math inline">\(w\)</span>’s are updated unevenly. - <span class="math inline">\(\alpha\)</span> is shared by all parameter updates (<span class="math inline">\(w\)</span>’s and <span class="math inline">\(b\)</span>). - the common error term is multiplied by the features for the <span class="math inline">\(w\)</span>’s. (not <span class="math inline">\(b\)</span>). - the features vary significantly in magnitude making some features update much faster than others. In this case, <span class="math inline">\(w_0\)</span> is multiplied by ‘size(sqft)’, which is generally &gt; 1000, while <span class="math inline">\(w_1\)</span> is multiplied by ‘number of bedrooms’, which is generally 2-4.</p>
+<p>The solution is Feature Scaling.</p>
+<p>The lectures discussed three different techniques: - Feature scaling, essentially dividing each positive feature by its maximum value, or more generally, rescale each feature by both its minimum and maximum values using (x-min)/(max-min). Both ways normalizes features to the range of -1 and 1, where the former method works for positive features which is simple and serves well for the lecture’s example, and the latter method works for any features. - Mean normalization: $x_i := $ - Z-score normalization which we will explore below.</p>
+<section id="z-score-normalization" class="level3">
+<h3 class="anchored" data-anchor-id="z-score-normalization">z-score normalization</h3>
+<p>After z-score normalization, all features will have a mean of 0 and a standard deviation of 1.</p>
+<p>To implement z-score normalization, adjust your input values as shown in this formula: <span class="math display">\[x^{(i)}_j = \dfrac{x^{(i)}_j - \mu_j}{\sigma_j} \tag{4}\]</span> where <span class="math inline">\(j\)</span> selects a feature or a column in the <span class="math inline">\(\mathbf{X}\)</span> matrix. <span class="math inline">\(µ_j\)</span> is the mean of all the values for feature (j) and <span class="math inline">\(\sigma_j\)</span> is the standard deviation of feature (j). <span class="math display">\[
+\begin{align}
+\mu_j &amp;= \frac{1}{m} \sum_{i=0}^{m-1} x^{(i)}_j \tag{5}\\
+\sigma^2_j &amp;= \frac{1}{m} \sum_{i=0}^{m-1} (x^{(i)}_j - \mu_j)^2  \tag{6}
+\end{align}
+\]</span></p>
+<blockquote class="blockquote">
+<p><strong>Implementation Note:</strong> When normalizing the features, it is important to store the values used for normalization - the mean value and the standard deviation used for the computations. After learning the parameters from the model, we often want to predict the prices of houses we have not seen before. Given a new x value (living room area and number of bed- rooms), we must first normalize x using the mean and standard deviation that we had previously computed from the training set.</p>
+</blockquote>
+<p><strong>Implementation</strong></p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:09:41.705192Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:09:41.709229Z&quot;}" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> zscore_normalize_features(X):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    computes  X, zcore normalized by column</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">      X (ndarray (m,n))     : input data, m examples, n features</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">      X_norm (ndarray (m,n)): input normalized by column</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">      mu (ndarray (n,))     : mean of each feature</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">      sigma (ndarray (n,))  : standard deviation of each feature</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find the mean of each column/feature</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    mu     <span class="op">=</span> np.mean(X, axis<span class="op">=</span><span class="dv">0</span>)                 <span class="co"># mu will have shape (n,)</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># find the standard deviation of each column/feature</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    sigma  <span class="op">=</span> np.std(X, axis<span class="op">=</span><span class="dv">0</span>)                  <span class="co"># sigma will have shape (n,)</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># element-wise, subtract mu for that column from each example, divide by std for that column</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    X_norm <span class="op">=</span> (X <span class="op">-</span> mu) <span class="op">/</span> sigma</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (X_norm, mu, sigma)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#check our work</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#from sklearn.preprocessing import scale</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#scale(X_orig, axis=0, with_mean=True, with_std=True, copy=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Let’s look at the steps involved in Z-score normalization. The plot below shows the transformation step by step.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:09:54.002365Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:09:54.246800Z&quot;}" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mu     <span class="op">=</span> np.mean(X_train,axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sigma  <span class="op">=</span> np.std(X_train,axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>X_mean <span class="op">=</span> (X_train <span class="op">-</span> mu)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>X_norm <span class="op">=</span> (X_train <span class="op">-</span> mu)<span class="op">/</span>sigma</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].scatter(X_train[:,<span class="dv">0</span>], X_train[:,<span class="dv">3</span>])</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_xlabel(X_features[<span class="dv">0</span>])<span class="op">;</span> ax[<span class="dv">0</span>].set_ylabel(X_features[<span class="dv">3</span>])<span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="st">"unnormalized"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].axis(<span class="st">'equal'</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].scatter(X_mean[:,<span class="dv">0</span>], X_mean[:,<span class="dv">3</span>])</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_xlabel(X_features[<span class="dv">0</span>])<span class="op">;</span> ax[<span class="dv">0</span>].set_ylabel(X_features[<span class="dv">3</span>])<span class="op">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="vs">r"X - $\mu$"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].axis(<span class="st">'equal'</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].scatter(X_norm[:,<span class="dv">0</span>], X_norm[:,<span class="dv">3</span>])</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].set_xlabel(X_features[<span class="dv">0</span>])<span class="op">;</span> ax[<span class="dv">0</span>].set_ylabel(X_features[<span class="dv">3</span>])<span class="op">;</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].set_title(<span class="vs">r"Z-score normalized"</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].axis(<span class="st">'equal'</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.03</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"distribution of features before, during, after normalization"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The plot above shows the relationship between two of the training set parameters, “age” and “size(sqft)”. <em>These are plotted with equal scale</em>. - Left: Unnormalized: The range of values or the variance of the ‘size(sqft)’ feature is much larger than that of age - Middle: The first step removes the mean or average value from each feature. This leaves features that are centered around zero. It’s difficult to see the difference for the ‘age’ feature, but ‘size(sqft)’ is clearly around zero. - Right: The second step divides by the standard deviation. This leaves both features centered at zero with a similar scale.</p>
+<p>Let’s normalize the data and compare it to the original data.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:11:26.118776Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:11:26.133913Z&quot;}" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize the original features</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>X_norm, X_mu, X_sigma <span class="op">=</span> zscore_normalize_features(X_train)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X_mu = </span><span class="sc">{</span>X_mu<span class="sc">}</span><span class="ss">, </span><span class="ch">\n</span><span class="ss">X_sigma = </span><span class="sc">{</span>X_sigma<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peak to Peak range by column in Raw        X:</span><span class="sc">{</span>np<span class="sc">.</span>ptp(X_train,axis<span class="op">=</span><span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Peak to Peak range by column in Normalized X:</span><span class="sc">{</span>np<span class="sc">.</span>ptp(X_norm,axis<span class="op">=</span><span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>X_mu = [1.42e+03 2.72e+00 1.38e+00 3.84e+01], 
+X_sigma = [411.62   0.65   0.49  25.78]
+Peak to Peak range by column in Raw        X:[2.41e+03 4.00e+00 1.00e+00 9.50e+01]
+Peak to Peak range by column in Normalized X:[5.85 6.14 2.06 3.69]</code></pre>
+</div>
+</div>
+<p>The peak to peak range of each column is reduced from a factor of thousands to a factor of 2-3 by normalization.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:13:17.934434Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:13:18.423698Z&quot;}" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ax)):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    norm_plot(ax[i],X_train[:,i],)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    ax[i].set_xlabel(X_features[i])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"count"</span>)<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"distribution of features before normalization"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>,<span class="dv">4</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">3</span>))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ax)):</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    norm_plot(ax[i],X_norm[:,i],)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    ax[i].set_xlabel(X_features[i])</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"count"</span>)<span class="op">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"distribution of features after normalization"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-14-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Notice, above, the range of the normalized data (x-axis) is centered around zero and roughly +/- 2. Most importantly, the range is similar for each feature.</p>
+<p>Let’s re-run our gradient descent algorithm with normalized data. Note the <strong>vastly larger value of alpha</strong>. This will speed up gradient descent.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:13:59.060726Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:13:59.141200Z&quot;}" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>w_norm, b_norm, hist <span class="op">=</span> run_gradient_descent(X_norm, y_train, <span class="dv">1000</span>, <span class="fl">1.0e-1</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iteration Cost          w0       w1       w2       w3       b       djdw0    djdw1    djdw2    djdw3    djdb  
+---------------------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+        0 5.76170e+04  8.9e+00  3.0e+00  3.3e+00 -6.0e+00  3.6e+01 -8.9e+01 -3.0e+01 -3.3e+01  6.0e+01 -3.6e+02
+      100 2.21086e+02  1.1e+02 -2.0e+01 -3.1e+01 -3.8e+01  3.6e+02 -9.2e-01  4.5e-01  5.3e-01 -1.7e-01 -9.6e-03
+      200 2.19209e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -3.0e-02  1.5e-02  1.7e-02 -6.0e-03 -2.6e-07
+      300 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -1.0e-03  5.1e-04  5.7e-04 -2.0e-04 -6.9e-12
+      400 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -3.4e-05  1.7e-05  1.9e-05 -6.6e-06 -2.7e-13
+      500 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -1.1e-06  5.6e-07  6.2e-07 -2.2e-07 -2.7e-13
+      600 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -3.7e-08  1.9e-08  2.1e-08 -7.3e-09 -2.6e-13
+      700 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -1.2e-09  6.2e-10  6.9e-10 -2.4e-10 -2.6e-13
+      800 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -4.1e-11  2.1e-11  2.3e-11 -8.1e-12 -2.6e-13
+      900 2.19207e+02  1.1e+02 -2.1e+01 -3.3e+01 -3.8e+01  3.6e+02 -1.4e-12  7.0e-13  7.6e-13 -2.7e-13 -2.6e-13
+w,b found by gradient descent: w: [110.56 -21.27 -32.71 -37.97], b: 363.16</code></pre>
+</div>
+</div>
+<p>The scaled features get very accurate results <strong>much, much faster!</strong>. Notice the gradient of each parameter is tiny by the end of this fairly short run. A learning rate of 0.1 is a good start for regression with normalized features. Let’s plot our predictions versus the target values. Note, the prediction is made using the normalized feature while the plot is shown using the original feature values.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:14:36.182113Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:14:36.343995Z&quot;}" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#predict target using normalized features</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> X_norm.shape[<span class="dv">0</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>yp <span class="op">=</span> np.zeros(m)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m):</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    yp[i] <span class="op">=</span> np.dot(X_norm[i], w_norm) <span class="op">+</span> b_norm</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot predictions and targets versus original features</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">1</span>,<span class="dv">4</span>,figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">3</span>),sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(ax)):</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    ax[i].scatter(X_train[:,i],y_train, label <span class="op">=</span> <span class="st">'target'</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    ax[i].set_xlabel(X_features[i])</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    ax[i].scatter(X_train[:,i],yp,color<span class="op">=</span>dlc[<span class="st">"dlorange"</span>], label <span class="op">=</span> <span class="st">'predict'</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Price"</span>)<span class="op">;</span> ax[<span class="dv">0</span>].legend()<span class="op">;</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>fig.suptitle(<span class="st">"target versus prediction using z-score normalized model"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The results look good. A few points to note: - with multiple features, we can no longer have a single plot showing results versus features. - when generating the plot, the normalized features were used. Any predictions using the parameters learned from a normalized training set must also be normalized.</p>
+<p><strong>Prediction</strong> The point of generating our model is to use it to predict housing prices that are not in the data set. Let’s predict the price of a house with 1200 sqft, 3 bedrooms, 1 floor, 40 years old. Recall, that you must normalize the data with the mean and standard deviation derived when the training data was normalized.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:15:29.596985Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:15:29.613916Z&quot;}" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, normalize out example.</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x_house <span class="op">=</span> np.array([<span class="dv">1200</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">40</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>x_house_norm <span class="op">=</span> (x_house <span class="op">-</span> X_mu) <span class="op">/</span> X_sigma</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x_house_norm)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>x_house_predict <span class="op">=</span> np.dot(x_house_norm, w_norm) <span class="op">+</span> b_norm</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f" predicted price of a house with 1200 sqft, 3 bedrooms, 1 floor, 40 years old = $</span><span class="sc">{</span>x_house_predict<span class="op">*</span><span class="dv">1000</span><span class="sc">:0.0f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-0.53  0.43 -0.79  0.06]
+ predicted price of a house with 1200 sqft, 3 bedrooms, 1 floor, 40 years old = $318709</code></pre>
+</div>
+</div>
+<p><strong>Cost Contours</strong> <img align="left" src="C1_W2_Lab06_contours.PNG" style="width:240px;">Another way to view feature scaling is in terms of the cost contours. When feature scales do not match, the plot of cost versus parameters in a contour plot is asymmetric.</p>
+<p>In the plot below, the scale of the parameters is matched. The left plot is the cost contour plot of w[0], the square feet versus w[1], the number of bedrooms before normalizing the features. The plot is so asymmetric, the curves completing the contours are not visible. In contrast, when the features are normalized, the cost contour is much more symmetric. The result is that updates to parameters during gradient descent can make equal progress for each parameter.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-24T23:16:41.313635Z&quot;,&quot;end_time&quot;:&quot;2023-04-24T23:16:43.147161Z&quot;}" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt_equal_scale(X_train, X_norm, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="Feature scaling and learning rate_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</details></section>
+<section id="congratulations" class="level2">
+<h2 class="anchored" data-anchor-id="congratulations">Congratulations!</h2>
+<p>In this lab you: - utilized the routines for linear regression with multiple features you developed in previous labs - explored the impact of the learning rate <span class="math inline">\(\alpha\)</span> on convergence - discovered the value of feature scaling using z-score normalization in speeding convergence</p>
+</section>
+<section id="acknowledgments" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
+<p>The housing data was derived from the <a href="http://jse.amstat.org/v19n3/decock.pdf">Ames Housing dataset</a> compiled by Dean De Cock for use in data science education.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
