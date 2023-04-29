@@ -10,6 +10,9 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Coffee roasting in tensorflow/Coffee roasting in tensorflow.html",
+      "/posts/Coffee roasting numpy/Coffee roasting numpy.html",
+      "/posts/Neurons and layers/Neurons and Layers.html",
       "/posts/Gradient Descent for Linear Regression/Gradient Descent for Linear Regression.html",
       "/posts/Classification with logistic regression/Classification.html",
       "/posts/Cost function for logistic regression/Cost function for logistic regression.html",

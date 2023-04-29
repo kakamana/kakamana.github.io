@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-04-27T19:58:06.297Z</lastmod>
+    <lastmod>2023-04-29T11:25:06.838Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
@@ -463,5 +463,17 @@
   <url>
     <loc>https://kakamana.github.io/posts/Vectorization with python and numpy/Vectorization with python and numpy.html</loc>
     <lastmod>2023-04-27T20:00:38.608Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Coffee roasting numpy/Coffee roasting numpy.html</loc>
+    <lastmod>2023-04-29T11:23:01.253Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Coffee roasting in tensorflow/Coffee roasting in tensorflow.html</loc>
+    <lastmod>2023-04-29T11:23:58.213Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Neurons and layers/Neurons and Layers.html</loc>
+    <lastmod>2023-04-29T11:24:31.950Z</lastmod>
   </url>
 </urlset>
