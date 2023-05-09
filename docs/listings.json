@@ -10,6 +10,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Back Propagation/Back propagation.html",
+      "/posts/Derivatives/Derivatives.html",
+      "/posts/Multi-class Classification/Multi-class Classification.html",
+      "/posts/Softmax Function/Softmax Function.html",
+      "/posts/ReLU activation/ReLU activation.html",
       "/posts/Coffee roasting in tensorflow/Coffee roasting in tensorflow.html",
       "/posts/Coffee roasting numpy/Coffee roasting numpy.html",
       "/posts/Neurons and layers/Neurons and Layers.html",

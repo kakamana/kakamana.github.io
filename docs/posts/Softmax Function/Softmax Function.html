@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-04-30">
+
+<title>Kakamana’s Blogs - Softmax Function</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#softmax-function" id="toc-softmax-function" class="nav-link active" data-scroll-target="#softmax-function">Softmax Function</a></li>
+  <li><a href="#optional-lab---softmax-function" id="toc-optional-lab---softmax-function" class="nav-link" data-scroll-target="#optional-lab---softmax-function">Optional Lab - Softmax Function</a>
+  <ul class="collapse">
+  <li><a href="#softmax-function-1" id="toc-softmax-function-1" class="nav-link" data-scroll-target="#softmax-function-1">Softmax Function</a></li>
+  <li><a href="#cost" id="toc-cost" class="nav-link" data-scroll-target="#cost">Cost</a></li>
+  <li><a href="#tensorflow" id="toc-tensorflow" class="nav-link" data-scroll-target="#tensorflow">Tensorflow</a>
+  <ul class="collapse">
+  <li><a href="#the-obvious-organization" id="toc-the-obvious-organization" class="nav-link" data-scroll-target="#the-obvious-organization">The <em>Obvious</em> organization</a></li>
+  <li><a href="#preferred" id="toc-preferred" class="nav-link" data-scroll-target="#preferred">Preferred <img align="Right" src="C2_W2_softmax_accurate.png" style=" width:400px; padding: 10px 20px ; "></a></li>
+  </ul></li>
+  <li><a href="#sparsecategorialcrossentropy-or-categoricalcrossentropy" id="toc-sparsecategorialcrossentropy-or-categoricalcrossentropy" class="nav-link" data-scroll-target="#sparsecategorialcrossentropy-or-categoricalcrossentropy">SparseCategorialCrossentropy or CategoricalCrossEntropy</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Softmax Function</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">supervised learning</div>
+    <div class="quarto-category">logistic regression</div>
+    <div class="quarto-category">linear regression</div>
+    <div class="quarto-category">neural network</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="softmax-function" class="level1">
+<h1>Softmax Function</h1>
+<p>This lab is about softmax function, its usage in both softmax regression and in neural networks when solving multiclass classification</p>
+<p>This <strong>Softmax Function</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 2: Advanced Learning Algorithms: Multiclass classification</a> You will build and train a neural network with TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Ensure that your machine learning models are generalizable by applying best practices for machine learning development. You will build and train a neural network using TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Implement best practices for machine learning development to ensure that your models are generalizable to real-world data and tasks. Create and use decision trees and tree ensemble methods, including random forests and boosted trees.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+</section>
+<section id="optional-lab---softmax-function" class="level1">
+<h1>Optional Lab - Softmax Function</h1>
+<p>In this lab, we will explore the softmax function. This function is used in both Softmax Regression and in Neural Networks when solving Multiclass Classification problems.</p>
+<center>
+<img src="C2_W2_Softmax_Header.PNG" width="600">
+<center>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:33:40.514886Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:33:55.420634Z&quot;}" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'deeplearning.mplstyle'</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>devices <span class="op">=</span> tf.config.list_physical_devices()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(devices)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Markdown, Latex</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib widget</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.widgets <span class="im">import</span> Slider</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_common <span class="im">import</span> dlc</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_softmax <span class="im">import</span> plt_softmax</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>logging.getLogger(<span class="st">"tensorflow"</span>).setLevel(logging.ERROR)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>tf.autograph.set_verbosity(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU'), PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]</code></pre>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:33:55.421797Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:33:55.423358Z&quot;}" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify the GPU device to use</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gpus <span class="op">=</span> tf.config.list_physical_devices(<span class="st">'GPU'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> gpus:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the GPU memory growth to True</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    tf.config.experimental.set_memory_growth(gpus[<span class="dv">0</span>], <span class="va">True</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">except</span> <span class="pp">RuntimeError</span> <span class="im">as</span> e:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: Normally, in this course, the notebooks use the convention of starting counts with 0 and ending with N-1, <span class="math inline">\(\sum_{i=0}^{N-1}\)</span>, while lectures start with 1 and end with N, <span class="math inline">\(\sum_{i=1}^{N}\)</span>. This is because code will typically start iteration with 0 while in lecture, counting 1 to N leads to cleaner, more succinct equations. This notebook has more equations than is typical for a lab and thus will break with the convention and will count 1 to N.</p>
+</blockquote>
+<section id="softmax-function-1" class="level2">
+<h2 class="anchored" data-anchor-id="softmax-function-1">Softmax Function</h2>
+In both softmax regression and neural networks with Softmax outputs, N outputs are generated and one output is selected as the predicted category. In both cases a vector <span class="math inline">\(\mathbf{z}\)</span> is generated by a linear function which is applied to a softmax function. The softmax function converts <span class="math inline">\(\mathbf{z}\)</span> into a probability distribution as described below. After applying softmax, each output will be between 0 and 1 and the outputs will add to 1, so that they can be interpreted as probabilities. The larger inputs will correspond to larger output probabilities.
+<center>
+<p><img src="C2_W2_SoftmaxReg_NN.png" width="600"></p>
+<p>The softmax function can be written: <span class="math display">\[a_j = \frac{e^{z_j}}{ \sum_{k=1}^{N}{e^{z_k} }} \tag{1}\]</span> The output <span class="math inline">\(\mathbf{a}\)</span> is a vector of length N, so for softmax regression, you could also write: <span class="math display">\[\begin{align}
+\mathbf{a}(x) =
+\begin{bmatrix}
+P(y = 1 | \mathbf{x}; \mathbf{w},b) \\
+\vdots \\
+P(y = N | \mathbf{x}; \mathbf{w},b)
+\end{bmatrix}
+=
+\frac{1}{ \sum_{k=1}^{N}{e^{z_k} }}
+\begin{bmatrix}
+e^{z_1} \\
+\vdots \\
+e^{z_{N}} \\
+\end{bmatrix} \tag{2}
+\end{align}\]</span></p>
+<p>Which shows the output is a vector of probabilities. The first entry is the probability the input is the first category given the input <span class="math inline">\(\mathbf{x}\)</span> and parameters <span class="math inline">\(\mathbf{w}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>. Let’s create a NumPy implementation:</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:40:44.048816Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:40:44.059825Z&quot;}" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_softmax(z):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    ez <span class="op">=</span> np.exp(z)              <span class="co">#element-wise exponenial</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">=</span> ez<span class="op">/</span>np.<span class="bu">sum</span>(ez)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(sm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Below, vary the values of the <code>z</code> inputs using the sliders.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:41:09.276302Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:41:09.427648Z&quot;}" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.close(<span class="st">"all"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt_softmax(my_softmax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major":2,"version_minor":0,"model_id":"4bdf1c520d354d0ea465592f66447933"}
+</script>
+</div>
+</div>
+<p>As you are varying the values of the z’s above, there are a few things to note: * the exponential in the numerator of the softmax magnifies small differences in the values * the output values sum to one * the softmax spans all of the outputs. A change in <code>z0</code> for example will change the values of <code>a0</code>-<code>a3</code>. Compare this to other activations such as ReLU or Sigmoid which have a single input and single output.</p>
+</center></section>
+<section id="cost" class="level2">
+<h2 class="anchored" data-anchor-id="cost">Cost</h2>
+<center>
+<img src="C2_W2_SoftMaxCost.png" width="400">
+<center>
+<p>The loss function associated with Softmax, the cross-entropy loss, is: <span class="math display">\[\begin{equation}
+  L(\mathbf{a},y)=\begin{cases}
+    -log(a_1), &amp; \text{if $y=1$}.\\
+        &amp;\vdots\\
+     -log(a_N), &amp; \text{if $y=N$}
+  \end{cases} \tag{3}
+\end{equation}\]</span></p>
+<p>Where y is the target category for this example and <span class="math inline">\(\mathbf{a}\)</span> is the output of a softmax function. In particular, the values in <span class="math inline">\(\mathbf{a}\)</span> are probabilities that sum to one. &gt;<strong>Recall:</strong> In this course, Loss is for one example while Cost covers all examples.</p>
+<p>Note in (3) above, only the line that corresponds to the target contributes to the loss, other lines are zero. To write the cost equation we need an ‘indicator function’ that will be 1 when the index matches the target and zero otherwise. <span class="math display">\[\mathbf{1}\{y == n\} = =\begin{cases}
+    1, &amp; \text{if $y==n$}.\\
+    0, &amp; \text{otherwise}.
+  \end{cases}\]</span> Now the cost is: <span class="math display">\[\begin{align}
+J(\mathbf{w},b) = -\frac{1}{m} \left[ \sum_{i=1}^{m} \sum_{j=1}^{N}  1\left\{y^{(i)} == j\right\} \log \frac{e^{z^{(i)}_j}}{\sum_{k=1}^N e^{z^{(i)}_k} }\right] \tag{4}
+\end{align}\]</span></p>
+<p>Where <span class="math inline">\(m\)</span> is the number of examples, <span class="math inline">\(N\)</span> is the number of outputs. This is the average of all the losses.</p>
+</center></center></section>
+<section id="tensorflow" class="level2">
+<h2 class="anchored" data-anchor-id="tensorflow">Tensorflow</h2>
+<p>This lab will discuss two ways of implementing the softmax, cross-entropy loss in Tensorflow, the ‘obvious’ method and the ‘preferred’ method. The former is the most straightforward while the latter is more numerically stable.</p>
+<p>Let’s start by creating a dataset to train a multiclass classification model.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:45:05.659622Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:45:05.665445Z&quot;}" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make  dataset for example</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>centers <span class="op">=</span> [[<span class="op">-</span><span class="dv">5</span>, <span class="dv">2</span>], [<span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">2</span>], [<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">5</span>, <span class="op">-</span><span class="dv">2</span>]]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> make_blobs(n_samples<span class="op">=</span><span class="dv">2000</span>, centers<span class="op">=</span>centers, cluster_std<span class="op">=</span><span class="fl">1.0</span>,random_state<span class="op">=</span><span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="the-obvious-organization" class="level3">
+<h3 class="anchored" data-anchor-id="the-obvious-organization">The <em>Obvious</em> organization</h3>
+<p>The model below is implemented with the softmax as an activation in the final Dense layer. The loss function is separately specified in the <code>compile</code> directive.</p>
+<p>The loss function is <code>SparseCategoricalCrossentropy</code>. This loss is described in (3) above. In this model, the softmax takes place in the last layer. The loss function takes in the softmax output which is a vector of probabilities.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:48:17.537340Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:48:22.187375Z&quot;}" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">25</span>, activation <span class="op">=</span> <span class="st">'relu'</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">15</span>, activation <span class="op">=</span> <span class="st">'relu'</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">4</span>, activation <span class="op">=</span> <span class="st">'softmax'</span>)    <span class="co"># &lt; softmax activation here</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span>tf.keras.losses.SparseCategoricalCrossentropy(),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>tf.keras.optimizers.Adam(<span class="fl">0.001</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>model.fit(</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    X_train,y_train,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.
+WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/M2 Macs. Falling back to the legacy Keras optimizer, i.e., `tf.keras.optimizers.legacy.Adam`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metal device set to: Apple M2 Pro
+Epoch 1/10</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-04-30 18:48:17.679790: W tensorflow/tsl/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>63/63 [==============================] - 3s 4ms/step - loss: 0.9258
+Epoch 2/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.4904
+Epoch 3/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.2659
+Epoch 4/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.1344
+Epoch 5/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0873
+Epoch 6/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0688
+Epoch 7/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0595
+Epoch 8/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0530
+Epoch 9/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0485
+Epoch 10/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0453</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>&lt;keras.callbacks.History at 0x2aa5815e0&gt;</code></pre>
+</div>
+</div>
+<p>Because the softmax is integrated into the output layer, the output is a vector of probabilities.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:48:54.652789Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:48:54.877303Z&quot;}" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p_nonpreferred <span class="op">=</span> model.predict(X_train)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(p_nonpreferred [:<span class="dv">2</span>])</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"largest value"</span>, np.<span class="bu">max</span>(p_nonpreferred), <span class="st">"smallest value"</span>, np.<span class="bu">min</span>(p_nonpreferred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>63/63 [==============================] - 0s 2ms/step
+[[5.44e-03 4.45e-03 9.54e-01 3.62e-02]
+ [9.98e-01 1.55e-03 7.32e-05 5.33e-06]]
+largest value 0.9999995 smallest value 1.1039895e-11</code></pre>
+</div>
+</div>
+</section>
+<section id="preferred" class="level3">
+<h3 class="anchored" data-anchor-id="preferred">Preferred <img align="Right" src="C2_W2_softmax_accurate.png" style=" width:400px; padding: 10px 20px ; "></h3>
+<p>Recall from lecture, more stable and accurate results can be obtained if the softmax and loss are combined during training. This is enabled by the ‘preferred’ organization shown here.</p>
+<p>In the preferred organization the final layer has a linear activation. For historical reasons, the outputs in this form are referred to as <em>logits</em>. The loss function has an additional argument: <code>from_logits = True</code>. This informs the loss function that the softmax operation should be included in the loss calculation. This allows for an optimized implementation.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:50:51.705956Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:50:54.104118Z&quot;}" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>preferred_model <span class="op">=</span> Sequential(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">25</span>, activation <span class="op">=</span> <span class="st">'relu'</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">15</span>, activation <span class="op">=</span> <span class="st">'relu'</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        Dense(<span class="dv">4</span>, activation <span class="op">=</span> <span class="st">'linear'</span>)   <span class="co">#&lt;-- Note</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>preferred_model.<span class="bu">compile</span>(</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    loss<span class="op">=</span>tf.keras.losses.SparseCategoricalCrossentropy(from_logits<span class="op">=</span><span class="va">True</span>),  <span class="co">#&lt;-- Note</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    optimizer<span class="op">=</span>tf.keras.optimizers.Adam(<span class="fl">0.001</span>),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>preferred_model.fit(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    X_train,y_train,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    epochs<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.
+WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/M2 Macs. Falling back to the legacy Keras optimizer, i.e., `tf.keras.optimizers.legacy.Adam`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/10
+63/63 [==============================] - 0s 4ms/step - loss: 1.2856
+Epoch 2/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.4192
+Epoch 3/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.1841
+Epoch 4/10
+63/63 [==============================] - 0s 4ms/step - loss: 0.1101
+Epoch 5/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0809
+Epoch 6/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0659
+Epoch 7/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0569
+Epoch 8/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0513
+Epoch 9/10
+63/63 [==============================] - 0s 4ms/step - loss: 0.0466
+Epoch 10/10
+63/63 [==============================] - 0s 3ms/step - loss: 0.0435</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>&lt;keras.callbacks.History at 0x2aa441df0&gt;</code></pre>
+</div>
+</div>
+<section id="output-handling" class="level4">
+<h4 class="anchored" data-anchor-id="output-handling">Output Handling</h4>
+<p>Notice that in the preferred model, the outputs are not probabilities, but can range from large negative numbers to large positive numbers. The output must be sent through a softmax when performing a prediction that expects a probability. Let’s look at the preferred model outputs:</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:51:40.332615Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:51:40.492090Z&quot;}" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>p_preferred <span class="op">=</span> preferred_model.predict(X_train)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"two example output vectors:</span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>p_preferred[:<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"largest value"</span>, np.<span class="bu">max</span>(p_preferred), <span class="st">"smallest value"</span>, np.<span class="bu">min</span>(p_preferred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>63/63 [==============================] - 0s 2ms/step
+two example output vectors:
+ [[-1.18 -2.47  3.75  0.22]
+ [ 5.18 -0.19 -5.2  -7.79]]
+largest value 12.0866 smallest value -14.279548</code></pre>
+</div>
+</div>
+<p>The output predictions are not probabilities! If the desired output are probabilities, the output should be be processed by a <a href="https://www.tensorflow.org/api_docs/python/tf/nn/softmax">softmax</a>.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:52:01.517337Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:52:01.529880Z&quot;}" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sm_preferred <span class="op">=</span> tf.nn.softmax(p_preferred).numpy()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"two example output vectors:</span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>sm_preferred[:<span class="dv">2</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"largest value"</span>, np.<span class="bu">max</span>(sm_preferred), <span class="st">"smallest value"</span>, np.<span class="bu">min</span>(sm_preferred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>two example output vectors:
+ [[6.96e-03 1.92e-03 9.63e-01 2.83e-02]
+ [9.95e-01 4.66e-03 3.10e-05 2.33e-06]]
+largest value 0.9999994 smallest value 1.287414e-11</code></pre>
+</div>
+</div>
+<p>To select the most likely category, the softmax is not required. One can find the index of the largest output using <a href="https://numpy.org/doc/stable/reference/generated/numpy.argmax.html">np.argmax()</a>.</p>
+<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-30T18:52:21.383957Z&quot;,&quot;end_time&quot;:&quot;2023-04-30T18:52:21.396670Z&quot;}" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>( <span class="ss">f"</span><span class="sc">{</span>p_preferred[i]<span class="sc">}</span><span class="ss">, category: </span><span class="sc">{</span>np<span class="sc">.</span>argmax(p_preferred[i])<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-1.18 -2.47  3.75  0.22], category: 2
+[ 5.18 -0.19 -5.2  -7.79], category: 0
+[ 3.75  0.37 -4.06 -6.02], category: 0
+[-0.38  4.   -2.86 -1.88], category: 1
+[ 1.5  -6.1   6.37 -3.19], category: 2</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sparsecategorialcrossentropy-or-categoricalcrossentropy" class="level2">
+<h2 class="anchored" data-anchor-id="sparsecategorialcrossentropy-or-categoricalcrossentropy">SparseCategorialCrossentropy or CategoricalCrossEntropy</h2>
+<p>Tensorflow has two potential formats for target values and the selection of the loss defines which is expected. - SparseCategorialCrossentropy: expects the target to be an integer corresponding to the index. For example, if there are 10 potential target values, y would be between 0 and 9. - CategoricalCrossEntropy: Expects the target value of an example to be one-hot encoded where the value at the target index is 1 while the other N-1 entries are zero. An example with 10 potential target values, where the target is 2 would be [0,0,1,0,0,0,0,0,0,0].</p>
+
+
+</section>
+</center></center></section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

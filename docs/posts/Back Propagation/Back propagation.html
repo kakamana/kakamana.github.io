@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-05-09">
+
+<title>Kakamana’s Blogs - Back Propagation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#back-propagation" id="toc-back-propagation" class="nav-link active" data-scroll-target="#back-propagation">Back Propagation</a>
+  <ul class="collapse">
+  <li><a href="#computation-graph" id="toc-computation-graph" class="nav-link" data-scroll-target="#computation-graph">Computation Graph</a>
+  <ul class="collapse">
+  <li><a href="#forward-propagation" id="toc-forward-propagation" class="nav-link" data-scroll-target="#forward-propagation">Forward Propagation</a></li>
+  <li><a href="#backprop" id="toc-backprop" class="nav-link" data-scroll-target="#backprop">Backprop</a></li>
+  <li><a href="#fracpartial-jpartial-a" id="toc-fracpartial-jpartial-a" class="nav-link" data-scroll-target="#fracpartial-jpartial-a"><span class="math inline">\(\frac{\partial J}{\partial a}\)</span></a></li>
+  <li><a href="#fracpartial-jpartial-w" id="toc-fracpartial-jpartial-w" class="nav-link" data-scroll-target="#fracpartial-jpartial-w"><span class="math inline">\(\frac{\partial J}{\partial w}\)</span></a></li>
+  </ul></li>
+  <li><a href="#computation-graph-of-a-simple-neural-network" id="toc-computation-graph-of-a-simple-neural-network" class="nav-link" data-scroll-target="#computation-graph-of-a-simple-neural-network">Computation Graph of a Simple Neural Network</a>
+  <ul class="collapse">
+  <li><a href="#forward-propagation-1" id="toc-forward-propagation-1" class="nav-link" data-scroll-target="#forward-propagation-1">Forward propagation</a></li>
+  <li><a href="#backward-propagation-backprop" id="toc-backward-propagation-backprop" class="nav-link" data-scroll-target="#backward-propagation-backprop">Backward propagation (Backprop)</a></li>
+  <li><a href="#fracpartial-jpartial-d" id="toc-fracpartial-jpartial-d" class="nav-link" data-scroll-target="#fracpartial-jpartial-d"><span class="math inline">\(\frac{\partial J}{\partial d}\)</span></a></li>
+  <li><a href="#fracpartial-jpartial-a-1" id="toc-fracpartial-jpartial-a-1" class="nav-link" data-scroll-target="#fracpartial-jpartial-a-1"><span class="math inline">\(\frac{\partial J}{\partial a}\)</span></a></li>
+  <li><a href="#fracpartial-jpartial-c-fracpartial-jpartial-b" id="toc-fracpartial-jpartial-c-fracpartial-jpartial-b" class="nav-link" data-scroll-target="#fracpartial-jpartial-c-fracpartial-jpartial-b"><span class="math inline">\(\frac{\partial J}{\partial c}\)</span>, <span class="math inline">\(\frac{\partial J}{\partial b}\)</span></a></li>
+  <li><a href="#fracpartial-jpartial-w-1" id="toc-fracpartial-jpartial-w-1" class="nav-link" data-scroll-target="#fracpartial-jpartial-w-1"><span class="math inline">\(\frac{\partial J}{\partial w}\)</span></a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Back Propagation</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">supervised learning</div>
+    <div class="quarto-category">back propagation</div>
+    <div class="quarto-category">neural network</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 9, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="back-propagation" class="level1">
+<h1>Back Propagation</h1>
+<p>This describes compute graphs and their use in back propagation. Working through this lab will give you insight into a key algorithm used by most machine learning frameworks. Gradient descent requires the derivative of the cost with respect to each parameter in the network. Neural networks can have millions or even billions of parameters. The back propagation algorithm is used to compute those derivatives. Computation graphs are used to simplify the operation.</p>
+<p>This <strong>Back Propagation</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 2: Advanced Learning Algorithms: Back propagation</a> You will build and train a neural network with TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Ensure that your machine learning models are generalizable by applying best practices for machine learning development. You will build and train a neural network using TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Implement best practices for machine learning development to ensure that your models are generalizable to real-world data and tasks. Create and use decision trees and tree ensemble methods, including random forests and boosted trees.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib widget</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.widgets <span class="im">import</span> TextBox</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.widgets <span class="im">import</span> Button</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lab_utils_backprop <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="computation-graph" class="level2">
+<h2 class="anchored" data-anchor-id="computation-graph">Computation Graph</h2>
+<p>A computation graph simplifies the computation of complex derivatives by breaking them into smaller steps. Let’s see how this works.</p>
+<p>Let’s calculate the derivative of this slightly complex expression, <span class="math inline">\(J = (2+3w)^2\)</span>. We would like to find the derivative of <span class="math inline">\(J\)</span> with respect to <span class="math inline">\(w\)</span> or <span class="math inline">\(\frac{\partial J}{\partial w}\)</span>.</p>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plt.close(<span class="st">"all"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>plt_network(config_nw0, <span class="st">"C2_W2_BP_network0.PNG"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>&lt;lab_utils_backprop.plt_network at 0x1771b5b7ca0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major":2,"version_minor":0,"model_id":"6d8d33918c264a1389e34c875f32ab18"}
+</script>
+</div>
+</div>
+<section id="forward-propagation" class="level3">
+<h3 class="anchored" data-anchor-id="forward-propagation">Forward Propagation</h3>
+<p>Let’s calculate the values in the forward direction.</p>
+<blockquote class="blockquote">
+<p>Just a note about this section. It uses global variables and reuses them as the calculation progresses. If you run cells out of order, you may get funny results. If you do, go back to this point and run them in order.</p>
+</blockquote>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">2</span><span class="op">+</span><span class="dv">3</span><span class="op">*</span>w</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> a<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>a = 11, J = 121</code></pre>
+</div>
+</div>
+</section>
+<section id="backprop" class="level3">
+<h3 class="anchored" data-anchor-id="backprop">Backprop</h3>
+<p><img align="left" src="C2_W2_BP_network0_j.PNG" style=" width:100px; padding: 10px 20px; "> Backprop is the algorithm we use to calculate derivatives. As described in the lectures, backprop starts at the right and moves to the left. The first node to consider is $J = a^2 $ and the first step is to find <span class="math inline">\(\frac{\partial J}{\partial a}\)</span></p>
+</section>
+<section id="fracpartial-jpartial-a" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-a"><span class="math inline">\(\frac{\partial J}{\partial a}\)</span></h3>
+<section id="arithmetically" class="level4">
+<h4 class="anchored" data-anchor-id="arithmetically">Arithmetically</h4>
+<p>Find <span class="math inline">\(\frac{\partial J}{\partial a}\)</span> by finding how <span class="math inline">\(J\)</span> changes as a result of a little change in <span class="math inline">\(a\)</span>. This is described in detail in the derivatives optional lab.</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a_epsilon <span class="op">=</span> a <span class="op">+</span> <span class="fl">0.001</span>       <span class="co"># a epsilon</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>J_epsilon <span class="op">=</span> a_epsilon<span class="op">**</span><span class="dv">2</span>    <span class="co"># J_epsilon</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (J_epsilon <span class="op">-</span> J)<span class="op">/</span><span class="fl">0.001</span>   <span class="co"># difference divided by epsilon</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, J_epsilon = </span><span class="sc">{</span>J_epsilon<span class="sc">}</span><span class="ss">, dJ_da ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J = 121, J_epsilon = 121.02200099999999, dJ_da ~= k = 22.000999999988835 </code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\frac{\partial J}{\partial a}\)</span> is 22 which is <span class="math inline">\(2\times a\)</span>. Our result is not exactly <span class="math inline">\(2 \times a\)</span> because our epsilon value is not infinitesimally small. #### Symbolically Now, let’s use SymPy to calculate derivatives symbolically as we did in the derivatives optional lab. We will prefix the name of the variable with an ‘s’ to indicate this is a <em>symbolic</em> variable.</p>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sw,sJ,sa <span class="op">=</span> symbols(<span class="st">'w,J,a'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sJ <span class="op">=</span> sa<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sJ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>a**2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sJ.subs([(sa,a)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>121</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dJ_da <span class="op">=</span> diff(sJ, sa)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dJ_da</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>2*a</code></pre>
+</div>
+</div>
+<p>So, <span class="math inline">\(\frac{\partial J}{\partial a} = 2a\)</span>. When <span class="math inline">\(a=11\)</span>, <span class="math inline">\(\frac{\partial J}{\partial a} = 22\)</span>. This matches our arithmetic calculation above. If you have not already done so, you can go back to the diagram above and fill in the value for <span class="math inline">\(\frac{\partial J}{\partial a}\)</span>.</p>
+</section>
+</section>
+<section id="fracpartial-jpartial-w" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-w"><span class="math inline">\(\frac{\partial J}{\partial w}\)</span></h3>
+<p><img align="left" src="C2_W2_BP_network0_a.PNG" style=" width:100px; padding: 10px 20px; "> Moving from right to left, the next value we would like to compute is <span class="math inline">\(\frac{\partial J}{\partial w}\)</span>. To do this, we first need to calculate <span class="math inline">\(\frac{\partial a}{\partial w}\)</span> which describes how the output of this node, <span class="math inline">\(a\)</span>, changes when the input <span class="math inline">\(w\)</span> changes a little bit.</p>
+<section id="arithmetically-1" class="level4">
+<h4 class="anchored" data-anchor-id="arithmetically-1">Arithmetically</h4>
+<p>Find <span class="math inline">\(\frac{\partial a}{\partial w}\)</span> by finding how <span class="math inline">\(a\)</span> changes as a result of a little change in <span class="math inline">\(w\)</span>.</p>
+<p>Calculated arithmetically, <span class="math inline">\(\frac{\partial a}{\partial w} \approx 3\)</span>. Let’s try it with SymPy.</p>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sa <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>sw</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>3*w + 2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>da_dw <span class="op">=</span> diff(sa,sw)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>da_dw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>3</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The next step is the interesting part: - We know that a small change in <span class="math inline">\(w\)</span> will cause <span class="math inline">\(a\)</span> to change by 3 times that amount. - We know that a small change in <span class="math inline">\(a\)</span> will cause <span class="math inline">\(J\)</span> to change by <span class="math inline">\(2\times a\)</span> times that amount. (a=11 in this example) so, putting these together, - We know that a small change in <span class="math inline">\(w\)</span> will cause <span class="math inline">\(J\)</span> to change by <span class="math inline">\(3 \times 2\times a\)</span> times that amount.</p>
+<p>These cascading changes go by the name of <em>the chain rule</em>. It can be written like this: <span class="math display">\[\frac{\partial J}{\partial w} = \frac{\partial a}{\partial w} \frac{\partial J}{\partial a} \]</span></p>
+</blockquote>
+<p>It’s worth spending some time thinking this through if it is not clear. This is a key take-away.</p>
+<p>Let’s try calculating it:</p>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dJ_dw <span class="op">=</span> da_dw <span class="op">*</span> dJ_da</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dJ_dw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>6*a</code></pre>
+</div>
+</div>
+<p>And <span class="math inline">\(a\)</span> is 11 in this example so <span class="math inline">\(\frac{\partial J}{\partial w} = 66\)</span>. We can check this arithmetically:</p>
+<p>And <span class="math inline">\(a\)</span> is 11 in this example so <span class="math inline">\(\frac{\partial J}{\partial w} = 66\)</span>. We can check this arithmetically:</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>w_epsilon <span class="op">=</span> w <span class="op">+</span> <span class="fl">0.001</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>a_epsilon <span class="op">=</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>w_epsilon</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>J_epsilon <span class="op">=</span> a_epsilon<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (J_epsilon <span class="op">-</span> J)<span class="op">/</span><span class="fl">0.001</span>   <span class="co"># difference divided by epsilon</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, J_epsilon = </span><span class="sc">{</span>J_epsilon<span class="sc">}</span><span class="ss">, dJ_dw ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J = 121, J_epsilon = 121.06600900000001, dJ_dw ~= k = 66.0090000000082 </code></pre>
+</div>
+</div>
+<p><strong>Another view</strong> One could visualize these cascading changes this way: <img align="center" src="C2_W2_BP_network0_diff.PNG" style=" width:500px; padding: 10px 20px; "> A small change in <span class="math inline">\(w\)</span> is multiplied by <span class="math inline">\(\frac{\partial a}{\partial w}\)</span> resulting in a change that is 3 times as large. This larger change is then multiplied by <span class="math inline">\(\frac{\partial J}{\partial a}\)</span> resulting in a change that is now <span class="math inline">\(3 \times 22 = 66\)</span> times larger.</p>
+</section>
+</section>
+</section>
+<section id="computation-graph-of-a-simple-neural-network" class="level2">
+<h2 class="anchored" data-anchor-id="computation-graph-of-a-simple-neural-network">Computation Graph of a Simple Neural Network</h2>
+<p>Below is a graph of the neural network used in the lecture with different values. Try and fill in the values in the boxes. Note, the interactive graphic is not particularly robust. If you run into trouble with the interface, run the cell below again to restart.</p>
+<p><img src="backProp-1.png" class="img-fluid"></p>
+<p>Below, we will go through the computations required to fill in the above computation graph in detail. We start with the forward path.</p>
+<section id="forward-propagation-1" class="level3">
+<h3 class="anchored" data-anchor-id="forward-propagation-1">Forward propagation</h3>
+<p>The calculations in the forward path are the ones you have recently learned for neural networks. You can compare the values below to those you calculated for the diagram above.</p>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inputs and parameters</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="op">-</span><span class="dv">2</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate per step values</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> w <span class="op">*</span> x</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> c <span class="op">+</span> b</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> a <span class="op">-</span> y</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> d<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J=</span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, d=</span><span class="sc">{</span>d<span class="sc">}</span><span class="ss">, a=</span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, c=</span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J=4.5, d=3, a=4, c=-4</code></pre>
+</div>
+</div>
+</section>
+<section id="backward-propagation-backprop" class="level3">
+<h3 class="anchored" data-anchor-id="backward-propagation-backprop">Backward propagation (Backprop)</h3>
+<p><img align="left" src="C2_W2_BP_network1_jdsq.PNG" style=" width:100px; padding: 10px 20px; "> As described in the lectures, backprop starts at the right and moves to the left. The first node to consider is $J = d^2 $ and the first step is to find <span class="math inline">\(\frac{\partial J}{\partial d}\)</span></p>
+</section>
+<section id="fracpartial-jpartial-d" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-d"><span class="math inline">\(\frac{\partial J}{\partial d}\)</span></h3>
+<section id="arithmetically-2" class="level4">
+<h4 class="anchored" data-anchor-id="arithmetically-2">Arithmetically</h4>
+<p>Find <span class="math inline">\(\frac{\partial J}{\partial d}\)</span> by finding how <span class="math inline">\(J\)</span> changes as a result of a little change in <span class="math inline">\(d\)</span>.</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>d_epsilon <span class="op">=</span> d <span class="op">+</span> <span class="fl">0.001</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>J_epsilon <span class="op">=</span> d_epsilon<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (J_epsilon <span class="op">-</span> J)<span class="op">/</span><span class="fl">0.001</span>   <span class="co"># difference divided by epsilon</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, J_epsilon = </span><span class="sc">{</span>J_epsilon<span class="sc">}</span><span class="ss">, dJ_dd ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J = 4.5, J_epsilon = 4.5030005, dJ_dd ~= k = 3.0004999999997395 </code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\frac{\partial J}{\partial d}\)</span> is 3, which is the value of <span class="math inline">\(d\)</span>. Our result is not exactly <span class="math inline">\(d\)</span> because our epsilon value is not infinitesimally small. #### Symbolically Now, let’s use SymPy to calculate derivatives symbolically, as we did in the derivatives optional lab. We will prefix the name of the variable with an ‘s’ to indicate this is a <em>symbolic</em> variable.</p>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sx,sw,sb,sy,sJ <span class="op">=</span> symbols(<span class="st">'x,w,b,y,J'</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>sa, sc, sd <span class="op">=</span> symbols(<span class="st">'a,c,d'</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sJ <span class="op">=</span> sd<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sJ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>d**2/2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sJ.subs([(sd,d)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>9/2</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dJ_dd <span class="op">=</span> diff(sJ, sd)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dJ_dd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>d</code></pre>
+</div>
+</div>
+<p>So, <span class="math inline">\(\frac{\partial J}{\partial d}\)</span> = d.&nbsp;When <span class="math inline">\(d=3\)</span>, <span class="math inline">\(\frac{\partial J}{\partial d}\)</span> = 3. This matches our arithmetic calculation above. If you have not already done so, you can go back to the diagram above and fill in the value for <span class="math inline">\(\frac{\partial J}{\partial d}\)</span>.</p>
+</section>
+</section>
+<section id="fracpartial-jpartial-a-1" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-a-1"><span class="math inline">\(\frac{\partial J}{\partial a}\)</span></h3>
+<p><img align="left" src="C2_W2_BP_network1_d.PNG" style=" width:100px; padding: 10px 20px; "> Moving from right to left, the next value we would like to compute is <span class="math inline">\(\frac{\partial J}{\partial a}\)</span>. To do this, we first need to calculate <span class="math inline">\(\frac{\partial d}{\partial a}\)</span> which describes how the output of this node changes when the input <span class="math inline">\(a\)</span> changes a little bit. (Note, we are not interested in how the output changes when <span class="math inline">\(y\)</span> changes since <span class="math inline">\(y\)</span> is not a parameter.)</p>
+<section id="arithmetically-3" class="level4">
+<h4 class="anchored" data-anchor-id="arithmetically-3">Arithmetically</h4>
+<p>Find <span class="math inline">\(\frac{\partial d}{\partial a}\)</span> by finding how <span class="math inline">\(d\)</span> changes as a result of a little change in <span class="math inline">\(a\)</span>.</p>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>a_epsilon <span class="op">=</span> a <span class="op">+</span> <span class="fl">0.001</span>         <span class="co"># a  plus a small value</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>d_epsilon <span class="op">=</span> a_epsilon <span class="op">-</span> y</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (d_epsilon <span class="op">-</span> d)<span class="op">/</span><span class="fl">0.001</span>   <span class="co"># difference divided by epsilon</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"d = </span><span class="sc">{</span>d<span class="sc">}</span><span class="ss">, d_epsilon = </span><span class="sc">{</span>d_epsilon<span class="sc">}</span><span class="ss">, dd_da ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>d = 3, d_epsilon = 3.0010000000000003, dd_da ~= k = 1.000000000000334 </code></pre>
+</div>
+</div>
+<p>Calculated arithmetically, <span class="math inline">\(\frac{\partial d}{\partial a} \approx 1\)</span>. Let’s try it with SymPy. #### Symbolically</p>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> sa <span class="op">-</span> sy</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>a - y</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dd_da <span class="op">=</span> diff(sd,sa)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dd_da</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>1</code></pre>
+</div>
+</div>
+<p>Calculated arithmetically, <span class="math inline">\(\frac{\partial d}{\partial a}\)</span> also equals 1. &gt;The next step is the interesting part, repeated again in this example: &gt; - We know that a small change in <span class="math inline">\(a\)</span> will cause <span class="math inline">\(d\)</span> to change by 1 times that amount. &gt; - We know that a small change in <span class="math inline">\(d\)</span> will cause <span class="math inline">\(J\)</span> to change by <span class="math inline">\(d\)</span> times that amount. (d=3 in this example) so, putting these together, &gt; - We know that a small change in <span class="math inline">\(a\)</span> will cause <span class="math inline">\(J\)</span> to change by <span class="math inline">\(1\times d\)</span> times that amount. &gt; &gt;This is again <em>the chain rule</em>. It can be written like this: <span class="math display">\[\frac{\partial J}{\partial a} = \frac{\partial d}{\partial a} \frac{\partial J}{\partial d} \]</span></p>
+<p>Let’s try calculating it:</p>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dJ_da <span class="op">=</span> dd_da <span class="op">*</span> dJ_dd</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>dJ_da</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>d</code></pre>
+</div>
+</div>
+<p>And <span class="math inline">\(d\)</span> is 3 in this example so <span class="math inline">\(\frac{\partial J}{\partial a} = 3\)</span>. We can check this arithmetically:</p>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>a_epsilon <span class="op">=</span> a <span class="op">+</span> <span class="fl">0.001</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>d_epsilon <span class="op">=</span> a_epsilon <span class="op">-</span> y</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>J_epsilon <span class="op">=</span> d_epsilon<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (J_epsilon <span class="op">-</span> J)<span class="op">/</span><span class="fl">0.001</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, J_epsilon = </span><span class="sc">{</span>J_epsilon<span class="sc">}</span><span class="ss">, dJ_da ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J = 4.5, J_epsilon = 4.503000500000001, dJ_da ~= k = 3.0005000000006277 </code></pre>
+</div>
+</div>
+<p>OK, they match! You can now fill the values for <span class="math inline">\(\frac{\partial d}{\partial a}\)</span> and <span class="math inline">\(\frac{\partial J}{\partial a}\)</span> in the diagram if you have not already done so.</p>
+<blockquote class="blockquote">
+<p><strong>The steps in backprop</strong> Now that you have worked through several nodes, we can write down the basic method:<br>
+working right to left, for each node: - calculate the local derivative(s) of the node - using the chain rule, combine with the derivative of the cost with respect to the node to the right.</p>
+</blockquote>
+<p>The ‘local derivative(s)’ are the derivative(s) of the output of the current node with respect to all inputs or parameters.</p>
+<p>Let’s continue the job. We’ll be a bit less verbose now that you are familiar with the method.</p>
+</section>
+</section>
+<section id="fracpartial-jpartial-c-fracpartial-jpartial-b" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-c-fracpartial-jpartial-b"><span class="math inline">\(\frac{\partial J}{\partial c}\)</span>, <span class="math inline">\(\frac{\partial J}{\partial b}\)</span></h3>
+<p><img align="left" src="C2_W2_BP_network1_a.PNG" style=" width:100px; padding: 10px 20px; ">The next node has two derivatives of interest. We need to calculate <span class="math inline">\(\frac{\partial J}{\partial c}\)</span> so we can propagate to the left. We also want to calculate <span class="math inline">\(\frac{\partial J}{\partial b}\)</span>. Finding the derivative of the cost with respect to the parameters <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span> is the object of backprop. We will find the local derivatives, <span class="math inline">\(\frac{\partial a}{\partial c}\)</span> and <span class="math inline">\(\frac{\partial a}{\partial b}\)</span> first and then combine those with the derivative coming from the right, <span class="math inline">\(\frac{\partial J}{\partial a}\)</span>.</p>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the local derivatives da_dc, da_db</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sa <span class="op">=</span> sc <span class="op">+</span> sb</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>b + c</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>da_dc <span class="op">=</span> diff(sa,sc)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>da_db <span class="op">=</span> diff(sa,sb)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(da_dc, da_db)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 1</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dJ_dc <span class="op">=</span> da_dc <span class="op">*</span> dJ_da</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>dJ_db <span class="op">=</span> da_db <span class="op">*</span> dJ_da</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"dJ_dc = </span><span class="sc">{</span>dJ_dc<span class="sc">}</span><span class="ss">,  dJ_db = </span><span class="sc">{</span>dJ_db<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>dJ_dc = d,  dJ_db = d</code></pre>
+</div>
+</div>
+<p>And in our example, d = 3</p>
+</section>
+<section id="fracpartial-jpartial-w-1" class="level3">
+<h3 class="anchored" data-anchor-id="fracpartial-jpartial-w-1"><span class="math inline">\(\frac{\partial J}{\partial w}\)</span></h3>
+<p><img align="left" src="C2_W2_BP_network1_c.PNG" style=" width:100px; padding: 10px 20px; "> The last node in this example calculates <code>c</code>. Here, we are interested in how J changes with respect to the parameter w. We will not back propagate to the input <span class="math inline">\(x\)</span>, so we are not interested in <span class="math inline">\(\frac{\partial J}{\partial x}\)</span>. Let’s start by calculating <span class="math inline">\(\frac{\partial c}{\partial w}\)</span>.</p>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the local derivative</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> sw <span class="op">*</span> sx</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>sc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>w*x</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dc_dw <span class="op">=</span> diff(sc,sw)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>dc_dw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>x</code></pre>
+</div>
+</div>
+<p>This derivative is a bit more exciting than the last one. This will vary depending on the value of <span class="math inline">\(x\)</span>. This is 2 in our example.</p>
+<p>Combine this with <span class="math inline">\(\frac{\partial J}{\partial c}\)</span> to find <span class="math inline">\(\frac{\partial J}{\partial w}\)</span>.</p>
+<div class="cell" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dJ_dw <span class="op">=</span> dc_dw <span class="op">*</span> dJ_dc</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>dJ_dw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>d*x</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"dJ_dw = </span><span class="sc">{</span>dJ_dw<span class="sc">.</span>subs([(sd,d),(sx,x)])<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>dJ_dw = 2*d</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(d=3\)</span>, so <span class="math inline">\(\frac{\partial J}{\partial w} = 6\)</span> for our example. Let’s test this arithmetically:</p>
+<div class="cell" data-execution_count="31">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>J_epsilon <span class="op">=</span> ((w<span class="op">+</span><span class="fl">0.001</span>)<span class="op">*</span>x<span class="op">+</span>b <span class="op">-</span> y)<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (J_epsilon <span class="op">-</span> J)<span class="op">/</span><span class="fl">0.001</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"J = </span><span class="sc">{</span>J<span class="sc">}</span><span class="ss">, J_epsilon = </span><span class="sc">{</span>J_epsilon<span class="sc">}</span><span class="ss">, dJ_dw ~= k = </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>J = 4.5, J_epsilon = 4.506002, dJ_dw ~= k = 6.001999999999619 </code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
