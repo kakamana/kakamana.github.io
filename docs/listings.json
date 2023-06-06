@@ -10,8 +10,13 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Facial Expression Recognition with Keras/Facial Expression Recognition with Keras.html",
+      "/posts/Decision Trees/Decision Trees.html",
+      "/posts/Tree Ensembles/Tree Ensembles.html",
+      "/posts/Diagnosing Bias and Variance/Diagnosing Bias and Variance.html",
       "/posts/Back Propagation/Back propagation.html",
       "/posts/Derivatives/Derivatives.html",
+      "/posts/Model Evaluation and Selection/Model Evaluation and Selection.html",
       "/posts/Multi-class Classification/Multi-class Classification.html",
       "/posts/Softmax Function/Softmax Function.html",
       "/posts/ReLU activation/ReLU activation.html",
