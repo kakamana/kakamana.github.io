@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="kakamana">
+<meta name="dcterms.date" content="2023-05-13">
+
+<title>Kakamana’s Blogs - Tree Ensembles</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Kakamana’s Blogs</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tree-ensembles" id="toc-tree-ensembles" class="nav-link active" data-scroll-target="#tree-ensembles">Tree Ensembles</a>
+  <ul class="collapse">
+  <li><a href="#one-hot-encoding-using-pandas" id="toc-one-hot-encoding-using-pandas" class="nav-link" data-scroll-target="#one-hot-encoding-using-pandas">2. One-hot encoding using Pandas</a></li>
+  </ul></li>
+  <li><a href="#splitting-the-dataset" id="toc-splitting-the-dataset" class="nav-link" data-scroll-target="#splitting-the-dataset">3. Splitting the Dataset</a></li>
+  <li><a href="#building-the-models" id="toc-building-the-models" class="nav-link" data-scroll-target="#building-the-models">4. Building the Models</a>
+  <ul class="collapse">
+  <li><a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree">4.1 Decision Tree</a></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest">4.2 Random Forest</a></li>
+  <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost">4.3 XGBoost</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Tree Ensembles</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">deep learning.ai</div>
+    <div class="quarto-category">machine learning</div>
+    <div class="quarto-category">decision tree</div>
+    <div class="quarto-category">random forest</div>
+    <div class="quarto-category">xgboost</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>kakamana </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 13, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="tree-ensembles" class="level1">
+<h1>Tree Ensembles</h1>
+<p>In this lab, you will Work with a dataset related to cardiovascular disease, Build three different models to estimate how likely a person is to develop cardiovascular disease, Implement a Decision Tree model from scikit-learn, Implement a Random Forrest model from scikit-learn, Implement the XGBoost using its own library, Investigate how different parameters on the three models impact their performance</p>
+<p>This <strong>Tree Ensembles</strong> is part of <a href="" title="https://www.deeplearning.ai/courses/machine-learning-specialization/">DeepLearning.AI course: Machine Learning Specialization / Course 2: Advanced Learning Algorithms: Tree Ensembles</a> You will build and train a neural network with TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Ensure that your machine learning models are generalizable by applying best practices for machine learning development. You will build and train a neural network using TensorFlow to perform multi-class classification in the second course of the Machine Learning Specialization. Implement best practices for machine learning development to ensure that your models are generalizable to real-world data and tasks. Create and use decision trees and tree ensemble methods, including random forests and boosted trees.</p>
+<p>This is my learning experience of data science through DeepLearning.AI. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
+<p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellectual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
+<p>Trees Ensemble</p>
+<p>In this notebook, you will:</p>
+<ul>
+<li>Use Pandas to perform one-hot encoding of a dataset</li>
+<li>Use scikit-learn to implement a Decision Tree, Random Forest and XGBoost models</li>
+</ul>
+<div id="cell-3" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:18:14.571940Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:18:12.734959Z&quot;}" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> xgboost <span class="im">import</span> XGBClassifier</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'deeplearning.mplstyle'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>RANDOM_STATE <span class="op">=</span> <span class="dv">55</span> <span class="co">## We will pass it to every sklearn call so we ensure reproducibility</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="datatset" class="level4">
+<h4 class="anchored" data-anchor-id="datatset">Datatset</h4>
+<ul>
+<li>This dataset is obtained from Kaggle: <a href="https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction">Heart Failure Prediction Dataset</a></li>
+</ul>
+</section>
+<section id="context" class="level4">
+<h4 class="anchored" data-anchor-id="context">Context</h4>
+<ul>
+<li>Cardiovascular disease (CVDs) is the number one cause of death globally, taking an estimated 17.9 million lives each year, which accounts for 31% of all deaths worldwide. Four out of five CVD deaths are due to heart attacks and strokes, and one-third of these deaths occur prematurely in people under 70 years of age. Heart failure is a common event caused by CVDs.</li>
+<li>People with cardiovascular disease or who are at high cardiovascular risk (due to the presence of one or more risk factors such as hypertension, diabetes, hyperlipidaemia or already established disease) need early detection and management.</li>
+<li>This dataset contains 11 features that can be used to predict possible heart disease.</li>
+<li>Let’s train a machine learning model to assist with diagnosing this disease.</li>
+</ul>
+</section>
+<section id="attribute-information" class="level4">
+<h4 class="anchored" data-anchor-id="attribute-information">Attribute Information</h4>
+<ul>
+<li>Age: age of the patient [years]</li>
+<li>Sex: sex of the patient [M: Male, F: Female]</li>
+<li>ChestPainType: chest pain type [TA: Typical Angina, ATA: Atypical Angina, NAP: Non-Anginal Pain, ASY: Asymptomatic]</li>
+<li>RestingBP: resting blood pressure [mm Hg]</li>
+<li>Cholesterol: serum cholesterol [mm/dl]</li>
+<li>FastingBS: fasting blood sugar [1: if FastingBS &gt; 120 mg/dl, 0: otherwise]</li>
+<li>RestingECG: resting electrocardiogram results [Normal: Normal, ST: having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of &gt; 0.05 mV), LVH: showing probable or definite left ventricular hypertrophy by Estes’ criteria]</li>
+<li>MaxHR: maximum heart rate achieved [Numeric value between 60 and 202]</li>
+<li>ExerciseAngina: exercise-induced angina [Y: Yes, N: No]</li>
+<li>Oldpeak: oldpeak = ST [Numeric value measured in depression]</li>
+<li>ST_Slope: the slope of the peak exercise ST segment [Up: upsloping, Flat: flat, Down: downsloping]</li>
+<li>HeartDisease: output class [1: heart disease, 0: Normal]</li>
+</ul>
+<p>Let’s now load the dataset. As we can see above, the variables:</p>
+<ul>
+<li>Sex</li>
+<li>ChestPainType</li>
+<li>RestingECG</li>
+<li>ExerciseAngina</li>
+<li>ST_Slope</li>
+</ul>
+<p>Are <em>categorical</em>, so we must one-hot encode them.</p>
+<div id="cell-6" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:18:14.579080Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:18:14.573053Z&quot;}" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset using pandas</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/heart.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-7" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:18:14.586601Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:18:14.580685Z&quot;}" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">ChestPainType</th>
+<th data-quarto-table-cell-role="th">RestingBP</th>
+<th data-quarto-table-cell-role="th">Cholesterol</th>
+<th data-quarto-table-cell-role="th">FastingBS</th>
+<th data-quarto-table-cell-role="th">RestingECG</th>
+<th data-quarto-table-cell-role="th">MaxHR</th>
+<th data-quarto-table-cell-role="th">ExerciseAngina</th>
+<th data-quarto-table-cell-role="th">Oldpeak</th>
+<th data-quarto-table-cell-role="th">ST_Slope</th>
+<th data-quarto-table-cell-role="th">HeartDisease</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>40</td>
+<td>M</td>
+<td>ATA</td>
+<td>140</td>
+<td>289</td>
+<td>0</td>
+<td>Normal</td>
+<td>172</td>
+<td>N</td>
+<td>0.0</td>
+<td>Up</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>49</td>
+<td>F</td>
+<td>NAP</td>
+<td>160</td>
+<td>180</td>
+<td>0</td>
+<td>Normal</td>
+<td>156</td>
+<td>N</td>
+<td>1.0</td>
+<td>Flat</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>37</td>
+<td>M</td>
+<td>ATA</td>
+<td>130</td>
+<td>283</td>
+<td>0</td>
+<td>ST</td>
+<td>98</td>
+<td>N</td>
+<td>0.0</td>
+<td>Up</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>48</td>
+<td>F</td>
+<td>ASY</td>
+<td>138</td>
+<td>214</td>
+<td>0</td>
+<td>Normal</td>
+<td>108</td>
+<td>Y</td>
+<td>1.5</td>
+<td>Flat</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>54</td>
+<td>M</td>
+<td>NAP</td>
+<td>150</td>
+<td>195</td>
+<td>0</td>
+<td>Normal</td>
+<td>122</td>
+<td>N</td>
+<td>0.0</td>
+<td>Up</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>We must perform some data engineering before working with the models. There are 5 categorical features, so we will use Pandas to one-hot encode them.</p>
+</section>
+<section id="one-hot-encoding-using-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="one-hot-encoding-using-pandas">2. One-hot encoding using Pandas</h2>
+<p>First we will remove the binary variables, because one-hot encoding them would do nothing to them. To achieve this we will just count how many different values there are in each categorical variable and consider only the variables with 3 or more values.</p>
+<div id="cell-10" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:18:14.589168Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:18:14.587842Z&quot;}" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cat_variables <span class="op">=</span> [<span class="st">'Sex'</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">'ChestPainType'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">'RestingECG'</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">'ExerciseAngina'</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">'ST_Slope'</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>As a reminder, one-hot encoding aims to transform a categorical variable with <code>n</code> outputs into <code>n</code> binary variables.</p>
+<p>Pandas has a built-in method to one-hot encode variables, it is the function <code>pd.get_dummies</code>. There are several arguments to this function, but here we will use only a few. They are:</p>
+<ul>
+<li>data: DataFrame to be used</li>
+<li>prefix: A list with prefixes, so we know which value we are dealing with</li>
+<li>columns: the list of columns that will be one-hot encoded. ‘prefix’ and ‘columns’ must have the same length.</li>
+</ul>
+<p>For more information, you can always type <code>help(pd.get_dummies)</code> to read the function’s full documentation.</p>
+<div id="cell-12" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:18:14.600349Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:18:14.591360Z&quot;}" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This will replace the columns with the one-hot encoded ones and keep the columns outside 'columns' argument as it is.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.get_dummies(data <span class="op">=</span> df,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                         prefix <span class="op">=</span> cat_variables,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                         columns <span class="op">=</span> cat_variables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-13" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:22:22.251866Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:22:22.246645Z&quot;}" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">RestingBP</th>
+<th data-quarto-table-cell-role="th">Cholesterol</th>
+<th data-quarto-table-cell-role="th">FastingBS</th>
+<th data-quarto-table-cell-role="th">MaxHR</th>
+<th data-quarto-table-cell-role="th">Oldpeak</th>
+<th data-quarto-table-cell-role="th">HeartDisease</th>
+<th data-quarto-table-cell-role="th">Sex_F</th>
+<th data-quarto-table-cell-role="th">Sex_M</th>
+<th data-quarto-table-cell-role="th">ChestPainType_ASY</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">ChestPainType_NAP</th>
+<th data-quarto-table-cell-role="th">ChestPainType_TA</th>
+<th data-quarto-table-cell-role="th">RestingECG_LVH</th>
+<th data-quarto-table-cell-role="th">RestingECG_Normal</th>
+<th data-quarto-table-cell-role="th">RestingECG_ST</th>
+<th data-quarto-table-cell-role="th">ExerciseAngina_N</th>
+<th data-quarto-table-cell-role="th">ExerciseAngina_Y</th>
+<th data-quarto-table-cell-role="th">ST_Slope_Down</th>
+<th data-quarto-table-cell-role="th">ST_Slope_Flat</th>
+<th data-quarto-table-cell-role="th">ST_Slope_Up</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>40</td>
+<td>140</td>
+<td>289</td>
+<td>0</td>
+<td>172</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>49</td>
+<td>160</td>
+<td>180</td>
+<td>0</td>
+<td>156</td>
+<td>1.0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>37</td>
+<td>130</td>
+<td>283</td>
+<td>0</td>
+<td>98</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>48</td>
+<td>138</td>
+<td>214</td>
+<td>0</td>
+<td>108</td>
+<td>1.5</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>54</td>
+<td>150</td>
+<td>195</td>
+<td>0</td>
+<td>122</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 21 columns</p>
+</div>
+</div>
+</div>
+</div>
+<p>Let’s choose the variables that will be the input features of the model. - The target is <code>HeartDisease</code>. - All other variables are features that can potentially be used to predict the target, <code>HeartDisease</code>.</p>
+<div id="cell-15" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:23:05.561802Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:23:05.557761Z&quot;}" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> df.columns <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> <span class="st">'HeartDisease'</span>] <span class="co">## Removing our target variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We started with 11 features. Let’s see how many feature variables we have after one-hot encoding.</p>
+<div id="cell-17" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:23:36.649589Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:23:36.645130Z&quot;}" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(features))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>20</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="splitting-the-dataset" class="level1">
+<h1>3. Splitting the Dataset</h1>
+<p>In this section, we will split our dataset into train and test datasets. We will use the function <code>train_test_split</code> from Scikit-learn. Let’s just check its arguments.</p>
+<div id="cell-19" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:26:25.266960Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:26:25.262468Z&quot;}" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(train_test_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Help on function train_test_split in module sklearn.model_selection._split:
+
+train_test_split(*arrays, test_size=None, train_size=None, random_state=None, shuffle=True, stratify=None)
+    Split arrays or matrices into random train and test subsets.
+    
+    Quick utility that wraps input validation,
+    ``next(ShuffleSplit().split(X, y))``, and application to input data
+    into a single call for splitting (and optionally subsampling) data into a
+    one-liner.
+    
+    Read more in the :ref:`User Guide &lt;cross_validation&gt;`.
+    
+    Parameters
+    ----------
+    *arrays : sequence of indexables with same length / shape[0]
+        Allowed inputs are lists, numpy arrays, scipy-sparse
+        matrices or pandas dataframes.
+    
+    test_size : float or int, default=None
+        If float, should be between 0.0 and 1.0 and represent the proportion
+        of the dataset to include in the test split. If int, represents the
+        absolute number of test samples. If None, the value is set to the
+        complement of the train size. If ``train_size`` is also None, it will
+        be set to 0.25.
+    
+    train_size : float or int, default=None
+        If float, should be between 0.0 and 1.0 and represent the
+        proportion of the dataset to include in the train split. If
+        int, represents the absolute number of train samples. If None,
+        the value is automatically set to the complement of the test size.
+    
+    random_state : int, RandomState instance or None, default=None
+        Controls the shuffling applied to the data before applying the split.
+        Pass an int for reproducible output across multiple function calls.
+        See :term:`Glossary &lt;random_state&gt;`.
+    
+    shuffle : bool, default=True
+        Whether or not to shuffle the data before splitting. If shuffle=False
+        then stratify must be None.
+    
+    stratify : array-like, default=None
+        If not None, data is split in a stratified fashion, using this as
+        the class labels.
+        Read more in the :ref:`User Guide &lt;stratification&gt;`.
+    
+    Returns
+    -------
+    splitting : list, length=2 * len(arrays)
+        List containing train-test split of inputs.
+    
+        .. versionadded:: 0.16
+            If the input is sparse, the output will be a
+            ``scipy.sparse.csr_matrix``. Else, output type is the same as the
+            input type.
+    
+    Examples
+    --------
+    &gt;&gt;&gt; import numpy as np
+    &gt;&gt;&gt; from sklearn.model_selection import train_test_split
+    &gt;&gt;&gt; X, y = np.arange(10).reshape((5, 2)), range(5)
+    &gt;&gt;&gt; X
+    array([[0, 1],
+           [2, 3],
+           [4, 5],
+           [6, 7],
+           [8, 9]])
+    &gt;&gt;&gt; list(y)
+    [0, 1, 2, 3, 4]
+    
+    &gt;&gt;&gt; X_train, X_test, y_train, y_test = train_test_split(
+    ...     X, y, test_size=0.33, random_state=42)
+    ...
+    &gt;&gt;&gt; X_train
+    array([[4, 5],
+           [0, 1],
+           [6, 7]])
+    &gt;&gt;&gt; y_train
+    [2, 0, 3]
+    &gt;&gt;&gt; X_test
+    array([[2, 3],
+           [8, 9]])
+    &gt;&gt;&gt; y_test
+    [1, 4]
+    
+    &gt;&gt;&gt; train_test_split(y, shuffle=False)
+    [[0, 1, 2], [3, 4]]
+</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:26:52.112176Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:26:52.108205Z&quot;}" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>X_train, X_val, y_train, y_val <span class="op">=</span> train_test_split(df[features], df[<span class="st">'HeartDisease'</span>], train_size <span class="op">=</span> <span class="fl">0.8</span>, random_state <span class="op">=</span> RANDOM_STATE)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We will keep the shuffle = True since our dataset has not any time dependency.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-21" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:26:52.893971Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:26:52.890129Z&quot;}" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'train samples: </span><span class="sc">{</span><span class="bu">len</span>(X_train)<span class="sc">}</span><span class="ch">\v</span><span class="ss">alidation samples: </span><span class="sc">{</span><span class="bu">len</span>(X_val)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'target proportion: </span><span class="sc">{</span><span class="bu">sum</span>(y_train)<span class="op">/</span><span class="bu">len</span>(y_train)<span class="sc">:.4f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>train samples: 734alidation samples: 184
+target proportion: 0.5518</code></pre>
+</div>
+</div>
+</section>
+<section id="building-the-models" class="level1">
+<h1>4. Building the Models</h1>
+<section id="decision-tree" class="level2">
+<h2 class="anchored" data-anchor-id="decision-tree">4.1 Decision Tree</h2>
+<p>In this section, let’s work with the Decision Tree we previously learned, but now using the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html">Scikit-learn implementation</a>.</p>
+<p>There are several hyperparameters in the Decision Tree object from Scikit-learn. We will use only some of them and also we will not perform feature selection nor hyperparameter tuning in this lab (but you are encouraged to do so and compare the results 😄 )</p>
+<p>The hyperparameters we will use and investigate here are:</p>
+<ul>
+<li>min_samples_split: The minimum number of samples required to split an internal node.
+<ul>
+<li>Choosing a higher min_samples_split can reduce the number of splits and may help to reduce overfitting.</li>
+</ul></li>
+<li>max_depth: The maximum depth of the tree.
+<ul>
+<li>Choosing a lower max_depth can reduce the number of splits and may help to reduce overfitting.</li>
+</ul></li>
+</ul>
+<div id="cell-23" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:27:02.962905Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:27:02.958984Z&quot;}" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>min_samples_split_list <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">700</span>] <span class="co">## If the number is an integer, then it is the actual quantity of samples,</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>max_depth_list <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="va">None</span>] <span class="co"># None means that there is no depth limit.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-24" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:27:12.052624Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:27:11.913271Z&quot;}" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>accuracy_list_train <span class="op">=</span> []</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>accuracy_list_val <span class="op">=</span> []</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> min_samples_split <span class="kw">in</span> min_samples_split_list:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You can fit the model at the same time you define it, because the fit function returns the fitted estimator.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> DecisionTreeClassifier(min_samples_split <span class="op">=</span> min_samples_split,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                                   random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    predictions_train <span class="op">=</span> model.predict(X_train) <span class="co">## The predicted values for the train dataset</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    predictions_val <span class="op">=</span> model.predict(X_val) <span class="co">## The predicted values for the test dataset</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    accuracy_train <span class="op">=</span> accuracy_score(predictions_train,y_train)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    accuracy_val <span class="op">=</span> accuracy_score(predictions_val,y_val)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    accuracy_list_train.append(accuracy_train)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    accuracy_list_val.append(accuracy_val)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Train x Validation metrics'</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'min_samples_split'</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'accuracy'</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(min_samples_split_list )),labels<span class="op">=</span>min_samples_split_list)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_train)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_val)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Train'</span>,<span class="st">'Validation'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>&lt;matplotlib.legend.Legend at 0x176b2caf0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Tree Ensembles_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note how increasing the the number of <code>min_samples_split</code> reduces overfitting. - Increasing <code>min_samples_split</code> from 10 to 30, and from 30 to 50, even though it does not improve the validation accuracy, it brings the training accuracy closer to it, showing a reduction in overfitting.</p>
+<p>Let’s do the same experiment with <code>max_depth</code>.</p>
+<div id="cell-26" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:28:20.063209Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:28:19.958106Z&quot;}" data-execution_count="17">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>accuracy_list_train <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>accuracy_list_val <span class="op">=</span> []</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> max_depth <span class="kw">in</span> max_depth_list:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You can fit the model at the same time you define it, because the fit function returns the fitted estimator.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> DecisionTreeClassifier(max_depth <span class="op">=</span> max_depth,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                                   random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    predictions_train <span class="op">=</span> model.predict(X_train) <span class="co">## The predicted values for the train dataset</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    predictions_val <span class="op">=</span> model.predict(X_val) <span class="co">## The predicted values for the test dataset</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    accuracy_train <span class="op">=</span> accuracy_score(predictions_train,y_train)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    accuracy_val <span class="op">=</span> accuracy_score(predictions_val,y_val)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    accuracy_list_train.append(accuracy_train)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    accuracy_list_val.append(accuracy_val)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Train x Validation metrics'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'max_depth'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'accuracy'</span>)</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(max_depth_list )),labels<span class="op">=</span>max_depth_list)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_train)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_val)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Train'</span>,<span class="st">'Validation'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>&lt;matplotlib.legend.Legend at 0x1768ddca0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Tree Ensembles_files/figure-html/cell-15-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see that in general, reducing <code>max_depth</code> can help to reduce overfitting. - Reducing <code>max_depth</code> from 8 to 4 increases validation accuracy closer to training accuracy, while significantly reducing training accuracy. - The validation accuracy reaches the highest at tree_depth=4. - When the <code>max_depth</code> is smaller than 3, both training and validation accuracy decreases. The tree cannot make enough splits to distinguish positives from negatives (the model is underfitting the training set). - When the <code>max_depth</code> is too high ( &gt;= 5), validation accuracy decreases while training accuracy increases, indicating that the model is overfitting to the training set.</p>
+<p>So we can choose the best values for these two hyper-parameters for our model to be: - <code>max_depth = 4</code> - <code>min_samples_split = 50</code></p>
+<div id="cell-28" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:29:05.752930Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:29:05.707908Z&quot;}" data-execution_count="18">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>decision_tree_model <span class="op">=</span> DecisionTreeClassifier(min_samples_split <span class="op">=</span> <span class="dv">50</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                             max_depth <span class="op">=</span> <span class="dv">3</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                             random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-29" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:29:12.886736Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:29:12.877100Z&quot;}" data-execution_count="19">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Metrics train:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(decision_tree_model.predict(X_train),y_train)<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Metrics validation:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(decision_tree_model.predict(X_val),y_val)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metrics train:
+    Accuracy score: 0.8583
+Metrics validation:
+    Accuracy score: 0.8641</code></pre>
+</div>
+</div>
+<p>No sign of overfitting, even though the metrics are not that good.</p>
+</section>
+<section id="random-forest" class="level2">
+<h2 class="anchored" data-anchor-id="random-forest">4.2 Random Forest</h2>
+<p>Now let’s try the Random Forest algorithm also, using the Scikit-learn implementation. - All of the hyperparameters found in the decision tree model will also exist in this algorithm, since a random forest is an ensemble of many Decision Trees. - One additional hyperparameter for Random Forest is called <code>n_estimators</code> which is the number of Decision Trees that make up the Random Forest.</p>
+<p>Remember that for a Random Forest, we randomly choose a subset of the features AND randomly choose a subset of the training examples to train each individual tree. - Following the lectures, if <span class="math inline">\(n\)</span> is the number of features, we will randomly select <span class="math inline">\(\sqrt{n}\)</span> of these features to train each individual tree. - Note that you can modify this by setting the <code>max_features</code> parameter.</p>
+<p>You can also speed up your training jobs with another parameter, <code>n_jobs</code>. - Since the fitting of each tree is independent of each other, it is possible fit more than one tree in parallel. - So setting <code>n_jobs</code> higher will increase how many CPU cores it will use. Note that the numbers very close to the maximum cores of your CPU may impact on the overall performance of your PC and even lead to freezes. - Changing this parameter does not impact on the final result but can reduce the training time.</p>
+<p>We will run the same script again, but with another parameter, <code>n_estimators</code>, where we will choose between 10, 50, and 100. The default is 100.</p>
+<div id="cell-32" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:30:19.533189Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:30:19.522908Z&quot;}" data-execution_count="20">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>min_samples_split_list <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">700</span>]  <span class="co">## If the number is an integer, then it is the actual quantity of samples,</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                                             <span class="co">## If it is a float, then it is the percentage of the dataset</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>max_depth_list <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">16</span>, <span class="dv">32</span>, <span class="dv">64</span>, <span class="va">None</span>]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>n_estimators_list <span class="op">=</span> [<span class="dv">10</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-33" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:30:29.578822Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:30:28.933985Z&quot;}" data-execution_count="21">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>accuracy_list_train <span class="op">=</span> []</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>accuracy_list_val <span class="op">=</span> []</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> min_samples_split <span class="kw">in</span> min_samples_split_list:</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You can fit the model at the same time you define it, because the fit function returns the fitted estimator.</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> RandomForestClassifier(min_samples_split <span class="op">=</span> min_samples_split,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                                   random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    predictions_train <span class="op">=</span> model.predict(X_train) <span class="co">## The predicted values for the train dataset</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    predictions_val <span class="op">=</span> model.predict(X_val) <span class="co">## The predicted values for the test dataset</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    accuracy_train <span class="op">=</span> accuracy_score(predictions_train,y_train)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    accuracy_val <span class="op">=</span> accuracy_score(predictions_val,y_val)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    accuracy_list_train.append(accuracy_train)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    accuracy_list_val.append(accuracy_val)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Train x Validation metrics'</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'min_samples_split'</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'accuracy'</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(min_samples_split_list )),labels<span class="op">=</span>min_samples_split_list)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_train)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_val)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Train'</span>,<span class="st">'Validation'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>&lt;matplotlib.legend.Legend at 0x176c387c0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Tree Ensembles_files/figure-html/cell-19-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notice that, even though the validation accuraty reaches is the same both at <code>min_samples_split = 2</code> and <code>min_samples_split = 10</code>, in the latter the difference in training and validation set reduces, showing less overfitting.</p>
+<div id="cell-35" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:31:08.288236Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:31:07.638224Z&quot;}" data-execution_count="22">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>accuracy_list_train <span class="op">=</span> []</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>accuracy_list_val <span class="op">=</span> []</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> max_depth <span class="kw">in</span> max_depth_list:</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You can fit the model at the same time you define it, because the fit function returns the fitted estimator.</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> RandomForestClassifier(max_depth <span class="op">=</span> max_depth,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                                   random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    predictions_train <span class="op">=</span> model.predict(X_train) <span class="co">## The predicted values for the train dataset</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    predictions_val <span class="op">=</span> model.predict(X_val) <span class="co">## The predicted values for the test dataset</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    accuracy_train <span class="op">=</span> accuracy_score(predictions_train,y_train)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    accuracy_val <span class="op">=</span> accuracy_score(predictions_val,y_val)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    accuracy_list_train.append(accuracy_train)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    accuracy_list_val.append(accuracy_val)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Train x Validation metrics'</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'max_depth'</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'accuracy'</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(max_depth_list )),labels<span class="op">=</span>max_depth_list)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_train)</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_val)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Train'</span>,<span class="st">'Validation'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>&lt;matplotlib.legend.Legend at 0x176d39880&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Tree Ensembles_files/figure-html/cell-20-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-36" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:31:19.405181Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:31:18.747787Z&quot;}" data-execution_count="23">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>accuracy_list_train <span class="op">=</span> []</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>accuracy_list_val <span class="op">=</span> []</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n_estimators <span class="kw">in</span> n_estimators_list:</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># You can fit the model at the same time you define it, because the fit function returns the fitted estimator.</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> RandomForestClassifier(n_estimators <span class="op">=</span> n_estimators,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                                   random_state <span class="op">=</span> RANDOM_STATE).fit(X_train,y_train)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    predictions_train <span class="op">=</span> model.predict(X_train) <span class="co">## The predicted values for the train dataset</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    predictions_val <span class="op">=</span> model.predict(X_val) <span class="co">## The predicted values for the test dataset</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    accuracy_train <span class="op">=</span> accuracy_score(predictions_train,y_train)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    accuracy_val <span class="op">=</span> accuracy_score(predictions_val,y_val)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    accuracy_list_train.append(accuracy_train)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    accuracy_list_val.append(accuracy_val)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Train x Validation metrics'</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n_estimators'</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'accuracy'</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>plt.xticks(ticks <span class="op">=</span> <span class="bu">range</span>(<span class="bu">len</span>(n_estimators_list )),labels<span class="op">=</span>n_estimators_list)</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_train)</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>plt.plot(accuracy_list_val)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Train'</span>,<span class="st">'Validation'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>&lt;matplotlib.legend.Legend at 0x176d28790&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Tree Ensembles_files/figure-html/cell-21-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s then fit a random forest with the following parameters:</p>
+<ul>
+<li>max_depth: 16</li>
+<li>min_samples_split: 10</li>
+<li>n_estimators: 100</li>
+</ul>
+<div id="cell-38" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:31:40.895188Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:31:40.828740Z&quot;}" data-execution_count="24">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>random_forest_model <span class="op">=</span> RandomForestClassifier(n_estimators <span class="op">=</span> <span class="dv">100</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                             max_depth <span class="op">=</span> <span class="dv">16</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                             min_samples_split <span class="op">=</span> <span class="dv">10</span>).fit(X_train,y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-39" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:31:53.371119Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:31:53.357216Z&quot;}" data-execution_count="25">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Metrics train:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(random_forest_model.predict(X_train),y_train)<span class="sc">:.4f}</span><span class="ch">\n</span><span class="ss">Metrics test:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(random_forest_model.predict(X_val),y_val)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metrics train:
+    Accuracy score: 0.9305
+Metrics test:
+    Accuracy score: 0.8804</code></pre>
+</div>
+</div>
+<p>Note that we are searching for the best value one hyperparameter while leaving the other hyperparameters at their default values. - Ideally, we would want to check every combination of values for every hyperparameter that we are tuning. - If we have 3 hyperparameters, and each hyperparameter has 4 values to try out, we should have a total of 4 x 4 x 4 = 64 combinations to try. - When we only modify one hyperparameter while leaving the rest as their default value, we are trying 4 + 4 + 4 = 12 results. - To try out all combinations, we can use a sklearn implementation called GridSearchCV. GridSearchCV has a refit parameter that will automatically refit a model on the best combination so we will not need to program it explicitly. For more on GridSearchCV, please refer to its <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">documentation</a>.</p>
+</section>
+<section id="xgboost" class="level2">
+<h2 class="anchored" data-anchor-id="xgboost">4.3 XGBoost</h2>
+<p>Next is the Gradient Boosting model, called XGBoost. The boosting methods train several trees, but instead of them being uncorrelated to each other, now the trees are fit one after the other in order to minimize the error.</p>
+<p>The model has the same parameters as a decision tree, plus the learning rate. - The learning rate is the size of the step on the Gradient Descent method that the XGBoost uses internally to minimize the error on each train step.</p>
+<p>One interesting thing about the XGBoost is that during fitting, it can take in an evaluation dataset of the form <code>(X_val,y_val)</code>. - On each iteration, it measures the cost (or evaluation metric) on the evaluation datasets. - Once the cost (or metric) stops decreasing for a number of rounds (called early_stopping_rounds), the training will stop. - More iterations lead to more estimators, and more estimators can result in overfitting. - By stopping once the validation metric no longer improves, we can limit the number of estimators created, and reduce overfitting.</p>
+<p>First, let’s define a subset of our training set (we should not use the test set here).</p>
+<div id="cell-42" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:34:01.460868Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:34:01.438835Z&quot;}" data-execution_count="26">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(X_train)<span class="op">*</span><span class="fl">0.8</span>) <span class="co">## Let's use 80% to train and 20% to eval</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-43" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:34:13.153891Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:34:13.141844Z&quot;}" data-execution_count="27">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X_train_fit, X_train_eval, y_train_fit, y_train_eval <span class="op">=</span> X_train[:n], X_train[n:], y_train[:n], y_train[n:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can then set a large number of estimators, because we can stop if the cost function stops decreasing.</p>
+<p>Note some of the <code>.fit()</code> parameters: - <code>eval_set = [(X_train_eval,y_train_eval)]</code>:Here we must pass a list to the eval_set, because you can have several different tuples ov eval sets. - <code>early_stopping_rounds</code>: This parameter helps to stop the model training if its evaluation metric is no longer improving on the validation set. It’s set to 10. - The model keeps track of the round with the best performance (lowest evaluation metric). For example, let’s say round 16 has the lowest evaluation metric so far. - Each successive round’s evaluation metric is compared to the best metric. If the model goes 10 rounds where none have a better metric than the best one, then the model stops training. - The model is returned at its last state when training terminated, not its state during the best round. For example, if the model stops at round 26, but the best round was 16, the model’s training state at round 26 is returned, not round 16. - Note that this is different from returning the model’s “best” state (from when the evaluation metric was the lowest).</p>
+<div id="cell-46" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:35:39.342743Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:35:39.276309Z&quot;}" data-execution_count="28">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>xgb_model <span class="op">=</span> XGBClassifier(n_estimators <span class="op">=</span> <span class="dv">500</span>, learning_rate <span class="op">=</span> <span class="fl">0.1</span>,verbosity <span class="op">=</span> <span class="dv">1</span>, random_state <span class="op">=</span> RANDOM_STATE)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>xgb_model.fit(X_train_fit,y_train_fit, eval_set <span class="op">=</span> [(X_train_eval,y_train_eval)], early_stopping_rounds <span class="op">=</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0] validation_0-logloss:0.64479
+[1] validation_0-logloss:0.60569
+[2] validation_0-logloss:0.57481
+[3] validation_0-logloss:0.54947
+[4] validation_0-logloss:0.52973
+[5] validation_0-logloss:0.51331
+[6] validation_0-logloss:0.49823
+[7] validation_0-logloss:0.48855
+[8] validation_0-logloss:0.47888
+[9] validation_0-logloss:0.47068
+[10]    validation_0-logloss:0.46507
+[11]    validation_0-logloss:0.45832
+[12]    validation_0-logloss:0.45557
+[13]    validation_0-logloss:0.45030
+[14]    validation_0-logloss:0.44653
+[15]    validation_0-logloss:0.44213
+[16]    validation_0-logloss:0.43948
+[17]    validation_0-logloss:0.44088
+[18]    validation_0-logloss:0.44358
+[19]    validation_0-logloss:0.44493
+[20]    validation_0-logloss:0.44294
+[21]    validation_0-logloss:0.44486
+[22]    validation_0-logloss:0.44586
+[23]    validation_0-logloss:0.44680
+[24]    validation_0-logloss:0.44925
+[25]    validation_0-logloss:0.45383</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/kakamana/opt/anaconda3/lib/python3.9/site-packages/xgboost/sklearn.py:835: UserWarning: `early_stopping_rounds` in `fit` method is deprecated for better compatibility with scikit-learn, use `early_stopping_rounds` in constructor or`set_params` instead.
+  warnings.warn(</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+              interaction_constraints=None, learning_rate=0.1, max_bin=None,
+              max_cat_threshold=None, max_cat_to_onehot=None,
+              max_delta_step=None, max_depth=None, max_leaves=None,
+              min_child_weight=None, missing=nan, monotone_constraints=None,
+              n_estimators=500, n_jobs=None, num_parallel_tree=None,
+              predictor=None, random_state=55, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">XGBClassifier</label><div class="sk-toggleable__content"><pre>XGBClassifier(base_score=None, booster=None, callbacks=None,
+              colsample_bylevel=None, colsample_bynode=None,
+              colsample_bytree=None, early_stopping_rounds=None,
+              enable_categorical=False, eval_metric=None, feature_types=None,
+              gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+              interaction_constraints=None, learning_rate=0.1, max_bin=None,
+              max_cat_threshold=None, max_cat_to_onehot=None,
+              max_delta_step=None, max_depth=None, max_leaves=None,
+              min_child_weight=None, missing=nan, monotone_constraints=None,
+              n_estimators=500, n_jobs=None, num_parallel_tree=None,
+              predictor=None, random_state=55, ...)</pre></div></div></div></div></div>
+</div>
+</div>
+<p>Even though we initialized the model to allow up to 500 estimators, the algorithm only fit 26 estimators (over 26 rounds of training).</p>
+<p>To see why, let’s look for the round of training that had the best performance (lowest evaluation metric). You can either view the validation log loss metrics that were output above, or view the model’s <code>.best_iteration</code> attribute:</p>
+<div id="cell-48" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:36:06.270279Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:36:06.254539Z&quot;}" data-execution_count="29">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>xgb_model.best_iteration</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>16</code></pre>
+</div>
+</div>
+<p>The best round of training was round 16, with a log loss of 4.3948. - For 10 rounds of training after that (from round 17 to 26), the log loss was higher than this. - Since we set <code>early_stopping_rounds</code> to 10, then by the 10th round where the log loss doesn’t improve upon the best one, training stops. - You can try out different values of <code>early_stopping_rounds</code> to verify this. If you set it to 20, for instance, the model stops training at round 36 (16 + 20).</p>
+<div id="cell-50" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-05-13T11:36:27.263970Z&quot;,&quot;start_time&quot;:&quot;2023-05-13T11:36:27.249214Z&quot;}" data-execution_count="30">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Metrics train:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(xgb_model.predict(X_train),y_train)<span class="sc">:.4f}</span><span class="ch">\n</span><span class="ss">Metrics test:</span><span class="ch">\n\t</span><span class="ss">Accuracy score: </span><span class="sc">{</span>accuracy_score(xgb_model.predict(X_val),y_val)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Metrics train:
+    Accuracy score: 0.9251
+Metrics test:
+    Accuracy score: 0.8641</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,8 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -132,45 +111,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -245,7 +226,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="regression" class="level1">
 <h1>Regression</h1>
@@ -253,8 +236,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Regression</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/machine-learning-with-pyspark">Datacamp course: Machine Learning with PySpark</a> Spark is a powerful, general-purpose tool for working with large data sets. Spark transparently distributes compute tasks across a cluster. By doing this, operations are fast, but you can also focus on the analysis rather than worry about technical details. This course will teach you how to get data into Spark, and then dive into three fundamental Spark Machine Learning algorithms: Linear Regression, Logistic Regression/Classifiers, and creating pipelines. You will analyze a large dataset of flight delays and spam text messages along the way. With this background, you will be able to harness the power of Spark and apply it to your own Machine Learning projects.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:56:47.114365Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:56:47.118591Z&quot;}" data-execution_count="3">
-<details>
+<div id="cell-2" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:56:47.114365Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:56:47.118591Z&quot;}" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
@@ -279,8 +262,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>TUS — Tucson International Airport</li>
 <li>OGG — Kahului (Hawaii) Obviously this is only a small subset of airports. Nevertheless, since this is a categorical variable, it needs to be one-hot encoded before it can be used in a regression model.</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:58:12.307127Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:58:12.976268Z&quot;}" data-execution_count="4">
-<details>
+<div id="cell-4" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:58:12.307127Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:58:12.976268Z&quot;}" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>spark <span class="op">=</span> SparkSession.builder.master(<span class="st">'local[*]'</span>).appName(<span class="st">'flights'</span>).getOrCreate()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -327,8 +310,8 @@ None
 [('mon', 'int'), ('dom', 'int'), ('dow', 'int'), ('carrier', 'string'), ('flight', 'int'), ('org', 'string'), ('mile', 'int'), ('depart', 'double'), ('duration', 'int'), ('delay', 'int')]</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:58:55.115000Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:58:55.944351Z&quot;}" data-execution_count="5">
-<details>
+<div id="cell-5" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T23:58:55.115000Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T23:58:55.944351Z&quot;}" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,8 +348,8 @@ only showing top 20 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:00:42.882462Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:00:43.551351Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-6" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:00:42.882462Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:00:43.551351Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the one hot encoder class</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> OneHotEncoder</span>
@@ -405,8 +388,8 @@ only showing top 20 rows
 <h2 class="anchored" data-anchor-id="flight-duration-model---just-distance">Flight duration model - Just distance</h2>
 <p>In this exercise you’ll build a regression model to predict flight duration (the duration column).</p>
 <p>For the moment you’ll keep the model simple, including only the distance of the flight (the km column) as a predictor.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:01:57.619502Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:01:57.684595Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-8" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:01:57.619502Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:01:57.684595Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>flights_onehot.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -424,8 +407,8 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:19:16.985770Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:19:17.081133Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-9" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:19:16.985770Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:19:17.081133Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">round</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -448,8 +431,8 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:19:54.674255Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:19:54.774950Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-10" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:19:54.674255Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:19:54.774950Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -475,14 +458,14 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:20:50.728428Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:20:50.737430Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-11" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:20:50.728428Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:20:50.737430Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:21:01.014201Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:21:03.880209Z&quot;}" data-execution_count="11">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:21:01.014201Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:21:03.880209Z&quot;}" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.regression <span class="im">import</span> LinearRegression</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> RegressionEvaluator</span>
@@ -501,19 +484,9 @@ only showing top 5 rows
 <pre><code>23/04/11 00:21:01 WARN Instrumentation: [30b8ecc7] regParam is zero, which might cause numerical instability and overfitting.
 23/04/11 00:21:01 WARN InstanceBuilder$JavaBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.VectorBLAS
 23/04/11 00:21:01 WARN InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.JNIBLAS
-23/04/11 00:21:01 WARN InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>23/04/11 00:21:01 WARN InstanceBuilder$NativeLAPACK: Failed to load implementation from:dev.ludovic.netlib.lapack.JNILAPACK</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>+--------+-----------------+
+23/04/11 00:21:01 WARN InstanceBuilder$NativeBLAS: Failed to load implementation from:dev.ludovic.netlib.blas.ForeignLinkerBLAS
+23/04/11 00:21:01 WARN InstanceBuilder$NativeLAPACK: Failed to load implementation from:dev.ludovic.netlib.lapack.JNILAPACK
++--------+-----------------+
 |duration|prediction       |
 +--------+-----------------+
 |210     |222.625095554037 |
@@ -525,6 +498,9 @@ only showing top 5 rows
 only showing top 5 rows
 </code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>                                                                                                                                                                </code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>17.162736947467877</code></pre>
 </div>
@@ -533,23 +509,23 @@ only showing top 5 rows
 <section id="interpreting-the-coefficients" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-the-coefficients">Interpreting the coefficients</h2>
 <p><img src="regression-1.png" class="img-fluid"></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:27:39.170443Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:27:39.207671Z&quot;}" data-execution_count="12">
-<details>
+<div id="cell-14" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:27:39.170443Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:27:39.207671Z&quot;}" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>inter <span class="op">=</span> regression.intercept</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inter)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> regression.coefficients</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coefs)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes per km</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>minutes_per_km <span class="op">=</span> regression.coefficients[<span class="dv">0</span>]</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(minutes_per_km)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Average speed in km per hour</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>avg_speed <span class="op">=</span> <span class="dv">60</span> <span class="op">/</span> minutes_per_km</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_speed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>inter <span class="op">=</span> regression.intercept</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inter)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficients</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>coefs <span class="op">=</span> regression.coefficients</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coefs)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes per km</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>minutes_per_km <span class="op">=</span> regression.coefficients[<span class="dv">0</span>]</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(minutes_per_km)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Average speed in km per hour</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>avg_speed <span class="op">=</span> <span class="dv">60</span> <span class="op">/</span> minutes_per_km</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_speed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>44.295923491174236
@@ -563,15 +539,15 @@ only showing top 5 rows
 <h2 class="anchored" data-anchor-id="flight-duration-model---adding-origin-airport">Flight duration model - Adding origin airport</h2>
 <p>Some airports are busier than others. Some airports are bigger than others too. Flights departing from large or busy airports are likely to spend more time taxiing or waiting for their takeoff slot. So it stands to reason that the duration of a flight might depend not only on the distance being covered but also the airport from which the flight departs.</p>
 <p>You are going to make the regression model a little more sophisticated by including the departure airport as a predictor.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:29:20.412950Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:29:20.528374Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-16" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:29:20.412950Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:29:20.528374Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[<span class="st">'km'</span>, <span class="st">'org_dummy'</span>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Consolidate predictor columns</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights_onehot)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[<span class="st">'km'</span>, <span class="st">'org_dummy'</span>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Consolidate predictor columns</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights_onehot)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+------+---+------+--------+-----+-------+-------------+------+--------------------+
@@ -587,19 +563,19 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:30:13.399865Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:30:15.514333Z&quot;}" data-execution_count="14">
-<details>
+<div id="cell-17" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:30:13.399865Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:30:15.514333Z&quot;}" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a regression object and train on training data</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">'features'</span>, labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create predictions for the test data</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on test data</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a regression object and train on training data</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(featuresCol<span class="op">=</span><span class="st">'features'</span>, labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create predictions for the test data</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on test data</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>23/04/11 00:30:13 WARN Instrumentation: [77102ecd] regParam is zero, which might cause numerical instability and overfitting.</code></pre>
@@ -628,23 +604,23 @@ only showing top 5 rows
 </ul>
 <p>In this exercise you’ll be using the intercept and coefficients attributes to interpret the model.</p>
 <p>The coefficients attribute is a list, where the first element indicates how flight duration changes with flight distance.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:33:22.462179Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:33:22.478147Z&quot;}" data-execution_count="15">
-<details>
+<div id="cell-19" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:33:22.462179Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:33:22.478147Z&quot;}" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>avg_speed_hour <span class="op">=</span> <span class="dv">60</span> <span class="op">/</span> regression.coefficients[<span class="dv">0</span>]</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_speed_hour)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Averate minutes on ground at OGG</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>inter <span class="op">=</span> regression.intercept</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inter)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at JFK</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>avg_ground_jfk<span class="op">=</span> inter <span class="op">+</span> regression.coefficients[<span class="dv">3</span>]</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_ground_jfk)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at LGA</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>avg_ground_lga <span class="op">=</span> inter <span class="op">+</span> regression.coefficients[<span class="dv">4</span>]</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_ground_lga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>avg_speed_hour <span class="op">=</span> <span class="dv">60</span> <span class="op">/</span> regression.coefficients[<span class="dv">0</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_speed_hour)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Averate minutes on ground at OGG</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>inter <span class="op">=</span> regression.intercept</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inter)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at JFK</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>avg_ground_jfk<span class="op">=</span> inter <span class="op">+</span> regression.coefficients[<span class="dv">3</span>]</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_ground_jfk)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at LGA</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>avg_ground_lga <span class="op">=</span> inter <span class="op">+</span> regression.coefficients[<span class="dv">4</span>]</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_ground_lga)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>807.5223057447772
@@ -665,26 +641,26 @@ only showing top 5 rows
 <h2 class="anchored" data-anchor-id="bucketing-departure-time">Bucketing departure time</h2>
 <p>Time of day data are a challenge with regression models. They are also a great candidate for bucketing.</p>
 <p>In this lesson you will convert the flight departure times from numeric values between 0 (corresponding to “00:00”) and 24 (corresponding to “24:00”) to binned values. You’ll then take those binned values and one-hot encode them.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:36:28.928193Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:36:29.122538Z&quot;}" data-execution_count="16">
-<details>
+<div id="cell-21" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:36:28.928193Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:36:29.122538Z&quot;}" data-execution_count="16">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Bucketizer</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create buckets at 3 hour intervals through the day</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>buckets <span class="op">=</span> Bucketizer(splits<span class="op">=</span>[</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span> <span class="op">*</span> x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">9</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>], inputCol<span class="op">=</span><span class="st">'depart'</span>, outputCol<span class="op">=</span><span class="st">'depart_bucket'</span>)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bucket the departure times</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>bucketed <span class="op">=</span> buckets.transform(flights)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>bucketed.select(<span class="st">'depart'</span>, <span class="st">'depart_bucket'</span>).show(<span class="dv">5</span>)</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a one-hot encoder</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'depart_bucket'</span>], outputCols<span class="op">=</span>[<span class="st">'depart_dummy'</span>])</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode the bucketed departure times</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>flights_onehot <span class="op">=</span> onehot.fit(bucketed).transform(bucketed)</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>flights_onehot.select(<span class="st">'depart'</span>, <span class="st">'depart_bucket'</span>, <span class="st">'depart_dummy'</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Bucketizer</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create buckets at 3 hour intervals through the day</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>buckets <span class="op">=</span> Bucketizer(splits<span class="op">=</span>[</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span> <span class="op">*</span> x <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">9</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>], inputCol<span class="op">=</span><span class="st">'depart'</span>, outputCol<span class="op">=</span><span class="st">'depart_bucket'</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bucket the departure times</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>bucketed <span class="op">=</span> buckets.transform(flights)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>bucketed.select(<span class="st">'depart'</span>, <span class="st">'depart_bucket'</span>).show(<span class="dv">5</span>)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a one-hot encoder</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'depart_bucket'</span>], outputCols<span class="op">=</span>[<span class="st">'depart_dummy'</span>])</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode the bucketed departure times</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>flights_onehot <span class="op">=</span> onehot.fit(bucketed).transform(bucketed)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>flights_onehot.select(<span class="st">'depart'</span>, <span class="st">'depart_bucket'</span>, <span class="st">'depart_dummy'</span>).show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+------+-------------+
@@ -716,14 +692,14 @@ only showing top 5 rows
 <h2 class="anchored" data-anchor-id="flight-duration-model---adding-departure-time">Flight duration model - Adding departure time</h2>
 <p>In the previous exercise the departure time was bucketed and converted to dummy variables. Now you’re going to include those dummy variables in a regression model for flight duration.</p>
 <p>The data are in flights. The km, org_dummy and depart_dummy columns have been assembled into features, where km is index 0, org_dummy runs from index 1 to 7 and depart_dummy from index 8 to 14.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:38:51.651271Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:38:51.766008Z&quot;}" data-execution_count="17">
-<details>
+<div id="cell-23" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:38:51.651271Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:38:51.766008Z&quot;}" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[<span class="st">'km'</span>, <span class="st">'org_dummy'</span>, <span class="st">'depart_dummy'</span>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights_onehot.drop(<span class="st">'features'</span>))</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[<span class="st">'km'</span>, <span class="st">'org_dummy'</span>, <span class="st">'depart_dummy'</span>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights_onehot.drop(<span class="st">'features'</span>))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+------+---+------+--------+-----+-------+-------------+------+-------------+-------------+--------------------+
@@ -739,42 +715,37 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:40:59.743792Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:41:03.053817Z&quot;}" data-execution_count="18">
-<details>
+<div id="cell-24" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:40:59.743792Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:41:03.053817Z&quot;}" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Train with training data</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at OGG for flights departing between 21:00 and 24:00</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>avg_eve_ogg <span class="op">=</span> regression.intercept</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_eve_ogg)</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at OGG for flights departing between 00:00 and 03:00</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>avg_night_ogg <span class="op">=</span> regression.intercept <span class="op">+</span> regression.coefficients[<span class="dv">8</span>]</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_night_ogg)</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at JFK for flights departing between 00:00 and 03:00</span></span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>avg_night_jfk <span class="op">=</span> regression.intercept <span class="op">+</span> regression.coefficients[<span class="dv">3</span>] <span class="op">+</span> regression.coefficients[<span class="dv">8</span>]</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_night_jfk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Train with training data</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at OGG for flights departing between 21:00 and 24:00</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>avg_eve_ogg <span class="op">=</span> regression.intercept</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_eve_ogg)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at OGG for flights departing between 00:00 and 03:00</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>avg_night_ogg <span class="op">=</span> regression.intercept <span class="op">+</span> regression.coefficients[<span class="dv">8</span>]</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_night_ogg)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Average minutes on ground at JFK for flights departing between 00:00 and 03:00</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>avg_night_jfk <span class="op">=</span> regression.intercept <span class="op">+</span> regression.coefficients[<span class="dv">3</span>] <span class="op">+</span> regression.coefficients[<span class="dv">8</span>]</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avg_night_jfk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>23/04/11 00:40:59 WARN Instrumentation: [1af1202e] regParam is zero, which might cause numerical instability and overfitting.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>10.39466681440241
+<pre><code>23/04/11 00:40:59 WARN Instrumentation: [1af1202e] regParam is zero, which might cause numerical instability and overfitting.
+10.39466681440241
 -3.7075609618922467
 48.22234281706298</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
+<pre><code>                                                                                                                                                                </code></pre>
 </div>
 </div>
 </section>
@@ -798,16 +769,16 @@ only showing top 5 rows
 <li>mon (departure month, one-hot encoded, 12 levels).</li>
 </ul>
 <p>These have been assembled into the features column, which is a sparse representation of 32 columns (remember one-hot encoding produces a number of columns which is one fewer than the number of levels).</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:49:40.753171Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:49:41.515450Z&quot;}" data-execution_count="19">
-<details>
+<div id="cell-26" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:49:40.753171Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:49:41.515450Z&quot;}" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'dow'</span>], outputCols<span class="op">=</span>[<span class="st">'dow_dummy'</span>])</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> onehot.fit(flights).transform(flights)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'mon'</span>], outputCols<span class="op">=</span>[<span class="st">'mon_dummy'</span>])</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> onehot.fit(flights).transform(flights)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'dow'</span>], outputCols<span class="op">=</span>[<span class="st">'dow_dummy'</span>])</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> onehot.fit(flights).transform(flights)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>onehot <span class="op">=</span> OneHotEncoder(inputCols<span class="op">=</span>[<span class="st">'mon'</span>], outputCols<span class="op">=</span>[<span class="st">'mon_dummy'</span>])</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> onehot.fit(flights).transform(flights)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+------+---+------+--------+-----+-------+-------------+------+-------------+-------------+--------------------+-------------+---------------+
@@ -823,15 +794,15 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:50:07.408492Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:50:07.510206Z&quot;}" data-execution_count="20">
-<details>
+<div id="cell-27" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:50:07.408492Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:50:07.510206Z&quot;}" data-execution_count="20">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'km'</span>, <span class="st">'org_dummy'</span>, <span class="st">'depart_dummy'</span>, <span class="st">'dow_dummy'</span>, <span class="st">'mon_dummy'</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights.drop(<span class="st">'features'</span>))</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'km'</span>, <span class="st">'org_dummy'</span>, <span class="st">'depart_dummy'</span>, <span class="st">'dow_dummy'</span>, <span class="st">'mon_dummy'</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> assembler.transform(flights.drop(<span class="st">'features'</span>))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>flights.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+------+---+------+--------+-----+-------+-------------+------+-------------+-------------+-------------+---------------+--------------------+
@@ -847,37 +818,32 @@ only showing top 5 rows
 </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:50:56.926787Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:50:59.393683Z&quot;}" data-execution_count="21">
-<details>
+<div id="cell-28" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:50:56.926787Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:50:59.393683Z&quot;}" data-execution_count="21">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regressino model to training data</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on test data</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on test data</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The test RMSE is"</span>, rmse)</span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the model coefficients</span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> regression.coefficients</span>
-<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coeffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>])</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regressino model to training data</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>).fit(flights_train)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on test data</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on test data</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The test RMSE is"</span>, rmse)</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the model coefficients</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> regression.coefficients</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coeffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>23/04/11 00:50:57 WARN Instrumentation: [80c1b164] regParam is zero, which might cause numerical instability and overfitting.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The test RMSE is 10.724190288776182
+<pre><code>23/04/11 00:50:57 WARN Instrumentation: [80c1b164] regParam is zero, which might cause numerical instability and overfitting.
+The test RMSE is 10.724190288776182
 [0.07439617054843561,27.145340646967067,20.000499394192136,52.01213638788842,46.080034158347246,15.143439944331867,17.332120108676925,17.380424266350847,-14.90401554203675,-0.19040688562203764,3.993555504344593,7.026619199266888,4.769865793438894,8.882711940858849,8.951419052412321,-0.0918176307653956,-0.17177103162039656,-0.15924171886157698,-0.09247573867539892,-0.060677744022317515,-0.07752584272351075,-1.837930733439899,-1.8292147413424755,-2.036520611335749,-3.4324149024765247,-4.029267456901507,-3.8997326499213996,-3.9006869384654714,-3.9574770581976257,-3.856452567341345,-2.561223621449253,-0.38910636975803964]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>                                                                                </code></pre>
+<pre><code>                                                                                                                                                                </code></pre>
 </div>
 </div>
 </section>
@@ -886,23 +852,23 @@ only showing top 5 rows
 <p>In the previous exercise you added more predictors to the flight duration model. The model performed well on testing data, but with so many coefficients it was difficult to interpret.</p>
 <p>In this exercise you’ll use Lasso regression (regularized with a L1 penalty) to create a more parsimonious model. Many of the coefficients in the resulting model will be set to zero. This means that only a subset of the predictors actually contribute to the model. Despite the simpler model, it still produces a good RMSE on the testing data.</p>
 <p>You’ll use a specific value for the regularization strength. Later you’ll learn how to find the best value using cross validation.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:53:10.619117Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:53:12.697925Z&quot;}" data-execution_count="22">
-<details>
+<div id="cell-30" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-11T00:53:10.619117Z&quot;,&quot;end_time&quot;:&quot;2023-04-11T00:53:12.697925Z&quot;}" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>, regParam<span class="op">=</span><span class="dv">1</span>, elasticNetParam<span class="op">=</span><span class="dv">1</span>).fit(flights_train)</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on testing data</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The test RMSE is"</span>, rmse)</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the model coefficients</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> regression.coefficients</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coeffs)</span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of zero coefficients</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>zero_coeff <span class="op">=</span> <span class="bu">sum</span>([beta <span class="op">==</span> <span class="dv">0</span> <span class="cf">for</span> beta <span class="kw">in</span> regression.coefficients])</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of coefficients equal to 0:"</span>, zero_coeff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>regression <span class="op">=</span> LinearRegression(labelCol<span class="op">=</span><span class="st">'duration'</span>, regParam<span class="op">=</span><span class="dv">1</span>, elasticNetParam<span class="op">=</span><span class="dv">1</span>).fit(flights_train)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> regression.transform(flights_test)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the RMSE on testing data</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> RegressionEvaluator(labelCol<span class="op">=</span><span class="st">'duration'</span>, metricName<span class="op">=</span><span class="st">'rmse'</span>).evaluate(predictions)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The test RMSE is"</span>, rmse)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the model coefficients</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>coeffs <span class="op">=</span> regression.coefficients</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coeffs)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of zero coefficients</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>zero_coeff <span class="op">=</span> <span class="bu">sum</span>([beta <span class="op">==</span> <span class="dv">0</span> <span class="cf">for</span> beta <span class="kw">in</span> regression.coefficients])</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of coefficients equal to 0:"</span>, zero_coeff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
@@ -946,9 +912,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -984,10 +964,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -997,8 +976,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1013,6 +1001,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1055,6 +1275,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

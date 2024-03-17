@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -249,15 +230,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="selecting-features-for-modeling" class="level1">
 <h1>Selecting Features for Modeling</h1>
 <p>We are going to learn how to create a few different techniques to evaluate the most important features from your dataset. we will learn how to eliminate redundant features, use text vectors to reduce the number of features in your dataset, and use principal component analysis (PCA) to reduce the number of features in your dataset.</p>
 <p>This <strong>Selecting Features for Modeling</strong> is part of <a href="https://app.datacamp.com/learn/courses/preprocessing-for-machine-learning-in-python">Datacamp course: Preprocessing for Machine Learning in Python</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -273,106 +256,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="identifying-areas-for-feature-selection" class="level3">
 <h3 class="anchored" data-anchor-id="identifying-areas-for-feature-selection">Identifying areas for feature selection</h3>
 <p>Take an exploratory look at the post-feature engineering <code>hiking</code> dataset.</p>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="cell-5" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hiking <span class="op">=</span> pd.read_json(<span class="st">'dataset/hiking.json'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>hiking.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="2">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Prop_ID</th>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Park_Name</th>
-      <th>Length</th>
-      <th>Difficulty</th>
-      <th>Other_Details</th>
-      <th>Accessible</th>
-      <th>Limited_Access</th>
-      <th>lat</th>
-      <th>lon</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>B057</td>
-      <td>Salt Marsh Nature Trail</td>
-      <td>Enter behind the Salt Marsh Nature Center, loc...</td>
-      <td>Marine Park</td>
-      <td>0.8 miles</td>
-      <td>None</td>
-      <td>&lt;p&gt;The first half of this mile-long trail foll...</td>
-      <td>Y</td>
-      <td>N</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>B073</td>
-      <td>Lullwater</td>
-      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
-      <td>Prospect Park</td>
-      <td>1.0 mile</td>
-      <td>Easy</td>
-      <td>Explore the Lullwater to see how nature thrive...</td>
-      <td>N</td>
-      <td>N</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>B073</td>
-      <td>Midwood</td>
-      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
-      <td>Prospect Park</td>
-      <td>0.75 miles</td>
-      <td>Easy</td>
-      <td>Step back in time with a walk through Brooklyn...</td>
-      <td>N</td>
-      <td>N</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>B073</td>
-      <td>Peninsula</td>
-      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
-      <td>Prospect Park</td>
-      <td>0.5 miles</td>
-      <td>Easy</td>
-      <td>Discover how the Peninsula has changed over th...</td>
-      <td>N</td>
-      <td>N</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>B073</td>
-      <td>Waterfall</td>
-      <td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
-      <td>Prospect Park</td>
-      <td>0.5 miles</td>
-      <td>Easy</td>
-      <td>Trace the source of the Lake on the Waterfall ...</td>
-      <td>N</td>
-      <td>N</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Prop_ID</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Location</th>
+<th data-quarto-table-cell-role="th">Park_Name</th>
+<th data-quarto-table-cell-role="th">Length</th>
+<th data-quarto-table-cell-role="th">Difficulty</th>
+<th data-quarto-table-cell-role="th">Other_Details</th>
+<th data-quarto-table-cell-role="th">Accessible</th>
+<th data-quarto-table-cell-role="th">Limited_Access</th>
+<th data-quarto-table-cell-role="th">lat</th>
+<th data-quarto-table-cell-role="th">lon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>B057</td>
+<td>Salt Marsh Nature Trail</td>
+<td>Enter behind the Salt Marsh Nature Center, loc...</td>
+<td>Marine Park</td>
+<td>0.8 miles</td>
+<td>None</td>
+<td>&lt;p&gt;The first half of this mile-long trail foll...</td>
+<td>Y</td>
+<td>N</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>B073</td>
+<td>Lullwater</td>
+<td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+<td>Prospect Park</td>
+<td>1.0 mile</td>
+<td>Easy</td>
+<td>Explore the Lullwater to see how nature thrive...</td>
+<td>N</td>
+<td>N</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>B073</td>
+<td>Midwood</td>
+<td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+<td>Prospect Park</td>
+<td>0.75 miles</td>
+<td>Easy</td>
+<td>Step back in time with a walk through Brooklyn...</td>
+<td>N</td>
+<td>N</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>B073</td>
+<td>Peninsula</td>
+<td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+<td>Prospect Park</td>
+<td>0.5 miles</td>
+<td>Easy</td>
+<td>Discover how the Peninsula has changed over th...</td>
+<td>N</td>
+<td>N</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>B073</td>
+<td>Waterfall</td>
+<td>Enter Park at Lincoln Road and Ocean Avenue en...</td>
+<td>Prospect Park</td>
+<td>0.5 miles</td>
+<td>Easy</td>
+<td>Trace the source of the Lake on the Waterfall ...</td>
+<td>N</td>
+<td>N</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -396,142 +382,145 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For example, if you explore the <code>volunteer</code> dataset in the console, you’ll see three features which are related to location: <code>locality</code>, <code>region</code>, and <code>postalcode</code>. They contain repeated information, so it would make sense to keep only one of the features.</p>
 <p>There are also features that have gone through the feature engineering process: columns like <code>Education</code> and <code>Emergency Preparedness</code> are a product of encoding the categorical variable <code>category_desc</code>, so <code>category_desc</code> itself is redundant now.</p>
 <p>Take a moment to examine the features of volunteer in the console, and try to identify the redundant features.</p>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="cell-8" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> pd.read_csv(<span class="st">'dataset/volunteer_sample.csv'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>volunteer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="3">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>vol_requests</th>
-      <th>title</th>
-      <th>hits</th>
-      <th>category_desc</th>
-      <th>locality</th>
-      <th>region</th>
-      <th>postalcode</th>
-      <th>created_date</th>
-      <th>vol_requests_lognorm</th>
-      <th>created_month</th>
-      <th>Education</th>
-      <th>Emergency Preparedness</th>
-      <th>Environment</th>
-      <th>Health</th>
-      <th>Helping Neighbors in Need</th>
-      <th>Strengthening Communities</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2</td>
-      <td>Web designer</td>
-      <td>22</td>
-      <td>Strengthening Communities</td>
-      <td>5 22nd St\nNew York, NY 10010\n(40.74053152272...</td>
-      <td>NY</td>
-      <td>10010.0</td>
-      <td>2011-01-14</td>
-      <td>0.693147</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>20</td>
-      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
-      <td>62</td>
-      <td>Strengthening Communities</td>
-      <td>NaN</td>
-      <td>NY</td>
-      <td>10026.0</td>
-      <td>2011-01-19</td>
-      <td>2.995732</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>500</td>
-      <td>Fight global hunger and support women farmers ...</td>
-      <td>14</td>
-      <td>Strengthening Communities</td>
-      <td>NaN</td>
-      <td>NY</td>
-      <td>2114.0</td>
-      <td>2011-01-21</td>
-      <td>6.214608</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>15</td>
-      <td>Stop 'N' Swap</td>
-      <td>31</td>
-      <td>Environment</td>
-      <td>NaN</td>
-      <td>NY</td>
-      <td>10455.0</td>
-      <td>2011-01-28</td>
-      <td>2.708050</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>15</td>
-      <td>Queens Stop 'N' Swap</td>
-      <td>135</td>
-      <td>Environment</td>
-      <td>NaN</td>
-      <td>NY</td>
-      <td>11372.0</td>
-      <td>2011-01-28</td>
-      <td>2.708050</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">vol_requests</th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">hits</th>
+<th data-quarto-table-cell-role="th">category_desc</th>
+<th data-quarto-table-cell-role="th">locality</th>
+<th data-quarto-table-cell-role="th">region</th>
+<th data-quarto-table-cell-role="th">postalcode</th>
+<th data-quarto-table-cell-role="th">created_date</th>
+<th data-quarto-table-cell-role="th">vol_requests_lognorm</th>
+<th data-quarto-table-cell-role="th">created_month</th>
+<th data-quarto-table-cell-role="th">Education</th>
+<th data-quarto-table-cell-role="th">Emergency Preparedness</th>
+<th data-quarto-table-cell-role="th">Environment</th>
+<th data-quarto-table-cell-role="th">Health</th>
+<th data-quarto-table-cell-role="th">Helping Neighbors in Need</th>
+<th data-quarto-table-cell-role="th">Strengthening Communities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2</td>
+<td>Web designer</td>
+<td>22</td>
+<td>Strengthening Communities</td>
+<td>5 22nd St\nNew York, NY 10010\n(40.74053152272...</td>
+<td>NY</td>
+<td>10010.0</td>
+<td>2011-01-14</td>
+<td>0.693147</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>20</td>
+<td>Urban Adventures - Ice Skating at Lasker Rink</td>
+<td>62</td>
+<td>Strengthening Communities</td>
+<td>NaN</td>
+<td>NY</td>
+<td>10026.0</td>
+<td>2011-01-19</td>
+<td>2.995732</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>500</td>
+<td>Fight global hunger and support women farmers ...</td>
+<td>14</td>
+<td>Strengthening Communities</td>
+<td>NaN</td>
+<td>NY</td>
+<td>2114.0</td>
+<td>2011-01-21</td>
+<td>6.214608</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>15</td>
+<td>Stop 'N' Swap</td>
+<td>31</td>
+<td>Environment</td>
+<td>NaN</td>
+<td>NY</td>
+<td>10455.0</td>
+<td>2011-01-28</td>
+<td>2.708050</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>15</td>
+<td>Queens Stop 'N' Swap</td>
+<td>135</td>
+<td>Environment</td>
+<td>NaN</td>
+<td>NY</td>
+<td>11372.0</td>
+<td>2011-01-28</td>
+<td>2.708050</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
-<details>
+</div>
+<div id="cell-9" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>volunteer.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -543,8 +532,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-10" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of redundant column names to drop</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> [<span class="st">"locality"</span>, <span class="st">"region"</span>, <span class="st">"category_desc"</span>, <span class="st">"created_date"</span>, <span class="st">"vol_requests"</span>]</span>
@@ -556,99 +545,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>volunteer_subset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="5">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>title</th>
-      <th>hits</th>
-      <th>postalcode</th>
-      <th>vol_requests_lognorm</th>
-      <th>created_month</th>
-      <th>Education</th>
-      <th>Emergency Preparedness</th>
-      <th>Environment</th>
-      <th>Health</th>
-      <th>Helping Neighbors in Need</th>
-      <th>Strengthening Communities</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Web designer</td>
-      <td>22</td>
-      <td>10010.0</td>
-      <td>0.693147</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Urban Adventures - Ice Skating at Lasker Rink</td>
-      <td>62</td>
-      <td>10026.0</td>
-      <td>2.995732</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Fight global hunger and support women farmers ...</td>
-      <td>14</td>
-      <td>2114.0</td>
-      <td>6.214608</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Stop 'N' Swap</td>
-      <td>31</td>
-      <td>10455.0</td>
-      <td>2.708050</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Queens Stop 'N' Swap</td>
-      <td>135</td>
-      <td>11372.0</td>
-      <td>2.708050</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">title</th>
+<th data-quarto-table-cell-role="th">hits</th>
+<th data-quarto-table-cell-role="th">postalcode</th>
+<th data-quarto-table-cell-role="th">vol_requests_lognorm</th>
+<th data-quarto-table-cell-role="th">created_month</th>
+<th data-quarto-table-cell-role="th">Education</th>
+<th data-quarto-table-cell-role="th">Emergency Preparedness</th>
+<th data-quarto-table-cell-role="th">Environment</th>
+<th data-quarto-table-cell-role="th">Health</th>
+<th data-quarto-table-cell-role="th">Helping Neighbors in Need</th>
+<th data-quarto-table-cell-role="th">Strengthening Communities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Web designer</td>
+<td>22</td>
+<td>10010.0</td>
+<td>0.693147</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Urban Adventures - Ice Skating at Lasker Rink</td>
+<td>62</td>
+<td>10026.0</td>
+<td>2.995732</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Fight global hunger and support women farmers ...</td>
+<td>14</td>
+<td>2114.0</td>
+<td>6.214608</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Stop 'N' Swap</td>
+<td>31</td>
+<td>10455.0</td>
+<td>2.708050</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Queens Stop 'N' Swap</td>
+<td>135</td>
+<td>11372.0</td>
+<td>2.708050</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -656,75 +648,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="checking-for-correlated-features" class="level3">
 <h3 class="anchored" data-anchor-id="checking-for-correlated-features">Checking for correlated features</h3>
 <p>Let’s take a look at the <code>wine</code> dataset again, which is made up of continuous, numerical features. Run Pearson’s correlation coefficient on the dataset to determine which columns are good candidates for eliminating. Then, remove those columns from the DataFrame.</p>
-<div class="cell" data-execution_count="6">
-<details>
+<div id="cell-12" class="cell" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">'dataset/wine_sample.csv'</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>wine.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="6">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Flavanoids</th>
-      <th>Total phenols</th>
-      <th>Malic acid</th>
-      <th>OD280/OD315 of diluted wines</th>
-      <th>Hue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>3.06</td>
-      <td>2.80</td>
-      <td>1.71</td>
-      <td>3.92</td>
-      <td>1.04</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2.76</td>
-      <td>2.65</td>
-      <td>1.78</td>
-      <td>3.40</td>
-      <td>1.05</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3.24</td>
-      <td>2.80</td>
-      <td>2.36</td>
-      <td>3.17</td>
-      <td>1.03</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3.49</td>
-      <td>3.85</td>
-      <td>1.95</td>
-      <td>3.45</td>
-      <td>0.86</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2.69</td>
-      <td>2.80</td>
-      <td>2.59</td>
-      <td>2.93</td>
-      <td>1.04</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Flavanoids</th>
+<th data-quarto-table-cell-role="th">Total phenols</th>
+<th data-quarto-table-cell-role="th">Malic acid</th>
+<th data-quarto-table-cell-role="th">OD280/OD315 of diluted wines</th>
+<th data-quarto-table-cell-role="th">Hue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>3.06</td>
+<td>2.80</td>
+<td>1.71</td>
+<td>3.92</td>
+<td>1.04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.76</td>
+<td>2.65</td>
+<td>1.78</td>
+<td>3.40</td>
+<td>1.05</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.24</td>
+<td>2.80</td>
+<td>2.36</td>
+<td>3.17</td>
+<td>1.03</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3.49</td>
+<td>3.85</td>
+<td>1.95</td>
+<td>3.45</td>
+<td>0.86</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2.69</td>
+<td>2.80</td>
+<td>2.59</td>
+<td>2.93</td>
+<td>1.04</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<details>
+</div>
+<div id="cell-13" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print out the column correlations of the wine dataset</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(wine.corr())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -745,8 +740,8 @@ OD280/OD315 of diluted wines                      1.000000  0.565468
 Hue                                               0.565468  1.000000  </code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-14" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a minute to find the column where the correlation value is greater than 0.75 at least twice</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>to_drop <span class="op">=</span> <span class="st">"Flavanoids"</span></span>
@@ -762,22 +757,22 @@ Hue                                               0.565468  1.000000  </code></p
 <section id="exploring-text-vectors-part-1" class="level3">
 <h3 class="anchored" data-anchor-id="exploring-text-vectors-part-1">Exploring text vectors, part 1</h3>
 <p>Let’s expand on the text vector exploration method we just learned about, using the <code>volunteer</code> dataset’s title tf/idf vectors. In this first part of text vector exploration, we’re going to add to that function we learned about in the slides. We’ll return a list of numbers with the function. In the next exercise, we’ll write another function to collect the top words across all documents, extract them, and then use that list to filter down our <code>text_tfidf</code> vector.</p>
-<div class="cell" data-execution_count="9">
-<details>
+<div id="cell-17" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>vocab_csv <span class="op">=</span> pd.read_csv(<span class="st">'dataset/vocab.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>).to_dict()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> vocab_csv[<span class="st">'0'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="10">
-<details>
+<div id="cell-18" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> volunteer[[<span class="st">'category_desc'</span>, <span class="st">'title'</span>]]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>volunteer <span class="op">=</span> volunteer.dropna(subset<span class="op">=</span>[<span class="st">'category_desc'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="11">
-<details>
+<div id="cell-19" class="cell" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -791,8 +786,8 @@ Hue                                               0.565468  1.000000  </code></p
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>text_tfidf <span class="op">=</span> tfidf_vec.fit_transform(title_text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="12">
-<details>
+<div id="cell-20" class="cell" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add in the rest of the parameters</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> return_weights(vocab, original_vocab, vector, vector_index, top_n):</span>
@@ -816,8 +811,8 @@ Hue                                               0.565468  1.000000  </code></p
 <section id="exploring-text-vectors-part-2" class="level3">
 <h3 class="anchored" data-anchor-id="exploring-text-vectors-part-2">Exploring text vectors, part 2</h3>
 <p>Using the function we wrote in the previous exercise, we’re going to extract the top words from each document in the text vector, return a list of the word indices, and use that list to filter the text vector down to those top words.</p>
-<div class="cell" data-execution_count="13">
-<details>
+<div id="cell-22" class="cell" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> words_to_filter(vocab, original_vocab, vector, top_n):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    filter_list <span class="op">=</span> []</span>
@@ -841,8 +836,8 @@ Hue                                               0.565468  1.000000  </code></p
 <section id="training-naive-bayes-with-feature-selection" class="level3">
 <h3 class="anchored" data-anchor-id="training-naive-bayes-with-feature-selection">Training Naive Bayes with feature selection</h3>
 <p>Let’s re-run the Naive Bayes text classification model we ran at the end of chapter 3, with our selection choices from the previous exercise, on the <code>volunteer</code> dataset’s <code>title</code> and <code>category_desc</code> columns.</p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-24" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.naive_bayes <span class="im">import</span> GaussianNB</span>
@@ -887,129 +882,132 @@ Hue                                               0.565468  1.000000  </code></p
 <section id="using-pca" class="level3">
 <h3 class="anchored" data-anchor-id="using-pca">Using PCA</h3>
 <p>Let’s apply PCA to the <code>wine</code> dataset, to see if we can get an increase in our model’s accuracy.</p>
-<div class="cell" data-execution_count="15">
-<details>
+<div id="cell-28" class="cell" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wine <span class="op">=</span> pd.read_csv(<span class="st">'dataset/wine_types.csv'</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>wine.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="15">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Type</th>
-      <th>Alcohol</th>
-      <th>Malic acid</th>
-      <th>Ash</th>
-      <th>Alcalinity of ash</th>
-      <th>Magnesium</th>
-      <th>Total phenols</th>
-      <th>Flavanoids</th>
-      <th>Nonflavanoid phenols</th>
-      <th>Proanthocyanins</th>
-      <th>Color intensity</th>
-      <th>Hue</th>
-      <th>OD280/OD315 of diluted wines</th>
-      <th>Proline</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>14.23</td>
-      <td>1.71</td>
-      <td>2.43</td>
-      <td>15.6</td>
-      <td>127</td>
-      <td>2.80</td>
-      <td>3.06</td>
-      <td>0.28</td>
-      <td>2.29</td>
-      <td>5.64</td>
-      <td>1.04</td>
-      <td>3.92</td>
-      <td>1065</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>13.20</td>
-      <td>1.78</td>
-      <td>2.14</td>
-      <td>11.2</td>
-      <td>100</td>
-      <td>2.65</td>
-      <td>2.76</td>
-      <td>0.26</td>
-      <td>1.28</td>
-      <td>4.38</td>
-      <td>1.05</td>
-      <td>3.40</td>
-      <td>1050</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1</td>
-      <td>13.16</td>
-      <td>2.36</td>
-      <td>2.67</td>
-      <td>18.6</td>
-      <td>101</td>
-      <td>2.80</td>
-      <td>3.24</td>
-      <td>0.30</td>
-      <td>2.81</td>
-      <td>5.68</td>
-      <td>1.03</td>
-      <td>3.17</td>
-      <td>1185</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>14.37</td>
-      <td>1.95</td>
-      <td>2.50</td>
-      <td>16.8</td>
-      <td>113</td>
-      <td>3.85</td>
-      <td>3.49</td>
-      <td>0.24</td>
-      <td>2.18</td>
-      <td>7.80</td>
-      <td>0.86</td>
-      <td>3.45</td>
-      <td>1480</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>13.24</td>
-      <td>2.59</td>
-      <td>2.87</td>
-      <td>21.0</td>
-      <td>118</td>
-      <td>2.80</td>
-      <td>2.69</td>
-      <td>0.39</td>
-      <td>1.82</td>
-      <td>4.32</td>
-      <td>1.04</td>
-      <td>2.93</td>
-      <td>735</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Alcohol</th>
+<th data-quarto-table-cell-role="th">Malic acid</th>
+<th data-quarto-table-cell-role="th">Ash</th>
+<th data-quarto-table-cell-role="th">Alcalinity of ash</th>
+<th data-quarto-table-cell-role="th">Magnesium</th>
+<th data-quarto-table-cell-role="th">Total phenols</th>
+<th data-quarto-table-cell-role="th">Flavanoids</th>
+<th data-quarto-table-cell-role="th">Nonflavanoid phenols</th>
+<th data-quarto-table-cell-role="th">Proanthocyanins</th>
+<th data-quarto-table-cell-role="th">Color intensity</th>
+<th data-quarto-table-cell-role="th">Hue</th>
+<th data-quarto-table-cell-role="th">OD280/OD315 of diluted wines</th>
+<th data-quarto-table-cell-role="th">Proline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>14.23</td>
+<td>1.71</td>
+<td>2.43</td>
+<td>15.6</td>
+<td>127</td>
+<td>2.80</td>
+<td>3.06</td>
+<td>0.28</td>
+<td>2.29</td>
+<td>5.64</td>
+<td>1.04</td>
+<td>3.92</td>
+<td>1065</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>13.20</td>
+<td>1.78</td>
+<td>2.14</td>
+<td>11.2</td>
+<td>100</td>
+<td>2.65</td>
+<td>2.76</td>
+<td>0.26</td>
+<td>1.28</td>
+<td>4.38</td>
+<td>1.05</td>
+<td>3.40</td>
+<td>1050</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>13.16</td>
+<td>2.36</td>
+<td>2.67</td>
+<td>18.6</td>
+<td>101</td>
+<td>2.80</td>
+<td>3.24</td>
+<td>0.30</td>
+<td>2.81</td>
+<td>5.68</td>
+<td>1.03</td>
+<td>3.17</td>
+<td>1185</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>14.37</td>
+<td>1.95</td>
+<td>2.50</td>
+<td>16.8</td>
+<td>113</td>
+<td>3.85</td>
+<td>3.49</td>
+<td>0.24</td>
+<td>2.18</td>
+<td>7.80</td>
+<td>0.86</td>
+<td>3.45</td>
+<td>1480</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>13.24</td>
+<td>2.59</td>
+<td>2.87</td>
+<td>21.0</td>
+<td>118</td>
+<td>2.80</td>
+<td>2.69</td>
+<td>0.39</td>
+<td>1.82</td>
+<td>4.32</td>
+<td>1.04</td>
+<td>2.93</td>
+<td>735</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
-<details>
+</div>
+<div id="cell-29" class="cell" data-execution_count="16">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1034,8 +1032,8 @@ Hue                                               0.565468  1.000000  </code></p
 <section id="training-a-model-with-pca" class="level3">
 <h3 class="anchored" data-anchor-id="training-a-model-with-pca">Training a model with PCA</h3>
 <p>Now that we have run PCA on the <code>wine</code> dataset, let’s try training a model with it.</p>
-<div class="cell" data-execution_count="17">
-<details>
+<div id="cell-31" class="cell" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1090,9 +1088,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1128,10 +1140,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1141,8 +1152,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1157,6 +1177,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1199,6 +1451,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

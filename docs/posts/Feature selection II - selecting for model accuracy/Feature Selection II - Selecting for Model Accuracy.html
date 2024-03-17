@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,15 +96,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -136,45 +143,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -254,15 +263,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="feature-selection-ii---selecting-for-model-accuracy" class="level1">
 <h1>Feature Selection II - Selecting for Model Accuracy</h1>
 <p>We’ll explore how to use models to identify the most important features in a dataset in order to predict certain targets. We then concludes with a lesson in which we will decide which features to keep based on advice from multiple, different models.</p>
 <p>This <strong>Feature Selection II - Selecting for Model Accuracy</strong> is part of <a href="https://app.datacamp.com/learn/courses/dimensionality-reduction-in-python">Datacamp course: Dimensionality Reduction in Python</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-execution_count="32">
-<details>
+<div id="cell-2" class="cell" data-execution_count="32">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -277,99 +288,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="building-a-diabetes-classifier" class="level3">
 <h3 class="anchored" data-anchor-id="building-a-diabetes-classifier">Building a diabetes classifier</h3>
 <p>You’ll be using the Pima Indians diabetes dataset to predict whether a person has diabetes using logistic regression. There are 8 features and one target in this dataset.</p>
-<div class="cell" data-execution_count="33">
-<details>
+<div id="cell-5" class="cell" data-execution_count="33">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>diabetes_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/PimaIndians.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>diabetes_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="33">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>pregnant</th>
-      <th>glucose</th>
-      <th>diastolic</th>
-      <th>triceps</th>
-      <th>insulin</th>
-      <th>bmi</th>
-      <th>family</th>
-      <th>age</th>
-      <th>test</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>89</td>
-      <td>66</td>
-      <td>23</td>
-      <td>94</td>
-      <td>28.1</td>
-      <td>0.167</td>
-      <td>21</td>
-      <td>negative</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>137</td>
-      <td>40</td>
-      <td>35</td>
-      <td>168</td>
-      <td>43.1</td>
-      <td>2.288</td>
-      <td>33</td>
-      <td>positive</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>78</td>
-      <td>50</td>
-      <td>32</td>
-      <td>88</td>
-      <td>31.0</td>
-      <td>0.248</td>
-      <td>26</td>
-      <td>positive</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2</td>
-      <td>197</td>
-      <td>70</td>
-      <td>45</td>
-      <td>543</td>
-      <td>30.5</td>
-      <td>0.158</td>
-      <td>53</td>
-      <td>positive</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1</td>
-      <td>189</td>
-      <td>60</td>
-      <td>23</td>
-      <td>846</td>
-      <td>30.1</td>
-      <td>0.398</td>
-      <td>59</td>
-      <td>positive</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">pregnant</th>
+<th data-quarto-table-cell-role="th">glucose</th>
+<th data-quarto-table-cell-role="th">diastolic</th>
+<th data-quarto-table-cell-role="th">triceps</th>
+<th data-quarto-table-cell-role="th">insulin</th>
+<th data-quarto-table-cell-role="th">bmi</th>
+<th data-quarto-table-cell-role="th">family</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>89</td>
+<td>66</td>
+<td>23</td>
+<td>94</td>
+<td>28.1</td>
+<td>0.167</td>
+<td>21</td>
+<td>negative</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>137</td>
+<td>40</td>
+<td>35</td>
+<td>168</td>
+<td>43.1</td>
+<td>2.288</td>
+<td>33</td>
+<td>positive</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>78</td>
+<td>50</td>
+<td>32</td>
+<td>88</td>
+<td>31.0</td>
+<td>0.248</td>
+<td>26</td>
+<td>positive</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2</td>
+<td>197</td>
+<td>70</td>
+<td>45</td>
+<td>543</td>
+<td>30.5</td>
+<td>0.158</td>
+<td>53</td>
+<td>positive</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>189</td>
+<td>60</td>
+<td>23</td>
+<td>846</td>
+<td>30.1</td>
+<td>0.398</td>
+<td>59</td>
+<td>positive</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
-<details>
+</div>
+<div id="cell-6" class="cell" data-execution_count="34">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
@@ -384,8 +398,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LogisticRegression()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="35">
-<details>
+<div id="cell-7" class="cell" data-execution_count="35">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the scaler on the training features and transform these in one go</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_train_std <span class="op">=</span> scaler.fit_transform(X_train)</span>
@@ -423,8 +437,8 @@ We get almost 80% accuracy on the test set. Take a look at the differences in mo
 <h3 class="anchored" data-anchor-id="manual-recursive-feature-elimination">Manual Recursive Feature Elimination</h3>
 <p>Now that we’ve created a diabetes classifier, let’s see if we can reduce the number of features without hurting the model accuracy too much.</p>
 <p>On the second line of code the features are selected from the original dataframe. Adjust this selection.</p>
-<div class="cell" data-execution_count="36">
-<details>
+<div id="cell-9" class="cell" data-execution_count="36">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the feature with the lowest model coefficient</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> diabetes_df[[<span class="st">'pregnant'</span>, <span class="st">'glucose'</span>, <span class="st">'triceps'</span>,</span>
@@ -452,8 +466,8 @@ We get almost 80% accuracy on the test set. Take a look at the differences in mo
  'triceps': 0.24}</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="37">
-<details>
+<div id="cell-10" class="cell" data-execution_count="37">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the 2 features with the lowest model coefficients</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> diabetes_df[[<span class="st">'glucose'</span>, <span class="st">'triceps'</span>, <span class="st">'bmi'</span>, <span class="st">'family'</span>, <span class="st">'age'</span>]]</span>
@@ -474,8 +488,8 @@ We get almost 80% accuracy on the test set. Take a look at the differences in mo
 {'age': 0.37, 'bmi': 0.34, 'family': 0.34, 'glucose': 1.13, 'triceps': 0.25}</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
-<details>
+<div id="cell-11" class="cell" data-execution_count="38">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep the feature with the highest coefficient</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> diabetes_df[[<span class="st">'glucose'</span>]]</span>
@@ -500,8 +514,8 @@ We get almost 80% accuracy on the test set. Take a look at the differences in mo
 <section id="automatic-recursive-feature-elimination" class="level3">
 <h3 class="anchored" data-anchor-id="automatic-recursive-feature-elimination">Automatic Recursive Feature Elimination</h3>
 <p>Now let’s automate this recursive process. Wrap a Recursive Feature Eliminator (RFE) around our logistic regression estimator and pass it the desired number of features.</p>
-<div class="cell" data-execution_count="39">
-<details>
+<div id="cell-13" class="cell" data-execution_count="39">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> diabetes_df.iloc[:, :<span class="op">-</span><span class="dv">1</span>], diabetes_df.iloc[:, <span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>)</span>
@@ -518,8 +532,8 @@ We get almost 80% accuracy on the test set. Take a look at the differences in mo
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>X_test_std <span class="op">=</span> scaler.transform(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="40">
-<details>
+<div id="cell-14" class="cell" data-execution_count="40">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -560,8 +574,8 @@ Index(['glucose', 'bmi', 'age'], dtype='object')
 <section id="building-a-random-forest-model" class="level3">
 <h3 class="anchored" data-anchor-id="building-a-random-forest-model">Building a random forest model</h3>
 <p>You’ll again work on the Pima Indians dataset to predict whether an individual has diabetes. This time using a random forest classifier. You’ll fit the model on the training data after performing the train-test split and consult the feature importance values.</p>
-<div class="cell" data-execution_count="41">
-<details>
+<div id="cell-17" class="cell" data-execution_count="41">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -597,8 +611,8 @@ Index(['glucose', 'bmi', 'age'], dtype='object')
 <section id="random-forest-for-feature-selection" class="level3">
 <h3 class="anchored" data-anchor-id="random-forest-for-feature-selection">Random forest for feature selection</h3>
 <p>Now lets use the fitted random model to select the most important features from our input dataset <code>X</code>.</p>
-<div class="cell" data-execution_count="42">
-<details>
+<div id="cell-19" class="cell" data-execution_count="42">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a mask for features importances above the threshold</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> rf.feature_importances_ <span class="op">&gt;</span> <span class="fl">0.15</span></span>
@@ -621,8 +635,8 @@ Index(['glucose'], dtype='object')</code></pre>
 <section id="recursive-feature-elimination-with-random-forests" class="level3">
 <h3 class="anchored" data-anchor-id="recursive-feature-elimination-with-random-forests">Recursive Feature Elimination with random forests</h3>
 <p>You’ll wrap a Recursive Feature Eliminator around a random forest model to remove features step by step. This method is more conservative compared to selecting features after applying a single importance threshold. Since dropping one feature can influence the relative importances of the others.</p>
-<div class="cell" data-execution_count="43">
-<details>
+<div id="cell-21" class="cell" data-execution_count="43">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrap the feature eliminator around the random forest model</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(estimator<span class="op">=</span>RandomForestClassifier(), n_features_to_select<span class="op">=</span><span class="dv">2</span>, verbose<span class="op">=</span><span class="dv">1</span>)</span>
@@ -647,8 +661,8 @@ Fitting estimator with 3 features.
 Index(['glucose', 'bmi'], dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="44">
-<details>
+<div id="cell-22" class="cell" data-execution_count="44">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrap the feature eliminator around the random forest model</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>rfe <span class="op">=</span> RFE(estimator<span class="op">=</span>RandomForestClassifier(), n_features_to_select<span class="op">=</span><span class="dv">2</span>, step<span class="op">=</span><span class="dv">2</span>, verbose<span class="op">=</span><span class="dv">1</span>)</span>
@@ -690,8 +704,8 @@ Compared to the quick and dirty single threshold method from the previous exerci
 <h3 class="anchored" data-anchor-id="creating-a-lasso-regressor">Creating a LASSO regressor</h3>
 <p>You’ll be working on the numeric ANSUR body measurements dataset to predict a persons Body Mass Index (BMI) using the <code>Lasso()</code> regressor. BMI is a metric derived from body height and weight but those two features have been removed from the dataset to give the model a challenge.</p>
 <p>You’ll standardize the data first using the <code>StandardScaler()</code> that has been instantiated for you as scaler to make sure all coefficients face a comparable regularizing force trying to bring them down.</p>
-<div class="cell" data-execution_count="45">
-<details>
+<div id="cell-25" class="cell" data-execution_count="45">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ansur_male <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_MALE.csv'</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -708,8 +722,8 @@ Compared to the quick and dirty single threshold method from the previous exerci
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="46">
-<details>
+<div id="cell-26" class="cell" data-execution_count="46">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Lasso</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -733,8 +747,8 @@ Compared to the quick and dirty single threshold method from the previous exerci
 <section id="lasso-model-results" class="level3">
 <h3 class="anchored" data-anchor-id="lasso-model-results">Lasso model results</h3>
 <p>Now that you’ve trained the Lasso model, you’ll score its predictive capacity (<span class="math inline">\(R^2\)</span>) on the test set and count how many features are ignored because their coefficient is reduced to zero.</p>
-<div class="cell" data-execution_count="47">
-<details>
+<div id="cell-28" class="cell" data-execution_count="47">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the test set with the pre-fitted scaler</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>X_test_std <span class="op">=</span> scaler.transform(X_test)</span>
@@ -763,8 +777,8 @@ We can predict almost 85% of the variance in the BMI value using just 9 out of 9
 <h3 class="anchored" data-anchor-id="adjusting-the-regularization-strength">Adjusting the regularization strength</h3>
 <p>Your current Lasso model has an <span class="math inline">\(R^2\)</span> score of 84.7%. When a model applies overly powerful regularization it can suffer from high bias, hurting its predictive power.</p>
 <p>Let’s improve the balance between predictive power and model simplicity by tweaking the <code>alpha</code> parameter.</p>
-<div class="cell" data-execution_count="48">
-<details>
+<div id="cell-30" class="cell" data-execution_count="48">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>alpha_list <span class="op">=</span> [<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.01</span>]</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>max_r <span class="op">=</span> <span class="dv">0</span></span>
@@ -804,8 +818,8 @@ Max R-squared: 0.9828190248586458, alpha: 0.1</code></pre>
 <section id="creating-a-lassocv-regressor" class="level3">
 <h3 class="anchored" data-anchor-id="creating-a-lassocv-regressor">Creating a LassoCV regressor</h3>
 <p>You’ll be predicting biceps circumference on a subsample of the male ANSUR dataset using the <code>LassoCV()</code> regressor that automatically tunes the regularization strength (alpha value) using Cross-Validation.</p>
-<div class="cell" data-execution_count="49">
-<details>
+<div id="cell-33" class="cell" data-execution_count="49">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ansur_df[[<span class="st">'acromialheight'</span>, <span class="st">'axillaheight'</span>, <span class="st">'bideltoidbreadth'</span>, <span class="st">'buttockcircumference'</span>, <span class="st">'buttockkneelength'</span>, <span class="st">'buttockpopliteallength'</span>, <span class="st">'cervicaleheight'</span>, <span class="st">'chestcircumference'</span>, <span class="st">'chestheight'</span>,</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">'earprotrusion'</span>, <span class="st">'footbreadthhorizontal'</span>, <span class="st">'forearmcircumferenceflexed'</span>, <span class="st">'handlength'</span>, <span class="st">'headbreadth'</span>, <span class="st">'heelbreadth'</span>, <span class="st">'hipbreadth'</span>, <span class="st">'iliocristaleheight'</span>, <span class="st">'interscyeii'</span>,</span>
@@ -820,8 +834,8 @@ Max R-squared: 0.9828190248586458, alpha: 0.1</code></pre>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> scaler.transform(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="50">
-<details>
+<div id="cell-34" class="cell" data-execution_count="50">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LassoCV</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -848,8 +862,8 @@ The model explains 85.6% of the test set variance
 <section id="ensemble-models-for-extra-votes" class="level3">
 <h3 class="anchored" data-anchor-id="ensemble-models-for-extra-votes">Ensemble models for extra votes</h3>
 <p>The LassoCV() model selected 24 out of 32 features. Not bad, but not a spectacular dimensionality reduction either. Let’s use two more models to select the 10 features they consider most important using the Recursive Feature Eliminator (RFE).</p>
-<div class="cell" data-execution_count="51">
-<details>
+<div id="cell-36" class="cell" data-execution_count="51">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_selection <span class="im">import</span> RFE</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingRegressor</span>
@@ -878,8 +892,8 @@ Fitting estimator with 11 features.
 The model can explain 83.3% of the variance in the test set</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="52">
-<details>
+<div id="cell-37" class="cell" data-execution_count="52">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -914,8 +928,8 @@ Inluding the Lasso linear model from the previous exercise, we now have the vote
 <section id="combining-3-feature-selectors" class="level3">
 <h3 class="anchored" data-anchor-id="combining-3-feature-selectors">Combining 3 feature selectors</h3>
 <p>We’ll combine the votes of the 3 models you built in the previous exercises, to decide which features are important into a meta mask. We’ll then use this mask to reduce dimensionality and see how a simple linear regressor performs on the reduced dataset.</p>
-<div class="cell" data-execution_count="53">
-<details>
+<div id="cell-39" class="cell" data-execution_count="53">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum the votes of the three models</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>votes <span class="op">=</span> np.<span class="bu">sum</span>([lcv_mask, rf_mask, gb_mask], axis<span class="op">=</span><span class="dv">0</span>)</span>
@@ -940,8 +954,8 @@ Index(['bideltoidbreadth', 'buttockcircumference', 'chestcircumference',
       dtype='object')</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="54">
-<details>
+<div id="cell-40" class="cell" data-execution_count="54">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -994,9 +1008,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1032,10 +1060,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1045,8 +1072,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1061,6 +1097,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1103,6 +1371,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

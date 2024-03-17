@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -245,7 +226,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="high-level-apis" class="level1">
 <h1>High Level APIs</h1>
@@ -253,8 +236,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>High Level APIs</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/introduction-to-tensorflow-in-python">Datacamp course: Introduction to TensorFlow in Python</a> Until recently, cutting-edge computer vision algorithms could not distinguish between images of cats and dogs. Today, a skilled data scientist equipped with a laptop can classify tens of thousands of objects more accurately than a human eye. This course uses TensorFlow 2.6 to develop, train, and predict models that have fueled major advances in recommendation systems, image classification, and financial technology. In this course, you will learn both high-level APIs that will allow you to design and train deep learning models in 15 lines of code, as well as low-level APIs that will allow you to go beyond off-the-shelf procedures. Additionally, you will learn how to accurately predict housing prices, credit card defaults, and images of sign language gestures.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -280,8 +263,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="the-sequential-model-in-keras">The sequential model in Keras</h2>
 <p>n chapter 3, we used components of the keras API in tensorflow to define a neural network, but we stopped short of using its full capabilities to streamline model definition and training. In this exercise, you will use the keras sequential model API to define a neural network that can be used to classify images of sign language letters. You will also use the .summary() method to print the model’s architecture, including the shape and number of parameters associated with each layer.</p>
 <p>Note that the images were reshaped from (28, 28) to (784,), so that they could be used as inputs to a dense layer</p>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="cell-5" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -323,8 +306,8 @@ Notice that we've defined a model, but we haven't compiled it. The compilation s
 <section id="compiling-a-sequential-model" class="level2">
 <h2 class="anchored" data-anchor-id="compiling-a-sequential-model">Compiling a sequential model</h2>
 <p>In this exercise, you will work towards classifying letters from the Sign Language MNIST dataset; however, you will adopt a different network architecture than what you used in the previous exercise. There will be fewer layers, but more nodes. You will also apply dropout to prevent overfitting. Finally, you will compile the model to use the adam optimizer and the categorical_crossentropy loss. You will also use a method in keras to summarize your model’s architecture.</p>
-<div class="cell" data-execution_count="4">
-<details>
+<div id="cell-7" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -366,15 +349,15 @@ None</code></pre>
 <section id="defining-a-multiple-input-model" class="level2">
 <h2 class="anchored" data-anchor-id="defining-a-multiple-input-model">Defining a multiple input model</h2>
 <p>In some cases, the sequential API will not be sufficiently flexible to accommodate your desired model architecture and you will need to use the functional API instead. If, for instance, you want to train two models with different architectures jointly, you will need to use the functional API to do this. In this exercise, we will see how to do this. We will also use the .summary() method to examine the joint model’s architecture.</p>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-9" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m1_inputs <span class="op">=</span> tf.keras.Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m2_inputs <span class="op">=</span> tf.keras.Input(shape<span class="op">=</span>(<span class="dv">784</span>,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="7">
-<details>
+<div id="cell-10" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1_layer1 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">12</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>)(m1_inputs)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m1_layer2 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>)(m1_layer1)</span>
@@ -426,23 +409,23 @@ Notice that the .summary() method yields a new column: connected to. This column
 <section id="training-and-validation-with-keras" class="level1">
 <h1>Training and validation with Keras</h1>
 <p>Training with Keras In this exercise, we return to our sign language letter classification problem. We have 2000 images of four letters–A, B, C, and D–and we want to classify them with a high level of accuracy. We will complete all parts of the problem, including the model definition, compilation, and training.</p>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-12" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/slmnist.csv'</span>, header<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.iloc[:, <span class="dv">1</span>:]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df.iloc[:, <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="9">
-<details>
+<div id="cell-13" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sign_language_features <span class="op">=</span> (X <span class="op">-</span>  X.mean()) <span class="op">/</span> (X.<span class="bu">max</span>() <span class="op">-</span> X.<span class="bu">min</span>()).to_numpy()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sign_language_labels <span class="op">=</span> pd.get_dummies(y).astype(np.float32).to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="10">
-<details>
+<div id="cell-14" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -459,13 +442,8 @@ Notice that the .summary() method yields a new column: connected to. This column
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>model.fit(sign_language_features, sign_language_labels, epochs<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch 1/5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>2023-04-02 00:04:57.813454: W tensorflow/tsl/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>63/63 [==============================] - 2s 6ms/step - loss: 1.3199
+<pre><code>Epoch 1/5
+63/63 [==============================] - 2s 6ms/step - loss: 1.3199
 Epoch 2/5
 63/63 [==============================] - 0s 5ms/step - loss: 1.0591
 Epoch 3/5
@@ -475,14 +453,17 @@ Epoch 4/5
 Epoch 5/5
 63/63 [==============================] - 0s 5ms/step - loss: 0.6211</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-04-02 00:04:57.813454: W tensorflow/tsl/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>&lt;keras.callbacks.History at 0x2c052a430&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
-<details>
+<div id="cell-15" class="cell" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You probably noticed that your only measure of performance improvement was the value of the loss function in the training sample, which is not particularly informative. You will improve on this in the next exercise."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You probably noticed that your only measure of performance improvement was the value of the loss function in the training sample, which is not particularly informative. You will improve on this in the next exercise."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -492,22 +473,22 @@ You probably noticed that your only measure of performance improvement was the v
 <section id="metrics-and-validation-with-keras" class="level2">
 <h2 class="anchored" data-anchor-id="metrics-and-validation-with-keras">Metrics and validation with Keras</h2>
 <p>We trained a model to predict sign language letters in the previous exercise, but it is unclear how successful we were in doing so. In this exercise, we will try to improve upon the interpretability of our results. Since we did not use a validation split, we only observed performance improvements within the training set; however, it is unclear how much of that was due to overfitting. Furthermore, since we did not supply a metric, we only saw decreases in the loss function, which do not have any clear interpretation.</p>
-<div class="cell" data-execution_count="12">
-<details>
+<div id="cell-17" class="cell" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the first layer</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add activation function to classifier</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the optimizer, loss function, and metrics</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'RMSprop'</span>, loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the number of epochs and the validation split</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>model.fit(sign_language_features, sign_language_labels, epochs<span class="op">=</span><span class="dv">10</span>, validation_split<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the first layer</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add activation function to classifier</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the optimizer, loss function, and metrics</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'RMSprop'</span>, loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the number of epochs and the validation split</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>model.fit(sign_language_features, sign_language_labels, epochs<span class="op">=</span><span class="dv">10</span>, validation_split<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Epoch 1/10
@@ -535,10 +516,10 @@ Epoch 10/10
 <pre><code>&lt;keras.callbacks.History at 0x2c3fd2eb0&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
-<details>
+<div id="cell-18" class="cell" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">With the keras API, you only needed 14 lines of code to define, compile, train, and validate a model. You may have noticed that your model performed quite well. In just 10 epochs, we achieved a classification accuracy of over 90</span><span class="sc">% i</span><span class="st">n the validation sample!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">With the keras API, you only needed 14 lines of code to define, compile, train, and validate a model. You may have noticed that your model performed quite well. In just 10 epochs, we achieved a classification accuracy of over 90</span><span class="sc">% i</span><span class="st">n the validation sample!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -550,23 +531,23 @@ With the keras API, you only needed 14 lines of code to define, compile, train, 
 <h2 class="anchored" data-anchor-id="overfitting-detection">Overfitting detection</h2>
 <p>In this exercise, we’ll work with a small subset of the examples from the original sign language letters dataset. A small sample, coupled with a heavily-parameterized model, will generally lead to overfitting. This means that your model will simply memorize the class of each example, rather than identifying features that generalize to many examples.</p>
 <p>You will detect overfitting by checking whether the validation sample loss is substantially higher than the training sample loss and whether it increases with further training. With a small sample and a high learning rate, the model will struggle to converge on an optimum. You will set a low learning rate for the optimizer, which will make it easier to identify overfitting.</p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-20" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the first layer</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">1024</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>, )))</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add activation function to classifier</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Finish the model compilation</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.Adam(lr<span class="op">=</span><span class="fl">0.001</span>),</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete the model fit operation</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>model.fit(sign_language_features, sign_language_labels, epochs<span class="op">=</span><span class="dv">50</span>, validation_split<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the first layer</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">1024</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>, )))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add activation function to classifier</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Finish the model compilation</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.Adam(lr<span class="op">=</span><span class="fl">0.001</span>),</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete the model fit operation</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>model.fit(sign_language_features, sign_language_labels, epochs<span class="op">=</span><span class="dv">50</span>, validation_split<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.
@@ -679,10 +660,10 @@ Epoch 50/50
 <pre><code>&lt;keras.callbacks.History at 0x2c3de16a0&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
-<details>
+<div id="cell-21" class="cell" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You may have noticed that the validation loss, val_loss, was substantially higher than the training loss, loss. Furthermore, if val_loss started to increase before the training process was terminated, then we may have overfitted. When this happens, you will want to try decreasing the number of epochs."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You may have noticed that the validation loss, val_loss, was substantially higher than the training loss, loss. Furthermore, if val_loss started to increase before the training process was terminated, then we may have overfitted. When this happens, you will want to try decreasing the number of epochs."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -694,17 +675,17 @@ You may have noticed that the validation loss, val_loss, was substantially highe
 <h2 class="anchored" data-anchor-id="evaluating-models">Evaluating models</h2>
 <p>Two models have been trained and are available: large_model, which has many parameters; and small_model, which has fewer parameters. Both models have been trained using train_features and train_labels, which are available to you. A separate test set, which consists of test_features and test_labels, is also available.</p>
 <p>Your goal is to evaluate relative model performance and also determine whether either model exhibits signs of overfitting. You will do this by evaluating large_model and small_model on both the train and test sets. For each model, you can do this by applying the .evaluate(x, y) method to compute the loss for features x and labels y. You will then compare the four losses generated.</p>
-<div class="cell" data-execution_count="17">
-<details>
+<div id="cell-23" class="cell" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>small_model <span class="op">=</span> tf.keras.Sequential()</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>small_model.add(tf.keras.layers.Dense(<span class="dv">8</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>small_model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>small_model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.SGD(lr<span class="op">=</span><span class="fl">0.01</span>),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>small_model <span class="op">=</span> tf.keras.Sequential()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>small_model.add(tf.keras.layers.Dense(<span class="dv">8</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>small_model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>small_model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.SGD(lr<span class="op">=</span><span class="fl">0.01</span>),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                    loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                    metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.SGD` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.SGD`.
@@ -712,60 +693,60 @@ WARNING:absl:`lr` is deprecated in Keras optimizer, please use `learning_rate` o
 WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/M2 Macs. Falling back to the legacy Keras optimizer, i.e., `tf.keras.optimizers.legacy.SGD`.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
-<details>
+<div id="cell-24" class="cell" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>large_model <span class="op">=</span> tf.keras.Sequential()</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>large_model.add(tf.keras.layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>large_model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>large_model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>,</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                                                       beta_1<span class="op">=</span><span class="fl">0.9</span>, beta_2<span class="op">=</span><span class="fl">0.999</span>),</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                   loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>large_model <span class="op">=</span> tf.keras.Sequential()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>large_model.add(tf.keras.layers.Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>, input_shape<span class="op">=</span>(<span class="dv">784</span>,)))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>large_model.add(tf.keras.layers.Dense(<span class="dv">4</span>, activation<span class="op">=</span><span class="st">'softmax'</span>))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>large_model.<span class="bu">compile</span>(optimizer<span class="op">=</span>tf.keras.optimizers.Adam(learning_rate<span class="op">=</span><span class="fl">0.001</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                                                       beta_1<span class="op">=</span><span class="fl">0.9</span>, beta_2<span class="op">=</span><span class="fl">0.999</span>),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>                   loss<span class="op">=</span><span class="st">'categorical_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>WARNING:absl:At this time, the v2.11+ optimizer `tf.keras.optimizers.Adam` runs slowly on M1/M2 Macs, please use the legacy Keras optimizer instead, located at `tf.keras.optimizers.legacy.Adam`.
 WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/M2 Macs. Falling back to the legacy Keras optimizer, i.e., `tf.keras.optimizers.legacy.Adam`.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="19">
-<details>
+<div id="cell-25" class="cell" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>train_features, test_features, train_labels, test_labels <span class="op">=</span> train_test_split(sign_language_features,</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                                                                            sign_language_labels,</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                                                                            test_size<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>train_features, test_features, train_labels, test_labels <span class="op">=</span> train_test_split(sign_language_features,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                                                                            sign_language_labels,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                                                                            test_size<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="20">
-<details>
+<div id="cell-26" class="cell" data-execution_count="20">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>small_model.fit(train_features, train_labels, epochs<span class="op">=</span><span class="dv">30</span>, verbose<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>large_model.fit(train_features, train_labels, epochs<span class="op">=</span><span class="dv">30</span>, verbose<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>small_model.fit(train_features, train_labels, epochs<span class="op">=</span><span class="dv">30</span>, verbose<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>large_model.fit(train_features, train_labels, epochs<span class="op">=</span><span class="dv">30</span>, verbose<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>&lt;keras.callbacks.History at 0x2d5171310&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
-<details>
+<div id="cell-27" class="cell" data-execution_count="21">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>small_train <span class="op">=</span> small_model.evaluate(train_features, train_labels)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the small model using the test data</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>small_test <span class="op">=</span> small_model.evaluate(test_features, test_labels)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the large model using the train data</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>large_train <span class="op">=</span> large_model.evaluate(train_features, train_labels)</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Evalute the large model using the test data</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>large_test <span class="op">=</span> large_model.evaluate(test_features, test_labels)</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print losses</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st"> Small - Train: </span><span class="sc">{}</span><span class="st">, Test: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(small_train, small_test))</span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Large - Train: </span><span class="sc">{}</span><span class="st">, Test: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(large_train, large_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>small_train <span class="op">=</span> small_model.evaluate(train_features, train_labels)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the small model using the test data</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>small_test <span class="op">=</span> small_model.evaluate(test_features, test_labels)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the large model using the train data</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>large_train <span class="op">=</span> large_model.evaluate(train_features, train_labels)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Evalute the large model using the test data</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>large_test <span class="op">=</span> large_model.evaluate(test_features, test_labels)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print losses</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st"> Small - Train: </span><span class="sc">{}</span><span class="st">, Test: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(small_train, small_test))</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Large - Train: </span><span class="sc">{}</span><span class="st">, Test: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(large_train, large_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>32/32 [==============================] - 0s 7ms/step - loss: 0.2940 - accuracy: 0.9720
@@ -777,10 +758,10 @@ WARNING:absl:There is a known slowdown when using v2.11+ Keras optimizers on M1/
 Large - Train: [0.008654868230223656, 1.0], Test: [0.009581816382706165, 1.0]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="22">
-<details>
+<div id="cell-28" class="cell" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Notice that the gap between the test and train set losses is high for large_model, suggesting that overfitting may be an issue. Furthermore, both test and train set performance is better for large_model. This suggests that we may want to use large_model, but reduce the number of training epochs."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Notice that the gap between the test and train set losses is high for large_model, suggesting that overfitting may be an issue. Furthermore, both test and train set performance is better for large_model. This suggests that we may want to use large_model, but reduce the number of training epochs."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -796,188 +777,191 @@ Notice that the gap between the test and train set losses is high for large_mode
 <h2 class="anchored" data-anchor-id="preparing-to-train-with-estimators">Preparing to train with Estimators</h2>
 <p>For this exercise, we’ll return to the King County housing transaction dataset from chapter 2. We will again develop and train a machine learning model to predict house prices; however, this time, we’ll do it using the estimator API.</p>
 <p>Rather than completing everything in one step, we’ll break this procedure down into parts. We’ll begin by defining the feature columns and loading the data. In the next exercise, we’ll define and train a premade estimator.</p>
-<div class="cell" data-execution_count="23">
-<details>
+<div id="cell-31" class="cell" data-execution_count="23">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> pd.read_csv(<span class="st">'dataset/kc_house_data.csv'</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>housing.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> pd.read_csv(<span class="st">'dataset/kc_house_data.csv'</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>housing.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="23">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>id</th>
-      <th>date</th>
-      <th>price</th>
-      <th>bedrooms</th>
-      <th>bathrooms</th>
-      <th>sqft_living</th>
-      <th>sqft_lot</th>
-      <th>floors</th>
-      <th>waterfront</th>
-      <th>view</th>
-      <th>...</th>
-      <th>grade</th>
-      <th>sqft_above</th>
-      <th>sqft_basement</th>
-      <th>yr_built</th>
-      <th>yr_renovated</th>
-      <th>zipcode</th>
-      <th>lat</th>
-      <th>long</th>
-      <th>sqft_living15</th>
-      <th>sqft_lot15</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7129300520</td>
-      <td>20141013T000000</td>
-      <td>221900.0</td>
-      <td>3</td>
-      <td>1.00</td>
-      <td>1180</td>
-      <td>5650</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>7</td>
-      <td>1180</td>
-      <td>0</td>
-      <td>1955</td>
-      <td>0</td>
-      <td>98178</td>
-      <td>47.5112</td>
-      <td>-122.257</td>
-      <td>1340</td>
-      <td>5650</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>6414100192</td>
-      <td>20141209T000000</td>
-      <td>538000.0</td>
-      <td>3</td>
-      <td>2.25</td>
-      <td>2570</td>
-      <td>7242</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>7</td>
-      <td>2170</td>
-      <td>400</td>
-      <td>1951</td>
-      <td>1991</td>
-      <td>98125</td>
-      <td>47.7210</td>
-      <td>-122.319</td>
-      <td>1690</td>
-      <td>7639</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5631500400</td>
-      <td>20150225T000000</td>
-      <td>180000.0</td>
-      <td>2</td>
-      <td>1.00</td>
-      <td>770</td>
-      <td>10000</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>6</td>
-      <td>770</td>
-      <td>0</td>
-      <td>1933</td>
-      <td>0</td>
-      <td>98028</td>
-      <td>47.7379</td>
-      <td>-122.233</td>
-      <td>2720</td>
-      <td>8062</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2487200875</td>
-      <td>20141209T000000</td>
-      <td>604000.0</td>
-      <td>4</td>
-      <td>3.00</td>
-      <td>1960</td>
-      <td>5000</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>7</td>
-      <td>1050</td>
-      <td>910</td>
-      <td>1965</td>
-      <td>0</td>
-      <td>98136</td>
-      <td>47.5208</td>
-      <td>-122.393</td>
-      <td>1360</td>
-      <td>5000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1954400510</td>
-      <td>20150218T000000</td>
-      <td>510000.0</td>
-      <td>3</td>
-      <td>2.00</td>
-      <td>1680</td>
-      <td>8080</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>8</td>
-      <td>1680</td>
-      <td>0</td>
-      <td>1987</td>
-      <td>0</td>
-      <td>98074</td>
-      <td>47.6168</td>
-      <td>-122.045</td>
-      <td>1800</td>
-      <td>7503</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">bedrooms</th>
+<th data-quarto-table-cell-role="th">bathrooms</th>
+<th data-quarto-table-cell-role="th">sqft_living</th>
+<th data-quarto-table-cell-role="th">sqft_lot</th>
+<th data-quarto-table-cell-role="th">floors</th>
+<th data-quarto-table-cell-role="th">waterfront</th>
+<th data-quarto-table-cell-role="th">view</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">grade</th>
+<th data-quarto-table-cell-role="th">sqft_above</th>
+<th data-quarto-table-cell-role="th">sqft_basement</th>
+<th data-quarto-table-cell-role="th">yr_built</th>
+<th data-quarto-table-cell-role="th">yr_renovated</th>
+<th data-quarto-table-cell-role="th">zipcode</th>
+<th data-quarto-table-cell-role="th">lat</th>
+<th data-quarto-table-cell-role="th">long</th>
+<th data-quarto-table-cell-role="th">sqft_living15</th>
+<th data-quarto-table-cell-role="th">sqft_lot15</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7129300520</td>
+<td>20141013T000000</td>
+<td>221900.0</td>
+<td>3</td>
+<td>1.00</td>
+<td>1180</td>
+<td>5650</td>
+<td>1.0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>7</td>
+<td>1180</td>
+<td>0</td>
+<td>1955</td>
+<td>0</td>
+<td>98178</td>
+<td>47.5112</td>
+<td>-122.257</td>
+<td>1340</td>
+<td>5650</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>6414100192</td>
+<td>20141209T000000</td>
+<td>538000.0</td>
+<td>3</td>
+<td>2.25</td>
+<td>2570</td>
+<td>7242</td>
+<td>2.0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>7</td>
+<td>2170</td>
+<td>400</td>
+<td>1951</td>
+<td>1991</td>
+<td>98125</td>
+<td>47.7210</td>
+<td>-122.319</td>
+<td>1690</td>
+<td>7639</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>5631500400</td>
+<td>20150225T000000</td>
+<td>180000.0</td>
+<td>2</td>
+<td>1.00</td>
+<td>770</td>
+<td>10000</td>
+<td>1.0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>6</td>
+<td>770</td>
+<td>0</td>
+<td>1933</td>
+<td>0</td>
+<td>98028</td>
+<td>47.7379</td>
+<td>-122.233</td>
+<td>2720</td>
+<td>8062</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2487200875</td>
+<td>20141209T000000</td>
+<td>604000.0</td>
+<td>4</td>
+<td>3.00</td>
+<td>1960</td>
+<td>5000</td>
+<td>1.0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>7</td>
+<td>1050</td>
+<td>910</td>
+<td>1965</td>
+<td>0</td>
+<td>98136</td>
+<td>47.5208</td>
+<td>-122.393</td>
+<td>1360</td>
+<td>5000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1954400510</td>
+<td>20150218T000000</td>
+<td>510000.0</td>
+<td>3</td>
+<td>2.00</td>
+<td>1680</td>
+<td>8080</td>
+<td>1.0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>8</td>
+<td>1680</td>
+<td>0</td>
+<td>1987</td>
+<td>0</td>
+<td>98074</td>
+<td>47.6168</td>
+<td>-122.045</td>
+<td>1800</td>
+<td>7503</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 21 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
-<details>
+</div>
+<div id="cell-32" class="cell" data-execution_count="24">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>bedrooms <span class="op">=</span> tf.feature_column.numeric_column(<span class="st">"bedrooms"</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>bathrooms <span class="op">=</span> tf.feature_column.numeric_column(<span class="st">"bathrooms"</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the list of feature columns</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>feature_list <span class="op">=</span> [bedrooms, bathrooms]</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> input_fn():</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the labels</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> np.array(housing[<span class="st">'price'</span>])</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the features</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> {<span class="st">'bedrooms'</span>: np.array(housing[<span class="st">'bedrooms'</span>]),</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">'bathrooms'</span>: np.array(housing[<span class="st">'bathrooms'</span>])}</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> features, labels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>bedrooms <span class="op">=</span> tf.feature_column.numeric_column(<span class="st">"bedrooms"</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>bathrooms <span class="op">=</span> tf.feature_column.numeric_column(<span class="st">"bathrooms"</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the list of feature columns</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>feature_list <span class="op">=</span> [bedrooms, bathrooms]</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> input_fn():</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the labels</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> np.array(housing[<span class="st">'price'</span>])</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the features</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    features <span class="op">=</span> {<span class="st">'bedrooms'</span>: np.array(housing[<span class="st">'bedrooms'</span>]),</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">'bathrooms'</span>: np.array(housing[<span class="st">'bathrooms'</span>])}</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> features, labels</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING:tensorflow:From /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/ipykernel_16625/2163834188.py:1: numeric_column (from tensorflow.python.feature_column.feature_column_v2) is deprecated and will be removed in a future version.
@@ -994,259 +978,127 @@ Use Keras preprocessing layers instead, either directly or via the `tf.keras.uti
 <section id="defining-estimators" class="level2">
 <h2 class="anchored" data-anchor-id="defining-estimators">Defining Estimators</h2>
 <p>In the previous exercise, you defined a list of feature columns, feature_list, and a data input function, input_fn(). In this exercise, you will build on that work by defining an estimator that makes use of input data.</p>
-<div class="cell" data-execution_count="27">
-<details>
+<div id="cell-34" class="cell" data-execution_count="27">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.estimator.DNNRegressor(feature_columns<span class="op">=</span>feature_list, hidden_units<span class="op">=</span>[<span class="dv">2</span>,<span class="dv">2</span>])</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>model.train(input_fn, steps<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.estimator.DNNRegressor(feature_columns<span class="op">=</span>feature_list, hidden_units<span class="op">=</span>[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>model.train(input_fn, steps<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Using default config.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Using default config.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+<pre><code>INFO:tensorflow:Using default config.
+WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh
+INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
 graph_options {
   rewrite_options {
     meta_optimizer_iterations: ONE
   }
 }
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}</code></pre>
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...
+INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...
+INFO:tensorflow:loss = 426471720000.0, step = 0
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 1...
+INFO:tensorflow:Saving checkpoints for 1 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 1...
+INFO:tensorflow:Loss for final step: 426471720000.0.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+<pre><code>INFO:tensorflow:Using default config.
+WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh
+INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
 graph_options {
   rewrite_options {
     meta_optimizer_iterations: ONE
   }
 }
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Done calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Done calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Create CheckpointSaverHook.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Create CheckpointSaverHook.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Graph was finalized.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Graph was finalized.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Done running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Done running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:loss = 426471720000.0, step = 0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:loss = 426471720000.0, step = 0</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 1...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 1...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Saving checkpoints for 1 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Saving checkpoints for 1 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 1...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 1...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Loss for final step: 426471720000.0.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Loss for final step: 426471720000.0.</code></pre>
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...
+INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...
+INFO:tensorflow:loss = 426471720000.0, step = 0
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 1...
+INFO:tensorflow:Saving checkpoints for 1 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmphuwzvxmh/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 1...
+INFO:tensorflow:Loss for final step: 426471720000.0.</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <pre><code>&lt;tensorflow_estimator.python.estimator.canned.dnn.DNNRegressorV2 at 0x2fe2a3700&gt;</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
-<details>
+<div id="cell-35" class="cell" data-execution_count="28">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.estimator.LinearRegressor(feature_columns<span class="op">=</span>feature_list)</span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>model.train(input_fn, steps<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.estimator.LinearRegressor(feature_columns<span class="op">=</span>feature_list)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>model.train(input_fn, steps<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>WARNING:tensorflow:From /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/ipykernel_16625/3790289045.py:1: LinearRegressorV2.__init__ (from tensorflow_estimator.python.estimator.canned.linear) is deprecated and will be removed in a future version.
 Instructions for updating:
-Use tf.keras instead.</code></pre>
+Use tf.keras instead.
+INFO:tensorflow:Using default config.
+WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k
+INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+graph_options {
+  rewrite_options {
+    meta_optimizer_iterations: ONE
+  }
+}
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...
+INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...
+INFO:tensorflow:loss = 426471360000.0, step = 0
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 2...
+INFO:tensorflow:Saving checkpoints for 2 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 2...
+INFO:tensorflow:Loss for final step: 426469820000.0.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>WARNING:tensorflow:From /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/ipykernel_16625/3790289045.py:1: LinearRegressorV2.__init__ (from tensorflow_estimator.python.estimator.canned.linear) is deprecated and will be removed in a future version.
 Instructions for updating:
-Use tf.keras instead.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Using default config.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Using default config.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
+Use tf.keras instead.
+INFO:tensorflow:Using default config.
+WARNING:tensorflow:Using temporary folder as model directory: /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k
+INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
 graph_options {
   rewrite_options {
     meta_optimizer_iterations: ONE
   }
 }
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Using config: {'_model_dir': '/var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k', '_tf_random_seed': None, '_save_summary_steps': 100, '_save_checkpoints_steps': None, '_save_checkpoints_secs': 600, '_session_config': allow_soft_placement: true
-graph_options {
-  rewrite_options {
-    meta_optimizer_iterations: ONE
-  }
-}
-, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Done calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Done calling model_fn.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Create CheckpointSaverHook.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Create CheckpointSaverHook.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Graph was finalized.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Graph was finalized.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Done running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Done running local_init_op.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:loss = 426471360000.0, step = 0</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:loss = 426471360000.0, step = 0</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 2...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 2...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Saving checkpoints for 2 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Saving checkpoints for 2 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 2...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 2...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>INFO:tensorflow:Loss for final step: 426469820000.0.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:tensorflow:Loss for final step: 426469820000.0.</code></pre>
+, '_keep_checkpoint_max': 5, '_keep_checkpoint_every_n_hours': 10000, '_log_step_count_steps': 100, '_train_distribute': None, '_device_fn': None, '_protocol': None, '_eval_distribute': None, '_experimental_distribute': None, '_experimental_max_worker_delay_secs': None, '_session_creation_timeout_secs': 7200, '_checkpoint_save_graph_def': True, '_service': None, '_cluster_spec': ClusterSpec({}), '_task_type': 'worker', '_task_id': 0, '_global_id_in_cluster': 0, '_master': '', '_evaluation_master': '', '_is_chief': True, '_num_ps_replicas': 0, '_num_worker_replicas': 1}
+INFO:tensorflow:Calling model_fn.
+INFO:tensorflow:Done calling model_fn.
+INFO:tensorflow:Create CheckpointSaverHook.
+INFO:tensorflow:Graph was finalized.
+INFO:tensorflow:Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 0...
+INFO:tensorflow:Saving checkpoints for 0 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 0...
+INFO:tensorflow:loss = 426471360000.0, step = 0
+INFO:tensorflow:Calling checkpoint listeners before saving checkpoint 2...
+INFO:tensorflow:Saving checkpoints for 2 into /var/folders/gk/g6hht_993hbcv0ffg5wyh8f00000gn/T/tmp1v8llg0k/model.ckpt.
+INFO:tensorflow:Calling checkpoint listeners after saving checkpoint 2...
+INFO:tensorflow:Loss for final step: 426469820000.0.</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>&lt;tensorflow_estimator.python.estimator.canned.linear.LinearRegressorV2 at 0x2d6cb56d0&gt;</code></pre>
@@ -1285,9 +1137,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1323,10 +1189,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1336,8 +1201,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1352,6 +1226,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1394,6 +1500,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

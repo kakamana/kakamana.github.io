@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -134,46 +113,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -246,13 +227,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+
 <section id="exploring-high-dimensional-data" class="level1">
 <h1>Exploring High Dimensional Data</h1>
 <p>It will introduce us to dimensionality reduction and explain why and when it is important. It will also teach us the difference between feature selection and feature extraction, and we’ll learn how to apply both techniques for data exploration. Finally, the chapter covers t-SNE, a powerful feature extraction method for analyzing high-dimensional data.</p>
 <p>This <strong>Exploring High Dimensional Data</strong> is part of <a href="https://app.datacamp.com/learn/courses/hypothesis-testing-in-python">Datacamp course: Hypothesis Testing in Python</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -262,211 +244,220 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="dv">10</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="cell-3" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pokemon_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/pokemon_gen1.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pokemon_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="2">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Generation</th>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Legendary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>45</td>
-      <td>49</td>
-      <td>49</td>
-      <td>1</td>
-      <td>Bulbasaur</td>
-      <td>Grass</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>60</td>
-      <td>62</td>
-      <td>63</td>
-      <td>1</td>
-      <td>Ivysaur</td>
-      <td>Grass</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>80</td>
-      <td>82</td>
-      <td>83</td>
-      <td>1</td>
-      <td>Venusaur</td>
-      <td>Grass</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>80</td>
-      <td>100</td>
-      <td>123</td>
-      <td>1</td>
-      <td>VenusaurMega Venusaur</td>
-      <td>Grass</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>39</td>
-      <td>52</td>
-      <td>43</td>
-      <td>1</td>
-      <td>Charmander</td>
-      <td>Fire</td>
-      <td>False</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Attack</th>
+<th data-quarto-table-cell-role="th">Defense</th>
+<th data-quarto-table-cell-role="th">Generation</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Legendary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>45</td>
+<td>49</td>
+<td>49</td>
+<td>1</td>
+<td>Bulbasaur</td>
+<td>Grass</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>60</td>
+<td>62</td>
+<td>63</td>
+<td>1</td>
+<td>Ivysaur</td>
+<td>Grass</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>80</td>
+<td>82</td>
+<td>83</td>
+<td>1</td>
+<td>Venusaur</td>
+<td>Grass</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>80</td>
+<td>100</td>
+<td>123</td>
+<td>1</td>
+<td>VenusaurMega Venusaur</td>
+<td>Grass</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>39</td>
+<td>52</td>
+<td>43</td>
+<td>1</td>
+<td>Charmander</td>
+<td>Fire</td>
+<td>False</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
-<details>
+</div>
+<div id="cell-4" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pokemon_df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="3">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Generation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>160.00000</td>
-      <td>160.00000</td>
-      <td>160.000000</td>
-      <td>160.0</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>64.61250</td>
-      <td>74.98125</td>
-      <td>70.175000</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>27.92127</td>
-      <td>29.18009</td>
-      <td>28.883533</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>10.00000</td>
-      <td>5.00000</td>
-      <td>5.000000</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>45.00000</td>
-      <td>52.00000</td>
-      <td>50.000000</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>60.00000</td>
-      <td>71.00000</td>
-      <td>65.000000</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>80.00000</td>
-      <td>95.00000</td>
-      <td>85.000000</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>250.00000</td>
-      <td>155.00000</td>
-      <td>180.000000</td>
-      <td>1.0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Attack</th>
+<th data-quarto-table-cell-role="th">Defense</th>
+<th data-quarto-table-cell-role="th">Generation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>160.00000</td>
+<td>160.00000</td>
+<td>160.000000</td>
+<td>160.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>64.61250</td>
+<td>74.98125</td>
+<td>70.175000</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>27.92127</td>
+<td>29.18009</td>
+<td>28.883533</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>10.00000</td>
+<td>5.00000</td>
+<td>5.000000</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>45.00000</td>
+<td>52.00000</td>
+<td>50.000000</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>60.00000</td>
+<td>71.00000</td>
+<td>65.000000</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>80.00000</td>
+<td>95.00000</td>
+<td>85.000000</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>250.00000</td>
+<td>155.00000</td>
+<td>180.000000</td>
+<td>1.0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
-<details>
+</div>
+<div id="cell-5" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pokemon_df.describe(exclude<span class="op">=</span><span class="st">'number'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="4">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Legendary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>160</td>
-      <td>160</td>
-      <td>160</td>
-    </tr>
-    <tr>
-      <th>unique</th>
-      <td>160</td>
-      <td>15</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>top</th>
-      <td>Bulbasaur</td>
-      <td>Water</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>freq</th>
-      <td>1</td>
-      <td>31</td>
-      <td>160</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Legendary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>160</td>
+<td>160</td>
+<td>160</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">unique</td>
+<td>160</td>
+<td>15</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">top</td>
+<td>Bulbasaur</td>
+<td>Water</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">freq</td>
+<td>1</td>
+<td>31</td>
+<td>160</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -475,8 +466,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="removing-features-without-variance" class="level3">
 <h3 class="anchored" data-anchor-id="removing-features-without-variance">Removing features without variance</h3>
 <p>A sample of the Pokemon dataset has been loaded as <code>pokemon_df</code>. To get an idea of which features have little variance to calculate summary as above statistics on this sample. Then adjust the code to create a smaller, easier to understand, dataset.</p>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-8" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the feature without variance from this list</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>number_cols <span class="op">=</span> [<span class="st">'HP'</span>, <span class="st">'Attack'</span>, <span class="st">'Defense'</span>]</span>
@@ -499,8 +490,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4  39      52       43             Charmander   Fire      False</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
-<details>
+<div id="cell-9" class="cell" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Leave this list as is</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>number_cols <span class="op">=</span> [<span class="st">'HP'</span>, <span class="st">'Attack'</span>, <span class="st">'Defense'</span>]</span>
@@ -540,34 +531,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 </ul>
-<div id="fig-feature" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="feature.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: feature</figcaption><p></p>
+<div id="fig-feature" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feature-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="feature.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feature-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: feature
+</figcaption>
 </figure>
 </div>
 <section id="visually-detecting-redundant-features" class="level3">
 <h3 class="anchored" data-anchor-id="visually-detecting-redundant-features">Visually detecting redundant features</h3>
 <p>Data visualization is a crucial step in any data exploration. Let’s use Seaborn to explore some samples of the US Army ANSUR body measurement dataset.</p>
-<div class="cell" data-execution_count="7">
-<details>
+<div id="cell-13" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ansur_df_1 <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ansur_df_1.csv'</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ansur_df_2 <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ansur_df_2.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-14" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot and color the points using the 'Gender' feature</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(ansur_df_1, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<details>
+</div>
+<div id="cell-15" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove one of the redundant features</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reduced_df <span class="op">=</span> ansur_df_1.drop(<span class="st">'body_height'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -576,21 +575,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(reduced_df, hue<span class="op">=</span><span class="st">'Gender'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
-<details>
+</div>
+<div id="cell-16" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot and color the points using the 'Gender' feature</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(ansur_df_2, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
-<details>
+</div>
+<div id="cell-17" class="cell" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the redundant feature</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>reduced_df <span class="op">=</span> ansur_df_2.drop([<span class="st">'n_legs'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -599,7 +606,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sns.pairplot(reduced_df, hue<span class="op">=</span><span class="st">'Gender'</span>, diag_kind<span class="op">=</span><span class="st">'hist'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>the body height (inches) and stature (meters) hold the same information in a different unit + all the individuals in the second sample have two legs.</p>
@@ -611,8 +622,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="fitting-t-sne-to-the-ansur-data" class="level3">
 <h3 class="anchored" data-anchor-id="fitting-t-sne-to-the-ansur-data">Fitting t-SNE to the ANSUR data</h3>
 <p>t-SNE is a great technique for visual exploration of high dimensional datasets. In this exercise, you’ll apply it to the ANSUR dataset. You’ll remove non-numeric columns from the pre-loaded dataset df and fit TSNE to his numeric dataset.</p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-21" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ansur_male <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_MALE.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ansur_female <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_FEMALE.csv'</span>)</span>
@@ -621,165 +632,168 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="14">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Branch</th>
-      <th>Component</th>
-      <th>Gender</th>
-      <th>abdominalextensiondepthsitting</th>
-      <th>acromialheight</th>
-      <th>acromionradialelength</th>
-      <th>anklecircumference</th>
-      <th>axillaheight</th>
-      <th>balloffootcircumference</th>
-      <th>balloffootlength</th>
-      <th>...</th>
-      <th>waistdepth</th>
-      <th>waistfrontlengthsitting</th>
-      <th>waistheightomphalion</th>
-      <th>wristcircumference</th>
-      <th>wristheight</th>
-      <th>weight_kg</th>
-      <th>stature_m</th>
-      <th>BMI</th>
-      <th>BMI_class</th>
-      <th>Height_class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Combat Arms</td>
-      <td>Regular Army</td>
-      <td>Male</td>
-      <td>266</td>
-      <td>1467</td>
-      <td>337</td>
-      <td>222</td>
-      <td>1347</td>
-      <td>253</td>
-      <td>202</td>
-      <td>...</td>
-      <td>240</td>
-      <td>440</td>
-      <td>1054</td>
-      <td>175</td>
-      <td>853</td>
-      <td>81.5</td>
-      <td>1.776</td>
-      <td>25.838761</td>
-      <td>Overweight</td>
-      <td>Tall</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Combat Support</td>
-      <td>Regular Army</td>
-      <td>Male</td>
-      <td>233</td>
-      <td>1395</td>
-      <td>326</td>
-      <td>220</td>
-      <td>1293</td>
-      <td>245</td>
-      <td>193</td>
-      <td>...</td>
-      <td>225</td>
-      <td>371</td>
-      <td>1054</td>
-      <td>167</td>
-      <td>815</td>
-      <td>72.6</td>
-      <td>1.702</td>
-      <td>25.062103</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Combat Support</td>
-      <td>Regular Army</td>
-      <td>Male</td>
-      <td>287</td>
-      <td>1430</td>
-      <td>341</td>
-      <td>230</td>
-      <td>1327</td>
-      <td>256</td>
-      <td>196</td>
-      <td>...</td>
-      <td>255</td>
-      <td>411</td>
-      <td>1041</td>
-      <td>180</td>
-      <td>831</td>
-      <td>92.9</td>
-      <td>1.735</td>
-      <td>30.861480</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Combat Service Support</td>
-      <td>Regular Army</td>
-      <td>Male</td>
-      <td>234</td>
-      <td>1347</td>
-      <td>310</td>
-      <td>230</td>
-      <td>1239</td>
-      <td>262</td>
-      <td>199</td>
-      <td>...</td>
-      <td>205</td>
-      <td>399</td>
-      <td>968</td>
-      <td>176</td>
-      <td>793</td>
-      <td>79.4</td>
-      <td>1.655</td>
-      <td>28.988417</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Combat Service Support</td>
-      <td>Regular Army</td>
-      <td>Male</td>
-      <td>250</td>
-      <td>1585</td>
-      <td>372</td>
-      <td>247</td>
-      <td>1478</td>
-      <td>267</td>
-      <td>224</td>
-      <td>...</td>
-      <td>214</td>
-      <td>379</td>
-      <td>1245</td>
-      <td>188</td>
-      <td>954</td>
-      <td>94.6</td>
-      <td>1.914</td>
-      <td>25.823034</td>
-      <td>Overweight</td>
-      <td>Tall</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Branch</th>
+<th data-quarto-table-cell-role="th">Component</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">abdominalextensiondepthsitting</th>
+<th data-quarto-table-cell-role="th">acromialheight</th>
+<th data-quarto-table-cell-role="th">acromionradialelength</th>
+<th data-quarto-table-cell-role="th">anklecircumference</th>
+<th data-quarto-table-cell-role="th">axillaheight</th>
+<th data-quarto-table-cell-role="th">balloffootcircumference</th>
+<th data-quarto-table-cell-role="th">balloffootlength</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">waistdepth</th>
+<th data-quarto-table-cell-role="th">waistfrontlengthsitting</th>
+<th data-quarto-table-cell-role="th">waistheightomphalion</th>
+<th data-quarto-table-cell-role="th">wristcircumference</th>
+<th data-quarto-table-cell-role="th">wristheight</th>
+<th data-quarto-table-cell-role="th">weight_kg</th>
+<th data-quarto-table-cell-role="th">stature_m</th>
+<th data-quarto-table-cell-role="th">BMI</th>
+<th data-quarto-table-cell-role="th">BMI_class</th>
+<th data-quarto-table-cell-role="th">Height_class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Combat Arms</td>
+<td>Regular Army</td>
+<td>Male</td>
+<td>266</td>
+<td>1467</td>
+<td>337</td>
+<td>222</td>
+<td>1347</td>
+<td>253</td>
+<td>202</td>
+<td>...</td>
+<td>240</td>
+<td>440</td>
+<td>1054</td>
+<td>175</td>
+<td>853</td>
+<td>81.5</td>
+<td>1.776</td>
+<td>25.838761</td>
+<td>Overweight</td>
+<td>Tall</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Combat Support</td>
+<td>Regular Army</td>
+<td>Male</td>
+<td>233</td>
+<td>1395</td>
+<td>326</td>
+<td>220</td>
+<td>1293</td>
+<td>245</td>
+<td>193</td>
+<td>...</td>
+<td>225</td>
+<td>371</td>
+<td>1054</td>
+<td>167</td>
+<td>815</td>
+<td>72.6</td>
+<td>1.702</td>
+<td>25.062103</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Combat Support</td>
+<td>Regular Army</td>
+<td>Male</td>
+<td>287</td>
+<td>1430</td>
+<td>341</td>
+<td>230</td>
+<td>1327</td>
+<td>256</td>
+<td>196</td>
+<td>...</td>
+<td>255</td>
+<td>411</td>
+<td>1041</td>
+<td>180</td>
+<td>831</td>
+<td>92.9</td>
+<td>1.735</td>
+<td>30.861480</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Combat Service Support</td>
+<td>Regular Army</td>
+<td>Male</td>
+<td>234</td>
+<td>1347</td>
+<td>310</td>
+<td>230</td>
+<td>1239</td>
+<td>262</td>
+<td>199</td>
+<td>...</td>
+<td>205</td>
+<td>399</td>
+<td>968</td>
+<td>176</td>
+<td>793</td>
+<td>79.4</td>
+<td>1.655</td>
+<td>28.988417</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Combat Service Support</td>
+<td>Regular Army</td>
+<td>Male</td>
+<td>250</td>
+<td>1585</td>
+<td>372</td>
+<td>247</td>
+<td>1478</td>
+<td>267</td>
+<td>224</td>
+<td>...</td>
+<td>214</td>
+<td>379</td>
+<td>1245</td>
+<td>188</td>
+<td>954</td>
+<td>94.6</td>
+<td>1.914</td>
+<td>25.823034</td>
+<td>Overweight</td>
+<td>Tall</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 99 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
-<details>
+</div>
+<div id="cell-22" class="cell" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.manifold <span class="im">import</span> TSNE</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -809,15 +823,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="t-sne-visualisation-of-dimensionality" class="level3">
 <h3 class="anchored" data-anchor-id="t-sne-visualisation-of-dimensionality">t-SNE visualisation of dimensionality</h3>
 <p>Time to look at the results of your hard work. In this exercise, you will visualize the output of t-SNE dimensionality reduction on the combined male and female Ansur dataset. You’ll create 3 scatterplots of the 2 t-SNE features (<code>'x'</code> and <code>'y'</code>) which were added to the dataset <code>df</code>. In each scatterplot you’ll color the points according to a different categorical variable.</p>
-<div class="cell" data-execution_count="16">
-<details>
+<div id="cell-25" class="cell" data-execution_count="16">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'x'</span>] <span class="op">=</span> tsne_features[:, <span class="dv">0</span>]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'y'</span>] <span class="op">=</span> tsne_features[:, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="17">
-<details>
+<div id="cell-26" class="cell" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points according to Army Component</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Component'</span>, data<span class="op">=</span>df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -826,27 +840,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>&lt;AxesSubplot:xlabel='x', ylabel='y'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
-<details>
+</div>
+<div id="cell-27" class="cell" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points by Army Branch</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Branch'</span>, data<span class="op">=</span>df)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="19">
-<details>
+</div>
+<div id="cell-28" class="cell" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color the points by Gender</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, hue<span class="op">=</span><span class="st">'Gender'</span>, data<span class="op">=</span>df)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Exploring High Dimensional data_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Exploring High Dimensional data_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>There is a Male and a Female cluster. t-SNE found these gender differences in body shape without being told about them explicitly! From the second plot you learned there are more males in the Combat Arms Branch.</p>
@@ -884,9 +910,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -922,10 +962,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -935,8 +974,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -951,6 +999,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -993,6 +1273,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

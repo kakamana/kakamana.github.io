@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -237,15 +218,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="correlation-and-experimental-design" class="level1">
 <h1>Correlation and Experimental Design</h1>
 <p>We will explore how to quantify the strength of a linear relationship between two variables, and explore how confounding variables can affect the relationship between two other variables. we’ll also see how a study’s design can influence its results, change how the data should be analyzed, and potentially affect the reliability of your conclusions</p>
 <p>This <strong>Correlation and Experimental Design</strong> is part of <a href="https://app.datacamp.com/learn/courses/introduction-to-statistics-in-python">Datacamp course: Introduction to Statistic in Python</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
-<details>
+<div id="cell-2" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -268,93 +251,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="relationships-between-variables">Relationships between variables</h3>
 <p>Here we’ll be working with a dataset world_happiness containing results from the 2019 World Happiness Report. The report scores various countries based on how happy people in that country are. It also ranks each country on various societal aspects such as social support, freedom, corruption, and others. The dataset also includes the GDP per capita and life expectancy for each country.</p>
 <p>In this exercise, you’ll examine the relationship between a country’s life expectancy (life_exp) and happiness score (happiness_score) both visually and quantitatively.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="20">
-<details>
+<div id="cell-5" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="20">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>world_happiness <span class="op">=</span> pd.read_csv(<span class="st">'world_happiness.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>world_happiness.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="20">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>country</th>
-      <th>social_support</th>
-      <th>freedom</th>
-      <th>corruption</th>
-      <th>generosity</th>
-      <th>gdp_per_cap</th>
-      <th>life_exp</th>
-      <th>happiness_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Finland</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>4.0</td>
-      <td>47.0</td>
-      <td>42400</td>
-      <td>81.8</td>
-      <td>155</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Denmark</td>
-      <td>4.0</td>
-      <td>6.0</td>
-      <td>3.0</td>
-      <td>22.0</td>
-      <td>48300</td>
-      <td>81.0</td>
-      <td>154</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Norway</td>
-      <td>3.0</td>
-      <td>3.0</td>
-      <td>8.0</td>
-      <td>11.0</td>
-      <td>66300</td>
-      <td>82.6</td>
-      <td>153</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Iceland</td>
-      <td>1.0</td>
-      <td>7.0</td>
-      <td>45.0</td>
-      <td>3.0</td>
-      <td>47900</td>
-      <td>83.0</td>
-      <td>152</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Netherlands</td>
-      <td>15.0</td>
-      <td>19.0</td>
-      <td>12.0</td>
-      <td>7.0</td>
-      <td>50500</td>
-      <td>81.8</td>
-      <td>151</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th">social_support</th>
+<th data-quarto-table-cell-role="th">freedom</th>
+<th data-quarto-table-cell-role="th">corruption</th>
+<th data-quarto-table-cell-role="th">generosity</th>
+<th data-quarto-table-cell-role="th">gdp_per_cap</th>
+<th data-quarto-table-cell-role="th">life_exp</th>
+<th data-quarto-table-cell-role="th">happiness_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Finland</td>
+<td>2.0</td>
+<td>5.0</td>
+<td>4.0</td>
+<td>47.0</td>
+<td>42400</td>
+<td>81.8</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Denmark</td>
+<td>4.0</td>
+<td>6.0</td>
+<td>3.0</td>
+<td>22.0</td>
+<td>48300</td>
+<td>81.0</td>
+<td>154</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Norway</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>8.0</td>
+<td>11.0</td>
+<td>66300</td>
+<td>82.6</td>
+<td>153</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Iceland</td>
+<td>1.0</td>
+<td>7.0</td>
+<td>45.0</td>
+<td>3.0</td>
+<td>47900</td>
+<td>83.0</td>
+<td>152</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Netherlands</td>
+<td>15.0</td>
+<td>19.0</td>
+<td>12.0</td>
+<td>7.0</td>
+<td>50500</td>
+<td>81.8</td>
+<td>151</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="21">
-<details>
+</div>
+<div id="cell-6" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="21">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot of happiness_score vs. life_exp and show</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_exp'</span>, y<span class="op">=</span><span class="st">'happiness_score'</span>,data<span class="op">=</span>world_happiness)</span>
@@ -363,11 +349,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="22">
-<details>
+</div>
+<div id="cell-7" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scatterplot of happiness_score vs life_exp with trendline</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(x<span class="op">=</span><span class="st">'life_exp'</span>, y<span class="op">=</span><span class="st">'happiness_score'</span>,data<span class="op">=</span>world_happiness, ci<span class="op">=</span><span class="va">None</span>)</span>
@@ -376,11 +366,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
-<details>
+</div>
+<div id="cell-8" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="23">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation between life_exp and happiness_score</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>cor <span class="op">=</span> world_happiness[<span class="st">'life_exp'</span>].corr(world_happiness[<span class="st">'happiness_score'</span>])</span>
@@ -405,8 +399,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="what-cant-correlation-measure" class="level3">
 <h3 class="anchored" data-anchor-id="what-cant-correlation-measure">What can’t correlation measure?</h3>
 <p>While the correlation coefficient is a convenient way to quantify the strength of a relationship between two variables, it’s far from perfect. Here we’ll explore one of the caveats of the correlation coefficient by examining the relationship between a country’s GDP per capita (gdp_per_cap) and happiness score.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
-<details>
+<div id="cell-11" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="24">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot of gdp_per_cap and life_exp</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'gdp_per_cap'</span>,y<span class="op">=</span><span class="st">'life_exp'</span>, data<span class="op">=</span>world_happiness)</span>
@@ -415,11 +409,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="25">
-<details>
+</div>
+<div id="cell-12" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="25">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation between gdp_per_cap and life_exp</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cor <span class="op">=</span> world_happiness[<span class="st">'gdp_per_cap'</span>].corr(world_happiness[<span class="st">'life_exp'</span>])</span>
@@ -434,8 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="transforming-variables" class="level3">
 <h3 class="anchored" data-anchor-id="transforming-variables">Transforming variables</h3>
 <p>When variables have skewed distributions, they often require a transformation in order to form a linear relationship with another variable so that correlation can be computed. Here we’ll perform a transformation yourself</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
-<details>
+<div id="cell-14" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="26">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot of happiness_score vs. gdp_per_cap</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'gdp_per_cap'</span>, y<span class="op">=</span><span class="st">'happiness_score'</span>, data<span class="op">=</span>world_happiness)</span>
@@ -446,14 +444,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.7279733012222975</code></pre>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="27">
-<details>
+<div id="cell-15" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="27">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create log_gdp_per_cap column</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>world_happiness[<span class="st">'log_gdp_per_cap'</span>] <span class="op">=</span> np.log(world_happiness[<span class="st">'gdp_per_cap'</span>])</span>
@@ -469,7 +471,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st"> The relationship between GDP per capita and happiness became more linear by applying a log transformation. Log transformations are great to use on variables with a skewed distribution, such as GDP"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.8043146004918288
@@ -481,184 +487,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="does-sugar-improve-happiness" class="level3">
 <h3 class="anchored" data-anchor-id="does-sugar-improve-happiness">Does sugar improve happiness?</h3>
 <p>A new column has been added to world_happiness called grams_sugar_per_day, which contains the average amount of sugar eaten per person per day in each country. We’ll examine the effect of a country’s average sugar consumption on its happiness score.</p>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="28">
-<details>
+<div id="cell-17" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="28">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>world_happiness <span class="op">=</span> pd.read_csv(<span class="st">'world_happiness_add_sugar.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>world_happiness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="28">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>country</th>
-      <th>social_support</th>
-      <th>freedom</th>
-      <th>corruption</th>
-      <th>generosity</th>
-      <th>gdp_per_cap</th>
-      <th>life_exp</th>
-      <th>happiness_score</th>
-      <th>grams_sugar_per_day</th>
-    </tr>
-    <tr>
-      <th>Unnamed: 0</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Finland</td>
-      <td>2</td>
-      <td>5</td>
-      <td>4.0</td>
-      <td>47</td>
-      <td>42400</td>
-      <td>81.8</td>
-      <td>155</td>
-      <td>86.8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Denmark</td>
-      <td>4</td>
-      <td>6</td>
-      <td>3.0</td>
-      <td>22</td>
-      <td>48300</td>
-      <td>81.0</td>
-      <td>154</td>
-      <td>152.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Norway</td>
-      <td>3</td>
-      <td>3</td>
-      <td>8.0</td>
-      <td>11</td>
-      <td>66300</td>
-      <td>82.6</td>
-      <td>153</td>
-      <td>120.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Iceland</td>
-      <td>1</td>
-      <td>7</td>
-      <td>45.0</td>
-      <td>3</td>
-      <td>47900</td>
-      <td>83.0</td>
-      <td>152</td>
-      <td>132.0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Netherlands</td>
-      <td>15</td>
-      <td>19</td>
-      <td>12.0</td>
-      <td>7</td>
-      <td>50500</td>
-      <td>81.8</td>
-      <td>151</td>
-      <td>122.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>129</th>
-      <td>Yemen</td>
-      <td>100</td>
-      <td>147</td>
-      <td>83.0</td>
-      <td>155</td>
-      <td>2340</td>
-      <td>68.1</td>
-      <td>5</td>
-      <td>77.9</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>Rwanda</td>
-      <td>144</td>
-      <td>21</td>
-      <td>2.0</td>
-      <td>90</td>
-      <td>2110</td>
-      <td>69.1</td>
-      <td>4</td>
-      <td>14.1</td>
-    </tr>
-    <tr>
-      <th>131</th>
-      <td>Tanzania</td>
-      <td>131</td>
-      <td>78</td>
-      <td>34.0</td>
-      <td>49</td>
-      <td>2980</td>
-      <td>67.7</td>
-      <td>3</td>
-      <td>28.0</td>
-    </tr>
-    <tr>
-      <th>132</th>
-      <td>Afghanistan</td>
-      <td>151</td>
-      <td>155</td>
-      <td>136.0</td>
-      <td>137</td>
-      <td>1760</td>
-      <td>64.1</td>
-      <td>2</td>
-      <td>24.5</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>Central African Republic</td>
-      <td>155</td>
-      <td>133</td>
-      <td>122.0</td>
-      <td>113</td>
-      <td>794</td>
-      <td>52.9</td>
-      <td>1</td>
-      <td>22.4</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country</th>
+<th data-quarto-table-cell-role="th">social_support</th>
+<th data-quarto-table-cell-role="th">freedom</th>
+<th data-quarto-table-cell-role="th">corruption</th>
+<th data-quarto-table-cell-role="th">generosity</th>
+<th data-quarto-table-cell-role="th">gdp_per_cap</th>
+<th data-quarto-table-cell-role="th">life_exp</th>
+<th data-quarto-table-cell-role="th">happiness_score</th>
+<th data-quarto-table-cell-role="th">grams_sugar_per_day</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Finland</td>
+<td>2</td>
+<td>5</td>
+<td>4.0</td>
+<td>47</td>
+<td>42400</td>
+<td>81.8</td>
+<td>155</td>
+<td>86.8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Denmark</td>
+<td>4</td>
+<td>6</td>
+<td>3.0</td>
+<td>22</td>
+<td>48300</td>
+<td>81.0</td>
+<td>154</td>
+<td>152.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Norway</td>
+<td>3</td>
+<td>3</td>
+<td>8.0</td>
+<td>11</td>
+<td>66300</td>
+<td>82.6</td>
+<td>153</td>
+<td>120.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Iceland</td>
+<td>1</td>
+<td>7</td>
+<td>45.0</td>
+<td>3</td>
+<td>47900</td>
+<td>83.0</td>
+<td>152</td>
+<td>132.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Netherlands</td>
+<td>15</td>
+<td>19</td>
+<td>12.0</td>
+<td>7</td>
+<td>50500</td>
+<td>81.8</td>
+<td>151</td>
+<td>122.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">129</td>
+<td>Yemen</td>
+<td>100</td>
+<td>147</td>
+<td>83.0</td>
+<td>155</td>
+<td>2340</td>
+<td>68.1</td>
+<td>5</td>
+<td>77.9</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">130</td>
+<td>Rwanda</td>
+<td>144</td>
+<td>21</td>
+<td>2.0</td>
+<td>90</td>
+<td>2110</td>
+<td>69.1</td>
+<td>4</td>
+<td>14.1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">131</td>
+<td>Tanzania</td>
+<td>131</td>
+<td>78</td>
+<td>34.0</td>
+<td>49</td>
+<td>2980</td>
+<td>67.7</td>
+<td>3</td>
+<td>28.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">132</td>
+<td>Afghanistan</td>
+<td>151</td>
+<td>155</td>
+<td>136.0</td>
+<td>137</td>
+<td>1760</td>
+<td>64.1</td>
+<td>2</td>
+<td>24.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">133</td>
+<td>Central African Republic</td>
+<td>155</td>
+<td>133</td>
+<td>122.0</td>
+<td>113</td>
+<td>794</td>
+<td>52.9</td>
+<td>1</td>
+<td>22.4</td>
+</tr>
+</tbody>
 </table>
+
 <p>133 rows × 9 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="29">
-<details>
+</div>
+<div id="cell-18" class="cell" data-pycharm="{&quot;name&quot;:&quot;#%%\n&quot;}" data-execution_count="29">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot of grams_sugar_per_day and happiness_score</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'grams_sugar_per_day'</span>, y<span class="op">=</span><span class="st">'happiness_score'</span>, data<span class="op">=</span>world_happiness)</span>
@@ -669,7 +678,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Correlation and experimental design_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Correlation and experimental design_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.6939100021829634</code></pre>
@@ -753,9 +766,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -791,10 +818,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -804,8 +830,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -820,6 +855,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -862,6 +1129,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

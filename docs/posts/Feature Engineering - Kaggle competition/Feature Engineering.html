@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -247,7 +228,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="feature-engineering" class="level1">
 <h1>Feature Engineering</h1>
@@ -255,8 +238,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Feature Engineering</strong> is part of <a href="" title="https://campus.datacamp.com/courses/winning-a-kaggle-competition-in-python">Datacamp course: Winning a Kaggle Competition in Python</a> This course will now have the opportunity to learn about different types of features. In this project, you will modify existing features and create new ones. In addition, you will take appropriate measures to address the missing data.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:17:43.010427Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:17:43.909939Z&quot;}" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:17:43.010427Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:17:43.909939Z&quot;}" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -282,8 +265,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="arithmetical-features">Arithmetical features</h2>
 <p>To practice creating new features, you will be working with a subsample from the Kaggle competition called “House Prices: Advanced Regression Techniques”. The goal of this competition is to predict the price of the house based on its properties. It’s a regression problem with Root Mean Squared Error as an evaluation metric.</p>
 <p>Your goal is to create new features and determine whether they improve your validation score. To get the validation score from 5-fold cross-validation, you’re given the get_kfold_rmse() function</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:21:04.494425Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:21:05.848589Z&quot;}" data-execution_count="2">
-<details>
+<div id="cell-5" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:21:04.494425Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:21:05.848589Z&quot;}" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> KFold</span>
@@ -344,8 +327,8 @@ RMSE with number of bathromms: 34506.78</code></pre>
 <h2 class="anchored" data-anchor-id="date-features">Date features</h2>
 <p>You’ve built some basic features using numerical variables. Now, it’s time to create features based on date and time. You will practice on a subsample from the Taxi Fare Prediction Kaggle competition data. The data represents information about the taxi rides and the goal is to predict the price for each ride.</p>
 <p>Your objective is to generate date features from the pickup datetime. Recall that it’s better to create new features for train and test data simultaneously. After the features are created, split the data back into the train and test DataFrames</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:26:54.756073Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:26:55.856759Z&quot;}" data-execution_count="3">
-<details>
+<div id="cell-7" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:26:54.756073Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:26:55.856759Z&quot;}" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.read_csv(<span class="st">'dataset/taxi_train_chapter_4.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.read_csv(<span class="st">'dataset/taxi_test_chapter_4.csv'</span>)</span>
@@ -373,8 +356,8 @@ RMSE with number of bathromms: 34506.78</code></pre>
 <h2 class="anchored" data-anchor-id="label-encoding">Label encoding</h2>
 <p>Let’s work on categorical variables encoding. You will again work with a subsample from the House Prices Kaggle competition.</p>
 <p>Your objective is to encode categorical features “RoofStyle” and “CentralAir” using label encoding.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:30:51.493946Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:30:51.504082Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-9" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:30:51.493946Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:30:51.504082Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -409,8 +392,8 @@ RMSE with number of bathromms: 34506.78</code></pre>
 <p>The problem with label encoding is that it implicitly assumes that there is a ranking dependency between the categories. So, let’s change the encoding method for the features “RoofStyle” and “CentralAir” to one-hot encoding. Again, the train and test DataFrames from House Prices Kaggle competition are already available in your workspace.</p>
 <p>Recall that if you’re dealing with binary features (categorical features with only two categories) it is suggested to apply label encoder only.</p>
 <p>Your goal is to determine which of the mentioned features is not binary, and to apply one-hot encoding only to this one.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:32:15.075420Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:32:15.080126Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-11" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:32:15.075420Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:32:15.080126Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>houses <span class="op">=</span> pd.concat([train, test])</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -432,8 +415,8 @@ N     196
 Name: CentralAir, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:33:52.172465Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:33:52.184544Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:33:52.172465Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:33:52.184544Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> LabelEncoder()</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>houses[<span class="st">'CentralAir_enc'</span>] <span class="op">=</span> le.fit_transform(houses[<span class="st">'CentralAir'</span>])</span>
@@ -480,8 +463,8 @@ Name: CentralAir, dtype: int64</code></pre>
 <p>First of all, you will create a function that implements mean target encoding. Remember that you need to develop the two following steps:</p>
 <pre><code>1. Calculate the mean on the train, apply to the test
 2. Split train into K folds. Calculate the out-of-fold mean for each fold, apply to this particular fold</code></pre>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:39:53.531889Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:39:53.547625Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-14" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:39:53.531889Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:39:53.547625Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mean_target_encoding(train, test, target, categorical, alpha<span class="op">=</span><span class="dv">5</span>):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate global mean on the train data</span></span>
@@ -531,8 +514,8 @@ Name: CentralAir, dtype: int64</code></pre>
 <section id="k-fold-cross-validation" class="level2">
 <h2 class="anchored" data-anchor-id="k-fold-cross-validation">K-fold cross-validation</h2>
 <p>You will work with a binary classification problem on a subsample from Kaggle playground competition. The objective of this competition is to predict whether a famous basketball player Kobe Bryant scored a basket or missed a particular shot.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:40:57.684175Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:40:57.733818Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-16" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:40:57.684175Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:40:57.733818Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bryant_shots <span class="op">=</span> pd.read_csv(<span class="st">'dataset/bryant_shots.csv'</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -574,8 +557,8 @@ Name: CentralAir, dtype: int64</code></pre>
 * For regression mean could be changed to median, quartiles, etc.
 * For multi-class classification with N classes we create N features with target mean for each category in one vs. all fashion The mean_target_encoding() function you've created could be used for any target type specified above. Let's apply it for the regression problem on the example of House Prices Kaggle competition.</code></pre>
 <p>Your goal is to encode a categorical feature “RoofStyle” using mean target encoding.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:43:15.354010Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:43:15.369776Z&quot;}" data-execution_count="11">
-<details>
+<div id="cell-18" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:43:15.354010Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:43:15.369776Z&quot;}" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.read_csv(<span class="st">'dataset/house_prices_train.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.read_csv(<span class="st">'dataset/house_prices_test.csv'</span>)</span>
@@ -590,50 +573,53 @@ Name: CentralAir, dtype: int64</code></pre>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>test[[<span class="st">'RoofStyle'</span>, <span class="st">'RoofStyle_enc'</span>]].drop_duplicates()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="11">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>RoofStyle</th>
-      <th>RoofStyle_enc</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Gable</td>
-      <td>171565.947836</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Hip</td>
-      <td>217594.645131</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>Gambrel</td>
-      <td>164152.950424</td>
-    </tr>
-    <tr>
-      <th>133</th>
-      <td>Flat</td>
-      <td>188703.563431</td>
-    </tr>
-    <tr>
-      <th>362</th>
-      <td>Mansard</td>
-      <td>180775.938759</td>
-    </tr>
-    <tr>
-      <th>1053</th>
-      <td>Shed</td>
-      <td>188267.663242</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">RoofStyle</th>
+<th data-quarto-table-cell-role="th">RoofStyle_enc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Gable</td>
+<td>171565.947836</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Hip</td>
+<td>217594.645131</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">98</td>
+<td>Gambrel</td>
+<td>164152.950424</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">133</td>
+<td>Flat</td>
+<td>188703.563431</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">362</td>
+<td>Mansard</td>
+<td>180775.938759</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1053</td>
+<td>Shed</td>
+<td>188267.663242</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -660,8 +646,8 @@ Name: CentralAir, dtype: int64</code></pre>
 <h2 class="anchored" data-anchor-id="find-missing-data">Find missing data</h2>
 <p>Let’s impute missing data on a real Kaggle dataset. For this purpose, you will be using a data subsample from the Kaggle “Two sigma connect: rental listing inquiries” competition.</p>
 <p>Before proceeding with any imputing you need to know the number of missing values for each of the features. Moreover, if the feature has missing values, you should explore the type of this feature.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:45:41.981778Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:45:42.002608Z&quot;}" data-execution_count="12">
-<details>
+<div id="cell-20" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:45:41.981778Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:45:42.002608Z&quot;}" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>twosigma <span class="op">=</span> pd.read_csv(<span class="st">'dataset/twosigma_rental_train_null.csv'</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -683,45 +669,48 @@ interest_level     0
 dtype: int64</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>building_id</th>
-      <th>price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>53a5b119ba8f7b61d4e010512e0dfc85</td>
-      <td>3000.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>c5c8a357cba207596b04d1afd1e4f130</td>
-      <td>5465.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>c3ba40552e2120b0acfc3cb5730bb2aa</td>
-      <td>2850.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>28d9ad350afeaab8027513a3e52ac8d5</td>
-      <td>3275.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>NaN</td>
-      <td>3350.0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">building_id</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>53a5b119ba8f7b61d4e010512e0dfc85</td>
+<td>3000.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>c5c8a357cba207596b04d1afd1e4f130</td>
+<td>5465.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>c3ba40552e2120b0acfc3cb5730bb2aa</td>
+<td>2850.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>28d9ad350afeaab8027513a3e52ac8d5</td>
+<td>3275.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>NaN</td>
+<td>3350.0</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -731,8 +720,8 @@ dtype: int64</code></pre>
 <p>You’ve found that “price” and “building_id” columns have missing values in the Rental Listing Inquiries dataset. So, before passing the data to the models you need to impute these values.</p>
 <p>Numerical feature “price” will be encoded with a mean value of non-missing prices.</p>
 <p>Imputing categorical feature “building_id” with the most frequent category is a bad idea, because it would mean that all the apartments with a missing “building_id” are located in the most popular building. The better idea is to impute it with a new category.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:48:38.020527Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:48:38.034752Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-22" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-14T19:48:38.020527Z&quot;,&quot;end_time&quot;:&quot;2023-04-14T19:48:38.034752Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -795,9 +784,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -833,10 +836,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -846,8 +848,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -862,6 +873,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -904,6 +1147,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -133,45 +140,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -227,7 +236,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="vectorization-with-python-and-numpy" class="level1">
 <h1>Vectorization with python and numpy</h1>
@@ -258,8 +269,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#toc_40015_4.3">&nbsp;&nbsp;4.3 Matrix Creation</a></li>
 <li><a href="#toc_40015_4.4">&nbsp;&nbsp;4.4 Operations on Matrices</a></li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T17:55:25.489249Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T17:55:25.583466Z&quot;}" data-execution_count="1">
-<details>
+<div id="cell-3" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T17:55:25.489249Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T17:55:25.583466Z&quot;}" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np    <span class="co"># it is an unofficial standard to use np for numpy</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -276,8 +287,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><a name="toc_40015_3.3"></a> ## 3.3 Vector Creation</p>
 <p>Data creation routines in NumPy will generally have a first parameter which is the shape of the object. This can either be a single value for a 1-D result or a tuple (n,m,…) specifying the shape of the result. Below are examples of creating vectors using these routines.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:00:07.452329Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:00:07.456161Z&quot;}" data-execution_count="2">
-<details>
+<div id="cell-10" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:00:07.452329Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:00:07.456161Z&quot;}" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NumPy routines which allocate memory and fill arrays with value</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.zeros(<span class="dv">4</span>)<span class="op">;</span>                <span class="bu">print</span>(<span class="ss">f"np.zeros(4) :   a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, a shape = </span><span class="sc">{</span>a<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, a data type = </span><span class="sc">{</span>a<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -291,8 +302,8 @@ np.random.random_sample(4): a = [0.77585598 0.09092811 0.74525404 0.50676535], a
 </div>
 </div>
 <p>Some data creation routines do not take a shape tuple:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:01:13.456860Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:01:13.461820Z&quot;}" data-execution_count="3">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:01:13.456860Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:01:13.461820Z&quot;}" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NumPy routines which allocate memory and fill arrays with value but do not accept shape as input argument</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="fl">4.</span>)<span class="op">;</span>              <span class="bu">print</span>(<span class="ss">f"np.arange(4.):     a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">, a shape = </span><span class="sc">{</span>a<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, a data type = </span><span class="sc">{</span>a<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -304,8 +315,8 @@ np.random.rand(4): a = [0.5364477  0.86793191 0.40241384 0.03283116], a shape = 
 </div>
 </div>
 <p>values can be specified manually as well.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:01:47.041104Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:01:47.043113Z&quot;}" data-execution_count="4">
-<details>
+<div id="cell-14" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:01:47.041104Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:01:47.043113Z&quot;}" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NumPy routines which allocate memory and fill with user specified values</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>])<span class="op">;</span>  <span class="bu">print</span>(<span class="ss">f"np.array([5,4,3,2]):  a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">,     a shape = </span><span class="sc">{</span>a<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, a data type = </span><span class="sc">{</span>a<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -318,8 +329,8 @@ np.array([5.,4,3,2]): a = [5. 4. 3. 2.], a shape = (4,), a data type = float64</
 </div>
 <p>These have all created a one-dimensional vector <code>a</code> with four elements. <code>a.shape</code> returns the dimensions. Here we see a.shape = <code>(4,)</code> indicating a 1-d array with 4 elements.</p>
 <p><a name="toc_40015_3.4"></a> ## 3.4 Operations on Vectors Let’s explore some operations using vectors. <a name="toc_40015_3.4.1"></a> ### 3.4.1 Indexing Elements of vectors can be accessed via indexing and slicing. NumPy provides a very complete set of indexing and slicing capabilities. We will explore only the basics needed for the course here. Reference <a href="https://NumPy.org/doc/stable/reference/arrays.indexing.html">Slicing and Indexing</a> for more details. <strong>Indexing</strong> means referring to <em>an element</em> of an array by its position within the array. <strong>Slicing</strong> means getting a <em>subset</em> of elements from an array based on their indices. NumPy starts indexing at zero so the 3rd element of an vector <span class="math inline">\(\mathbf{a}\)</span> is <code>a[2]</code>.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:03:08.016968Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:03:08.018959Z&quot;}" data-execution_count="5">
-<details>
+<div id="cell-17" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:03:08.016968Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:03:08.018959Z&quot;}" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vector indexing operations on 1-D vectors</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">10</span>)</span>
@@ -347,8 +358,8 @@ index 10 is out of bounds for axis 0 with size 10</code></pre>
 </div>
 </div>
 <p><a name="toc_40015_3.4.2"></a> ### 3.4.2 Slicing Slicing creates an array of indices using a set of three values (<code>start:stop:step</code>). A subset of values is also valid. Its use is best explained by example:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:04:01.703501Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:04:01.705583Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-19" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:04:01.703501Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:04:01.705583Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vector slicing operations</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">10</span>)</span>
@@ -379,8 +390,8 @@ a[:]     =  [0 1 2 3 4 5 6 7 8 9]</code></pre>
 </div>
 </div>
 <p><a name="toc_40015_3.4.3"></a> ### 3.4.3 Single vector operations There are a number of useful operations that involve operations on a single vector.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:05:17.716463Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:05:17.729936Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-21" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:05:17.716463Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:05:17.729936Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>])</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a             : </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -407,8 +418,8 @@ b = a**2      : [ 1  4  9 16]</code></pre>
 </div>
 </div>
 <p><a name="toc_40015_3.4.4"></a> ### 3.4.4 Vector Vector element-wise operations Most of the NumPy arithmetic, logical and comparison operations apply to vectors as well. These operators work on an element-by-element basis. For example <span class="math display">\[ c_i = a_i + b_i \]</span></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:06:31.624853Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:06:31.632799Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-23" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:06:31.624853Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:06:31.632799Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([ <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
@@ -419,8 +430,8 @@ b = a**2      : [ 1  4  9 16]</code></pre>
 </div>
 </div>
 <p>Of course, for this to work correctly, the vectors must be of the same size:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:06:56.920896Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:06:56.929100Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-25" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:06:56.920896Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:06:56.929100Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#try a mismatched vector operation</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>])</span>
@@ -436,8 +447,8 @@ operands could not be broadcast together with shapes (4,) (2,) </code></pre>
 </div>
 </div>
 <p><a name="toc_40015_3.4.5"></a> ### 3.4.5 Scalar Vector operations Vectors can be ‘scaled’ by scalar values. A scalar value is just a number. The scalar multiplies all the elements of the vector.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:07:39.449293Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:07:39.457709Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-27" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:07:39.449293Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:07:39.457709Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -454,8 +465,8 @@ operands could not be broadcast together with shapes (4,) (2,) </code></pre>
 <p>The dot product multiplies the values in two vectors element-wise and then sums the result. Vector dot product requires the dimensions of the two vectors to be the same.</p>
 <p>Let’s implement our own version of the dot product below:</p>
 <p><strong>Using a for loop</strong>, implement a function which returns the dot product of two vectors. The function to return given inputs <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>: <span class="math display">\[ x = \sum_{i=0}^{n-1} a_i b_i \]</span> Assume both <code>a</code> and <code>b</code> are the same shape.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:11:04.957160Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:11:04.972725Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-32" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:11:04.957160Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:11:04.972725Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_dot(a, b):</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -474,8 +485,8 @@ operands could not be broadcast together with shapes (4,) (2,) </code></pre>
 <span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:11:38.718720Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:11:38.728548Z&quot;}" data-execution_count="14">
-<details>
+<div id="cell-33" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:11:38.718720Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:11:38.728548Z&quot;}" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test 1-D</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
@@ -488,8 +499,8 @@ operands could not be broadcast together with shapes (4,) (2,) </code></pre>
 </div>
 <p>Note, the dot product is expected to return a scalar value.</p>
 <p>Let’s try the same operations using <code>np.dot</code>.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:12:08.062363Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:12:08.094380Z&quot;}" data-execution_count="15">
-<details>
+<div id="cell-35" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:12:08.062363Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:12:08.094380Z&quot;}" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test 1-D</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
@@ -506,8 +517,8 @@ NumPy 1-D np.dot(b, a) = 24, np.dot(a, b).shape = () </code></pre>
 </div>
 <p>Above, you will note that the results for 1-D matched our implementation.</p>
 <p><a name="toc_40015_3.4.7"></a> ### 3.4.7 The Need for Speed: vector vs for loop We utilized the NumPy library because it improves speed memory efficiency. Let’s demonstrate:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:13:02.850419Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:13:04.235725Z&quot;}" data-execution_count="17">
-<details>
+<div id="cell-38" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:13:02.850419Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:13:04.235725Z&quot;}" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">1</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.random.rand(<span class="dv">10000000</span>)  <span class="co"># very large arrays</span></span>
@@ -539,8 +550,8 @@ loop version duration: 1296.9568 ms </code></pre>
 <p>So, vectorization provides a large speed up in this example. This is because NumPy makes better use of available data parallelism in the underlying hardware. GPU’s and modern CPU’s implement Single Instruction, Multiple Data (SIMD) pipelines allowing multiple operations to be issued in parallel. This is critical in Machine Learning where the data sets are often very large.</p>
 <p><a name="toc_12345_3.4.8"></a> ### 3.4.8 Vector Vector operations in Course 1 Vector Vector operations will appear frequently in course 1. Here is why: - Going forward, our examples will be stored in an array, <code>X_train</code> of dimension (m,n). This will be explained more in context, but here it is important to note it is a 2 Dimensional array or matrix (see next section on matrices). - <code>w</code> will be a 1-dimensional vector of shape (n,). - we will perform operations by looping through the examples, extracting each example to work on individually by indexing X. For example:<code>X[i]</code> - <code>X[i]</code> returns a value of shape (n,), a 1-dimensional vector. Consequently, operations involving <code>X[i]</code> are often vector-vector.</p>
 <p>That is a somewhat lengthy explanation, but aligning and understanding the shapes of your operands is important when performing vector operations.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:15:17.260918Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:15:17.280676Z&quot;}" data-execution_count="18">
-<details>
+<div id="cell-41" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:15:17.260918Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:15:17.280676Z&quot;}" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show common Course 1 example</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">2</span>],[<span class="dv">3</span>],[<span class="dv">4</span>]])</span>
@@ -563,7 +574,7 @@ c has shape ()</code></pre>
 <center>
 <img src="C1_W2_Lab04_Matrices.PNG" alt="missing" width="900" class="figure-img">
 <center>
-<figcaption class="figure-caption">
+<figcaption>
 Generic Matrix Notation, 1st index is row, 2nd is column
 </figcaption>
 <figure class="figure">
@@ -572,8 +583,8 @@ Generic Matrix Notation, 1st index is row, 2nd is column
 <p>In Course 1, 2-D matrices are used to hold training data. Training data is <span class="math inline">\(m\)</span> examples by <span class="math inline">\(n\)</span> features creating an (m,n) array. Course 1 does not do operations directly on matrices but typically extracts an example as a vector and operates on that. Below you will review: - data creation - slicing and indexing</p>
 <p><a name="toc_40015_4.3"></a> ## 4.3 Matrix Creation The same functions that created 1-D vectors will create 2-D or n-D arrays. Here are some examples</p>
 <p>Below, the shape tuple is provided to achieve a 2-D result. Notice how NumPy uses brackets to denote each dimension. Notice further than NumPy, when printing, will print one row per line.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:17:10.508647Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:17:10.525991Z&quot;}" data-execution_count="19">
-<details>
+<div id="cell-47" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:17:10.508647Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:17:10.525991Z&quot;}" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.zeros((<span class="dv">1</span>, <span class="dv">5</span>))</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"a shape = </span><span class="sc">{</span>a<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -592,8 +603,8 @@ a shape = (1, 1), a = [[0.44236513]]</code></pre>
 </div>
 </div>
 <p>One can also manually specify data. Dimensions are specified with additional brackets matching the format in the printing above.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:17:41.014035Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:17:41.033587Z&quot;}" data-execution_count="20">
-<details>
+<div id="cell-49" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:17:41.014035Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:17:41.033587Z&quot;}" data-execution_count="20">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NumPy routines which allocate memory and fill with user specified values</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([[<span class="dv">5</span>], [<span class="dv">4</span>], [<span class="dv">3</span>]])<span class="op">;</span>   <span class="bu">print</span>(<span class="ss">f" a shape = </span><span class="sc">{</span>a<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, np.array: a = </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -614,8 +625,8 @@ a shape = (1, 1), a = [[0.44236513]]</code></pre>
 <p><a name="toc_40015_4.4"></a> ## 4.4 Operations on Matrices Let’s explore some operations using matrices.</p>
 <p><a name="toc_40015_4.4.1"></a> ### 4.4.1 Indexing</p>
 <p>Matrices include a second index. The two indexes describe [row, column]. Access can either return an element or a row/column. See below:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:18:42.330637Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:18:42.351350Z&quot;}" data-execution_count="21">
-<details>
+<div id="cell-53" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:18:42.330637Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:18:42.351350Z&quot;}" data-execution_count="21">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vector indexing operations on matrices</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">6</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>)   <span class="co">#reshape is a convenient way to create matrices</span></span>
@@ -641,8 +652,8 @@ a[2].shape:   (2,), a[2]   = [4 5], type(a[2])   = &lt;class 'numpy.ndarray'&gt;
 <p>It is worth drawing attention to the last example. Accessing a matrix by just specifying the row will return a <em>1-D vector</em>.</p>
 <p><strong>Reshape</strong> The previous example used <a href="https://numpy.org/doc/stable/reference/generated/numpy.reshape.html">reshape</a> to shape the array. <code>a = np.arange(6).reshape(-1, 2)</code> This line of code first created a <em>1-D Vector</em> of six elements. It then reshaped that vector into a <em>2-D</em> array using the reshape command. This could have been written: <code>a = np.arange(6).reshape(3, 2)</code> To arrive at the same 3 row, 2 column array. The -1 argument tells the routine to compute the number of rows given the size of the array and the number of columns.</p>
 <p><a name="toc_40015_4.4.2"></a> ### 4.4.2 Slicing Slicing creates an array of indices using a set of three values (<code>start:stop:step</code>). A subset of values is also valid. Its use is best explained by example:</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:21:10.845833Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:21:10.866275Z&quot;}" data-execution_count="22">
-<details>
+<div id="cell-57" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:21:10.845833Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:21:10.866275Z&quot;}" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vector 2-D slicing operations</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.arange(<span class="dv">20</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">10</span>)</span>
@@ -710,9 +721,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -748,10 +773,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -761,8 +785,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -777,6 +810,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -819,6 +1084,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

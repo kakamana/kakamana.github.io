@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -253,15 +234,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="feature-extraction" class="level1">
 <h1>Feature Extraction</h1>
 <p>Principal Component Analysis (PCA), the most widely used dimensionality reduction algorithm, is covered briefly here. We will learn how and why this algorithm is so powerful, as well as how to apply it for data exploration and preprocessing as part of a modeling pipeline. We will conclude with an example of image compression.</p>
 <p>This <strong>Feature Extraction</strong> is part of <a href="https://app.datacamp.com/learn/courses/dimensionality-reduction-in-python">Datacamp course: Dimensionality Reduction in Python</a></p>
 <p>This is my learning experience of data science through DataCamp</p>
-<div class="cell" data-execution_count="84">
-<details>
+<div id="cell-2" class="cell" data-execution_count="84">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -276,75 +259,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="feature.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">feature</figcaption><p></p>
+<figcaption>feature</figcaption>
 </figure>
 </div>
 <section id="manual-feature-extraction-i" class="level3">
 <h3 class="anchored" data-anchor-id="manual-feature-extraction-i">Manual feature extraction I</h3>
 <p>You want to compare prices for specific products between stores. The features in the pre-loaded dataset <code>sales_df</code> are: <code>storeID</code>, <code>product</code>, <code>quantity</code> and <code>revenue</code>. The <code>quantity</code> and <code>revenue</code> features tell you how many items of a particular product were sold in a store and what the total revenue was. For the purpose of your analysis it’s more interesting to know the average price per product.</p>
-<div class="cell" data-execution_count="85">
-<details>
+<div id="cell-5" class="cell" data-execution_count="85">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sales_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/grocery_sales.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sales_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="85">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>storeID</th>
-      <th>product</th>
-      <th>quantity</th>
-      <th>revenue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>A</td>
-      <td>Apples</td>
-      <td>1811</td>
-      <td>9300.6</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>A</td>
-      <td>Bananas</td>
-      <td>1003</td>
-      <td>3375.2</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>A</td>
-      <td>Oranges</td>
-      <td>1604</td>
-      <td>8528.5</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>B</td>
-      <td>Apples</td>
-      <td>1785</td>
-      <td>9181.0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>B</td>
-      <td>Bananas</td>
-      <td>944</td>
-      <td>3680.2</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">storeID</th>
+<th data-quarto-table-cell-role="th">product</th>
+<th data-quarto-table-cell-role="th">quantity</th>
+<th data-quarto-table-cell-role="th">revenue</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A</td>
+<td>Apples</td>
+<td>1811</td>
+<td>9300.6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A</td>
+<td>Bananas</td>
+<td>1003</td>
+<td>3375.2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>A</td>
+<td>Oranges</td>
+<td>1604</td>
+<td>8528.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>B</td>
+<td>Apples</td>
+<td>1785</td>
+<td>9181.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>B</td>
+<td>Bananas</td>
+<td>944</td>
+<td>3680.2</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="86">
-<details>
+</div>
+<div id="cell-6" class="cell" data-execution_count="86">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the price from the quantity sold and revenue</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sales_df[<span class="st">'price'</span>] <span class="op">=</span> sales_df[<span class="st">'revenue'</span>] <span class="op">/</span> sales_df[<span class="st">'quantity'</span>]</span>
@@ -355,51 +341,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>reduced_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="86">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>storeID</th>
-      <th>product</th>
-      <th>price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>A</td>
-      <td>Apples</td>
-      <td>5.135616</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>A</td>
-      <td>Bananas</td>
-      <td>3.365105</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>A</td>
-      <td>Oranges</td>
-      <td>5.317020</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>B</td>
-      <td>Apples</td>
-      <td>5.143417</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>B</td>
-      <td>Bananas</td>
-      <td>3.898517</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">storeID</th>
+<th data-quarto-table-cell-role="th">product</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A</td>
+<td>Apples</td>
+<td>5.135616</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A</td>
+<td>Bananas</td>
+<td>3.365105</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>A</td>
+<td>Oranges</td>
+<td>5.317020</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>B</td>
+<td>Apples</td>
+<td>5.143417</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>B</td>
+<td>Bananas</td>
+<td>3.898517</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -407,69 +396,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="manual-feature-extraction-ii" class="level3">
 <h3 class="anchored" data-anchor-id="manual-feature-extraction-ii">Manual feature extraction II</h3>
 <p>You’re working on a variant of the ANSUR dataset, <code>height_df</code>, where a person’s height was measured 3 times. Add a feature with the mean height to the dataset, then drop the 3 original features.</p>
-<div class="cell" data-execution_count="87">
-<details>
+<div id="cell-8" class="cell" data-execution_count="87">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>height_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/height_df.csv'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>height_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="87">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>weight_kg</th>
-      <th>height_1</th>
-      <th>height_2</th>
-      <th>height_3</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>81.5</td>
-      <td>1.78</td>
-      <td>1.80</td>
-      <td>1.80</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>72.6</td>
-      <td>1.70</td>
-      <td>1.70</td>
-      <td>1.69</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>92.9</td>
-      <td>1.74</td>
-      <td>1.75</td>
-      <td>1.73</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>79.4</td>
-      <td>1.66</td>
-      <td>1.68</td>
-      <td>1.67</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>94.6</td>
-      <td>1.91</td>
-      <td>1.93</td>
-      <td>1.90</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">weight_kg</th>
+<th data-quarto-table-cell-role="th">height_1</th>
+<th data-quarto-table-cell-role="th">height_2</th>
+<th data-quarto-table-cell-role="th">height_3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>81.5</td>
+<td>1.78</td>
+<td>1.80</td>
+<td>1.80</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>72.6</td>
+<td>1.70</td>
+<td>1.70</td>
+<td>1.69</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>92.9</td>
+<td>1.74</td>
+<td>1.75</td>
+<td>1.73</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>79.4</td>
+<td>1.66</td>
+<td>1.68</td>
+<td>1.67</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>94.6</td>
+<td>1.91</td>
+<td>1.93</td>
+<td>1.90</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="88">
-<details>
+</div>
+<div id="cell-9" class="cell" data-execution_count="88">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean height</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>height_df[<span class="st">'height'</span>] <span class="op">=</span> height_df[[<span class="st">'height_1'</span>, <span class="st">'height_2'</span>, <span class="st">'height_3'</span>]].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -480,45 +472,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>reduced_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="88">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>weight_kg</th>
-      <th>height</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>81.5</td>
-      <td>1.793333</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>72.6</td>
-      <td>1.696667</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>92.9</td>
-      <td>1.740000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>79.4</td>
-      <td>1.670000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>94.6</td>
-      <td>1.913333</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">weight_kg</th>
+<th data-quarto-table-cell-role="th">height</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>81.5</td>
+<td>1.793333</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>72.6</td>
+<td>1.696667</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>92.9</td>
+<td>1.740000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>79.4</td>
+<td>1.670000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>94.6</td>
+<td>1.913333</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
@@ -532,24 +527,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="calculating-principal-components" class="level3">
 <h3 class="anchored" data-anchor-id="calculating-principal-components">Calculating Principal Components</h3>
 <p>You’ll visually inspect a 4 feature sample of the ANSUR dataset before and after PCA using Seaborn’s <code>pairplot()</code>. This will allow you to inspect the pairwise correlations between the features.</p>
-<div class="cell" data-execution_count="89">
-<details>
+<div id="cell-12" class="cell" data-execution_count="89">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ansur_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ansur_sample.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="90">
-<details>
+<div id="cell-13" class="cell" data-execution_count="90">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pairplot to inspect ansur_df</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(ansur_df)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="91">
-<details>
+</div>
+<div id="cell-14" class="cell" data-execution_count="91">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
@@ -574,15 +573,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Notice how, in contrast to the input features, none of the principal components are correlated to one another.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="pca-on-a-larger-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="pca-on-a-larger-dataset">PCA on a larger dataset</h3>
 <p>You’ll now apply PCA on a somewhat larger ANSUR datasample with 13 dimensions. The fitted model will be used in the next exercise. Since we are not using the principal components themselves there is no need to transform the data, instead, it is sufficient to fit pca to the data.</p>
-<div class="cell" data-execution_count="92">
-<details>
+<div id="cell-16" class="cell" data-execution_count="92">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'./dataset/ANSUR_II_MALE.csv'</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ansur_df <span class="op">=</span> df[[<span class="st">'stature_m'</span>, <span class="st">'buttockheight'</span>, <span class="st">'waistdepth'</span>, <span class="st">'span'</span>,</span>
@@ -591,8 +594,8 @@ Notice how, in contrast to the input features, none of the principal components 
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">'chestcircumference'</span>, <span class="st">'cervicaleheight'</span>, <span class="st">'sittingheight'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="93">
-<details>
+<div id="cell-17" class="cell" data-execution_count="93">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
@@ -611,8 +614,8 @@ Notice how, in contrast to the input features, none of the principal components 
 <section id="pca-explained-variance" class="level3">
 <h3 class="anchored" data-anchor-id="pca-explained-variance">PCA explained variance</h3>
 <p>You’ll be inspecting the variance explained by the different principal components of the <code>pca</code> instance you created in the previous exercise.</p>
-<div class="cell" data-execution_count="94">
-<details>
+<div id="cell-20" class="cell" data-execution_count="94">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the explained variance ratio per component</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca.explained_variance_ratio_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -623,8 +626,8 @@ Notice how, in contrast to the input features, none of the principal components 
  0.00079911]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="95">
-<details>
+<div id="cell-21" class="cell" data-execution_count="95">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the cumulative sum of the explained variance ratio</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca.explained_variance_ratio_.cumsum())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -643,196 +646,202 @@ Notice how, in contrast to the input features, none of the principal components 
 <section id="understanding-the-components" class="level3">
 <h3 class="anchored" data-anchor-id="understanding-the-components">Understanding the components</h3>
 <p>You’ll apply PCA to the numeric features of the Pokemon dataset, <code>poke_df</code>, using a pipeline to combine the feature scaling and PCA in one go. You’ll then interpret the meanings of the first two components.</p>
-<div class="cell" data-execution_count="96">
-<details>
+<div id="cell-25" class="cell" data-execution_count="96">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/pokemon.csv'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="96">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>#</th>
-      <th>Name</th>
-      <th>Type 1</th>
-      <th>Type 2</th>
-      <th>Total</th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Sp. Atk</th>
-      <th>Sp. Def</th>
-      <th>Speed</th>
-      <th>Generation</th>
-      <th>Legendary</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>Bulbasaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>318</td>
-      <td>45</td>
-      <td>49</td>
-      <td>49</td>
-      <td>65</td>
-      <td>65</td>
-      <td>45</td>
-      <td>1</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>Ivysaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>405</td>
-      <td>60</td>
-      <td>62</td>
-      <td>63</td>
-      <td>80</td>
-      <td>80</td>
-      <td>60</td>
-      <td>1</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>Venusaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>525</td>
-      <td>80</td>
-      <td>82</td>
-      <td>83</td>
-      <td>100</td>
-      <td>100</td>
-      <td>80</td>
-      <td>1</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3</td>
-      <td>VenusaurMega Venusaur</td>
-      <td>Grass</td>
-      <td>Poison</td>
-      <td>625</td>
-      <td>80</td>
-      <td>100</td>
-      <td>123</td>
-      <td>122</td>
-      <td>120</td>
-      <td>80</td>
-      <td>1</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4</td>
-      <td>Charmander</td>
-      <td>Fire</td>
-      <td>NaN</td>
-      <td>309</td>
-      <td>39</td>
-      <td>52</td>
-      <td>43</td>
-      <td>60</td>
-      <td>50</td>
-      <td>65</td>
-      <td>1</td>
-      <td>False</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">#</th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Type 1</th>
+<th data-quarto-table-cell-role="th">Type 2</th>
+<th data-quarto-table-cell-role="th">Total</th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Attack</th>
+<th data-quarto-table-cell-role="th">Defense</th>
+<th data-quarto-table-cell-role="th">Sp. Atk</th>
+<th data-quarto-table-cell-role="th">Sp. Def</th>
+<th data-quarto-table-cell-role="th">Speed</th>
+<th data-quarto-table-cell-role="th">Generation</th>
+<th data-quarto-table-cell-role="th">Legendary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>Bulbasaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>318</td>
+<td>45</td>
+<td>49</td>
+<td>49</td>
+<td>65</td>
+<td>65</td>
+<td>45</td>
+<td>1</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>Ivysaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>405</td>
+<td>60</td>
+<td>62</td>
+<td>63</td>
+<td>80</td>
+<td>80</td>
+<td>60</td>
+<td>1</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>Venusaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>525</td>
+<td>80</td>
+<td>82</td>
+<td>83</td>
+<td>100</td>
+<td>100</td>
+<td>80</td>
+<td>1</td>
+<td>False</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3</td>
+<td>VenusaurMega Venusaur</td>
+<td>Grass</td>
+<td>Poison</td>
+<td>625</td>
+<td>80</td>
+<td>100</td>
+<td>123</td>
+<td>122</td>
+<td>120</td>
+<td>80</td>
+<td>1</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4</td>
+<td>Charmander</td>
+<td>Fire</td>
+<td>NaN</td>
+<td>309</td>
+<td>39</td>
+<td>52</td>
+<td>43</td>
+<td>60</td>
+<td>50</td>
+<td>65</td>
+<td>1</td>
+<td>False</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="97">
-<details>
+</div>
+<div id="cell-26" class="cell" data-execution_count="97">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>poke_df <span class="op">=</span> df[[<span class="st">'HP'</span>, <span class="st">'Attack'</span>, <span class="st">'Defense'</span>, <span class="st">'Sp. Atk'</span>, <span class="st">'Sp. Def'</span>, <span class="st">'Speed'</span>]]</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>poke_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="97">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>HP</th>
-      <th>Attack</th>
-      <th>Defense</th>
-      <th>Sp. Atk</th>
-      <th>Sp. Def</th>
-      <th>Speed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>45</td>
-      <td>49</td>
-      <td>49</td>
-      <td>65</td>
-      <td>65</td>
-      <td>45</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>60</td>
-      <td>62</td>
-      <td>63</td>
-      <td>80</td>
-      <td>80</td>
-      <td>60</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>80</td>
-      <td>82</td>
-      <td>83</td>
-      <td>100</td>
-      <td>100</td>
-      <td>80</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>80</td>
-      <td>100</td>
-      <td>123</td>
-      <td>122</td>
-      <td>120</td>
-      <td>80</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>39</td>
-      <td>52</td>
-      <td>43</td>
-      <td>60</td>
-      <td>50</td>
-      <td>65</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Attack</th>
+<th data-quarto-table-cell-role="th">Defense</th>
+<th data-quarto-table-cell-role="th">Sp. Atk</th>
+<th data-quarto-table-cell-role="th">Sp. Def</th>
+<th data-quarto-table-cell-role="th">Speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>45</td>
+<td>49</td>
+<td>49</td>
+<td>65</td>
+<td>65</td>
+<td>45</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>60</td>
+<td>62</td>
+<td>63</td>
+<td>80</td>
+<td>80</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>80</td>
+<td>82</td>
+<td>83</td>
+<td>100</td>
+<td>100</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>80</td>
+<td>100</td>
+<td>123</td>
+<td>122</td>
+<td>120</td>
+<td>80</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>39</td>
+<td>52</td>
+<td>43</td>
+<td>60</td>
+<td>50</td>
+<td>65</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="98">
-<details>
+</div>
+<div id="cell-27" class="cell" data-execution_count="98">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -860,14 +869,14 @@ PC 2 effects = {'HP': 0.08, 'Attack': -0.01, 'Defense': 0.63, 'Sp. Atk': -0.31, 
 <section id="pca-for-feature-exploration" class="level3">
 <h3 class="anchored" data-anchor-id="pca-for-feature-exploration">PCA for feature exploration</h3>
 <p>You’ll use the PCA pipeline you’ve built in the previous exercise to visually explore how some categorical features relate to the variance in poke_df. These categorical features (<code>Type</code> &amp; <code>Legendary</code>) can be found in a separate dataframe poke_cat_df.</p>
-<div class="cell" data-execution_count="99">
-<details>
+<div id="cell-30" class="cell" data-execution_count="99">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>poke_cat_df <span class="op">=</span> df[[<span class="st">'Type 1'</span>, <span class="st">'Legendary'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="100">
-<details>
+<div id="cell-31" class="cell" data-execution_count="100">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the pipeline</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -890,8 +899,8 @@ PC 2 effects = {'HP': 0.08, 'Attack': -0.01, 'Defense': 0.63, 'Sp. Atk': -0.31, 
  [ 2.23378629  0.53762985]]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="101">
-<details>
+<div id="cell-32" class="cell" data-execution_count="101">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the 2 components to poke_cat_df</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>poke_cat_df.loc[:, <span class="st">'PC 1'</span>] <span class="op">=</span> pc[:, <span class="dv">0</span>]</span>
@@ -914,78 +923,89 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
   poke_cat_df.loc[:, 'PC 2'] = pc[:, 1]</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="101">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Type 1</th>
-      <th>Legendary</th>
-      <th>PC 1</th>
-      <th>PC 2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Grass</td>
-      <td>False</td>
-      <td>-1.556375</td>
-      <td>-0.021482</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Grass</td>
-      <td>False</td>
-      <td>-0.362867</td>
-      <td>-0.050269</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Grass</td>
-      <td>False</td>
-      <td>1.280152</td>
-      <td>-0.062720</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Grass</td>
-      <td>False</td>
-      <td>2.620916</td>
-      <td>0.704263</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Fire</td>
-      <td>False</td>
-      <td>-1.758284</td>
-      <td>-0.706179</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Type 1</th>
+<th data-quarto-table-cell-role="th">Legendary</th>
+<th data-quarto-table-cell-role="th">PC 1</th>
+<th data-quarto-table-cell-role="th">PC 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Grass</td>
+<td>False</td>
+<td>-1.556375</td>
+<td>-0.021482</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Grass</td>
+<td>False</td>
+<td>-0.362867</td>
+<td>-0.050269</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Grass</td>
+<td>False</td>
+<td>1.280152</td>
+<td>-0.062720</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Grass</td>
+<td>False</td>
+<td>2.620916</td>
+<td>0.704263</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Fire</td>
+<td>False</td>
+<td>-1.758284</td>
+<td>-0.706179</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="102">
-<details>
+</div>
+<div id="cell-33" class="cell" data-execution_count="102">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the Type feature to color the PC 1 vs. PC 2 scatterplot</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>poke_cat_df, x<span class="op">=</span><span class="st">'PC 1'</span>, y<span class="op">=</span><span class="st">'PC 2'</span>, hue<span class="op">=</span><span class="st">'Type 1'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="103">
-<details>
+</div>
+<div id="cell-34" class="cell" data-execution_count="103">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the Legendary feature to color the PC 1 vs. PC 2 scatterplot</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>poke_cat_df, x<span class="op">=</span><span class="st">'PC 1'</span>, y<span class="op">=</span><span class="st">'PC 2'</span>, hue<span class="op">=</span><span class="st">'Legendary'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Looks like the different types are scattered all over the place while the legendary Pokemon always score high for PC 1 meaning they have high stats overall. Their spread along the PC 2 axis tells us they aren’t consistently fast and vulnerable or slow and armored.</p>
@@ -993,8 +1013,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <section id="pca-in-a-model-pipeline" class="level3">
 <h3 class="anchored" data-anchor-id="pca-in-a-model-pipeline">PCA in a model pipeline</h3>
 <p>We just saw that legendary Pokemon tend to have higher stats overall. Let’s see if we can add a classifier to our pipeline that detects legendary versus non-legendary Pokemon based on the principal components.</p>
-<div class="cell" data-execution_count="104">
-<details>
+<div id="cell-37" class="cell" data-execution_count="104">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -1005,8 +1025,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.3</span>, random_state<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="105">
-<details>
+<div id="cell-38" class="cell" data-execution_count="105">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the pipeline</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1033,8 +1053,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <p>Repeat the process with 3 extracted components.</p>
-<div class="cell" data-execution_count="106">
-<details>
+<div id="cell-40" class="cell" data-execution_count="106">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the pipeline</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1057,8 +1077,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 93.8% test set accuracy</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="107">
-<details>
+<div id="cell-41" class="cell" data-execution_count="107">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the pipeline</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1091,172 +1111,175 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <section id="selecting-the-proportion-of-variance-to-keep" class="level3">
 <h3 class="anchored" data-anchor-id="selecting-the-proportion-of-variance-to-keep">Selecting the proportion of variance to keep</h3>
 <p>You’ll let PCA determine the number of components to calculate based on an explained variance threshold that you decide.</p>
-<div class="cell" data-execution_count="108">
-<details>
+<div id="cell-44" class="cell" data-execution_count="108">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ansur_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/ANSUR_II_FEMALE.csv'</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ansur_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="108">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Branch</th>
-      <th>Component</th>
-      <th>Gender</th>
-      <th>abdominalextensiondepthsitting</th>
-      <th>acromialheight</th>
-      <th>acromionradialelength</th>
-      <th>anklecircumference</th>
-      <th>axillaheight</th>
-      <th>balloffootcircumference</th>
-      <th>balloffootlength</th>
-      <th>...</th>
-      <th>waistdepth</th>
-      <th>waistfrontlengthsitting</th>
-      <th>waistheightomphalion</th>
-      <th>wristcircumference</th>
-      <th>wristheight</th>
-      <th>weight_kg</th>
-      <th>stature_m</th>
-      <th>BMI</th>
-      <th>BMI_class</th>
-      <th>Height_class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Combat Support</td>
-      <td>Regular Army</td>
-      <td>Female</td>
-      <td>231</td>
-      <td>1282</td>
-      <td>301</td>
-      <td>204</td>
-      <td>1180</td>
-      <td>222</td>
-      <td>177</td>
-      <td>...</td>
-      <td>217</td>
-      <td>345</td>
-      <td>942</td>
-      <td>152</td>
-      <td>756</td>
-      <td>65.7</td>
-      <td>1.560</td>
-      <td>26.997041</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Combat Service Support</td>
-      <td>Regular Army</td>
-      <td>Female</td>
-      <td>194</td>
-      <td>1379</td>
-      <td>320</td>
-      <td>207</td>
-      <td>1292</td>
-      <td>225</td>
-      <td>178</td>
-      <td>...</td>
-      <td>168</td>
-      <td>329</td>
-      <td>1032</td>
-      <td>155</td>
-      <td>815</td>
-      <td>53.4</td>
-      <td>1.665</td>
-      <td>19.262506</td>
-      <td>Normal</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Combat Service Support</td>
-      <td>Regular Army</td>
-      <td>Female</td>
-      <td>183</td>
-      <td>1369</td>
-      <td>329</td>
-      <td>233</td>
-      <td>1271</td>
-      <td>237</td>
-      <td>196</td>
-      <td>...</td>
-      <td>159</td>
-      <td>367</td>
-      <td>1035</td>
-      <td>162</td>
-      <td>799</td>
-      <td>66.3</td>
-      <td>1.711</td>
-      <td>22.647148</td>
-      <td>Normal</td>
-      <td>Tall</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Combat Service Support</td>
-      <td>Regular Army</td>
-      <td>Female</td>
-      <td>261</td>
-      <td>1356</td>
-      <td>306</td>
-      <td>214</td>
-      <td>1250</td>
-      <td>240</td>
-      <td>188</td>
-      <td>...</td>
-      <td>235</td>
-      <td>371</td>
-      <td>999</td>
-      <td>173</td>
-      <td>818</td>
-      <td>78.2</td>
-      <td>1.660</td>
-      <td>28.378575</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Combat Arms</td>
-      <td>Regular Army</td>
-      <td>Female</td>
-      <td>309</td>
-      <td>1303</td>
-      <td>308</td>
-      <td>214</td>
-      <td>1210</td>
-      <td>217</td>
-      <td>182</td>
-      <td>...</td>
-      <td>300</td>
-      <td>380</td>
-      <td>911</td>
-      <td>152</td>
-      <td>762</td>
-      <td>88.6</td>
-      <td>1.572</td>
-      <td>35.853259</td>
-      <td>Overweight</td>
-      <td>Normal</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Branch</th>
+<th data-quarto-table-cell-role="th">Component</th>
+<th data-quarto-table-cell-role="th">Gender</th>
+<th data-quarto-table-cell-role="th">abdominalextensiondepthsitting</th>
+<th data-quarto-table-cell-role="th">acromialheight</th>
+<th data-quarto-table-cell-role="th">acromionradialelength</th>
+<th data-quarto-table-cell-role="th">anklecircumference</th>
+<th data-quarto-table-cell-role="th">axillaheight</th>
+<th data-quarto-table-cell-role="th">balloffootcircumference</th>
+<th data-quarto-table-cell-role="th">balloffootlength</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">waistdepth</th>
+<th data-quarto-table-cell-role="th">waistfrontlengthsitting</th>
+<th data-quarto-table-cell-role="th">waistheightomphalion</th>
+<th data-quarto-table-cell-role="th">wristcircumference</th>
+<th data-quarto-table-cell-role="th">wristheight</th>
+<th data-quarto-table-cell-role="th">weight_kg</th>
+<th data-quarto-table-cell-role="th">stature_m</th>
+<th data-quarto-table-cell-role="th">BMI</th>
+<th data-quarto-table-cell-role="th">BMI_class</th>
+<th data-quarto-table-cell-role="th">Height_class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Combat Support</td>
+<td>Regular Army</td>
+<td>Female</td>
+<td>231</td>
+<td>1282</td>
+<td>301</td>
+<td>204</td>
+<td>1180</td>
+<td>222</td>
+<td>177</td>
+<td>...</td>
+<td>217</td>
+<td>345</td>
+<td>942</td>
+<td>152</td>
+<td>756</td>
+<td>65.7</td>
+<td>1.560</td>
+<td>26.997041</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Combat Service Support</td>
+<td>Regular Army</td>
+<td>Female</td>
+<td>194</td>
+<td>1379</td>
+<td>320</td>
+<td>207</td>
+<td>1292</td>
+<td>225</td>
+<td>178</td>
+<td>...</td>
+<td>168</td>
+<td>329</td>
+<td>1032</td>
+<td>155</td>
+<td>815</td>
+<td>53.4</td>
+<td>1.665</td>
+<td>19.262506</td>
+<td>Normal</td>
+<td>Normal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Combat Service Support</td>
+<td>Regular Army</td>
+<td>Female</td>
+<td>183</td>
+<td>1369</td>
+<td>329</td>
+<td>233</td>
+<td>1271</td>
+<td>237</td>
+<td>196</td>
+<td>...</td>
+<td>159</td>
+<td>367</td>
+<td>1035</td>
+<td>162</td>
+<td>799</td>
+<td>66.3</td>
+<td>1.711</td>
+<td>22.647148</td>
+<td>Normal</td>
+<td>Tall</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Combat Service Support</td>
+<td>Regular Army</td>
+<td>Female</td>
+<td>261</td>
+<td>1356</td>
+<td>306</td>
+<td>214</td>
+<td>1250</td>
+<td>240</td>
+<td>188</td>
+<td>...</td>
+<td>235</td>
+<td>371</td>
+<td>999</td>
+<td>173</td>
+<td>818</td>
+<td>78.2</td>
+<td>1.660</td>
+<td>28.378575</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Combat Arms</td>
+<td>Regular Army</td>
+<td>Female</td>
+<td>309</td>
+<td>1303</td>
+<td>308</td>
+<td>214</td>
+<td>1210</td>
+<td>217</td>
+<td>182</td>
+<td>...</td>
+<td>300</td>
+<td>380</td>
+<td>911</td>
+<td>152</td>
+<td>762</td>
+<td>88.6</td>
+<td>1.572</td>
+<td>35.853259</td>
+<td>Overweight</td>
+<td>Normal</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 99 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="109">
-<details>
+</div>
+<div id="cell-45" class="cell" data-execution_count="109">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ansur_df.drop([<span class="st">'Gender'</span>, <span class="st">'Branch'</span>, <span class="st">'Component'</span>, <span class="st">'BMI_class'</span>, <span class="st">'Height_class'</span>],</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>              axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
@@ -1266,8 +1289,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <pre><code>(1986, 94)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="110">
-<details>
+<div id="cell-46" class="cell" data-execution_count="110">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipe a scaler to PCA selecting 80% of the variance</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1284,8 +1307,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <pre><code>11 components selected</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="111">
-<details>
+<div id="cell-47" class="cell" data-execution_count="111">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipe a scaler to PCA selecting 90% of the variance</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1307,8 +1330,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <section id="choosing-the-number-of-components" class="level3">
 <h3 class="anchored" data-anchor-id="choosing-the-number-of-components">Choosing the number of components</h3>
 <p>You’ll now make a more informed decision on the number of principal components to reduce your data to using the “elbow in the plot” technique.</p>
-<div class="cell" data-execution_count="112">
-<details>
+<div id="cell-50" class="cell" data-execution_count="112">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pipeline a scaler and PCA selecting 10 components</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
@@ -1327,7 +1350,11 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-30-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1336,8 +1363,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <p>You’ll reduce the size of 16 images with hand written digits (MNIST dataset) using PCA.</p>
 <p>The samples are 28 by 28 pixel gray scale images that have been flattened to arrays with 784 elements each (28 x 28 = 784) and added to the 2D numpy array <code>X_test</code>. Each of the 784 pixels has a value between 0 and 255 and can be regarded as a feature.</p>
 <p>A pipeline with a scaler and PCA model to select 78 components has been pre-loaded for you as <code>pipe</code>. This pipeline has already been fitted to the entire MNIST dataset except for the 16 samples in X_test.</p>
-<div class="cell" data-execution_count="113">
-<details>
+<div id="cell-52" class="cell" data-execution_count="113">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_digits(data):</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(<span class="dv">4</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>),</span>
@@ -1349,8 +1376,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>                  clim<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">300</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="114">
-<details>
+<div id="cell-53" class="cell" data-execution_count="114">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1359,8 +1386,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>X_sample <span class="op">=</span> X_test[:<span class="dv">1600</span>:<span class="dv">100</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="115">
-<details>
+<div id="cell-54" class="cell" data-execution_count="115">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> Pipeline([</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'scaler'</span>, StandardScaler()),</span>
@@ -1375,8 +1402,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
                 ('reducer', PCA(n_components=78))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox"><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox"><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA(n_components=78)</pre></div></div></div></div></div></div></div>
 </div>
 </div>
-<div class="cell" data-execution_count="116">
-<details>
+<div id="cell-55" class="cell" data-execution_count="116">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>X_sample.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1384,8 +1411,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <pre><code>(16, 784)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="117">
-<details>
+<div id="cell-56" class="cell" data-execution_count="117">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the MNIST sample data</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>plot_digits(X_sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1394,11 +1421,15 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <pre><code>KeyError: 0</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-35-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-35-output-2.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </div>
-<div class="cell" data-execution_count="118">
-<details>
+</div>
+<div id="cell-57" class="cell" data-execution_count="118">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the input data to principal components</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>pc <span class="op">=</span> pipe.transform(X_sample)</span>
@@ -1412,8 +1443,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 pc has 78 features</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="119">
-<details>
+<div id="cell-58" class="cell" data-execution_count="119">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inverse transform the components to original feature space</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>X_rebuilt <span class="op">=</span> pipe.inverse_transform(pc)</span>
@@ -1425,14 +1456,18 @@ pc has 78 features</code></pre>
 <pre><code>X_rebuilt has 784 features</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="120">
-<details>
+<div id="cell-59" class="cell" data-execution_count="120">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the reconstructed data</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>plot_digits(X_rebuilt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Feature Extraction_files/figure-html/cell-38-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Feature Extraction_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>You’ve reduced the size of the data 10 fold but were able to reconstruct images with reasonable quality.</p>
@@ -1470,9 +1505,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1508,10 +1557,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1521,8 +1569,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1537,6 +1594,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1579,6 +1868,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

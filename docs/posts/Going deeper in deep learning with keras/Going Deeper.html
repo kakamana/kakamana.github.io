@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -250,7 +231,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="going-deeper" class="level1">
 <h1>Going Deeper</h1>
@@ -258,8 +241,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Going Deeper</strong> is part of [Datacamp course: Introduction to Deep Learning with Keras] There is no denying that deep learning is here to stay! A powerful innovation tool, it is used to solve complex problems arising from unstructured data. It is among the frameworks that make it easier to develop deep learning models, and it is versatile enough to build industry-ready models quickly. In this course, you will learn regression and save the earth by predicting asteroid trajectory, apply binary classification to distinguish real and fake dollar bills, learn to apply multiclass classification to decide who threw which dart at a dart board, and use neural networks to reconstruct noisy images. Additionally, you will learn how to tune your models to enhance their performance during training.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-execution_count="38">
-<details>
+<div id="cell-2" class="cell" data-execution_count="38">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -277,89 +260,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Exploring dollar bills You will practice building classification models in Keras with the Banknote Authentication dataset.</p>
 <p>Your goal is to distinguish between real and fake dollar bills. In order to do this, the dataset comes with 4 features: variance,skewness,curtosis and entropy. These features are calculated by applying mathematical operations over the dollar bill images. The labels are found in the dataframe’s class column.</p>
 <p><img src="GoingDeeper-3.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="39">
-<details>
+<div id="cell-5" class="cell" data-execution_count="39">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>banknotes <span class="op">=</span> pd.read_csv(<span class="st">'dataset/banknotes.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>banknotes.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="39">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>variace</th>
-      <th>skewness</th>
-      <th>curtosis</th>
-      <th>entropy</th>
-      <th>class</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>3.62160</td>
-      <td>8.6661</td>
-      <td>-2.8073</td>
-      <td>-0.44699</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4.54590</td>
-      <td>8.1674</td>
-      <td>-2.4586</td>
-      <td>-1.46210</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3.86600</td>
-      <td>-2.6383</td>
-      <td>1.9242</td>
-      <td>0.10645</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>3.45660</td>
-      <td>9.5228</td>
-      <td>-4.0112</td>
-      <td>-3.59440</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.32924</td>
-      <td>-4.4552</td>
-      <td>4.5718</td>
-      <td>-0.98880</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">variace</th>
+<th data-quarto-table-cell-role="th">skewness</th>
+<th data-quarto-table-cell-role="th">curtosis</th>
+<th data-quarto-table-cell-role="th">entropy</th>
+<th data-quarto-table-cell-role="th">class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>3.62160</td>
+<td>8.6661</td>
+<td>-2.8073</td>
+<td>-0.44699</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>4.54590</td>
+<td>8.1674</td>
+<td>-2.4586</td>
+<td>-1.46210</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.86600</td>
+<td>-2.6383</td>
+<td>1.9242</td>
+<td>0.10645</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3.45660</td>
+<td>9.5228</td>
+<td>-4.0112</td>
+<td>-3.59440</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.32924</td>
+<td>-4.4552</td>
+<td>4.5718</td>
+<td>-0.98880</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="40">
-<details>
+</div>
+<div id="cell-6" class="cell" data-execution_count="40">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> banknotes.iloc[:, :<span class="dv">4</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ((X <span class="op">-</span> X.mean()) <span class="op">/</span> X.std()).to_numpy()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> banknotes[<span class="st">'class'</span>].to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="41">
-<details>
+<div id="cell-7" class="cell" data-execution_count="41">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(banknotes, hue<span class="op">=</span><span class="st">'class'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="42">
-<details>
+<div id="cell-8" class="cell" data-execution_count="42">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Dataset stats: </span><span class="ch">\n</span><span class="st">'</span>, banknotes.describe())</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -383,8 +369,8 @@ Observations per class:
 Name: class, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="43">
-<details>
+<div id="cell-9" class="cell" data-execution_count="43">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">pairplot shows that there are features for which the classes spread out noticeably. This gives us an intuition about our classes being easily separable."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -399,8 +385,8 @@ pairplot shows that there are features for which the classes spread out noticeab
 <p>You will perform binary classification by using a single neuron as an output. The input layer will have 4 neurons since we have 4 features in our dataset. The model’s output will be a value constrained between 0 and 1.</p>
 <p>We will interpret this output number as the probability of our input variables coming from a fake dollar bill, with 1 meaning we are certain it’s a fake bill.</p>
 <p><img src="GoingDeeper-4.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="44">
-<details>
+<div id="cell-11" class="cell" data-execution_count="44">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the sequential model and dense layer</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
@@ -436,16 +422,16 @@ _________________________________________________________________</code></pre>
 <section id="is-this-dollar-bill-fake" class="level2">
 <h2 class="anchored" data-anchor-id="is-this-dollar-bill-fake">Is this dollar bill fake ?</h2>
 <p>You are now ready to train your model and check how well it performs when classifying new bills!</p>
-<div class="cell" data-execution_count="45">
-<details>
+<div id="cell-13" class="cell" data-execution_count="45">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.25</span>, stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="46">
-<details>
+<div id="cell-14" class="cell" data-execution_count="46">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -507,69 +493,72 @@ Accuracy:  0.941690981388092</code></pre>
 <p>A multi-class model</p>
 <p>You’re going to build a model that predicts who threw which dart only based on where that dart landed! (That is the dart’s x and y coordinates on the board.)</p>
 <p>This problem is a multi-class classification problem since each dart can only be thrown by one of 4 competitors. So classes/labels are mutually exclusive, and therefore we can build a neuron with as many output as competitors and use the softmax activation function to achieve a total sum of probabilities of 1 over all competitors.</p>
-<div class="cell" data-execution_count="47">
-<details>
+<div id="cell-16" class="cell" data-execution_count="47">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>darts <span class="op">=</span> pd.read_csv(<span class="st">'dataset/darts.csv'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>darts.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="47">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>xCoord</th>
-      <th>yCoord</th>
-      <th>competitor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.196451</td>
-      <td>-0.520341</td>
-      <td>Steve</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.476027</td>
-      <td>-0.306763</td>
-      <td>Susan</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.003175</td>
-      <td>-0.980736</td>
-      <td>Michael</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.294078</td>
-      <td>0.267566</td>
-      <td>Kate</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-0.051120</td>
-      <td>0.598946</td>
-      <td>Steve</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">xCoord</th>
+<th data-quarto-table-cell-role="th">yCoord</th>
+<th data-quarto-table-cell-role="th">competitor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.196451</td>
+<td>-0.520341</td>
+<td>Steve</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.476027</td>
+<td>-0.306763</td>
+<td>Susan</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.003175</td>
+<td>-0.980736</td>
+<td>Michael</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.294078</td>
+<td>0.267566</td>
+<td>Kate</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.051120</td>
+<td>0.598946</td>
+<td>Steve</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="48">
-<details>
+</div>
+<div id="cell-17" class="cell" data-execution_count="48">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sns.pairplot(darts, hue<span class="op">=</span><span class="st">'competitor'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="49">
-<details>
+<div id="cell-18" class="cell" data-execution_count="49">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a sequential model</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
@@ -592,8 +581,8 @@ Accuracy:  0.941690981388092</code></pre>
 <h2 class="anchored" data-anchor-id="prepare-your-dataset">Prepare your dataset</h2>
 <p>In the console you can check that your labels, darts.competitor are not yet in a format to be understood by your network. They contain the names of the competitors as strings. You will first turn these competitors into unique numbers,then use the to_categorical() function from tf.keras.utils to turn these numbers into their one-hot encoded representation.</p>
 <p>This is useful for multi-class classification problems, since there are as many output neurons as classes and for every observation in our dataset we just want one of the neurons to be activated.</p>
-<div class="cell" data-execution_count="50">
-<details>
+<div id="cell-20" class="cell" data-execution_count="50">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.utils <span class="im">import</span> to_categorical</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -632,8 +621,8 @@ One-hot encoded competitors:
  [0. 0. 0. 1.]]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="51">
-<details>
+<div id="cell-21" class="cell" data-execution_count="51">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Each competitor is now a vector of length 4, full of zeroes except for the position representing her or himself."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -648,64 +637,67 @@ Each competitor is now a vector of length 4, full of zeroes except for the posit
 <p>Your model is now ready, just as your dataset. It’s time to train!</p>
 <p>The coordinates features and competitors labels you just transformed have been partitioned into coord_train,coord_test and competitors_train,competitors_test.</p>
 <p>Let’s find out who threw which dart just by looking at the board!</p>
-<div class="cell" data-execution_count="52">
-<details>
+<div id="cell-23" class="cell" data-execution_count="52">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>coordinates <span class="op">=</span> darts[[<span class="st">'xCoord'</span>, <span class="st">'yCoord'</span>]]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>coordinates.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="52">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>xCoord</th>
-      <th>yCoord</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.196451</td>
-      <td>-0.520341</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.476027</td>
-      <td>-0.306763</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.003175</td>
-      <td>-0.980736</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.294078</td>
-      <td>0.267566</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-0.051120</td>
-      <td>0.598946</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">xCoord</th>
+<th data-quarto-table-cell-role="th">yCoord</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.196451</td>
+<td>-0.520341</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.476027</td>
+<td>-0.306763</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.003175</td>
+<td>-0.980736</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.294078</td>
+<td>0.267566</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>-0.051120</td>
+<td>0.598946</td>
+</tr>
+</tbody>
 </table>
+
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="53">
-<details>
+</div>
+<div id="cell-24" class="cell" data-execution_count="53">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>coord_train, coord_test, competitors_train, competitors_test <span class="op">=</span> <span class="op">\</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    train_test_split(coordinates, competitors, test_size<span class="op">=</span><span class="fl">0.25</span>, stratify<span class="op">=</span>competitors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="54">
-<details>
+<div id="cell-25" class="cell" data-execution_count="54">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -729,8 +721,8 @@ Non-trainable params: 0
 _________________________________________________________________</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="55">
-<details>
+<div id="cell-26" class="cell" data-execution_count="55">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit your model to the training data for 200 epochs</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>model.fit(coord_train,competitors_train,epochs<span class="op">=</span><span class="dv">200</span>)</span>
@@ -1153,8 +1145,8 @@ Accuracy: 0.7400000095367432</code></pre>
 <p>Since you used the softmax activation function, for every input of 2 coordinates provided to your model there’s an output vector of 4 numbers. Each of these numbers encodes the probability of a given dart being thrown by one of the 4 possible competitors.</p>
 <p>When computing accuracy with the model’s .evaluate() method, your model takes the class with the highest probability as the prediction. np.argmax() can help you do this since it returns the index with the highest value in an array.</p>
 <p>Use the collection of test throws stored in coords_small_test and np.argmax() to check this out!</p>
-<div class="cell" data-execution_count="56">
-<details>
+<div id="cell-28" class="cell" data-execution_count="56">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>coords_small_test <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'xCoord'</span>:[<span class="fl">0.209048</span>, <span class="fl">0.082103</span>, <span class="fl">0.198165</span>, <span class="op">-</span><span class="fl">0.348660</span>, <span class="fl">0.214726</span>],</span>
@@ -1166,8 +1158,8 @@ Accuracy: 0.7400000095367432</code></pre>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                                   [<span class="fl">0.</span>, <span class="fl">0.</span>, <span class="fl">1.</span>, <span class="fl">0.</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="57">
-<details>
+<div id="cell-29" class="cell" data-execution_count="57">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(coords_small_test)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1186,8 +1178,8 @@ Raw Model Predictions                         | True labels
 [0.23492725 0.02038225 0.74062115 0.00406925] | [0. 0. 1. 0.]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="58">
-<details>
+<div id="cell-30" class="cell" data-execution_count="58">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on coords_small_test</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(coords_small_test)</span>
@@ -1221,8 +1213,8 @@ Rounded Model Predictions | True labels
                         2 | [0. 0. 1. 0.]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="59">
-<details>
+<div id="cell-31" class="cell" data-execution_count="59">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">As you've seen you can easily interpret the softmax output. This can also help you spot those observations where your network is less certain on which class to predict, since you can see the probability distribution among classes per prediction. Let's learn how to solve new problems with neural networks!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1241,172 +1233,175 @@ As you've seen you can easily interpret the softmax output. This can also help y
 <p>You’re going to automate the watering of farm parcels by making an intelligent irrigation machine. Multi-label classification problems differ from multi-class problems in that each observation can be labeled with zero or more classes. So classes/labels are not mutually exclusive, you could water all, none or any combination of farm parcels based on the inputs.</p>
 <p>To account for this behavior what we do is have an output layer with as many neurons as classes but this time, unlike in multi-class problems, each output neuron has a sigmoid activation function. This makes each neuron in the output layer able to output a number between 0 and 1 independently.</p>
 <p><img src="GoingDeeper-9.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="60">
-<details>
+<div id="cell-34" class="cell" data-execution_count="60">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>irrigation <span class="op">=</span> pd.read_csv(<span class="st">'dataset/irrigation_machine.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>irrigation.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="60">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>sensor_0</th>
-      <th>sensor_1</th>
-      <th>sensor_2</th>
-      <th>sensor_3</th>
-      <th>sensor_4</th>
-      <th>sensor_5</th>
-      <th>sensor_6</th>
-      <th>sensor_7</th>
-      <th>sensor_8</th>
-      <th>sensor_9</th>
-      <th>...</th>
-      <th>sensor_13</th>
-      <th>sensor_14</th>
-      <th>sensor_15</th>
-      <th>sensor_16</th>
-      <th>sensor_17</th>
-      <th>sensor_18</th>
-      <th>sensor_19</th>
-      <th>parcel_0</th>
-      <th>parcel_1</th>
-      <th>parcel_2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>1.0</td>
-      <td>7.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>0.0</td>
-      <td>3.0</td>
-      <td>...</td>
-      <td>8.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>1.0</td>
-      <td>9.0</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5.0</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>5.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>3.0</td>
-      <td>1.0</td>
-      <td>...</td>
-      <td>4.0</td>
-      <td>5.0</td>
-      <td>5.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>7.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3.0</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>3.0</td>
-      <td>4.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>6.0</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>...</td>
-      <td>3.0</td>
-      <td>3.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>3.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>4.0</td>
-      <td>3.0</td>
-      <td>5.0</td>
-      <td>0.0</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>4.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>4.0</td>
-      <td>3.0</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>2.0</td>
-      <td>2.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sensor_0</th>
+<th data-quarto-table-cell-role="th">sensor_1</th>
+<th data-quarto-table-cell-role="th">sensor_2</th>
+<th data-quarto-table-cell-role="th">sensor_3</th>
+<th data-quarto-table-cell-role="th">sensor_4</th>
+<th data-quarto-table-cell-role="th">sensor_5</th>
+<th data-quarto-table-cell-role="th">sensor_6</th>
+<th data-quarto-table-cell-role="th">sensor_7</th>
+<th data-quarto-table-cell-role="th">sensor_8</th>
+<th data-quarto-table-cell-role="th">sensor_9</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">sensor_13</th>
+<th data-quarto-table-cell-role="th">sensor_14</th>
+<th data-quarto-table-cell-role="th">sensor_15</th>
+<th data-quarto-table-cell-role="th">sensor_16</th>
+<th data-quarto-table-cell-role="th">sensor_17</th>
+<th data-quarto-table-cell-role="th">sensor_18</th>
+<th data-quarto-table-cell-role="th">sensor_19</th>
+<th data-quarto-table-cell-role="th">parcel_0</th>
+<th data-quarto-table-cell-role="th">parcel_1</th>
+<th data-quarto-table-cell-role="th">parcel_2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>7.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>3.0</td>
+<td>...</td>
+<td>8.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>9.0</td>
+<td>2.0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>...</td>
+<td>4.0</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>7.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>2.0</td>
+<td>...</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>0.0</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>5.0</td>
+<td>...</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>...</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 23 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="61">
-<details>
+</div>
+<div id="cell-35" class="cell" data-execution_count="61">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1439,8 +1434,8 @@ Non-trainable params: 0
 _________________________________________________________________</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="62">
-<details>
+<div id="cell-36" class="cell" data-execution_count="62">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You've already built 3 models for 3 different problems! Hopefully you're starting to get a feel for how different problems can be modeled in the neural network realm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1454,8 +1449,8 @@ You've already built 3 models for 3 different problems! Hopefully you're startin
 <h2 class="anchored" data-anchor-id="training-with-multiple-labels">Training with multiple labels</h2>
 <p>An output of your multi-label model could look like this: [0.76 , 0.99 , 0.66 ]. If we round up probabilities higher than 0.5, this observation will be classified as containing all 3 possible labels [1,1,1]. For this particular problem, this would mean watering all 3 parcels in your field is the right thing to do given the input sensor measurements.</p>
 <p>You will now train and predict with the model you just built. sensors_train, parcels_train, sensors_test and parcels_test are already loaded for you to use. Let’s see how well your machine performs!</p>
-<div class="cell" data-execution_count="63">
-<details>
+<div id="cell-38" class="cell" data-execution_count="63">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>parcels <span class="op">=</span> irrigation[[<span class="st">'parcel_0'</span>, <span class="st">'parcel_1'</span>, <span class="st">'parcel_2'</span>]].to_numpy()</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sensors <span class="op">=</span> irrigation.drop([<span class="st">'parcel_0'</span>, <span class="st">'parcel_1'</span>, <span class="st">'parcel_2'</span>], axis<span class="op">=</span><span class="dv">1</span>).to_numpy()</span>
@@ -1464,8 +1459,8 @@ You've already built 3 models for 3 different problems! Hopefully you're startin
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    train_test_split(sensors, parcels, test_size<span class="op">=</span><span class="fl">0.3</span>, stratify<span class="op">=</span>parcels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="64">
-<details>
+<div id="cell-39" class="cell" data-execution_count="64">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train for 100 epochs using a validation split of 0.2</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>model.fit(sensors_train, parcels_train, epochs <span class="op">=</span> <span class="dv">100</span>, validation_split <span class="op">=</span> <span class="fl">0.2</span>)</span>
@@ -1697,8 +1692,8 @@ Rounded Predictions:
 Accuracy: 0.6549999713897705</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="65">
-<details>
+<div id="cell-40" class="cell" data-execution_count="65">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">You can see how the validation_split argument is useful for evaluating how your model performs as it trains. Let's move on and improve your model training by using callbacks!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1714,8 +1709,8 @@ You can see how the validation_split argument is useful for evaluating how your 
 <p>History EarlyStopping ModelCheckpoint The history callback The history callback is returned by default every time you train a model with the .fit() method. To access these metrics you can access the history dictionary parameter inside the returned h_callback object with the corresponding keys.</p>
 <p>The irrigation machine model you built in the previous lesson is loaded for you to train, along with its features and labels now loaded as X_train, y_train, X_test, y_test. This time you will store the model’s history callback and use the validation_data parameter as it trains.</p>
 <p>Let’s see the behind the scenes of our training!</p>
-<div class="cell" data-execution_count="66">
-<details>
+<div id="cell-42" class="cell" data-execution_count="66">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_accuracy(acc,val_acc):</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot training &amp; validation accuracy values</span></span>
@@ -1737,15 +1732,15 @@ You can see how the validation_split argument is useful for evaluating how your 
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>    plt.legend([<span class="st">'Train'</span>, <span class="st">'Test'</span>], loc<span class="op">=</span><span class="st">'upper right'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="67">
-<details>
+<div id="cell-43" class="cell" data-execution_count="67">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>X_train, y_train <span class="op">=</span> sensors_train, parcels_train</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>X_test, y_test <span class="op">=</span> sensors_test, parcels_test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="68">
-<details>
+<div id="cell-44" class="cell" data-execution_count="68">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>h_callback <span class="op">=</span> model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">50</span>, validation_data<span class="op">=</span>(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1852,8 +1847,8 @@ Epoch 50/50
 44/44 [==============================] - 0s 6ms/step - loss: 0.1119 - accuracy: 0.5964 - val_loss: 0.2620 - val_accuracy: 0.6150</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="69">
-<details>
+<div id="cell-45" class="cell" data-execution_count="69">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot_loss(h_callback.history[<span class="st">'loss'</span>], h_callback.history[<span class="st">'val_loss'</span>])</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1866,8 +1861,8 @@ Epoch 50/50
 <h2 class="anchored" data-anchor-id="early-stopping-your-model">Early stopping your model</h2>
 <p>The early stopping callback is useful since it allows for you to stop the model training if it no longer improves after a given number of epochs. To make use of this functionality you need to pass the callback inside a list to the model’s callback parameter in the .fit() method.</p>
 <p>The model you built to detect fake dollar bills is loaded for you to train, this time with early stopping. X_train, y_train, X_test and y_test are also available for you to use.</p>
-<div class="cell" data-execution_count="70">
-<details>
+<div id="cell-47" class="cell" data-execution_count="70">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> banknotes.iloc[:, :<span class="dv">4</span>]</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> ((X <span class="op">-</span> X.mean()) <span class="op">/</span> X.std()).to_numpy()</span>
@@ -1875,8 +1870,8 @@ Epoch 50/50
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.25</span>, stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="71">
-<details>
+<div id="cell-48" class="cell" data-execution_count="71">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1887,8 +1882,8 @@ Epoch 50/50
 <span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, optimizer<span class="op">=</span><span class="st">'sgd'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="72">
-<details>
+<div id="cell-49" class="cell" data-execution_count="72">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the early stopping callback</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.callbacks <span class="im">import</span> EarlyStopping</span>
@@ -1944,8 +1939,8 @@ Epoch 18/1000
 <h2 class="anchored" data-anchor-id="a-combination-of-callbacks">A combination of callbacks</h2>
 <p>Deep learning models can take a long time to train, especially when you move to deeper architectures and bigger datasets. Saving your model every time it improves as well as stopping it when it no longer does allows you to worry less about choosing the number of epochs to train for. You can also restore a saved model anytime and resume training where you left it.</p>
 <p>Use the EarlyStopping() and the ModelCheckpoint() callbacks so that you can go eat a jar of cookies while you leave your computer to work!</p>
-<div class="cell" data-execution_count="74">
-<details>
+<div id="cell-51" class="cell" data-execution_count="74">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.callbacks <span class="im">import</span> ModelCheckpoint</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1972,8 +1967,8 @@ Epoch 4/1000000000000
 33/33 [==============================] - 0s 5ms/step - loss: 0.2888 - accuracy: 0.9252 - val_loss: 0.2844 - val_accuracy: 0.9388</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="75">
-<details>
+<div id="cell-52" class="cell" data-execution_count="75">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>ls <span class="op">|</span> grep best_banknote<span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2014,9 +2009,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2052,10 +2061,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2065,8 +2073,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2081,6 +2098,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -2123,6 +2372,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

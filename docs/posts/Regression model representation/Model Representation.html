@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -133,45 +140,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -240,7 +249,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="regression-model-representation" class="level1">
 <h1>Regression model representation</h1>
@@ -256,8 +267,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="notation">Notation</h2>
 <p>Here is a summary of some of the notation you will encounter.</p>
 <p>|General <img width="70/"> <br> Notation <img width="70/"> | Description<img width="350/">| Python (if applicable) | |: ————|: ————————————————————|| | <span class="math inline">\(a\)</span> | scalar, non bold || | <span class="math inline">\(\mathbf{a}\)</span> | vector, bold || | <strong>Regression</strong> | | | | | <span class="math inline">\(\mathbf{x}\)</span> | Training Example feature values (in this lab - Size (1000 sqft)) | <code>x_train</code> | | <span class="math inline">\(\mathbf{y}\)</span> | Training Example targets (in this lab Price (1000s of dollars)) | <code>y_train</code> | <span class="math inline">\(x^{(i)}\)</span>, <span class="math inline">\(y^{(i)}\)</span> | <span class="math inline">\(i_{th}\)</span>Training Example | <code>x_i</code>, <code>y_i</code>| | m | Number of training examples | <code>m</code>| | <span class="math inline">\(w\)</span> | parameter: weight | <code>w</code> | | <span class="math inline">\(b\)</span> | parameter: bias | <code>b</code> | | <span class="math inline">\(f_{w,b}(x^{(i)})\)</span> | The result of the model evaluation at <span class="math inline">\(x^{(i)}\)</span> parameterized by <span class="math inline">\(w,b\)</span>: <span class="math inline">\(f_{w,b}(x^{(i)}) = wx^{(i)}+b\)</span> | <code>f_wb</code> |</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:36:08.569246Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:36:08.571382Z&quot;}" data-execution_count="4">
-<details>
+<div id="cell-5" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:36:08.569246Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:36:08.571382Z&quot;}" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -290,8 +301,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>You would like to fit a linear regression model (shown above as the blue straight line) through these two points, so you can then predict price for other houses - say, a house with 1200 sqft.</p>
 <p>Please run the following code cell to create your <code>x_train</code> and <code>y_train</code> variables. The data is stored in one-dimensional NumPy arrays.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:39:39.594851Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:39:39.598937Z&quot;}" data-execution_count="5">
-<details>
+<div id="cell-8" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:39:39.594851Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:39:39.598937Z&quot;}" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x_train is the input variable (size in 1000 square feet)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train is the target (price in 1000s of dollars)</span></span>
@@ -308,8 +319,8 @@ y_train = [300. 500.]</code></pre>
 <section id="number-of-training-examples-m" class="level3">
 <h3 class="anchored" data-anchor-id="number-of-training-examples-m">Number of training examples <code>m</code></h3>
 <p>You will use <code>m</code> to denote the number of training examples. Numpy arrays have a <code>.shape</code> parameter. <code>x_train.shape</code> returns a python tuple with an entry for each dimension. <code>x_train.shape[0]</code> is the length of the array and number of examples as shown below.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:40:42.922231Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:40:42.926310Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-10" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:40:42.922231Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:40:42.926310Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># m is the number of training examples</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"x_train.shape: </span><span class="sc">{</span>x_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -322,8 +333,8 @@ Number of training examples is: 2</code></pre>
 </div>
 </div>
 <p>One can also use the Python <code>len()</code> function as shown below.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:41:25.068319Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:41:25.077299Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:41:25.068319Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:41:25.077299Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># m is the number of training examples</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">len</span>(x_train)</span>
@@ -338,8 +349,8 @@ Number of training examples is: 2</code></pre>
 <h3 class="anchored" data-anchor-id="training-example-x_i-y_i">Training example <code>x_i, y_i</code></h3>
 <p>You will use (x<span class="math inline">\(^{(i)}\)</span>, y<span class="math inline">\(^{(i)}\)</span>) to denote the <span class="math inline">\(i^{th}\)</span> training example. Since Python is zero indexed, (x<span class="math inline">\(^{(0)}\)</span>, y<span class="math inline">\(^{(0)}\)</span>) is (1.0, 300.0) and (x<span class="math inline">\(^{(1)}\)</span>, y<span class="math inline">\(^{(1)}\)</span>) is (2.0, 500.0).</p>
 <p>To access a value in a Numpy array, one indexes the array with the desired offset. For example the syntax to access location zero of <code>x_train</code> is <code>x_train[0]</code>. Run the next code block below to get the <span class="math inline">\(i^{th}\)</span> training example.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:42:56.164379Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:42:56.178494Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-14" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:42:56.164379Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:42:56.178494Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span> <span class="co"># Change this to 1 to see (x^1, y^1)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -356,8 +367,8 @@ Number of training examples is: 2</code></pre>
 <h3 class="anchored" data-anchor-id="plotting-the-data">Plotting the data</h3>
 <p>You can plot these two points using the <code>scatter()</code> function in the <code>matplotlib</code> library, as shown in the cell below. - The function arguments <code>marker</code> and <code>c</code> show the points as red crosses (the default is blue dots).</p>
 <p>You can use other functions in the <code>matplotlib</code> library to set the title and labels to display</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:43:58.473384Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:43:58.623468Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-16" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:43:58.473384Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:43:58.623468Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data points</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_train, y_train, marker<span class="op">=</span><span class="st">'x'</span>, c<span class="op">=</span><span class="st">'r'</span>)</span>
@@ -370,7 +381,11 @@ Number of training examples is: 2</code></pre>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Model Representation_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Model Representation_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -381,8 +396,8 @@ Number of training examples is: 2</code></pre>
 <p>The formula above is how you can represent straight lines - different values of <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span> give you different straight lines on the plot. <br> <br> <br> <br> <br></p>
 <p>Let’s try to get a better intuition for this through the code blocks below. Let’s start with <span class="math inline">\(w = 100\)</span> and <span class="math inline">\(b = 100\)</span>.</p>
 <p><strong>Note: You can come back to this cell to adjust the model’s w and b parameters</strong></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:44:52.089474Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:44:52.095483Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-18" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:44:52.089474Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:44:52.095483Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">100</span></span>
@@ -398,8 +413,8 @@ b: 100</code></pre>
 <p>for <span class="math inline">\(x^{(0)}\)</span>, <code>f_wb = w * x[0] + b</code></p>
 <p>for <span class="math inline">\(x^{(1)}\)</span>, <code>f_wb = w * x[1] + b</code></p>
 <p>For a large number of data points, this can get unwieldy and repetitive. So instead, you can calculate the function output in a <code>for</code> loop as shown in the <code>compute_model_output</code> function below. &gt; <strong>Note</strong>: The argument description <code>(ndarray (m,))</code> describes a Numpy n-dimensional array of shape (m,). <code>(scalar)</code> describes an argument without dimensions, just a magnitude. &gt; <strong>Note</strong>: <code>np.zero(n)</code> will return a one-dimensional numpy array with <span class="math inline">\(n\)</span> entries</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:45:53.279627Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:45:53.286216Z&quot;}" data-execution_count="11">
-<details>
+<div id="cell-20" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:45:53.279627Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:45:53.286216Z&quot;}" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_model_output(x, w, b):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -418,8 +433,8 @@ b: 100</code></pre>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f_wb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:46:14.353665Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:46:14.424001Z&quot;}" data-execution_count="12">
-<details>
+<div id="cell-21" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:46:14.353665Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:46:14.424001Z&quot;}" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tmp_f_wb <span class="op">=</span> compute_model_output(x_train, w, b,)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -439,14 +454,18 @@ b: 100</code></pre>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Model Representation_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Model Representation_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="prediction" class="level3">
 <h3 class="anchored" data-anchor-id="prediction">Prediction</h3>
 <p>Now that we have a model, we can use it to make our original prediction. Let’s predict the price of a house with 1200 sqft. Since the units of <span class="math inline">\(x\)</span> are in 1000’s of sqft, <span class="math inline">\(x\)</span> is 1.2.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:48:14.704825Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:48:14.714025Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-23" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-16T08:48:14.704825Z&quot;,&quot;end_time&quot;:&quot;2023-04-16T08:48:14.714025Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">200</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">100</span></span>
@@ -497,9 +516,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -535,10 +568,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -548,8 +580,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -564,6 +605,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -606,6 +879,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

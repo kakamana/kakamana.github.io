@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -135,45 +114,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -249,7 +230,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="neural-networks" class="level1">
 <h1>Neural Networks</h1>
@@ -257,8 +240,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Neural Networks</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/introduction-to-tensorflow-in-python">Datacamp course: Introduction to TensorFlow in Python</a> Until recently, cutting-edge computer vision algorithms could not distinguish between images of cats and dogs. Today, a skilled data scientist equipped with a laptop can classify tens of thousands of objects more accurately than a human eye. This course uses TensorFlow 2.6 to develop, train, and predict models that have fueled major advances in recommendation systems, image classification, and financial technology. In this course, you will learn both high-level APIs that will allow you to design and train deep learning models in 15 lines of code, as well as low-level APIs that will allow you to go beyond off-the-shelf procedures. Additionally, you will learn how to accurately predict housing prices, credit card defaults, and images of sign language gestures.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -283,8 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="the-linear-algebra-of-dense-layers">The linear algebra of dense layers</h2>
 <p>There are two ways to define a dense layer in tensorflow. The first involves the use of low-level, linear algebraic operations. The second makes use of high-level keras operations.</p>
 <p><img src="Neural-3.png" class="img-fluid"></p>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="cell-5" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>borrower_features <span class="op">=</span> np.array([[<span class="fl">2.</span>, <span class="fl">2.</span>, <span class="fl">43.</span>]], np.float32)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -308,8 +291,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  dense1's output shape: (1, 2)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-6" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From previous step</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bias1 <span class="op">=</span> tf.Variable(<span class="fl">1.0</span>)</span>
@@ -343,8 +326,8 @@ Our model produces predicted values in the interval between 0 and 1. For the exa
 <section id="the-low-level-approach-with-multiple-examples" class="level2">
 <h2 class="anchored" data-anchor-id="the-low-level-approach-with-multiple-examples">The low-level approach with multiple examples</h2>
 <p>As we construct the first dense hidden layer for the case where we have multiple examples, we will gain further insight into the low-level approach. We will assume that the model has been trained and that the first layer weights, weights1, and bias, bias1, are available. The borrower_features tensor will then be multiplied by the weights1 variable. Among the borrower_featurestensor’s components are education, marital status, and age. As a final step, we will apply the sigmoid function to the elements of products1 + bias1, resulting in dense1.</p>
-<div class="cell" data-execution_count="6">
-<details>
+<div id="cell-8" class="cell" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bias1 <span class="op">=</span> tf.Variable([<span class="fl">0.1</span>], tf.float32)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -377,172 +360,175 @@ Our model produces predicted values in the interval between 0 and 1. For the exa
 <p>We have now seen how to define dense layers in Tensorflow using linear algebra. We will skip the linear algebra in this exercise and let Keras handle the details. Using this method, we will be able to construct the network below, which has two hidden layers and ten features, with less code than the network with one hidden layer and three features.</p>
 <p><img src="Neural-4.png" class="img-fluid"></p>
 <p>To construct this network, we’ll need to define three dense layers, each of which takes the previous layer as an input, multiplies it by weights, and applies an activation function.</p>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-10" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/uci_credit_card.csv'</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="8">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>ID</th>
-      <th>LIMIT_BAL</th>
-      <th>SEX</th>
-      <th>EDUCATION</th>
-      <th>MARRIAGE</th>
-      <th>AGE</th>
-      <th>PAY_0</th>
-      <th>PAY_2</th>
-      <th>PAY_3</th>
-      <th>PAY_4</th>
-      <th>...</th>
-      <th>BILL_AMT4</th>
-      <th>BILL_AMT5</th>
-      <th>BILL_AMT6</th>
-      <th>PAY_AMT1</th>
-      <th>PAY_AMT2</th>
-      <th>PAY_AMT3</th>
-      <th>PAY_AMT4</th>
-      <th>PAY_AMT5</th>
-      <th>PAY_AMT6</th>
-      <th>default.payment.next.month</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>20000.0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-      <td>24</td>
-      <td>2</td>
-      <td>2</td>
-      <td>-1</td>
-      <td>-1</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>689.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>120000.0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>26</td>
-      <td>-1</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>3272.0</td>
-      <td>3455.0</td>
-      <td>3261.0</td>
-      <td>0.0</td>
-      <td>1000.0</td>
-      <td>1000.0</td>
-      <td>1000.0</td>
-      <td>0.0</td>
-      <td>2000.0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>90000.0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>34</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>14331.0</td>
-      <td>14948.0</td>
-      <td>15549.0</td>
-      <td>1518.0</td>
-      <td>1500.0</td>
-      <td>1000.0</td>
-      <td>1000.0</td>
-      <td>1000.0</td>
-      <td>5000.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>50000.0</td>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-      <td>37</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>28314.0</td>
-      <td>28959.0</td>
-      <td>29547.0</td>
-      <td>2000.0</td>
-      <td>2019.0</td>
-      <td>1200.0</td>
-      <td>1100.0</td>
-      <td>1069.0</td>
-      <td>1000.0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>50000.0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
-      <td>57</td>
-      <td>-1</td>
-      <td>0</td>
-      <td>-1</td>
-      <td>0</td>
-      <td>...</td>
-      <td>20940.0</td>
-      <td>19146.0</td>
-      <td>19131.0</td>
-      <td>2000.0</td>
-      <td>36681.0</td>
-      <td>10000.0</td>
-      <td>9000.0</td>
-      <td>689.0</td>
-      <td>679.0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">LIMIT_BAL</th>
+<th data-quarto-table-cell-role="th">SEX</th>
+<th data-quarto-table-cell-role="th">EDUCATION</th>
+<th data-quarto-table-cell-role="th">MARRIAGE</th>
+<th data-quarto-table-cell-role="th">AGE</th>
+<th data-quarto-table-cell-role="th">PAY_0</th>
+<th data-quarto-table-cell-role="th">PAY_2</th>
+<th data-quarto-table-cell-role="th">PAY_3</th>
+<th data-quarto-table-cell-role="th">PAY_4</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">BILL_AMT4</th>
+<th data-quarto-table-cell-role="th">BILL_AMT5</th>
+<th data-quarto-table-cell-role="th">BILL_AMT6</th>
+<th data-quarto-table-cell-role="th">PAY_AMT1</th>
+<th data-quarto-table-cell-role="th">PAY_AMT2</th>
+<th data-quarto-table-cell-role="th">PAY_AMT3</th>
+<th data-quarto-table-cell-role="th">PAY_AMT4</th>
+<th data-quarto-table-cell-role="th">PAY_AMT5</th>
+<th data-quarto-table-cell-role="th">PAY_AMT6</th>
+<th data-quarto-table-cell-role="th">default.payment.next.month</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>20000.0</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>24</td>
+<td>2</td>
+<td>2</td>
+<td>-1</td>
+<td>-1</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>689.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>120000.0</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>26</td>
+<td>-1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>3272.0</td>
+<td>3455.0</td>
+<td>3261.0</td>
+<td>0.0</td>
+<td>1000.0</td>
+<td>1000.0</td>
+<td>1000.0</td>
+<td>0.0</td>
+<td>2000.0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>90000.0</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>34</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>14331.0</td>
+<td>14948.0</td>
+<td>15549.0</td>
+<td>1518.0</td>
+<td>1500.0</td>
+<td>1000.0</td>
+<td>1000.0</td>
+<td>1000.0</td>
+<td>5000.0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>50000.0</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>37</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>28314.0</td>
+<td>28959.0</td>
+<td>29547.0</td>
+<td>2000.0</td>
+<td>2019.0</td>
+<td>1200.0</td>
+<td>1100.0</td>
+<td>1069.0</td>
+<td>1000.0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>50000.0</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>57</td>
+<td>-1</td>
+<td>0</td>
+<td>-1</td>
+<td>0</td>
+<td>...</td>
+<td>20940.0</td>
+<td>19146.0</td>
+<td>19131.0</td>
+<td>2000.0</td>
+<td>36681.0</td>
+<td>10000.0</td>
+<td>9000.0</td>
+<td>689.0</td>
+<td>679.0</td>
+<td>0</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 25 columns</p>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<details>
+</div>
+<div id="cell-11" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> df.columns[<span class="dv">1</span>:<span class="dv">11</span>].tolist()</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>borrower_features <span class="op">=</span> df[features].values</span>
@@ -551,8 +537,8 @@ Our model produces predicted values in the interval between 0 and 1. For the exa
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>borrower_features <span class="op">=</span> tf.gather(borrower_features, idx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="13">
-<details>
+<div id="cell-12" class="cell" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dense1 <span class="op">=</span> tf.keras.layers.Dense(<span class="dv">7</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>)(borrower_features)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -597,15 +583,15 @@ With just 8 lines of code, you were able to define 2 dense hidden layers and an 
 <section id="binary-classification-problems" class="level2">
 <h2 class="anchored" data-anchor-id="binary-classification-problems">Binary classification problems</h2>
 <p>Once again, you will be using credit card data in this exercise. Credit card holders are required to report whether they have defaulted on their payments in the following period using the target variable, default. Because there are only two options-default or not-this is a binary classification problem. Despite the fact that the dataset has many features, you will focus on just three: the size of the three most recent credit card bills. As a final step, you will compute predictions from the outputs of your untrained network and compare them with the default variable.</p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-15" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bill_amounts <span class="op">=</span> df[[<span class="st">'BILL_AMT1'</span>, <span class="st">'BILL_AMT2'</span>, <span class="st">'BILL_AMT3'</span>]].to_numpy()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>default <span class="op">=</span> df[[<span class="st">'default.payment.next.month'</span>]].to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="19">
-<details>
+<div id="cell-16" class="cell" data-execution_count="19">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct input layer from features</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tf.constant(bill_amounts)</span>
@@ -639,15 +625,15 @@ If you run the code several times, you'll notice that the errors change each tim
 <h2 class="anchored" data-anchor-id="multiclass-classification-problems">Multiclass classification problems</h2>
 <p>In this exercise, we expand our focus beyond binary classification to include multiclass problems. Targets in a multiclass problem can take on three or more values. The education variable in the credit card dataset can take on six different values, each representing a different level of education. In this exercise, we will use that target as well as expand the feature set from three to ten columns.</p>
 <p>In the same manner as the previous problem, you will define an input layer, dense layers, and an output layer. Moreover, you will print the untrained model’s predictions, which are probabilities assigned to each class.</p>
-<div class="cell" data-execution_count="20">
-<details>
+<div id="cell-18" class="cell" data-execution_count="20">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> df.columns[<span class="dv">1</span>:<span class="dv">11</span>].tolist()</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>borrower_features <span class="op">=</span> df[features].values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="22">
-<details>
+<div id="cell-19" class="cell" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tf.constant(borrower_features, tf.float32)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -698,8 +684,8 @@ Notice that each row of outputs sums to one. This is because a row contains the 
 <p>Consider the plot of the following loss function, loss_function(), which contains a global minimum, marked by the dot on the right, and several local minima, including the one marked by the dot on the left.</p>
 <p><img src="Neural-10.png" class="img-fluid"></p>
 <p>The graph is of a single variable function that contains multiple local minima and a global minimum. In this exercise, you will try to find the global minimum of loss_function() using keras.optimizers.SGD(). You will do this twice, each time with a different initial value of the input to loss_function(). First, you will use x_1, which is a variable with an initial value of 6.0. Second, you will use x_2, which is a variable with an initial value of 0.3. Note that loss_function() has been defined and is available.</p>
-<div class="cell" data-execution_count="25">
-<details>
+<div id="cell-22" class="cell" data-execution_count="25">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -707,8 +693,8 @@ Notice that each row of outputs sums to one. This is because a row contains the 
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">4.0</span> <span class="op">*</span> math.cos(x <span class="op">-</span> <span class="dv">1</span>) <span class="op">+</span> math.cos(<span class="fl">2.0</span> <span class="op">*</span> math.pi <span class="op">*</span> x) <span class="op">/</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="28">
-<details>
+<div id="cell-23" class="cell" data-execution_count="28">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize x_1 and x_2</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x_1 <span class="op">=</span> tf.Variable(<span class="fl">6.0</span>,tf.float32)</span>
@@ -738,8 +724,8 @@ Notice that we used the same optimizer and loss function, but two different init
 <h2 class="anchored" data-anchor-id="avoiding-local-minima">Avoiding local minima</h2>
 <p>The previous problem showed how easy it is to get stuck in local minima. We had a simple optimization problem in one variable and gradient descent still failed to deliver the global minimum when we had to travel through local minima first. One way to avoid this problem is to use momentum, which allows the optimizer to break through local minima. We will again use the loss function from the previous problem, which has been defined and is available for you as loss_function().</p>
 <p>Several optimizers in tensorflow have a momentum parameter, including SGD and RMSprop. You will make use of RMSprop in this exercise. Note that x_1 and x_2 have been initialized to the same value this time.</p>
-<div class="cell" data-execution_count="30">
-<details>
+<div id="cell-25" class="cell" data-execution_count="30">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x_1 <span class="op">=</span> tf.Variable(<span class="fl">0.05</span>, tf.float32)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x_2 <span class="op">=</span> tf.Variable(<span class="fl">0.05</span>, tf.float32)</span>
@@ -792,8 +778,8 @@ Recall that the global minimum is approximately 4.38. Notice that opt_1 built mo
 <section id="initialization-in-tensorflow" class="level2">
 <h2 class="anchored" data-anchor-id="initialization-in-tensorflow">Initialization in TensorFlow</h2>
 <p>A good initialization can reduce the amount of time needed to find the global minimum. In this exercise, we will initialize weights and biases for a neural network that will be used to predict credit card default decisions. To build intuition, we will use the low-level, linear algebraic approach, rather than making use of convenience functions and high-level keras operations. We will also expand the set of input features from 3 to 23. Several operations have been imported from tensorflow: Variable(), random(), and ones().</p>
-<div class="cell" data-execution_count="31">
-<details>
+<div id="cell-28" class="cell" data-execution_count="31">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>w1 <span class="op">=</span> tf.Variable(tf.random.normal([<span class="dv">23</span>, <span class="dv">7</span>]), tf.float32)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -807,8 +793,8 @@ Recall that the global minimum is approximately 4.38. Notice that opt_1 built mo
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>b2 <span class="op">=</span> tf.Variable(<span class="fl">0.0</span>, tf.float32)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="32">
-<details>
+<div id="cell-29" class="cell" data-execution_count="32">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tf.Variable(tf.random.normal([<span class="dv">7</span>, <span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -828,8 +814,8 @@ array([[-1.3544159 ],
 <h2 class="anchored" data-anchor-id="defining-the-model-and-loss-function">Defining the model and loss function</h2>
 <p>In this exercise, you will train a neural network to predict whether a credit card holder will default. The features and targets you will use to train your network are available in the Python shell as borrower_features and default. You defined the weights and biases in the previous exercise.</p>
 <p>Note that the predictions layer is defined as σ ( layer1 × w 2 + b 2 ) σ(layer1×w2+b2), where σ σ is the sigmoid activation, layer1 is a tensor of nodes for the first hidden dense layer, w2 is a tensor of weights, and b2 is the bias tensor.</p>
-<div class="cell" data-execution_count="33">
-<details>
+<div id="cell-31" class="cell" data-execution_count="33">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df.head()</span>
@@ -838,8 +824,8 @@ array([[-1.3544159 ],
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df.iloc[:<span class="dv">3000</span>, <span class="dv">24</span>].astype(np.float32).to_numpy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="34">
-<details>
+<div id="cell-32" class="cell" data-execution_count="34">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -847,8 +833,8 @@ array([[-1.3544159 ],
 <pre><code>array([1., 1., 0., ..., 0., 1., 0.], dtype=float32)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="35">
-<details>
+<div id="cell-33" class="cell" data-execution_count="35">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>borrower_features, test_features, borrower_targets, test_targets <span class="op">=</span> train_test_split(X,</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                                                                                    y,</span>
@@ -856,8 +842,8 @@ array([[-1.3544159 ],
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                                                                                   stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="37">
-<details>
+<div id="cell-34" class="cell" data-execution_count="37">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(w1, b1, w2, b2, features<span class="op">=</span>borrower_features):</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply relu activation function to layer 1</span></span>
@@ -881,8 +867,8 @@ array([[-1.3544159 ],
 One of the benefits of using tensorflow is that you have the option to customize models down to the linear algebraic-level, as we’ve shown in the last two exercises. If you print w1, you can see that the objects we’re working with are simply tensors.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
-<details>
+<div id="cell-35" class="cell" data-execution_count="38">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>w1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -940,14 +926,14 @@ array([[ 1.1639808 , -0.76576465,  0.48124003, -1.859154  , -1.0521691 ,
 <section id="training-neural-networks-with-tensorflow" class="level2">
 <h2 class="anchored" data-anchor-id="training-neural-networks-with-tensorflow">Training neural networks with TensorFlow</h2>
 <p>In the previous exercise, you defined a model, model(w1, b1, w2, b2, features), and a loss function, loss_function(w1, b1, w2, b2, features, targets), both of which are available to you in this exercise. You will now train the model and then evaluate its performance by predicting default outcomes in a test set, which consists of test_features and test_targets and is available to you. The trainable variables are w1, b1, w2, and b2.</p>
-<div class="cell" data-execution_count="46">
-<details>
+<div id="cell-37" class="cell" data-execution_count="46">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>opt <span class="op">=</span> tf.keras.optimizers.legacy.Adam(learning_rate<span class="op">=</span><span class="fl">0.1</span>, beta_1<span class="op">=</span><span class="fl">0.9</span>, beta_2<span class="op">=</span><span class="fl">0.999</span>, amsgrad<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="50">
-<details>
+<div id="cell-38" class="cell" data-execution_count="50">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> confusion_matrix</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -966,8 +952,8 @@ array([[ 1.1639808 , -0.76576465,  0.48124003, -1.859154  , -1.0521691 ,
 <pre><code>ValueError: `logits` and `labels` must have the same shape, received ((2250, 1) vs (2250,)).</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="48">
-<details>
+<div id="cell-39" class="cell" data-execution_count="48">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -979,8 +965,8 @@ array([[ 1.1639808 , -0.76576465,  0.48124003, -1.859154  , -1.0521691 ,
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    sns.heatmap(confusion_matrix, cmap<span class="op">=</span><span class="st">"Greys"</span>, fmt<span class="op">=</span><span class="st">"d"</span>, annot<span class="op">=</span><span class="va">True</span>, cbar<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="49">
-<details>
+<div id="cell-40" class="cell" data-execution_count="49">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix_plot(test_targets.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), model_predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1021,9 +1007,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1059,10 +1059,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1072,8 +1071,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1088,6 +1096,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1130,6 +1370,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -133,45 +140,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -241,7 +250,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="neurons-and-layers" class="level1">
 <h1>Neurons and Layers</h1>
@@ -259,8 +270,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <p><strong>Tensorflow and Keras</strong> Tensorflow is a machine learning package developed by Google. In 2019, Google integrated Keras into Tensorflow and released Tensorflow 2.0. Keras is a framework developed independently by François Chollet that creates a simple, layer-centric interface to Tensorflow. This course will be using the Keras interface.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.434804Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.480830Z&quot;}" data-execution_count="22">
-<details>
+<div id="cell-4" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.434804Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.480830Z&quot;}" data-execution_count="22">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -283,8 +294,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <section id="dataset" class="level3">
 <h3 class="anchored" data-anchor-id="dataset">DataSet</h3>
 <p>We’ll use an example from Course 1, linear regression on house prices.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.439638Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523304Z&quot;}" data-execution_count="23">
-<details>
+<div id="cell-7" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.439638Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523304Z&quot;}" data-execution_count="23">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> np.array([[<span class="fl">1.0</span>], [<span class="fl">2.0</span>]], dtype<span class="op">=</span>np.float32)           <span class="co">#(size in 1000 square feet)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Y_train <span class="op">=</span> np.array([[<span class="fl">300.0</span>], [<span class="fl">500.0</span>]], dtype<span class="op">=</span>np.float32)       <span class="co">#(price in 1000s of dollars)</span></span>
@@ -297,7 +308,11 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Neurons and Layers_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Neurons and Layers_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -305,15 +320,15 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <h3 class="anchored" data-anchor-id="regressionlinear-model">Regression/Linear Model</h3>
 <p>The function implemented by a neuron with no activation is the same as in Course 1, linear regression: <span class="math display">\[ f_{\mathbf{w},b}(x^{(i)}) = \mathbf{w}\cdot x^{(i)} + b \tag{1}\]</span></p>
 <p>We can define a layer with one neuron or unit and compare it to the familiar linear regression function.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.508318Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523583Z&quot;}" data-execution_count="24">
-<details>
+<div id="cell-10" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.508318Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523583Z&quot;}" data-execution_count="24">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>linear_layer <span class="op">=</span> tf.keras.layers.Dense(units<span class="op">=</span><span class="dv">1</span>, activation <span class="op">=</span> <span class="st">'linear'</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Let’s examine the weights.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.511582Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523657Z&quot;}" data-execution_count="25">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.511582Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.523657Z&quot;}" data-execution_count="25">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>linear_layer.get_weights()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -322,8 +337,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </div>
 </div>
 <p>There are no weights as the weights are not yet instantiated. Let’s try the model on one example in <code>X_train</code>. This will trigger the instantiation of the weights. Note, the input to the layer must be 2-D, so we’ll reshape it.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.520649Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.533582Z&quot;}" data-execution_count="26">
-<details>
+<div id="cell-14" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.520649Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.533582Z&quot;}" data-execution_count="26">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> linear_layer(X_train[<span class="dv">0</span>].reshape(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -333,8 +348,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </div>
 </div>
 <p>The result is a tensor (another name for an array) with a shape of (1,1) or one entry. Now let’s look at the weights and bias. These weights are randomly initialized to small numbers and the bias defaults to being initialized to zero.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.528726Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.557994Z&quot;}" data-execution_count="27">
-<details>
+<div id="cell-16" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.528726Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.557994Z&quot;}" data-execution_count="27">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>w, b<span class="op">=</span> linear_layer.get_weights()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"w = </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">, b=</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -345,8 +360,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </div>
 <p>A linear regression model (1) with a single input feature will have a single weight and bias. This matches the dimensions of our <code>linear_layer</code> above.</p>
 <p>The weights are initialized to random values so let’s set them to some known values.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.540429Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603417Z&quot;}" data-execution_count="28">
-<details>
+<div id="cell-18" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.540429Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603417Z&quot;}" data-execution_count="28">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>set_w <span class="op">=</span> np.array([[<span class="dv">200</span>]])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>set_b <span class="op">=</span> np.array([<span class="dv">100</span>])</span>
@@ -360,8 +375,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </div>
 </div>
 <p>Let’s compare equation (1) to the layer output.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.556544Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603620Z&quot;}" data-execution_count="29">
-<details>
+<div id="cell-20" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.556544Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603620Z&quot;}" data-execution_count="29">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> linear_layer(X_train[<span class="dv">0</span>].reshape(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a1)</span>
@@ -374,20 +389,24 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </div>
 </div>
 <p>They produce the same values! Now, we can use our linear layer to make predictions on our training data.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.563928Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603652Z&quot;}" data-execution_count="30">
-<details>
+<div id="cell-22" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.563928Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.603652Z&quot;}" data-execution_count="30">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prediction_tf <span class="op">=</span> linear_layer(X_train)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>prediction_np <span class="op">=</span> np.dot( X_train, set_w) <span class="op">+</span> set_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.569537Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.712562Z&quot;}" data-execution_count="31">
-<details>
+<div id="cell-23" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.569537Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.712562Z&quot;}" data-execution_count="31">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt_linear(X_train, Y_train, prediction_tf, prediction_np)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Neurons and Layers_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Neurons and Layers_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -399,15 +418,15 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <section id="dataset-1" class="level3">
 <h3 class="anchored" data-anchor-id="dataset-1">DataSet</h3>
 <p>We’ll use an example from Course 1, logistic regression.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.714087Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.716497Z&quot;}" data-execution_count="32">
-<details>
+<div id="cell-26" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.714087Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.716497Z&quot;}" data-execution_count="32">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> np.array([<span class="fl">0.</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>], dtype<span class="op">=</span>np.float32).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)  <span class="co"># 2-D Matrix</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Y_train <span class="op">=</span> np.array([<span class="dv">0</span>,  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], dtype<span class="op">=</span>np.float32).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)  <span class="co"># 2-D Matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.717749Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.718988Z&quot;}" data-execution_count="33">
-<details>
+<div id="cell-27" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.717749Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.718988Z&quot;}" data-execution_count="33">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> Y_train <span class="op">==</span> <span class="dv">1</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>neg <span class="op">=</span> Y_train <span class="op">==</span> <span class="dv">0</span></span>
@@ -417,8 +436,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <pre><code>array([3., 4., 5.], dtype=float32)</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.721976Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.790616Z&quot;}" data-execution_count="34">
-<details>
+<div id="cell-28" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.721976Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.790616Z&quot;}" data-execution_count="34">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> Y_train <span class="op">==</span> <span class="dv">1</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>neg <span class="op">=</span> Y_train <span class="op">==</span> <span class="dv">0</span></span>
@@ -436,15 +455,19 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Neurons and Layers_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Neurons and Layers_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="logistic-neuron" class="level3">
 <h3 class="anchored" data-anchor-id="logistic-neuron">Logistic Neuron</h3>
 <p>We can implement a ‘logistic neuron’ by adding a sigmoid activation. The function of the neuron is then described by (2) above. This section will create a Tensorflow Model that contains our logistic layer to demonstrate an alternate method of creating models. Tensorflow is most often used to create multi-layer models. The <a href="https://keras.io/guides/sequential_model/">Sequential</a> model is a convenient means of constructing these models.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.782152Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.790698Z&quot;}" data-execution_count="35">
-<details>
+<div id="cell-30" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.782152Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.790698Z&quot;}" data-execution_count="35">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    [</span>
@@ -454,8 +477,8 @@ In this lab we will explore the inner workings of neurons/units and layers. In p
 </details>
 </div>
 <p><code>model.summary()</code> shows the layers and number of parameters in the model. There is only one layer in this model and that layer has only one unit. The unit has two parameters, <span class="math inline">\(w\)</span> and <span class="math inline">\(b\)</span>.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.790484Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.797216Z&quot;}" data-execution_count="36">
-<details>
+<div id="cell-32" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.790484Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.797216Z&quot;}" data-execution_count="36">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -473,8 +496,8 @@ Non-trainable params: 0
 _________________________________________________________________</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.797828Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.802821Z&quot;}" data-execution_count="37">
-<details>
+<div id="cell-33" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.797828Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.802821Z&quot;}" data-execution_count="37">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>logistic_layer <span class="op">=</span> model.get_layer(<span class="st">'L1'</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>w,b <span class="op">=</span> logistic_layer.get_weights()</span>
@@ -486,8 +509,8 @@ _________________________________________________________________</code></pre>
 (1, 1) (1,)</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.805247Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.808708Z&quot;}" data-execution_count="38">
-<details>
+<div id="cell-34" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.805247Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.808708Z&quot;}" data-execution_count="38">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>set_w <span class="op">=</span> np.array([[<span class="dv">2</span>]])</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>set_b <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">4.5</span>])</span>
@@ -500,8 +523,8 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <p>Let’s compare equation (2) to the layer output.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.811074Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.855552Z&quot;}" data-execution_count="39">
-<details>
+<div id="cell-36" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.811074Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:39.855552Z&quot;}" data-execution_count="39">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> model.predict(X_train[<span class="dv">0</span>].reshape(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a1)</span>
@@ -515,8 +538,8 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <p>They produce the same values! Now, we can use our logistic layer and NumPy model to make predictions on our training data.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.858075Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:40.962541Z&quot;}" data-execution_count="40">
-<details>
+<div id="cell-38" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-29T00:06:39.858075Z&quot;,&quot;end_time&quot;:&quot;2023-04-29T00:06:40.962541Z&quot;}" data-execution_count="40">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plt_logistic(X_train, Y_train, model, set_w, set_b, pos, neg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -573,7 +596,11 @@ _________________________________________________________________</code></pre>
 1/1 [==============================] - 0s 7ms/step</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Neurons and Layers_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Neurons and Layers_files/figure-html/cell-20-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>The shading above reflects the output of the sigmoid which varies from 0 to 1.</p>
@@ -611,9 +638,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -649,10 +690,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -662,8 +702,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -678,6 +727,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -720,6 +1001,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

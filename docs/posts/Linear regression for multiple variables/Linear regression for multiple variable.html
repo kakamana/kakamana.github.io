@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,12 +96,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -133,45 +140,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -227,7 +236,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="linear-regression-for-multiple-variables" class="level1">
 <h1>Linear regression for multiple variables</h1>
@@ -241,8 +252,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this lab, you will extend the data structures and previously developed routines to support multiple features. Several routines are updated making the lab appear lengthy, but it makes minor adjustments to previous routines making it quick to review. # Outline - <a href="#toc_15456_1.1">&nbsp;&nbsp;1.1 Goals</a> - <a href="#toc_15456_1.2">&nbsp;&nbsp;1.2 Tools</a> - <a href="#toc_15456_1.3">&nbsp;&nbsp;1.3 Notation</a> - <a href="#toc_15456_2">2 Problem Statement</a> - <a href="#toc_15456_2.1">&nbsp;&nbsp;2.1 Matrix X containing our examples</a> - <a href="#toc_15456_2.2">&nbsp;&nbsp;2.2 Parameter vector w, b</a> - <a href="#toc_15456_3">3 Model Prediction With Multiple Variables</a> - <a href="#toc_15456_3.1">&nbsp;&nbsp;3.1 Single Prediction element by element</a> - <a href="#toc_15456_3.2">&nbsp;&nbsp;3.2 Single Prediction, vector</a> - <a href="#toc_15456_4">4 Compute Cost With Multiple Variables</a> - <a href="#toc_15456_5">5 Gradient Descent With Multiple Variables</a> - <a href="#toc_15456_5.1">&nbsp;&nbsp;5.1 Compute Gradient with Multiple Variables</a> - <a href="#toc_15456_5.2">&nbsp;&nbsp;5.2 Gradient Descent With Multiple Variables</a> - <a href="#toc_15456_6">6 Congratulations</a></p>
 <p><a name="toc_15456_1.1"></a> ## 1.1 Goals - Extend our regression model routines to support multiple features - Extend data structures to support multiple features - Rewrite prediction, cost and gradient routines to support multiple features - Utilize NumPy <code>np.dot</code> to vectorize their implementations for speed and simplicity</p>
 <p><a name="toc_15456_1.2"></a> ## 1.2 Tools In this lab, we will make use of: - NumPy, a popular library for scientific computing - Matplotlib, a popular library for plotting data</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:31:01.229583Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:31:02.252898Z&quot;}" data-execution_count="1">
-<details>
+<div id="cell-5" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:31:01.229583Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:31:02.252898Z&quot;}" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy, math</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -299,8 +310,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <p>You will build a linear regression model using these values so you can then predict the price for other houses. For example, a house with 1200 sqft, 3 bedrooms, 1 floor, 40 years old.</p>
 <p>Please run the following code cell to create your <code>X_train</code> and <code>y_train</code> variables.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:34:52.614444Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:34:52.621730Z&quot;}" data-execution_count="2">
-<details>
+<div id="cell-8" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:34:52.614444Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:34:52.621730Z&quot;}" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> np.array([[<span class="dv">2104</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">45</span>], [<span class="dv">1416</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">40</span>], [<span class="dv">852</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">35</span>]])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> np.array([<span class="dv">460</span>, <span class="dv">232</span>, <span class="dv">178</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -316,8 +327,8 @@ x^{(m-1)}_0 &amp; x^{(m-1)}_1 &amp; \cdots &amp; x^{(m-1)}_{n-1}
 \end{pmatrix}
 \]</span> notation: - <span class="math inline">\(\mathbf{x}^{(i)}\)</span> is vector containing example i. <span class="math inline">\(\mathbf{x}^{(i)}\)</span> $ = (x^{(i)}_0, x^{(i)}<em>1, ,x^{(i)}</em>{n-1})$ - <span class="math inline">\(x^{(i)}_j\)</span> is element j in example i. The superscript in parenthesis indicates the example number while the subscript represents an element.</p>
 <p>Display the input data.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:36:15.013625Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:36:15.019365Z&quot;}" data-execution_count="3">
-<details>
+<div id="cell-10" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:36:15.013625Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:36:15.019365Z&quot;}" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data is stored in numpy array/matrix</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X Shape: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, X Type:</span><span class="sc">{</span><span class="bu">type</span>(X_train)<span class="sc">}</span><span class="ss">)"</span>)</span>
@@ -351,8 +362,8 @@ w_{n-1}
 \end{pmatrix}
 \]</span> * <span class="math inline">\(b\)</span> is a scalar parameter.</p>
 <p>For demonstration, <span class="math inline">\(\mathbf{w}\)</span> and <span class="math inline">\(b\)</span> will be loaded with some initial selected values that are near the optimal. <span class="math inline">\(\mathbf{w}\)</span> is a 1-D NumPy vector.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:37:34.070807Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:37:34.076497Z&quot;}" data-execution_count="4">
-<details>
+<div id="cell-12" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:37:34.070807Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:37:34.076497Z&quot;}" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>b_init <span class="op">=</span> <span class="fl">785.1811367994083</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>w_init <span class="op">=</span> np.array([ <span class="fl">0.39133535</span>, <span class="fl">18.75376741</span>, <span class="op">-</span><span class="fl">53.36032453</span>, <span class="op">-</span><span class="fl">26.42131618</span>])</span>
@@ -366,8 +377,8 @@ w_{n-1}
 <p><span class="math display">\[ f_{\mathbf{w},b}(\mathbf{x}) =  w_0x_0 + w_1x_1 +... + w_{n-1}x_{n-1} + b \tag{1}\]</span> or in vector notation: <span class="math display">\[ f_{\mathbf{w},b}(\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b  \tag{2} \]</span> where <span class="math inline">\(\cdot\)</span> is a vector <code>dot product</code></p>
 <p>To demonstrate the dot product, we will implement prediction using (1) and (2).</p>
 <p><a name="toc_15456_3.1"></a> ## 3.1 Single Prediction element by element Our previous prediction multiplied one feature value by one parameter and added a bias parameter. A direct extension of our previous implementation of prediction to multiple features would be to implement (1) above using loop over each element, performing the multiply with its parameter and then adding the bias parameter at the end.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:38:52.470959Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:38:52.477086Z&quot;}" data-execution_count="5">
-<details>
+<div id="cell-15" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:38:52.470959Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:38:52.477086Z&quot;}" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_single_loop(x, w, b):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -390,8 +401,8 @@ w_{n-1}
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:39:15.182823Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:39:15.189827Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-16" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:39:15.182823Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:39:15.189827Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get a row from our training data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x_vec <span class="op">=</span> X_train[<span class="dv">0</span>,:]</span>
@@ -410,8 +421,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <p><a name="toc_15456_3.2"></a> ## 3.2 Single Prediction, vector</p>
 <p>Noting that equation (1) above can be implemented using the dot product as in (2) above. We can make use of vector operations to speed up predictions.</p>
 <p>Recall from the Python/Numpy lab that NumPy <code>np.dot()</code>[<a href="https://numpy.org/doc/stable/reference/generated/numpy.dot.html">link</a>] can be used to perform a vector dot product.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:40:04.216970Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:40:04.224098Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-19" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:40:04.216970Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:40:04.224098Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(x, w, b):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -428,8 +439,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:40:26.000942Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:40:26.008578Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-20" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:40:26.000942Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:40:26.008578Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get a row from our training data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x_vec <span class="op">=</span> X_train[<span class="dv">0</span>,:]</span>
@@ -448,8 +459,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <p><a name="toc_15456_4"></a> # 4 Compute Cost With Multiple Variables The equation for the cost function with multiple variables <span class="math inline">\(J(\mathbf{w},b)\)</span> is: <span class="math display">\[J(\mathbf{w},b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{\mathbf{w},b}(\mathbf{x}^{(i)}) - y^{(i)})^2 \tag{3}\]</span> where: <span class="math display">\[ f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = \mathbf{w} \cdot \mathbf{x}^{(i)} + b  \tag{4} \]</span></p>
 <p>In contrast to previous labs, <span class="math inline">\(\mathbf{w}\)</span> and <span class="math inline">\(\mathbf{x}^{(i)}\)</span> are vectors rather than scalars supporting multiple features.</p>
 <p>Below is an implementation of equations (3) and (4). Note that this uses a <em>standard pattern for this course</em> where a for loop over all <code>m</code> examples is used.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:42:14.700113Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:42:14.712231Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-24" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:42:14.700113Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:42:14.712231Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_cost(X, y, w, b):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -472,8 +483,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:43:22.829061Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:43:22.837875Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-25" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:43:22.829061Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:43:22.837875Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and display cost using our pre-chosen optimal parameters.</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cost <span class="op">=</span> compute_cost(X_train, y_train, w_init, b_init)</span>
@@ -499,8 +510,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <li><span class="math inline">\(f_{\mathbf{w},b}(\mathbf{x}^{(i)})\)</span> is the model’s prediction, while <span class="math inline">\(y^{(i)}\)</span> is the target value</li>
 </ul>
 <p><a name="toc_15456_5.1"></a> ## 5.1 Compute Gradient with Multiple Variables An implementation for calculating the equations (6) and (7) is below. There are many ways to implement this. In this version, there is an - outer loop over all m examples. - <span class="math inline">\(\frac{\partial J(\mathbf{w},b)}{\partial b}\)</span> for the example can be computed directly and accumulated - in a second loop over all n features: - <span class="math inline">\(\frac{\partial J(\mathbf{w},b)}{\partial w_j}\)</span> is computed for each <span class="math inline">\(w_j\)</span>.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:05.138381Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:05.152883Z&quot;}" data-execution_count="11">
-<details>
+<div id="cell-28" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:05.138381Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:05.152883Z&quot;}" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_gradient(X, y, w, b):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -530,8 +541,8 @@ f_wb shape (), prediction: 459.9999976194083</code></pre>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dj_db, dj_dw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:13.271357Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:13.286602Z&quot;}" data-execution_count="12">
-<details>
+<div id="cell-29" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:13.271357Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:13.286602Z&quot;}" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Compute and display gradient</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>tmp_dj_db, tmp_dj_dw <span class="op">=</span> compute_gradient(X_train, y_train, w_init, b_init)</span>
@@ -545,8 +556,8 @@ dj_dw at initial w,b:
 </div>
 </div>
 <p><a name="toc_15456_5.2"></a> ## 5.2 Gradient Descent With Multiple Variables The routine below implements equation (5) above.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:41.219643Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:41.222760Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-31" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:46:41.219643Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:46:41.222760Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, num_iters):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -594,8 +605,8 @@ dj_dw at initial w,b:
 </details>
 </div>
 <p>In the next cell you will test the implementation.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:47:30.951290Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:47:30.968774Z&quot;}" data-execution_count="14">
-<details>
+<div id="cell-33" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:47:30.951290Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:47:30.968774Z&quot;}" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize parameters</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>initial_w <span class="op">=</span> np.zeros_like(w_init)</span>
@@ -629,8 +640,8 @@ prediction: 286.17, target value: 232
 prediction: 171.47, target value: 178</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:47:43.209988Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:47:43.433682Z&quot;}" data-execution_count="15">
-<details>
+<div id="cell-34" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-23T18:47:43.209988Z&quot;,&quot;end_time&quot;:&quot;2023-04-23T18:47:43.433682Z&quot;}" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot cost versus iteration</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, constrained_layout<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
@@ -642,7 +653,11 @@ prediction: 171.47, target value: 178</code></pre>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="Linear regression for multiple variable_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear regression for multiple variable_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><em>These results are not inspiring</em>! Cost is still declining and our predictions are not very accurate. The next lab will explore how to improve on this.</p>
@@ -679,9 +694,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -717,10 +746,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -730,8 +758,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -746,6 +783,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -788,6 +1057,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,43 +49,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,8 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -132,45 +111,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -247,7 +228,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="classification" class="level1">
 <h1>Classification</h1>
@@ -255,8 +238,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Classification</strong> is part of <a href="" title="https://app.datacamp.com/learn/courses/machine-learning-with-pyspark">Datacamp course: Machine Learning with PySpark</a> Spark is a powerful, general-purpose tool for working with large data sets. Spark transparently distributes compute tasks across a cluster. By doing this, operations are fast, but you can also focus on the analysis rather than worry about technical details. This course will teach you how to get data into Spark, and then dive into three fundamental Spark Machine Learning algorithms: Linear Regression, Logistic Regression/Classifiers, and creating pipelines. You will analyze a large dataset of flight delays and spam text messages along the way. With this background, you will be able to harness the power of Spark and apply it to your own Machine Learning projects.</p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:11:45.148119Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:11:45.867137Z&quot;}" data-execution_count="1">
-<details>
+<div id="cell-2" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:11:45.148119Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:11:45.867137Z&quot;}" data-execution_count="1">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyspark</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -274,8 +257,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>removing an uninformative column and</li>
 <li>removing rows which do not have information about whether or not a flight was delayed.</li>
 </ol>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:12:38.487625Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:12:43.236239Z&quot;}" data-execution_count="2">
-<details>
+<div id="cell-4" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:12:38.487625Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:12:43.236239Z&quot;}" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql <span class="im">import</span> SparkSession</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -289,14 +272,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>23/04/09 23:12:39 WARN Utils: Your hostname, kamrans-Mac-mini.local resolves to a loopback address: 127.0.0.1; using 192.168.1.18 instead (on interface en1)
-23/04/09 23:12:39 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>23/04/09 23:12:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+23/04/09 23:12:39 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+23/04/09 23:12:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 23/04/09 23:12:40 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
 +---+---+---+-------+------+---+----+------+--------+-----+
 |mon|dom|dow|carrier|flight|org|mile|depart|duration|delay|
@@ -310,21 +287,25 @@ To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLeve
 only showing top 5 rows
 </code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).</code></pre>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:16:58.937481Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:16:59.616582Z&quot;}" data-execution_count="3">
-<details>
+</div>
+<div id="cell-5" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:16:58.937481Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:16:59.616582Z&quot;}" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>flights_drop_column <span class="op">=</span> flights.drop(<span class="st">'flight'</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of records with missing 'delay' values</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>flights_drop_column.<span class="bu">filter</span>(<span class="st">'delay IS NULL'</span>).count()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove records with missing 'delay' values</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>flights_valid_delay <span class="op">=</span> flights_drop_column.<span class="bu">filter</span>(<span class="st">'delay IS NOT NULL'</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove records with missing values in any column and get the number of remaining rows</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>flights_none_missing <span class="op">=</span> flights_valid_delay.dropna()</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(flights_none_missing.count())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flights_drop_column <span class="op">=</span> flights.drop(<span class="st">'flight'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of records with missing 'delay' values</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>flights_drop_column.<span class="bu">filter</span>(<span class="st">'delay IS NULL'</span>).count()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove records with missing 'delay' values</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>flights_valid_delay <span class="op">=</span> flights_drop_column.<span class="bu">filter</span>(<span class="st">'delay IS NOT NULL'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove records with missing values in any column and get the number of remaining rows</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>flights_none_missing <span class="op">=</span> flights_valid_delay.dropna()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(flights_none_missing.count())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>258289</code></pre>
@@ -339,19 +320,19 @@ only showing top 5 rows
 <li>convert the units of distance, replacing the mile column with a kmcolumn; and</li>
 <li>create a Boolean column indicating whether or not a flight was delayed.</li>
 </ol>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:18:08.026419Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:18:08.126342Z&quot;}" data-execution_count="4">
-<details>
+<div id="cell-7" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:18:08.026419Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:18:08.126342Z&quot;}" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">round</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'mile' to 'km' and drop 'mile' column</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>flights_km <span class="op">=</span> flights_none_missing.withColumn(<span class="st">'km'</span>, <span class="bu">round</span>(flights_none_missing.mile <span class="op">*</span> <span class="fl">1.60934</span>, <span class="dv">0</span>)).drop(<span class="st">'mile'</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create 'label' column indicating whether flight delayed (1) or not(0)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>flights_km <span class="op">=</span> flights_km.withColumn(<span class="st">'label'</span>, (flights_km.delay <span class="op">&gt;=</span> <span class="dv">15</span>).cast(<span class="st">'integer'</span>))</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check first five records</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>flights_km.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> <span class="bu">round</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert 'mile' to 'km' and drop 'mile' column</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>flights_km <span class="op">=</span> flights_none_missing.withColumn(<span class="st">'km'</span>, <span class="bu">round</span>(flights_none_missing.mile <span class="op">*</span> <span class="fl">1.60934</span>, <span class="dv">0</span>)).drop(<span class="st">'mile'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create 'label' column indicating whether flight delayed (1) or not(0)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>flights_km <span class="op">=</span> flights_km.withColumn(<span class="st">'label'</span>, (flights_km.delay <span class="op">&gt;=</span> <span class="dv">15</span>).cast(<span class="st">'integer'</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Check first five records</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>flights_km.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+---+------+--------+-----+------+-----+
@@ -371,23 +352,23 @@ only showing top 5 rows
 <section id="categorical-columns" class="level2">
 <h2 class="anchored" data-anchor-id="categorical-columns">Categorical columns</h2>
 <p>In the flights data there are two columns, carrier and org, which hold categorical data. You need to transform those columns into indexed numerical values.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:29:55.275178Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:29:55.865109Z&quot;}" data-execution_count="6">
-<details>
+<div id="cell-9" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:29:55.275178Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:29:55.865109Z&quot;}" data-execution_count="6">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an indexer</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>indexer <span class="op">=</span> StringIndexer(inputCol<span class="op">=</span><span class="st">'carrier'</span>, outputCol<span class="op">=</span><span class="st">'carrier_idx'</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indexer identifies categories in the data</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>indexer_model <span class="op">=</span> indexer.fit(flights_km)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Indexer creates a new column with numeric index values</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>flights_indexed <span class="op">=</span> indexer_model.transform(flights_km)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat the process for the other categorical feature</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>flights_indexed <span class="op">=</span> StringIndexer(inputCol<span class="op">=</span><span class="st">'org'</span>, outputCol<span class="op">=</span><span class="st">'org_idx'</span>).fit(flights_indexed).transform(flights_indexed)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>flights_indexed.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StringIndexer</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an indexer</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>indexer <span class="op">=</span> StringIndexer(inputCol<span class="op">=</span><span class="st">'carrier'</span>, outputCol<span class="op">=</span><span class="st">'carrier_idx'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Indexer identifies categories in the data</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>indexer_model <span class="op">=</span> indexer.fit(flights_km)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Indexer creates a new column with numeric index values</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>flights_indexed <span class="op">=</span> indexer_model.transform(flights_km)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat the process for the other categorical feature</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>flights_indexed <span class="op">=</span> StringIndexer(inputCol<span class="op">=</span><span class="st">'org'</span>, outputCol<span class="op">=</span><span class="st">'org_idx'</span>).fit(flights_indexed).transform(flights_indexed)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>flights_indexed.show(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+---+---+-------+---+------+--------+-----+------+-----+-----------+-------+
@@ -416,24 +397,24 @@ only showing top 5 rows
 <li>depart</li>
 <li>duration</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:33:24.510137Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:33:24.657169Z&quot;}" data-execution_count="7">
-<details>
+<div id="cell-11" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:33:24.510137Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:33:24.657169Z&quot;}" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an assembler object</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mon'</span>, <span class="st">'dom'</span>, <span class="st">'dow'</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'carrier_idx'</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'org_idx'</span>,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'km'</span>, <span class="st">'depart'</span>, <span class="st">'duration'</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Consolidate predictor columns</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>flights_assembled <span class="op">=</span> assembler.transform(flights_indexed)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the resulting column</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>flights_assembled.select(<span class="st">'features'</span>, <span class="st">'delay'</span>).show(<span class="dv">5</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> VectorAssembler</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an assembler object</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>assembler <span class="op">=</span> VectorAssembler(inputCols<span class="op">=</span>[</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mon'</span>, <span class="st">'dom'</span>, <span class="st">'dow'</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'carrier_idx'</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'org_idx'</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'km'</span>, <span class="st">'depart'</span>, <span class="st">'duration'</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>], outputCol<span class="op">=</span><span class="st">'features'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Consolidate predictor columns</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>flights_assembled <span class="op">=</span> assembler.transform(flights_indexed)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the resulting column</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>flights_assembled.select(<span class="st">'features'</span>, <span class="st">'delay'</span>).show(<span class="dv">5</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-----------------------------------------+-----+
@@ -461,14 +442,14 @@ only showing top 5 rows
 <li>training data (used to train the model) and</li>
 <li>testing data (used to test the model).</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:36:17.404976Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:36:18.436612Z&quot;}" data-execution_count="8">
-<details>
+<div id="cell-13" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:36:17.404976Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:36:18.436612Z&quot;}" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights_assembled.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">17</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that training set has around 80% of records</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>training_ratio <span class="op">=</span> flights_train.count() <span class="op">/</span> flights_assembled.count()</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(training_ratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>flights_train, flights_test <span class="op">=</span> flights_assembled.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">17</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that training set has around 80% of records</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>training_ratio <span class="op">=</span> flights_train.count() <span class="op">/</span> flights_assembled.count()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(training_ratio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
@@ -481,18 +462,18 @@ only showing top 5 rows
 <section id="build-a-decision-tree" class="level2">
 <h2 class="anchored" data-anchor-id="build-a-decision-tree">Build a Decision Tree</h2>
 <p>Now that you’ve split the flights data into training and testing sets, you can use the training set to fit a Decision Tree model</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:39:57.489876Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:40:00.552611Z&quot;}" data-execution_count="9">
-<details>
+<div id="cell-15" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:39:57.489876Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:40:00.552611Z&quot;}" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> DecisionTreeClassifier</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a classifier object and fit to the training data</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier()</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>tree_model <span class="op">=</span> tree.fit(flights_train)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create predictions for the testing data and take a look at the predictions</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> tree_model.transform(flights_test)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>prediction.select(<span class="st">'label'</span>, <span class="st">'prediction'</span>, <span class="st">'probability'</span>).show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a classifier object and fit to the training data</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>tree <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>tree_model <span class="op">=</span> tree.fit(flights_train)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create predictions for the testing data and take a look at the predictions</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> tree_model.transform(flights_test)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>prediction.select(<span class="st">'label'</span>, <span class="st">'prediction'</span>, <span class="st">'probability'</span>).show(<span class="dv">5</span>, <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-----+----------+----------------------------------------+
@@ -519,20 +500,20 @@ only showing top 5 rows
 <li>False Negatives (FN) — model predicts negative outcome but known outcome is positive</li>
 <li>False Positives (FP) — model predicts positive outcome but known outcome is negative.</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:44:14.359546Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:44:17.059959Z&quot;}" data-execution_count="10">
-<details>
+<div id="cell-17" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:44:14.359546Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:44:17.059959Z&quot;}" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">'label'</span>, <span class="st">'prediction'</span>).count().show()</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the elements of the confusion matrix</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>TN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = prediction'</span>).count()</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = prediction'</span>).count()</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>FN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = 1'</span>).count()</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = 0'</span>).count()</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Accuracy measures the proportion of correct predictions</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> (TN <span class="op">+</span> TP) <span class="op">/</span> (TN <span class="op">+</span> TP <span class="op">+</span> FN <span class="op">+</span> FP)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">'label'</span>, <span class="st">'prediction'</span>).count().show()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the elements of the confusion matrix</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>TN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = prediction'</span>).count()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = prediction'</span>).count()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>FN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = 1'</span>).count()</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = 0'</span>).count()</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Accuracy measures the proportion of correct predictions</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> (TN <span class="op">+</span> TP) <span class="op">/</span> (TN <span class="op">+</span> TP <span class="op">+</span> FN <span class="op">+</span> FP)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+-----+----------+-----+
@@ -556,21 +537,21 @@ only showing top 5 rows
 <p>You’ve already built a Decision Tree model using the flights data. Now you’re going to create a Logistic Regression model on the same data.</p>
 <p>The objective is to predict whether a flight is likely to be delayed by at least 15 minutes (label 1) or not (label 0).</p>
 <p>Although you have a variety of predictors at your disposal, you’ll only use the mon, depart and duration columns for the moment. These are numerical features which can immediately be used for a Logistic Regression model. You’ll need to do a little more work before you can include categorical features.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:50:04.390905Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:50:07.118654Z&quot;}" data-execution_count="11">
-<details>
+<div id="cell-19" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:50:04.390905Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:50:07.118654Z&quot;}" data-execution_count="11">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> LogisticRegression</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting numeric columns</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>flights_train_num <span class="op">=</span> flights_train.select(<span class="st">"mon"</span>, <span class="st">'depart'</span>, <span class="st">'duration'</span>, <span class="st">'features'</span>, <span class="st">'label'</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>flights_test_num <span class="op">=</span> flights_test.select(<span class="st">"mon"</span>, <span class="st">"depart"</span>, <span class="st">"duration"</span>, <span class="st">'features'</span>, <span class="st">'label'</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create classifier object and train on training data</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>logistic <span class="op">=</span> LogisticRegression().fit(flights_train_num)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a predictions for the test data and show confusion matrix</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> logistic.transform(flights_test_num)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">"label"</span>, <span class="st">"prediction"</span>).count().show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.classification <span class="im">import</span> LogisticRegression</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecting numeric columns</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>flights_train_num <span class="op">=</span> flights_train.select(<span class="st">"mon"</span>, <span class="st">'depart'</span>, <span class="st">'duration'</span>, <span class="st">'features'</span>, <span class="st">'label'</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>flights_test_num <span class="op">=</span> flights_test.select(<span class="st">"mon"</span>, <span class="st">"depart"</span>, <span class="st">"duration"</span>, <span class="st">'features'</span>, <span class="st">'label'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create classifier object and train on training data</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>logistic <span class="op">=</span> LogisticRegression().fit(flights_train_num)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a predictions for the test data and show confusion matrix</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> logistic.transform(flights_test_num)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">"label"</span>, <span class="st">"prediction"</span>).count().show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>                                                                                </code></pre>
@@ -602,32 +583,32 @@ only showing top 5 rows
 <p>Precision is the proportion of positive predictions which are correct. For all flights which are predicted to be delayed, what proportion is actually delayed?</p>
 <p>Recall is the proportion of positives outcomes which are correctly predicted. For all delayed flights, what proportion is correctly predicted by the model?</p>
 <p>The precision and recall are generally formulated in terms of the positive target class. But it’s also possible to calculate weighted versions of these metrics which look at both target classes.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:54:51.646793Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:54:53.407151Z&quot;}" data-execution_count="12">
-<details>
+<div id="cell-21" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:54:51.646793Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:54:53.407151Z&quot;}" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>TN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = prediction'</span>).count()</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = prediction'</span>).count()</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>FN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = 1'</span>).count()</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = 0'</span>).count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>TN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = prediction'</span>).count()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>TP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = prediction'</span>).count()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>FN <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 0 AND label = 1'</span>).count()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>FP <span class="op">=</span> prediction.<span class="bu">filter</span>(<span class="st">'prediction = 1 AND label = 0'</span>).count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:55:02.957498Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:55:04.583480Z&quot;}" data-execution_count="13">
-<details>
+<div id="cell-22" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:55:02.957498Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:55:04.583480Z&quot;}" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> MulticlassClassificationEvaluator, BinaryClassificationEvaluator</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate precision and recall</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> TP <span class="op">/</span> (TP <span class="op">+</span> FP)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>recall <span class="op">=</span> TP <span class="op">/</span> (TP <span class="op">+</span> FN)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'precision = </span><span class="sc">{:.2f}</span><span class="ch">\n</span><span class="st">recall   = </span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>(precision, recall))</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Find weighted precision</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>multi_evaluator <span class="op">=</span> MulticlassClassificationEvaluator()</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>weighted_precision <span class="op">=</span> multi_evaluator.evaluate(prediction, {multi_evaluator.metricName: <span class="st">"weightedPrecision"</span>})</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find AUC</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>binary_evaluator <span class="op">=</span> BinaryClassificationEvaluator()</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>auc <span class="op">=</span> binary_evaluator.evaluate(prediction, {binary_evaluator.metricName: <span class="st">"areaUnderROC"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.evaluation <span class="im">import</span> MulticlassClassificationEvaluator, BinaryClassificationEvaluator</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate precision and recall</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> TP <span class="op">/</span> (TP <span class="op">+</span> FP)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>recall <span class="op">=</span> TP <span class="op">/</span> (TP <span class="op">+</span> FN)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'precision = </span><span class="sc">{:.2f}</span><span class="ch">\n</span><span class="st">recall   = </span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>(precision, recall))</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Find weighted precision</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>multi_evaluator <span class="op">=</span> MulticlassClassificationEvaluator()</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>weighted_precision <span class="op">=</span> multi_evaluator.evaluate(prediction, {multi_evaluator.metricName: <span class="st">"weightedPrecision"</span>})</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Find AUC</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>binary_evaluator <span class="op">=</span> BinaryClassificationEvaluator()</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>auc <span class="op">=</span> binary_evaluator.evaluate(prediction, {binary_evaluator.metricName: <span class="st">"areaUnderROC"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>precision = 0.61
@@ -637,11 +618,11 @@ recall   = 0.64</code></pre>
 <pre><code>                                                                                </code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:56:52.537512Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:56:52.545983Z&quot;}" data-execution_count="14">
-<details>
+<div id="cell-23" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:56:52.537512Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:56:52.545983Z&quot;}" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(weighted_precision)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(weighted_precision)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(auc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.6106605467579678
@@ -663,39 +644,39 @@ recall   = 0.64</code></pre>
 <li>apply the hashing trick</li>
 <li>convert to TF-IDF representation. In this exercise you’ll remove punctuation and numbers, then tokenize the messages.</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:58:32.383916Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:58:32.403235Z&quot;}" data-execution_count="15">
-<details>
+<div id="cell-25" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:58:32.383916Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:58:32.403235Z&quot;}" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> StructType, StructField, IntegerType, StringType</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify column names and types</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> StructType([</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"id"</span>, IntegerType()),</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"text"</span>, StringType()),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"label"</span>, IntegerType())</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data from a delimited file</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> spark.read.csv(<span class="st">'dataset/sms.csv'</span>, sep<span class="op">=</span><span class="st">';'</span>, header<span class="op">=</span><span class="va">False</span>, schema<span class="op">=</span>schema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.types <span class="im">import</span> StructType, StructField, IntegerType, StringType</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify column names and types</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>schema <span class="op">=</span> StructType([</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"id"</span>, IntegerType()),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"text"</span>, StringType()),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    StructField(<span class="st">"label"</span>, IntegerType())</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data from a delimited file</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> spark.read.csv(<span class="st">'dataset/sms.csv'</span>, sep<span class="op">=</span><span class="st">';'</span>, header<span class="op">=</span><span class="va">False</span>, schema<span class="op">=</span>schema)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:58:53.392345Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:58:53.532747Z&quot;}" data-execution_count="16">
-<details>
+<div id="cell-26" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-09T23:58:53.392345Z&quot;,&quot;end_time&quot;:&quot;2023-04-09T23:58:53.532747Z&quot;}" data-execution_count="16">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> regexp_replace</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Tokenizer</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove punctuation (REGEX provided) and numbers</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> sms.withColumn(<span class="st">'text'</span>, regexp_replace(sms.text, <span class="st">'[_():;,.!?</span><span class="ch">\\</span><span class="st">-]'</span>, <span class="st">' '</span>))</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> wrangled.withColumn(<span class="st">'text'</span>, regexp_replace(wrangled.text, <span class="st">'[0-9]'</span>, <span class="st">' '</span>))</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge multiple spaces</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> wrangled.withColumn(<span class="st">'text'</span>, regexp_replace(wrangled.text, <span class="st">' +'</span>, <span class="st">' '</span>))</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the text into words</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> Tokenizer(inputCol<span class="op">=</span><span class="st">'text'</span>, outputCol<span class="op">=</span><span class="st">'words'</span>).transform(wrangled)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>wrangled.show(<span class="dv">4</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.sql.functions <span class="im">import</span> regexp_replace</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> Tokenizer</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove punctuation (REGEX provided) and numbers</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> sms.withColumn(<span class="st">'text'</span>, regexp_replace(sms.text, <span class="st">'[_():;,.!?</span><span class="ch">\\</span><span class="st">-]'</span>, <span class="st">' '</span>))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> wrangled.withColumn(<span class="st">'text'</span>, regexp_replace(wrangled.text, <span class="st">'[0-9]'</span>, <span class="st">' '</span>))</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge multiple spaces</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> wrangled.withColumn(<span class="st">'text'</span>, regexp_replace(wrangled.text, <span class="st">' +'</span>, <span class="st">' '</span>))</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the text into words</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> Tokenizer(inputCol<span class="op">=</span><span class="st">'text'</span>, outputCol<span class="op">=</span><span class="st">'words'</span>).transform(wrangled)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>wrangled.show(<span class="dv">4</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+---+----------------------------------+-----+------------------------------------------+
@@ -719,23 +700,23 @@ only showing top 4 rows
 <li>The hashing trick provides a fast and space-efficient way to map a very large (possibly infinite) set of items (in this case, all words contained in the SMS messages) onto a smaller, finite number of values.</li>
 <li>The TF-IDF matrix reflects how important a word is to each document. It takes into account both the frequency of the word within each document but also the frequency of the word across all of the documents in the collection.</li>
 </ul>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T00:05:36.244470Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T00:05:36.755987Z&quot;}" data-execution_count="17">
-<details>
+<div id="cell-28" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T00:05:36.244470Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T00:05:36.755987Z&quot;}" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StopWordsRemover, HashingTF, IDF</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> wrangled.select(<span class="st">'id'</span>, <span class="st">'words'</span>, <span class="st">'label'</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove stop words.</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> StopWordsRemover(inputCol<span class="op">=</span><span class="st">'words'</span>, outputCol<span class="op">=</span><span class="st">'terms'</span>).transform(sms)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the hashing trick</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> HashingTF(inputCol<span class="op">=</span><span class="st">'terms'</span>, outputCol<span class="op">=</span><span class="st">'hash'</span>, numFeatures<span class="op">=</span><span class="dv">1024</span>).transform(wrangled)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert hashed symbols to TF-IDF</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>tf_idf <span class="op">=</span> IDF(inputCol<span class="op">=</span><span class="st">'hash'</span>, outputCol<span class="op">=</span><span class="st">'features'</span>).fit(wrangled).transform(wrangled)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>tf_idf.select(<span class="st">'terms'</span>, <span class="st">'features'</span>).show(<span class="dv">4</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyspark.ml.feature <span class="im">import</span> StopWordsRemover, HashingTF, IDF</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> wrangled.select(<span class="st">'id'</span>, <span class="st">'words'</span>, <span class="st">'label'</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove stop words.</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> StopWordsRemover(inputCol<span class="op">=</span><span class="st">'words'</span>, outputCol<span class="op">=</span><span class="st">'terms'</span>).transform(sms)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the hashing trick</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>wrangled <span class="op">=</span> HashingTF(inputCol<span class="op">=</span><span class="st">'terms'</span>, outputCol<span class="op">=</span><span class="st">'hash'</span>, numFeatures<span class="op">=</span><span class="dv">1024</span>).transform(wrangled)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert hashed symbols to TF-IDF</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>tf_idf <span class="op">=</span> IDF(inputCol<span class="op">=</span><span class="st">'hash'</span>, outputCol<span class="op">=</span><span class="st">'features'</span>).fit(wrangled).transform(wrangled)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>tf_idf.select(<span class="st">'terms'</span>, <span class="st">'features'</span>).show(<span class="dv">4</span>, truncate<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>+--------------------------------+----------------------------------------------------------------------------------------------------+
@@ -762,22 +743,22 @@ only showing top 4 rows
 <li>converted to a TF-IDF representation.</li>
 </ul>
 <p>Next you’ll need to split the TF-IDF data into training and testing sets. Then you’ll use the training data to fit a Logistic Regression model and finally evaluate the performance of that model on the testing data.</p>
-<div class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T00:09:35.914397Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T00:09:36.881140Z&quot;}" data-execution_count="18">
-<details>
+<div id="cell-30" class="cell" data-executetime="{&quot;start_time&quot;:&quot;2023-04-10T00:09:35.914397Z&quot;,&quot;end_time&quot;:&quot;2023-04-10T00:09:36.881140Z&quot;}" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> tf_idf.select(<span class="st">'label'</span>, <span class="st">'features'</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and test sets</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>sms_train, sms_test <span class="op">=</span> sms.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">13</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Logistic Regression model to the training data</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>logistic <span class="op">=</span> LogisticRegression(regParam<span class="op">=</span><span class="fl">0.2</span>).fit(sms_train)</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test data</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> logistic.transform(sms_test)</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix, comparing predictions to known labels</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">'label'</span>, <span class="st">'prediction'</span>).count().show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sms <span class="op">=</span> tf_idf.select(<span class="st">'label'</span>, <span class="st">'features'</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and test sets</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>sms_train, sms_test <span class="op">=</span> sms.randomSplit([<span class="fl">0.8</span>, <span class="fl">0.2</span>], seed<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Logistic Regression model to the training data</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>logistic <span class="op">=</span> LogisticRegression(regParam<span class="op">=</span><span class="fl">0.2</span>).fit(sms_train)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions on the test data</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> logistic.transform(sms_test)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix, comparing predictions to known labels</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>prediction.groupBy(<span class="st">'label'</span>, <span class="st">'prediction'</span>).count().show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>23/04/10 00:09:36 WARN BLAS: Failed to load implementation from: com.github.fommil.netlib.NativeSystemBLAS
@@ -826,9 +807,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -864,10 +859,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -877,8 +871,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -893,6 +896,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -935,6 +1170,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 

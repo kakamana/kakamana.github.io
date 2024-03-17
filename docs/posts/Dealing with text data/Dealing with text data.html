@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,47 +49,17 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -110,7 +81,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,15 +96,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -136,45 +143,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Kakamana’s Blogs</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://kakamana.github.io"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://kakamana.github.io"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/Nerdy_kakamana"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -240,7 +249,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <section id="dealing-with-text-data" class="level1">
 <h1>Dealing with text data</h1>
@@ -248,8 +259,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This <strong>Dealing with text data</strong> is part of <a href="" title="https://campus.datacamp.com/courses/feature-engineering-for-machine-learning-in-python">Datacamp course: Feature engineering for machine learning in Python</a></p>
 <p>This is my learning experience of data science through DataCamp. These repository contributions are part of my learning journey through my graduate program masters of applied data sciences (MADS) at University Of Michigan, <a href="https://www.deeplearning.ai">DeepLearning.AI</a>, <a href="https://www.coursera.org">Coursera</a> &amp; <a href="https://www.datacamp.com">DataCamp</a>. You can find my similar articles &amp; more stories at my <a href="https://medium.com/@kamig4u">medium</a> &amp; <a href="https://www.linkedin.com/in/asadenterprisearchitect">LinkedIn</a> profile. I am available at <a href="https://www.kaggle.com/kakamana">kaggle</a> &amp; <a href="https://kakamana.github.io">github blogs</a> &amp; <a href="https://github.com/kakamana">github repos</a>. Thank you for your motivation, support &amp; valuable feedback.</p>
 <p>These include projects, coursework &amp; notebook which I learned through my data science journey. They are created for reproducible &amp; future reference purpose only. All source code, slides or screenshot are intellactual property of respective content authors. If you find these contents beneficial, kindly consider learning subscription from <a href="https://www.deeplearning.ai">DeepLearning.AI Subscription</a>, <a href="https://www.coursera.org">Coursera</a>, <a href="https://www.datacamp.com">DataCamp</a></p>
-<div class="cell" data-execution_count="2">
-<details>
+<div id="cell-2" class="cell" data-execution_count="2">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -257,72 +268,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="3">
-<details>
+<div id="cell-3" class="cell" data-execution_count="3">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>speech_df <span class="op">=</span> pd.read_csv(<span class="st">'dataset/inaugural_speeches.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>speech_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display" data-execution_count="3">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Inaugural Address</th>
-      <th>Date</th>
-      <th>text</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>George Washington</td>
-      <td>First Inaugural Address</td>
-      <td>Thursday, April 30, 1789</td>
-      <td>Fellow-Citizens of the Senate and of the House...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>George Washington</td>
-      <td>Second Inaugural Address</td>
-      <td>Monday, March 4, 1793</td>
-      <td>Fellow Citizens:  I AM again called upon by th...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>John Adams</td>
-      <td>Inaugural Address</td>
-      <td>Saturday, March 4, 1797</td>
-      <td>WHEN it was first perceived, in early times, t...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Thomas Jefferson</td>
-      <td>First Inaugural Address</td>
-      <td>Wednesday, March 4, 1801</td>
-      <td>Friends and Fellow-Citizens:  CALLED upon to u...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Thomas Jefferson</td>
-      <td>Second Inaugural Address</td>
-      <td>Monday, March 4, 1805</td>
-      <td>PROCEEDING, fellow-citizens, to that qualifica...</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Inaugural Address</th>
+<th data-quarto-table-cell-role="th">Date</th>
+<th data-quarto-table-cell-role="th">text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>George Washington</td>
+<td>First Inaugural Address</td>
+<td>Thursday, April 30, 1789</td>
+<td>Fellow-Citizens of the Senate and of the House...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>George Washington</td>
+<td>Second Inaugural Address</td>
+<td>Monday, March 4, 1793</td>
+<td>Fellow Citizens: I AM again called upon by th...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>John Adams</td>
+<td>Inaugural Address</td>
+<td>Saturday, March 4, 1797</td>
+<td>WHEN it was first perceived, in early times, t...</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Thomas Jefferson</td>
+<td>First Inaugural Address</td>
+<td>Wednesday, March 4, 1801</td>
+<td>Friends and Fellow-Citizens: CALLED upon to u...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Thomas Jefferson</td>
+<td>Second Inaugural Address</td>
+<td>Monday, March 4, 1805</td>
+<td>PROCEEDING, fellow-citizens, to that qualifica...</td>
+</tr>
+</tbody>
 </table>
+
+</div>
 </div>
 </div>
 </div>
 <p>Encoding text</p>
 <p>Text cleanup</p>
 <p>To convert an unstructured text string into a set of numeric columns that can be ingested by a machine learning model, multiple steps need to be taken. You should standardize your data and eliminate any characters that might cause problems later.</p>
-<div class="cell" data-execution_count="4">
-<details>
+<div id="cell-5" class="cell" data-execution_count="4">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace all non letter characters with a whitespace</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>speech_df[<span class="st">'text_clean'</span>] <span class="op">=</span> speech_df[<span class="st">'text'</span>].<span class="bu">str</span>.replace(<span class="st">'[^a-zA-Z]'</span>, <span class="st">' '</span>)</span>
@@ -349,8 +363,8 @@ Name: text_clean, dtype: object</code></pre>
 <section id="feature-rich-text" class="level2">
 <h2 class="anchored" data-anchor-id="feature-rich-text">Feature-rich text</h2>
 <p>It is possible to calculate the length and number of words of free form text once the text has been cleaned and standardized.</p>
-<div class="cell" data-execution_count="5">
-<details>
+<div id="cell-7" class="cell" data-execution_count="5">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the length of each text</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>speech_df[<span class="st">'char_cnt'</span>] <span class="op">=</span> speech_df[<span class="st">'text_clean'</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
@@ -494,8 +508,8 @@ Name: text_clean, dtype: object</code></pre>
 <p>For each unique word in the dataset a column is created.</p>
 <p>For each entry, the number of times this word occurs is counted and the count value is entered into the respective column.</p>
 <p>These “count” columns can then be used to train machine learning models.</p>
-<div class="cell" data-execution_count="7">
-<details>
+<div id="cell-9" class="cell" data-execution_count="7">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import CountVectorizer</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
@@ -524,8 +538,8 @@ Name: text_clean, dtype: object</code></pre>
 <section id="counting-words-ii" class="level2">
 <h2 class="anchored" data-anchor-id="counting-words-ii">Counting words (II)</h2>
 <p>Once the vectorizer has been fitted to the data, it can be used to transform the text into an array representing the word counts. This array will contain a row for each block of text and columns for each feature generated by the vectorizer that you observed in the last exercise.</p>
-<div class="cell" data-execution_count="8">
-<details>
+<div id="cell-11" class="cell" data-execution_count="8">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the vectorizer</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cv_transformed <span class="op">=</span> cv.transform(speech_df[<span class="st">'text_clean'</span>])</span>
@@ -544,8 +558,8 @@ Name: text_clean, dtype: object</code></pre>
  [0 0 0 ... 0 0 0]]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<details>
+<div id="cell-12" class="cell" data-execution_count="9">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv_array.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -560,8 +574,8 @@ Name: text_clean, dtype: object</code></pre>
 <p>To reduce the number of features, you can set the following parameters in CountVectorizer:</p>
 <p>min_df : Use only words that occur in more than this percentage of documents. This can be used to remove outlier words that will not generalize across texts.</p>
 <p>max_df : Use only words that occur in less than this percentage of documents. This is useful to eliminate very common words that occur in every corpus without adding value such as “and” or “the”.</p>
-<div class="cell" data-execution_count="10">
-<details>
+<div id="cell-14" class="cell" data-execution_count="10">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import CountVectorizer</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
@@ -584,8 +598,8 @@ Name: text_clean, dtype: object</code></pre>
 <section id="text-to-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="text-to-dataframe">Text to DataFrame</h2>
 <p>The count-based features need to be reformatted in an array so that they can be combined with the rest of the dataset. Concatenate the array with the original DataFrame and convert it into a Pandas DataFrame with the feature names you found earlier as column names.</p>
-<div class="cell" data-execution_count="12">
-<details>
+<div id="cell-16" class="cell" data-execution_count="12">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame with these features</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>cv_df <span class="op">=</span> pd.DataFrame(cv_array,</span>
@@ -661,8 +675,8 @@ Name: text_clean, dtype: object</code></pre>
 \end{equation*}\]</span></p>
 <p>Tf-idf</p>
 <p>While counts of occurrences of words can be useful to build models, words that occur many times may skew the results undesirably. To limit these common words from overpowering your model a form of normalization can be used. In this lesson you will be using Term frequency-inverse document frequency (Tf-idf) as was discussed in the video. Tf-idf has the effect of reducing the value of common words, while increasing the weight of words that do not occur in many documents.</p>
-<div class="cell" data-execution_count="13">
-<details>
+<div id="cell-19" class="cell" data-execution_count="13">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import TfidfVectorizer</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
@@ -718,8 +732,8 @@ Name: text_clean, dtype: object</code></pre>
 <section id="inspecting-tf-idf-values" class="level2">
 <h2 class="anchored" data-anchor-id="inspecting-tf-idf-values">Inspecting Tf-idf values</h2>
 <p>After creating Tf-idf features you will often want to understand what are the most highest scored words for each corpus. This can be achieved by isolating the row you want to examine and then sorting the the scores from high to low.</p>
-<div class="cell" data-execution_count="14">
-<details>
+<div id="cell-21" class="cell" data-execution_count="14">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sample_row <span class="op">=</span> tv_df.iloc[<span class="dv">0</span>]</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -739,15 +753,15 @@ Name: 0, dtype: float64</code></pre>
 <section id="transforming-unseen-data" class="level2">
 <h2 class="anchored" data-anchor-id="transforming-unseen-data">Transforming unseen data</h2>
 <p>The transformations you perform before training a machine learning model must also be applied to the new unseen data when creating vectors from text. Follow the same approach as in the last chapter: fit the vectorizer only on training data and apply it to test data.</p>
-<div class="cell" data-execution_count="15">
-<details>
+<div id="cell-23" class="cell" data-execution_count="15">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>train_speech_df <span class="op">=</span> speech_df.iloc[:<span class="dv">45</span>]</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>test_speech_df <span class="op">=</span> speech_df.iloc[<span class="dv">45</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="16">
-<details>
+<div id="cell-24" class="cell" data-execution_count="16">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tv <span class="op">=</span> TfidfVectorizer(max_features<span class="op">=</span><span class="dv">100</span>, stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -767,160 +781,163 @@ Name: 0, dtype: float64</code></pre>
   warnings.warn(msg, category=FutureWarning)</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="16">
-
+<div>
 <div>
 
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>TFIDF_action</th>
-      <th>TFIDF_administration</th>
-      <th>TFIDF_america</th>
-      <th>TFIDF_american</th>
-      <th>TFIDF_authority</th>
-      <th>TFIDF_best</th>
-      <th>TFIDF_business</th>
-      <th>TFIDF_citizens</th>
-      <th>TFIDF_commerce</th>
-      <th>TFIDF_common</th>
-      <th>...</th>
-      <th>TFIDF_subject</th>
-      <th>TFIDF_support</th>
-      <th>TFIDF_time</th>
-      <th>TFIDF_union</th>
-      <th>TFIDF_united</th>
-      <th>TFIDF_war</th>
-      <th>TFIDF_way</th>
-      <th>TFIDF_work</th>
-      <th>TFIDF_world</th>
-      <th>TFIDF_years</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.000000</td>
-      <td>0.029540</td>
-      <td>0.233954</td>
-      <td>0.082703</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.022577</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.115378</td>
-      <td>0.000000</td>
-      <td>0.024648</td>
-      <td>0.079050</td>
-      <td>0.033313</td>
-      <td>0.000000</td>
-      <td>0.299983</td>
-      <td>0.134749</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.547457</td>
-      <td>0.036862</td>
-      <td>0.000000</td>
-      <td>0.036036</td>
-      <td>0.000000</td>
-      <td>0.015094</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.019296</td>
-      <td>0.092567</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.052851</td>
-      <td>0.066817</td>
-      <td>0.078999</td>
-      <td>0.277701</td>
-      <td>0.126126</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.126987</td>
-      <td>0.134669</td>
-      <td>0.000000</td>
-      <td>0.131652</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.046997</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.075151</td>
-      <td>0.000000</td>
-      <td>0.080272</td>
-      <td>0.042907</td>
-      <td>0.054245</td>
-      <td>0.096203</td>
-      <td>0.225452</td>
-      <td>0.043884</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.037094</td>
-      <td>0.067428</td>
-      <td>0.267012</td>
-      <td>0.031463</td>
-      <td>0.039990</td>
-      <td>0.061516</td>
-      <td>0.050085</td>
-      <td>0.077301</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.098819</td>
-      <td>0.210690</td>
-      <td>0.000000</td>
-      <td>0.056262</td>
-      <td>0.030073</td>
-      <td>0.038020</td>
-      <td>0.235998</td>
-      <td>0.237026</td>
-      <td>0.061516</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.221561</td>
-      <td>0.156644</td>
-      <td>0.028442</td>
-      <td>0.087505</td>
-      <td>0.000000</td>
-      <td>0.109959</td>
-      <td>0.0</td>
-      <td>0.023428</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.023428</td>
-      <td>0.187313</td>
-      <td>0.131913</td>
-      <td>0.040016</td>
-      <td>0.021389</td>
-      <td>0.081124</td>
-      <td>0.119894</td>
-      <td>0.299701</td>
-      <td>0.153133</td>
-    </tr>
-  </tbody>
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TFIDF_action</th>
+<th data-quarto-table-cell-role="th">TFIDF_administration</th>
+<th data-quarto-table-cell-role="th">TFIDF_america</th>
+<th data-quarto-table-cell-role="th">TFIDF_american</th>
+<th data-quarto-table-cell-role="th">TFIDF_authority</th>
+<th data-quarto-table-cell-role="th">TFIDF_best</th>
+<th data-quarto-table-cell-role="th">TFIDF_business</th>
+<th data-quarto-table-cell-role="th">TFIDF_citizens</th>
+<th data-quarto-table-cell-role="th">TFIDF_commerce</th>
+<th data-quarto-table-cell-role="th">TFIDF_common</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">TFIDF_subject</th>
+<th data-quarto-table-cell-role="th">TFIDF_support</th>
+<th data-quarto-table-cell-role="th">TFIDF_time</th>
+<th data-quarto-table-cell-role="th">TFIDF_union</th>
+<th data-quarto-table-cell-role="th">TFIDF_united</th>
+<th data-quarto-table-cell-role="th">TFIDF_war</th>
+<th data-quarto-table-cell-role="th">TFIDF_way</th>
+<th data-quarto-table-cell-role="th">TFIDF_work</th>
+<th data-quarto-table-cell-role="th">TFIDF_world</th>
+<th data-quarto-table-cell-role="th">TFIDF_years</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.000000</td>
+<td>0.029540</td>
+<td>0.233954</td>
+<td>0.082703</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.022577</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>0.115378</td>
+<td>0.000000</td>
+<td>0.024648</td>
+<td>0.079050</td>
+<td>0.033313</td>
+<td>0.000000</td>
+<td>0.299983</td>
+<td>0.134749</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.547457</td>
+<td>0.036862</td>
+<td>0.000000</td>
+<td>0.036036</td>
+<td>0.000000</td>
+<td>0.015094</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.019296</td>
+<td>0.092567</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.052851</td>
+<td>0.066817</td>
+<td>0.078999</td>
+<td>0.277701</td>
+<td>0.126126</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.126987</td>
+<td>0.134669</td>
+<td>0.000000</td>
+<td>0.131652</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.0</td>
+<td>0.046997</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>0.075151</td>
+<td>0.000000</td>
+<td>0.080272</td>
+<td>0.042907</td>
+<td>0.054245</td>
+<td>0.096203</td>
+<td>0.225452</td>
+<td>0.043884</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.037094</td>
+<td>0.067428</td>
+<td>0.267012</td>
+<td>0.031463</td>
+<td>0.039990</td>
+<td>0.061516</td>
+<td>0.050085</td>
+<td>0.077301</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.098819</td>
+<td>0.210690</td>
+<td>0.000000</td>
+<td>0.056262</td>
+<td>0.030073</td>
+<td>0.038020</td>
+<td>0.235998</td>
+<td>0.237026</td>
+<td>0.061516</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.221561</td>
+<td>0.156644</td>
+<td>0.028442</td>
+<td>0.087505</td>
+<td>0.000000</td>
+<td>0.109959</td>
+<td>0.0</td>
+<td>0.023428</td>
+<td>...</td>
+<td>0.0</td>
+<td>0.023428</td>
+<td>0.187313</td>
+<td>0.131913</td>
+<td>0.040016</td>
+<td>0.021389</td>
+<td>0.081124</td>
+<td>0.119894</td>
+<td>0.299701</td>
+<td>0.153133</td>
+</tr>
+</tbody>
 </table>
+
 <p>5 rows × 100 columns</p>
+</div>
 </div>
 </div>
 </div>
@@ -932,8 +949,8 @@ Name: 0, dtype: float64</code></pre>
 <p>bigrams: Sequences of two consecutive words</p>
 <p>trigrams: Sequences of two consecutive words</p>
 <p>You can automatically create these in your dataset by specifying the ngram_range argument as a tuple (n1, n2) that includes all n-grams in the range n1 to n2.</p>
-<div class="cell" data-execution_count="17">
-<details>
+<div id="cell-26" class="cell" data-execution_count="17">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cv_trigram_vec <span class="op">=</span> CountVectorizer(max_features<span class="op">=</span><span class="dv">100</span>,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                                 stop_words<span class="op">=</span><span class="st">'english'</span>,</span>
@@ -966,8 +983,8 @@ Name: 0, dtype: float64</code></pre>
 <section id="finding-the-most-common-words" class="level2">
 <h2 class="anchored" data-anchor-id="finding-the-most-common-words">Finding the most common words</h2>
 <p>Its always advisable once you have created your features to inspect them to ensure that they are as you would expect. This will allow you to catch errors early, and perhaps influence what further feature engineering you will need to do.</p>
-<div class="cell" data-execution_count="18">
-<details>
+<div id="cell-28" class="cell" data-execution_count="18">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame of the features</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cv_tri_df <span class="op">=</span> pd.DataFrame(cv_trigram.toarray(),</span>
@@ -1022,9 +1039,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1060,10 +1091,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1073,8 +1103,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1089,6 +1128,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1131,6 +1402,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <script src="https://utteranc.es/client.js" repo="kakamana/blogComments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
+
 
 
 
