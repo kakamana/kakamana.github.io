@@ -225,80 +225,84 @@
     <lastmod>2023-03-21T03:21:08.000Z</lastmod>
   </url>
   <url>
-    <loc>https://kakamana.github.io/posts/Coffee roasting in tensorflow/Coffee roasting in tensorflow.html</loc>
-    <lastmod>2023-04-28T20:56:46.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Classification with logistic regression/Classification.html</loc>
-    <lastmod>2023-04-25T18:47:03.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Classification/Classification.html</loc>
-    <lastmod>2023-01-20T05:00:24.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Building deep learning models with keras/Building deep learning models with keras.html</loc>
-    <lastmod>2023-04-05T20:16:43.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Basics of deep learning and neural netowrks/Basics of deep learning and neural networks.html</loc>
-    <lastmod>2023-04-03T20:02:27.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Basic features and readability scores/Basic features and readability scores.html</loc>
-    <lastmod>2023-03-30T06:22:22.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
-    <lastmod>2023-01-20T18:46:35.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
-    <lastmod>2023-04-07T18:02:20.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/archive.html</loc>
-    <lastmod>2023-01-06T08:49:01.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/about.html</loc>
-    <lastmod>2022-12-31T22:02:28.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/index.html</loc>
-    <lastmod>2023-01-10T04:14:37.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html</loc>
-    <lastmod>2023-04-08T13:52:29.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Back Propagation/Back propagation.html</loc>
-    <lastmod>2023-05-09T08:49:13.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html</loc>
-    <lastmod>2023-03-22T08:29:33.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Bringing it all together for network analysis/Bringing it all together - Network Analysis.html</loc>
-    <lastmod>2023-03-12T09:59:42.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Building fake news classifier/Building fake news classifier.html</loc>
-    <lastmod>2023-03-30T04:28:14.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kakamana.github.io/posts/Classification - machine learning with PySpark/Classification - machine learning with PySpark.html</loc>
-    <lastmod>2023-04-09T20:09:41.000Z</lastmod>
+    <loc>https://kakamana.github.io/posts/Coffee roasting numpy/Coffee roasting numpy.html</loc>
+    <lastmod>2023-04-28T21:31:24.000Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Classification with XGBoost/Classification with XGBoost.html</loc>
     <lastmod>2023-01-21T13:54:31.000Z</lastmod>
   </url>
   <url>
-    <loc>https://kakamana.github.io/posts/Coffee roasting numpy/Coffee roasting numpy.html</loc>
-    <lastmod>2023-04-28T21:31:24.000Z</lastmod>
+    <loc>https://kakamana.github.io/posts/Classification - machine learning with PySpark/Classification - machine learning with PySpark.html</loc>
+    <lastmod>2023-04-09T20:09:41.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Building fake news classifier/Building fake news classifier.html</loc>
+    <lastmod>2023-03-30T04:28:14.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Bringing it all together for network analysis/Bringing it all together - Network Analysis.html</loc>
+    <lastmod>2023-03-12T09:59:42.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Basic modeling in scikit-learn/Basic modeling in scikit-learn.html</loc>
+    <lastmod>2023-03-22T08:29:33.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Back Propagation/Back propagation.html</loc>
+    <lastmod>2023-05-09T08:49:13.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Advanced Operations, Detecting Faces and Features/Advanced Operations, Detecting Faces and Features.html</loc>
+    <lastmod>2023-04-08T13:52:29.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/index.html</loc>
+    <lastmod>2023-01-10T04:14:37.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/about.html</loc>
+    <lastmod>2022-12-31T22:02:28.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/archive.html</loc>
+    <lastmod>2023-01-06T08:49:01.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Advance model architecture/Advanced Model Architectures.html</loc>
+    <lastmod>2023-04-07T18:02:20.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Applying logistic regression and SVM/Applying logistic regression and SVM.html</loc>
+    <lastmod>2023-01-20T18:46:35.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Basic features and readability scores/Basic features and readability scores.html</loc>
+    <lastmod>2023-03-30T06:22:22.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Basics of deep learning and neural netowrks/Basics of deep learning and neural networks.html</loc>
+    <lastmod>2023-04-03T20:02:27.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Building deep learning models with keras/Building deep learning models with keras.html</loc>
+    <lastmod>2023-04-05T20:16:43.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Classification/Classification.html</loc>
+    <lastmod>2023-01-20T05:00:24.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Classification with logistic regression/Classification.html</loc>
+    <lastmod>2023-04-25T18:47:03.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Coffee roasting in tensorflow/Coffee roasting in tensorflow.html</loc>
+    <lastmod>2023-04-28T20:56:46.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kakamana.github.io/posts/Configuring and Connecting to a PostgreSQL Database with Docker/index.html</loc>
+    <lastmod>2024-03-28T07:09:37.725Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Correlation and experimental design/Correlation and experimental design.html</loc>
@@ -510,7 +514,7 @@
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Unraveling the impact of randomization through Uber tipping's example/unraveling-the-impact-of-randomization-techniques.html</loc>
-    <lastmod>2024-03-17T20:20:37.282Z</lastmod>
+    <lastmod>2024-03-28T07:16:53.263Z</lastmod>
   </url>
   <url>
     <loc>https://kakamana.github.io/posts/Using XGBoost in Pipelines/Using XGBoost in pipelines.html</loc>

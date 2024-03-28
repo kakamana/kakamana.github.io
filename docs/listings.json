@@ -1,15 +1,8 @@
 [
   {
-    "listing": "/archive.html",
-    "items": [
-      "/posts/Fuzzy Regression Discontinuity Designs/Fuzzy Regression Discontinuity Design.html",
-      "/posts/Regression Discontinuity/Regression Discontinuity.html",
-      "/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
+      "/posts/Configuring and Connecting to a PostgreSQL Database with Docker/index.html",
       "/posts/Unraveling the impact of randomization through Uber tipping's example/unraveling-the-impact-of-randomization-techniques.html",
       "/posts/Facial Expression Recognition with Keras/Facial Expression Recognition with Keras.html",
       "/posts/Decision Trees/Decision Trees.html",
@@ -137,6 +130,15 @@
       "/posts/Preprocessing and Pipelines/Preprocessing and pipelines.html",
       "/posts/Random numbers and probability/Random numbers and probability.html",
       "/posts/Summary of statistics/Summary Of Statistics.html"
+    ]
+  },
+  {
+    "listing": "/archive.html",
+    "items": [
+      "/posts/Configuring and Connecting to a PostgreSQL Database with Docker/index.html",
+      "/posts/Fuzzy Regression Discontinuity Designs/Fuzzy Regression Discontinuity Design.html",
+      "/posts/Regression Discontinuity/Regression Discontinuity.html",
+      "/posts/Sharp Regression Discontinuity Design/Sharp Regression Discontinuity Design.html"
     ]
   }
 ]
